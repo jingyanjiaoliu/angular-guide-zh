@@ -27,7 +27,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * 15-Dependency Injection
 * 16-Providers
 * 17-Modules
-* 18-Scopes
+* 18-Scopes 翻译者: @GrahamLe
 * 19-Expressions
 * 20-Bootstrap
 * 21-Directives
