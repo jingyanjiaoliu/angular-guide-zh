@@ -12,7 +12,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 
 * 01-Controllers（控制器）翻译者:
 * 02-Filters（过滤器）翻译者:@NigelYao
-* 03-Templates（模板）翻译者:
+* 03-Templates（模板）翻译者:@why520crazy
 * 04-Introduction（介绍）翻译者:
 * 05-Conceptual Overview（概述）翻译者: @asnowwolf
 * 06-Understanding Angular Services（理解ng的服务）翻译者: @lightma
