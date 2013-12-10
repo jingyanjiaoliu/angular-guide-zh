@@ -42,9 +42,9 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 
 目前加入者：
 
-@ckken QQ:Ken@广州(117692258)
+@ckken， QQ:Ken@广州(117692258)
 
-@grahamle QQ:Graham@杭州(798945730)  
+@grahamle， QQ:Graham@杭州(798945730)  
 
 @NigelYao， QQ:Nigel(491224575)
 
@@ -54,9 +54,9 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 
 @joe，QQ:Joe.Y.Lin(331547274)
 
-@FrankyYang QQ:杨凡(318065268) 
+@FrankyYang， QQ:杨凡(318065268) 
 
-@why520crazy @@ why520crazy(601213834)...
+@why520crazy， QQ:why520crazy(601213834)...
 
-heather(2751502325) 
-L(342840060) 
+
+heather(2751502325)，L(342840060) 
