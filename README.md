@@ -23,7 +23,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * 11-Using $location
 * 12-Angular Services 翻译者: @FrankyYang
 * 13-Data Binding
-* 14-Working With CSS in Angular
+* 14-Working With CSS in Angular @ckken
 * 15-Dependency Injection
 * 16-Providers
 * 17-Modules
@@ -42,9 +42,9 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 
 目前加入者：
 
-Ken@广州(117692258)  Working With CSS in Angular @ckken
+@ckken QQ:Ken@广州(117692258)
 
-Graham@杭州(798945730)  @grahamle
+@grahamle QQ:Graham@杭州(798945730)  
 
 @NigelYao， QQ:Nigel(491224575)
 
