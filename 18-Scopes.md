@@ -4,26 +4,21 @@
 
 # 何为Scopes
 
-{@link api/ng.$rootScope.Scope scope} is an object that refers to the application
-model. It is an execution context for {@link expression expressions}. Scopes are
-arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can
-watch {@link guide/expression expressions} and propagate events.
+{@link api/ng.$rootScope.Scope scope} 
+- 是一个存储应用数据模型的对象
+- 为 {@link expression expressions} 提供了一个执行上下文
+- Scopes 的层级结构对应于 DOM 树结构
+- Scopes 可以监听 {@link guide/expression expressions} 的变化并传播事件
 
-## Scope的特点
+## Scopes有什么
 
-  - Scopes provide APIs ({@link api/ng.$rootScope.Scope#methods_$watch $watch}) to observe
-    model mutations.
+  - Scopes 提供了 ({@link api/ng.$rootScope.Scope#methods_$watch $watch}) 方法监听数据模型的变化
 
-  - Scopes provide APIs ({@link api/ng.$rootScope.Scope#methods_$apply $apply}) to
-    propagate any model changes through the system into the view from outside of the "Angular
-    realm" (controllers, services, Angular event handlers).
+  - Scopes 提供了 ({@link api/ng.$rootScope.Scope#methods_$apply $apply}) 方法把不是由 ng 触发的数据模型的改变引入 ng 的控制范围内（如控制器，服务，及 ng 事件处理器等）
+  
+  - Scopes 提供了基于原型式继承其父 scope 属性的机制，就算是嵌套于独立的应用组件中的 scopes 也是可以访问共享的数据模型（这个涉及到指令间嵌套时 scope 的几种模式）
 
-  - Scopes can be nested to isolate application components while providing access to shared model
-    properties. A scope (prototypically) inherits properties from its parent scope.
-
-  - Scopes provide context against which {@link guide/expression expressions} are evaluated. For
-    example `{{username}}` expression is meaningless, unless it is evaluated against a specific
-    scope which defines the `username` property.
+  - Scopes 提供了 {@link guide/expression expressions} 的执行环境，比如像 `{{username}}` 这个表达式，必须得是在一个拥有属性这个属性的 scope 中执行才会有意义，也就是说，scope 中可能会像这样 `scope.username` 或是 `$scope.username`，至于有没有 $ 符号，看你是在哪里调用 scope 了
 
 ## Scope作为数据模型注册的场所
 
