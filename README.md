@@ -42,4 +42,21 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 
 目前加入者：
 
-@NigelYao， @asnowwolf，@lightma，@joe，@why520crazy，@FrankyYang ...
+Ken@广州(117692258)  Working With CSS in Angular @ckken
+
+Graham@杭州(798945730)  @grahamle
+
+@NigelYao， QQ:Nigel(491224575)
+
+@asnowwolf，QQ:雪狼(370598316)
+
+@lightma，QQ:light(382068099)
+
+@joe，QQ:Joe.Y.Lin(331547274)
+
+@FrankyYang QQ:杨凡(318065268) 
+
+@why520crazy @@ why520crazy(601213834)...
+
+heather(2751502325) 
+L(342840060) 
