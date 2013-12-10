@@ -30,7 +30,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * 18-Scopes 翻译者: @GrahamLe
 * 19-Expressions
 * 20-Bootstrap
-* 21-Directives
+* 21-Directives 翻译者: @lrrluo
 * 22-HTML Compiler
 * 23-Forms
 * 24-Animations
