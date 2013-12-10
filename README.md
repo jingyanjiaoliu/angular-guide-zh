@@ -56,7 +56,9 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 
 @FrankyYang， QQ:杨凡(318065268) 
 
+@lrrluo，QQ:L(342840060) 
+
 @why520crazy， QQ:why520crazy(601213834)...
 
 
-heather(2751502325)，L(342840060) 
+---heather(2751502325)
