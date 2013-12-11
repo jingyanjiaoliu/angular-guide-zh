@@ -15,7 +15,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * 03-Templates（模板）翻译者:@why520crazy
 * 04-Introduction（介绍）翻译者:
 * 05-Conceptual Overview（概述）翻译者: @asnowwolf
-* 06-Understanding Angular Services（理解ng的服务）翻译者: @lightma 已完成翻译
+* [06-Understanding Angular Services（理解ng的服务）](https://github.com/jingyanjiaoliu/angular-guide-zh/blob/master/06-Understanding%20Angular%20Services(%E7%90%86%E8%A7%A3%E6%9C%8D%E5%8A%A1).md)翻译者: @lightma 已完成翻译
 * 07-Managing Service Dependencies @joe
 * 08-Creating Services 翻译者: @FrankyYang
 * 09-Injecting Services Into Controllers 翻译者: @FrankyYang
