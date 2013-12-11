@@ -15,7 +15,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * 03-Templates（模板）翻译者:@why520crazy
 * 04-Introduction（介绍）翻译者:
 * 05-Conceptual Overview（概述）翻译者: @asnowwolf
-* 06-Understanding Angular Services（理解ng的服务）翻译者: @lightma
+* 06-Understanding Angular Services（理解ng的服务）翻译者: @lightma 已完成翻译
 * 07-Managing Service Dependencies @joe
 * 08-Creating Services 翻译者: @FrankyYang
 * 09-Injecting Services Into Controllers 翻译者: @FrankyYang
@@ -23,14 +23,14 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * 11-Using $location
 * 12-Angular Services 翻译者: @FrankyYang
 * 13-Data Binding
-* 14-Working With CSS in Angular
+* 14-Working With CSS in Angular @ckken
 * 15-Dependency Injection
-* 16-Providers
+* 16-Providers （Providers）翻译者: @lightma
 * 17-Modules
 * 18-Scopes 翻译者: @GrahamLe
 * 19-Expressions
 * 20-Bootstrap
-* 21-Directives
+* 21-Directives 翻译者: @lrrluo
 * 22-HTML Compiler
 * 23-Forms
 * 24-Animations
@@ -42,4 +42,23 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 
 目前加入者：
 
-@NigelYao， @asnowwolf，@lightma，@joe，@why520crazy，@FrankyYang ...
+@ckken， QQ:Ken@广州(117692258)
+
+@grahamle， QQ:Graham@杭州(798945730)  
+
+@NigelYao， QQ:Nigel(491224575)
+
+@asnowwolf，QQ:雪狼(370598316)
+
+@lightma，QQ:light(382068099)
+
+@joe，QQ:Joe.Y.Lin(331547274)
+
+@FrankyYang， QQ:杨凡(318065268) 
+
+@lrrluo，QQ:L(342840060) 
+
+@why520crazy， QQ:why520crazy(601213834)...
+
+
+---heather(2751502325)
