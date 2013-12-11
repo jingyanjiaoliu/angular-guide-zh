@@ -35,8 +35,8 @@
 紧接着下面的例子在控制器中直接调用了这个过滤器。
 使用这种方式，控制器可以在需要的时候手动调用（例如在从后台获取数据或者过滤器中的表达式有改变）。
 
-<doc:example module="FilterInControllerModule">
-<doc:source>
+<div module="FilterInControllerModule">
+<div>
 <script>
   angular.module('FilterInControllerModule', []).
     controller('FilterController', ['filterFilter', function(filterFilter) {
@@ -62,8 +62,8 @@
     <span ng-repeat="entry in ctrl.filteredArray">{{entry.name}} </span>
   </div>
 </div>
-</doc:source>
-</doc:example>
+</div>
+</div>
 
 
 
@@ -73,8 +73,8 @@
 
 下面的示例过滤器逆置显示了一个字符串。额外的，它会根据条件设置大写字母。
 
-<doc:example module="MyReverseModule">
-<doc:source>
+<div module="MyReverseModule">
+<div>
 <script>
   angular.module('MyReverseModule', []).
     filter('reverse', function() {
@@ -102,5 +102,5 @@
   逆置: {{greeting|reverse}}<br>
   逆置 + 大写: {{greeting|reverse:true}}<br>
 </div>
-</doc:source>
-</doc:example>
+</div>
+</div>
