@@ -22,7 +22,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * 10-Testing Angular Services 翻译者: @FrankyYang
 * 11-Using $location
 * 12-Angular Services 翻译者: @FrankyYang
-* 13-Data Binding
+* 13-Data Binding @NigelYao
 * 14-Working With CSS in Angular @ckken
 * 15-Dependency Injection
 * 16-Providers （Providers）翻译者: @lightma
