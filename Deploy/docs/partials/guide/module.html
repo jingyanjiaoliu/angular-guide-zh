@@ -23,10 +23,10 @@ configuration and help end-to-end test the application</li>
 bootstraps the app using your module.</li>
 </ul>
 <h3 id="the-basics_source">Source</h3>
-<div source-edit="myApp" source-edit-deps="angular.js script.js" source-edit-html="index.html-268" source-edit-css="" source-edit-js="script.js-267" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="myApp" source-edit-deps="angular.js script.js" source-edit-html="index.html-263" source-edit-css="" source-edit-js="script.js-262" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-268" ng-html-wrap="myApp angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-268">
+<pre class="prettyprint linenums" ng-set-text="index.html-263" ng-html-wrap="myApp angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-263">
     
     <div>
       {{ 'World' | greet }}
@@ -34,8 +34,8 @@ bootstraps the app using your module.</li>
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-267"></pre>
-<script type="text/ng-template" id="script.js-267">
+<pre class="prettyprint linenums" ng-set-text="script.js-262"></pre>
+<script type="text/ng-template" id="script.js-262">
       // declare a module
       var myAppModule = angular.module('myApp', []);
 
@@ -50,7 +50,7 @@ bootstraps the app using your module.</li>
     </script>
 </div>
 </div><h3 id="the-basics_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="myApp" ng-set-html="index.html-268" ng-eval-javascript="script.js-267"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="myApp" ng-set-html="index.html-263" ng-eval-javascript="script.js-262"></div>
 <h2 id="recommended-setup">Recommended Setup</h2>
 <p>While the example above is simple, it will not scale to large applications. Instead we recommend
 that you break your application to multiple modules like this:</p>
@@ -67,10 +67,10 @@ can be easily ignored in tests. The tests can also be more focused by only loadi
 that are relevant to tests.</p>
 <p>The above is only a suggestion, so feel free to tailor it to your needs.</p>
 <h3 id="recommended-setup_source">Source</h3>
-<div source-edit="xmpl" source-edit-deps="angular.js script.js" source-edit-html="index.html-270" source-edit-css="" source-edit-js="script.js-269" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="xmpl" source-edit-deps="angular.js script.js" source-edit-html="index.html-265" source-edit-css="" source-edit-js="script.js-264" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-270" ng-html-wrap="xmpl angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-270">
+<pre class="prettyprint linenums" ng-set-text="index.html-265" ng-html-wrap="xmpl angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-265">
     
     <div ng-controller="XmplController">
       {{ greeting }}!
@@ -78,8 +78,8 @@ that are relevant to tests.</p>
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-269"></pre>
-<script type="text/ng-template" id="script.js-269">
+<pre class="prettyprint linenums" ng-set-text="script.js-264"></pre>
+<script type="text/ng-template" id="script.js-264">
       angular.module('xmpl.service', []).
         value('greeter', {
           salutation: 'Hello',
@@ -117,7 +117,7 @@ that are relevant to tests.</p>
     </script>
 </div>
 </div><h3 id="recommended-setup_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="xmpl" ng-set-html="index.html-270" ng-eval-javascript="script.js-269"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="xmpl" ng-set-html="index.html-265" ng-eval-javascript="script.js-264"></div>
 <h2 id="module-loading-&amp;-dependencies">Module Loading &amp; Dependencies</h2>
 <p>A module is a collection of configuration and run blocks which get applied to the application
 during the bootstrap process. In its simplest form the module consist of collection of two kinds

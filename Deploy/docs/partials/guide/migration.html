@@ -388,6 +388,10 @@ binding is set up in the pre-linking phase.</p>
 <a href="https://github.com/angular/angular.js/issues/4528">#4528</a>, and
 <a href="https://github.com/angular/angular.js/issues/4649">#4649</a></p>
 <h3 id="underscore-prefixed/suffixed-properties-are-non-bindable">Underscore-prefixed/suffixed properties are non-bindable</h3>
+<div class="alert alert-info">
+<p><strong>Reverted</strong>: This breaking change has been reverted in 1.2.1, and so can be ignored if you&#39;re using <strong>version 1.2.1 or higher</strong></p>
+</div>
+
 <p>This change introduces the notion of &quot;private&quot; properties (properties
 whose names begin and/or end with an underscore) on the scope chain.
 These properties will not be available to Angular expressions (i.e. {{

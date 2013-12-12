@@ -103,10 +103,10 @@ following components:</p>
 string &quot;very&quot;. Depending on which button is clicked, the <code>spice</code> model is set to <code>chili</code> or
 <code>jalapeño</code>, and the message is automatically updated by data-binding.</p>
 <h3 id="associating-controllers-with-angular-scope-objects_source">Source</h3>
-<div source-edit="spicyApp1" source-edit-deps="angular.js script.js" source-edit-html="index.html-203" source-edit-css="" source-edit-js="script.js-202" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="spicyApp1" source-edit-deps="angular.js script.js" source-edit-html="index.html-198" source-edit-css="" source-edit-js="script.js-197" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-203" ng-html-wrap="spicyApp1 angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-203">
+<pre class="prettyprint linenums" ng-set-text="index.html-198" ng-html-wrap="spicyApp1 angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-198">
     <div ng-app="spicyApp1" ng-controller="SpicyCtrl">
      <button ng-click="chiliSpicy()">Chili</button>
      <button ng-click="jalapenoSpicy()">Jalapeño</button>
@@ -116,8 +116,8 @@ string &quot;very&quot;. Depending on which button is clicked, the <code>spice</
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-202"></pre>
-<script type="text/ng-template" id="script.js-202">
+<pre class="prettyprint linenums" ng-set-text="script.js-197"></pre>
+<script type="text/ng-template" id="script.js-197">
       var myApp = angular.module('spicyApp1', []);
 
       myApp.controller('SpicyCtrl', ['$scope', function($scope){
@@ -134,7 +134,7 @@ string &quot;very&quot;. Depending on which button is clicked, the <code>spice</
     </script>
 </div>
 </div><h3 id="associating-controllers-with-angular-scope-objects_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="spicyApp1" ng-set-html="index.html-203" ng-eval-javascript="script.js-202"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="spicyApp1" ng-set-html="index.html-198" ng-eval-javascript="script.js-197"></div>
 <p>Things to notice in the example above:</p>
 <ul>
 <li>The <code>ng-controller</code> directive is used to (implicitly) create a scope for our template, and the
@@ -150,10 +150,10 @@ and its children).</li>
 <p>Controller methods can also take arguments, as demonstrated in the following variation of the
 previous example.</p>
 <h3 id="associating-controllers-with-angular-scope-objects_source">Source</h3>
-<div source-edit="spicyApp2" source-edit-deps="angular.js script.js" source-edit-html="index.html-205" source-edit-css="" source-edit-js="script.js-204" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="spicyApp2" source-edit-deps="angular.js script.js" source-edit-html="index.html-200" source-edit-css="" source-edit-js="script.js-199" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-205" ng-html-wrap="spicyApp2 angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-205">
+<pre class="prettyprint linenums" ng-set-text="index.html-200" ng-html-wrap="spicyApp2 angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-200">
   <div ng-app="spicyApp2" ng-controller="SpicyCtrl">
    <input ng-model="customSpice">
    <button ng-click="spicy('chili')">Chili</button>
@@ -164,8 +164,8 @@ previous example.</p>
 </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-204"></pre>
-<script type="text/ng-template" id="script.js-204">
+<pre class="prettyprint linenums" ng-set-text="script.js-199"></pre>
+<script type="text/ng-template" id="script.js-199">
     var myApp = angular.module('spicyApp2', []);
 
     myApp.controller('SpicyCtrl', ['$scope', function($scope){
@@ -179,7 +179,7 @@ previous example.</p>
   </script>
 </div>
 </div><h3 id="associating-controllers-with-angular-scope-objects_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="spicyApp2" ng-set-html="index.html-205" ng-eval-javascript="script.js-204"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="spicyApp2" ng-set-html="index.html-200" ng-eval-javascript="script.js-199"></div>
 <p>Notice that the <code>SpicyCtrl</code> Controller now defines just one method called <code>spicy</code>, which takes one
 argument called <code>spice</code>. The template then refers to this Controller method and passes in a string
 constant <code>&#39;chili&#39;</code> in the binding for the first button and a model property <code>customSpice</code> (bound to an
@@ -192,10 +192,10 @@ have access to properties and methods defined by Controllers higher up the hiera
 See <a href="https://github.com/angular/angular.js/wiki/Understanding-Scopes">Understanding Scopes</a> for
 more information about scope inheritance.</p>
 <h3 id="associating-controllers-with-angular-scope-objects_source">Source</h3>
-<div source-edit="scopeInheritance" source-edit-deps="angular.js script.js" source-edit-html="index.html-208" source-edit-css="style.css-207" source-edit-js="script.js-206" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="scopeInheritance" source-edit-deps="angular.js script.js" source-edit-html="index.html-203" source-edit-css="style.css-202" source-edit-js="script.js-201" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-208" ng-html-wrap="scopeInheritance angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-208">
+<pre class="prettyprint linenums" ng-set-text="index.html-203" ng-html-wrap="scopeInheritance angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-203">
     <div ng-app="scopeInheritance" class="spicy">
       <div ng-controller="MainCtrl">
         <p>Good {{timeOfDay}}, {{name}}!</p>
@@ -214,8 +214,8 @@ more information about scope inheritance.</p>
   </script>
 </div>
 <div class="tab-pane" title="style.css">
-<pre class="prettyprint linenums" ng-set-text="style.css-207"></pre>
-<style type="text/css" id="style.css-207">
+<pre class="prettyprint linenums" ng-set-text="style.css-202"></pre>
+<style type="text/css" id="style.css-202">
       div.spicy div {
         padding: 10px;
         border: solid 2px blue;
@@ -223,8 +223,8 @@ more information about scope inheritance.</p>
     </style>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-206"></pre>
-<script type="text/ng-template" id="script.js-206">
+<pre class="prettyprint linenums" ng-set-text="script.js-201"></pre>
+<script type="text/ng-template" id="script.js-201">
       var myApp = angular.module('scopeInheritance', []);
       myApp.controller('MainCtrl', ['$scope', function($scope){
         $scope.timeOfDay = 'morning';
@@ -240,7 +240,7 @@ more information about scope inheritance.</p>
     </script>
 </div>
 </div><h3 id="associating-controllers-with-angular-scope-objects_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="scopeInheritance" ng-set-html="index.html-208" ng-eval-javascript="script.js-206"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="scopeInheritance" ng-set-html="index.html-203" ng-eval-javascript="script.js-201"></div>
 <p>Notice how we nested three <code>ng-controller</code> directives in our template. This will result in four
 scopes being created for our view:</p>
 <ul>

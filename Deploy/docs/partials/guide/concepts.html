@@ -76,10 +76,10 @@ For a more in-depth explanation, have a look at the <a href="tutorial/index">tut
 <p>In the following we will build a form to calculate the costs of an invoice in different currencies.</p>
 <p>Let&#39;s start with input fields for quantity and cost whose values are multiplied to produce the total of the invoice:</p>
 <h3 id="a-first-example-data-binding_source">Source</h3>
-<div source-edit="" source-edit-deps="angular.js" source-edit-html="index.html-198" source-edit-css="" source-edit-js="" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="" source-edit-deps="angular.js" source-edit-html="index.html-193" source-edit-css="" source-edit-js="" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-198" ng-html-wrap=" angular.js"></pre>
-<script type="text/ng-template" id="index.html-198">
+<pre class="prettyprint linenums" ng-set-text="index.html-193" ng-html-wrap=" angular.js"></pre>
+<script type="text/ng-template" id="index.html-193">
       <div ng-init="qty=1;cost=2">
         <b>Invoice:</b>
         <div>
@@ -95,7 +95,7 @@ For a more in-depth explanation, have a look at the <a href="tutorial/index">tut
   </script>
 </div>
 </div><h3 id="a-first-example-data-binding_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-198" ng-eval-javascript=""></div>
+<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-193" ng-eval-javascript=""></div>
 <p>Try out the Live Preview above, and then let&#39;s walk through the example and describe what&#39;s going on.</p>
 <p><img class="pull-right" style="padding-left: 3em; padding-bottom: 1em;" src="img/guide/concepts-databinding1.png"></p>
 <p>This looks like normal HTML, with some new markup. In Angular, a file like this is called a
@@ -140,10 +140,10 @@ The concept behind this is <a name="databinding">&quot;<a href="guide/databindin
 <p>Let&#39;s add some more logic to the example that allows us to enter and calculate the costs in
 different currencies and also pay the invoice.</p>
 <h3 id="adding-ui-logic-controllers_source">Source</h3>
-<div source-edit="invoice1" source-edit-deps="angular.js invoice1.js" source-edit-html="index.html-199" source-edit-css="" source-edit-js="invoice1.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="invoice1" source-edit-deps="angular.js invoice1.js" source-edit-html="index.html-194" source-edit-css="" source-edit-js="invoice1.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-199" ng-html-wrap="invoice1 angular.js invoice1.js"></pre>
-<script type="text/ng-template" id="index.html-199">
+<pre class="prettyprint linenums" ng-set-text="index.html-194" ng-html-wrap="invoice1 angular.js invoice1.js"></pre>
+<script type="text/ng-template" id="index.html-194">
       <div ng-controller="InvoiceController as invoice">
         <b>Invoice:</b>
         <div>
@@ -193,7 +193,7 @@ different currencies and also pay the invoice.</p>
   </script>
 </div>
 </div><h3 id="adding-ui-logic-controllers_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="invoice1" ng-set-html="index.html-199" ng-eval-javascript="invoice1.js"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="invoice1" ng-set-html="index.html-194" ng-eval-javascript="invoice1.js"></div>
 <p>What changed?</p>
 <p>First, there is a new JavaScript file that contains a so called <a name="controller">&quot;<a href="guide/controller">controller</a>&quot;</a>.
 More exactly, the file contains a constructor function that creates the actual controller instance.
@@ -225,10 +225,10 @@ of the application as well. Later on, we could also change that service to load 
 from the web, e.g. by calling the Yahoo Finance API, without changing the controller.</p>
 <p>Let&#39;s refactor our example and move the currency conversion into a service in another file:</p>
 <h3 id="view-independent-business-logic-services_source">Source</h3>
-<div source-edit="invoice2" source-edit-deps="angular.js finance2.js invoice2.js" source-edit-html="index.html-200" source-edit-css="" source-edit-js="finance2.js invoice2.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="invoice2" source-edit-deps="angular.js finance2.js invoice2.js" source-edit-html="index.html-195" source-edit-css="" source-edit-js="finance2.js invoice2.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-200" ng-html-wrap="invoice2 angular.js finance2.js invoice2.js"></pre>
-<script type="text/ng-template" id="index.html-200">
+<pre class="prettyprint linenums" ng-set-text="index.html-195" ng-html-wrap="invoice2 angular.js finance2.js invoice2.js"></pre>
+<script type="text/ng-template" id="index.html-195">
       <div ng-controller="InvoiceController as invoice">
         <b>Invoice:</b>
         <div>
@@ -292,7 +292,7 @@ from the web, e.g. by calling the Yahoo Finance API, without changing the contro
   </script>
 </div>
 </div><h3 id="view-independent-business-logic-services_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="invoice2" ng-set-html="index.html-200" ng-eval-javascript="finance2.js invoice2.js"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="invoice2" ng-set-html="index.html-195" ng-eval-javascript="finance2.js invoice2.js"></div>
 <p><img class="pull-right" style="padding-left: 3em; padding-bottom: 1em;" src="img/guide/concepts-module-service.png"></p>
 <p>What changed?
 We moved the <code>convertCurrency</code> function and the definition of the existing currencies
@@ -309,7 +309,7 @@ In Angular, this is the purpose of the so called <a name="module">&quot;<a href=
 When Angular starts, it will use the configuration of the module with the name defined by the <code>ng-app</code> directive,
 including the configuration of all modules that this module depends on.</p>
 <p>In the example above:
-The template contains the directive <code>ng-app=&quot;invoice&quot;</code>. This tells Angular
+The template contains the directive <code>ng-app=&quot;invoice2&quot;</code>. This tells Angular
 to use the <code>invoice</code> module as the main module for the application.
 The code snippet <code>angular.module(&#39;invoice&#39;, [&#39;finance&#39;])</code>  specifies that the <code>invoice</code> module depends on the
 <code>finance</code> module. By this, Angular uses the <code>InvoiceController</code> as well as the <code>currencyConverter</code> service.</p>
@@ -336,10 +336,10 @@ to something shorter like <code>a</code>.</p>
 <p>Let&#39;s finish our example by fetching the exchange rates from the Yahoo Finance API.
 The following example shows how this is done with Angular:</p>
 <h3 id="accessing-the-backend_source">Source</h3>
-<div source-edit="invoice3" source-edit-deps="angular.js invoice3.js finance3.js" source-edit-html="index.html-201" source-edit-css="" source-edit-js="invoice3.js finance3.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="invoice3" source-edit-deps="angular.js invoice3.js finance3.js" source-edit-html="index.html-196" source-edit-css="" source-edit-js="invoice3.js finance3.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-201" ng-html-wrap="invoice3 angular.js invoice3.js finance3.js"></pre>
-<script type="text/ng-template" id="index.html-201">
+<pre class="prettyprint linenums" ng-set-text="index.html-196" ng-html-wrap="invoice3 angular.js invoice3.js finance3.js"></pre>
+<script type="text/ng-template" id="index.html-196">
       <div ng-controller="InvoiceController as invoice">
         <b>Invoice:</b>
         <div>
@@ -418,7 +418,7 @@ The following example shows how this is done with Angular:</p>
   </script>
 </div>
 </div><h3 id="accessing-the-backend_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="invoice3" ng-set-html="index.html-201" ng-eval-javascript="invoice3.js finance3.js"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="invoice3" ng-set-html="index.html-196" ng-eval-javascript="invoice3.js finance3.js"></div>
 <p>What changed?
 Our <code>currencyConverter</code> service of the <code>finance</code> module now uses the
 <a href="api/ng.$http"><code>$http</code></a> service, a builtin service provided by Angular
