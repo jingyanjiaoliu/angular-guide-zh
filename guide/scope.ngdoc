@@ -155,29 +155,26 @@ scope 的分层的一个简单例子是，假设现在HTML视图中有一个表�
 
 ## 从DOM中抓取Scopes
 
-Scopes are attached to the DOM as `$scope` data property, and can be retrieved for debugging
-purposes. (It is unlikely that one would need to retrieve scopes in this way inside the
-application.) The location where the root scope is attached to the DOM is defined by the location
-of {@link api/ng.directive:ngApp `ng-app`} directive. Typically
-`ng-app` is placed on the `<html>` element, but it can be placed on other elements as well, if,
-for example, only a portion of the view needs to be controlled by Angular.
+Scope 对象是与指令或控制器等 ng 元素所在的DOM节点相关联的，也就是说，其实DOM节点上是可以抓取到 scope 这个对象的（当然，为了调试偶尔会用，一般不用）。
+而对于 `$rootScope` 在哪里抓呢？它藏在 `ng-app` 指令所在的那个DOM节点之中，请看更多关于 {@link api/ng.directive:ngApp `ng-app`} 指令。通常，`ng-app` 放在 `<html>` 标签中, 当然，如果你的应用中只是视图的某一部分想要用 ng 控制，那你可以把它放在想要控制的元素的最外层。
 
-To examine the scope in the debugger:
+那来看看如何在调试的时候抓取 scope 吧： 
 
-  1. right click on the element of interest in your browser and select 'inspect element'. You
-  should see the browser debugger with the element you clicked on highlighted.
+  1. 右键选去你想审查的元素，调出debugger，通常F12即可，这样你选中的元素会高亮显示（*译者注：感觉文档如果都看到这的人了，会需要这句提示么？原文档这是在卖萌么*）
 
-  2. The debugger allows you to access the currently selected element in the console as `$0`
-    variable.
+  2. 此时，调试器（debugger）允许你用变量 `$0` 来获取当前选取的元素
 
-  3. To retrieve the associated scope in console execute: `angular.element($0).scope()` or just type $scope
+  3. 在console中执行 `angular.element($0).scope()` 或直接输入 $scope 即可看到你想要查询的当前DOM元素节点绑定的 scope 了
 
 
 ## 基于Scope的事件传播
 
-Scopes can propagate events in similar fashion to DOM events. The event can be {@link
-api/ng.$rootScope.Scope#methods_$broadcast broadcasted} to the scope children or {@link
-api/ng.$rootScope.Scope#methods_$emit emitted} to scope parents.
+Scope 可以像DOM节点一样，进行事件的传播。主要是有两个方法：
+
+- {@link api/ng.$rootScope.Scope#methods_$broadcast broadcasted} ：从父级 scope 广播至子级 scope
+- {@link api/ng.$rootScope.Scope#methods_$emit emitted} ：从子级 scope 往上发射到父级 scope 
+
+让我们来看个例子：
 
 <example>
   <file name="script.js">
@@ -208,22 +205,19 @@ api/ng.$rootScope.Scope#methods_$emit emitted} to scope parents.
   </file>
 </example>
 
+译者注：上面例子很简单，有几个需要注意的是：
 
+- `$emit` 和 `$broadcast` 是直接被写在 html 模版中的，而不是写在控制器的 js 代码中，因为这两个方法是直接在 $scope 中就有的，
+- 同一个控制器 `EventController` 被用在了三个不同的DOM节点中（*这是为了省事，通常不这样写的*）
+- 上面的事件无非就是点击两个按钮，分别出发广播/冒泡（发射）事件，然后在各节点设置监听，这里只要用 `$scope.$on()` 方法（注：如果在指令中，可能就是 `scope.$on()`），就可以进行监听了
 
 ## Scope轮循（生命周期）
 
-The normal flow of a browser receiving an event is that it executes a corresponding JavaScript
-callback. Once the callback completes the browser re-renders the DOM and returns to waiting for
-more events.
+浏览器接收一个事件的标准的工作流程应该是：
+  
+    接收事件 --> 触发回调 --> 回调执行结束返回 --> 浏览器重绘DOM --> 浏览器返回等待下一个事件
 
-When the browser calls into JavaScript the code executes outside the Angular execution context,
-which means that Angular is unaware of model modifications. To properly process model
-modifications the execution has to enter the Angular execution context using the {@link
-api/ng.$rootScope.Scope#methods_$apply `$apply`} method. Only model modifications which
-execute inside the `$apply` method will be properly accounted for by Angular. For example if a
-directive listens on DOM events, such as {@link
-api/ng.directive:ngClick `ng-click`} it must evaluate the
-expression inside the `$apply` method.
+上面的过程中，如果一切都发生在 ng 的执行上下文的话，那相安无事，ng 能够知道数据模型发生的改变；但是如果当浏览器的控制权跑到原生的 Js 中去时（译者注：比如回调是用jQuery做的之类的非 ng 的操作等），那么应用执行的上下文就发生在 ng 的上下文之外了，这样就导致 ng 无法知晓数据模型的任何改变。想要让 ng *重新掌权并知晓正在发生的数据模型的变化*的话，那就需要通过使用 {@link api/ng.$rootScope.Scope#methods_$apply `$apply`} 方法让上下文执行环境重新进入到 ng 的上下文中（*注：用法 `$scope.$apply()`*）。只有执行上下文重新回到 ng 中，那样数据模型的改变才能被 ng 所识别并作出相应操作（注：当然，如果执行上下文没有发生改变，也就没有必要显示地去进行 $apply 操作）。举个例子，像 {@link api/ng.directive:ngClick `ng-click`} 这个指令，监听DOM事件时，表达式的计算就必须放在 `$apply()` 中（注：例子不够完备，待补充）。
 
 After evaluating the expression, the `$apply` method performs a {@link
 api/ng.$rootScope.Scope#methods_$digest `$digest`}. In the $digest phase the scope examines all
