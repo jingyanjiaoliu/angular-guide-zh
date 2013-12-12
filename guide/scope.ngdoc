@@ -2,6 +2,8 @@
 @name Developer Guide: Scopes
 @description
 
+Translated by [@GrahamLe](https://github.com/grahamle)
+
 ## 何为Scopes
 
 {@link api/ng.$rootScope.Scope scope} 
@@ -104,21 +106,16 @@ linking} 阶段时， {@link api/ng.$compileProvider#methods_directive directive
 
 ## Scope分层结构
 
-Each Angular application has exactly one {@link api/ng.$rootScope root scope}, but
-may have several child scopes.
+如上所说，scope 的结构对应于DOM结构，那么最顶层，和DOM树有根节点一样，每个 ng 应用有且仅有一个 {@link api/ng.$rootScope root scope}，当然啦，子级 scope 就和DOM树的子节点一样，可以有多个的。
 
-The application can have multiple scopes, because some {@link guide/directive directives} create
-new child scopes (refer to directive documentation to see which directives create new scopes).
-When new scopes are created, they are added as children of their parent scope. This creates a tree
-structure which parallels the DOM where they're attached
+应用可以拥有多个 scope ，比如 {@link guide/directive directives} 会创建子级 scope （至于指令创建的 scope 是有多种类型的，详情参加指令相关文档）。一般情况下，当新的 scope 被创建时，它是以嵌入在父级 scope 的子级的形式被创建的，这样就形成了与其所关联的DOM树相对应的一个 scope 的树结构。（译者注：scope 的层级继承是基于原型链的继承，所以在下面的例子中会看到，读属性时会一直往上溯源，直到有未知）
 
-When Angular evaluates `{{name}}`, it first looks at the scope associated with the given
-element for the `name` property. If no such property is found, it searches the parent scope
-and so on until the root scope is reached. In JavaScript this behavior is known as prototypical
-inheritance, and child scopes prototypically inherit from their parents.
+scope 的分层的一个简单例子是，假设现在HTML视图中有一个表达式 `{{name}}` ，正如上面解释过，ng 需要经历取值和计算两个阶段才能最终在视图渲染结果。那么这个取值的阶段，其实就是根据 scope 的这个层级结构（或树状结构）来进行的。
 
-This example illustrates scopes in application, and prototypical inheritance of properties. The example is followed by
-a diagram depicting the scope boundaries.
+- 首先，ng 在该表达式当前所在的DOM节点所对应的 scope 中去找有没有 `name` 这个属性
+- 如果有，ng 返回取值，计算渲染；如果在当前 scope 中没有找到，那么 ng 继续往上一层的父级 scope 中去找 `name` 属性，直到找到为止，最后实在没有，那就到达 `$rootScope` 了
+
+上面一个简单的例子展示了在 scope 分层结构中找属性，是基于原型继承的模式。接下来这个demo用一个图具体展示了 scope 的层级结构，让你可以有更直观的了解。
 
 <example>
   <file name="index.html">
@@ -154,13 +151,7 @@ a diagram depicting the scope boundaries.
 
 <img class="center" src="img/guide/concepts-scope.png">
 
-Notice that Angular automatically places `ng-scope` class on elements where scopes are
-attached. The `<style>` definition in this example highlights in red the new scope locations. The
-child scopes are necessary because the repeater evaluates `{{name}}` expression, but
-depending on which scope the expression is evaluated it produces different result. Similarly the
-evaluation of `{{department}}` prototypically inherits from root scope, as it is the only place
-where the `department` property is defined.
-
+看到上面的框中，注意，ng 会自动为每个拥有 scope 的DOM节点加上 `ng-scope` 类。上图中，拥有红色边框样式的节点，就意味着该节点拥有了自己的 scope ，无论它是通过什么方式创建的（*译者注：上面可以看到有通过控制器创建的新的 scope ，也有通过指令如 `ng-repeat` 创建的*）。上例中，`ng-repeat` 创建的子级 scope 是极其必要的，因为每个 `<li>` 中想要渲染输出的 `{{name}}` 显然是不同的值，那就需要为它们提供不同的 scope 。同样的，ng 在渲染 `{{department}}` 表达式时，先在当前和 `<li>` 相对应的 scope 去找有没有这个属性，如果没有，接着往上找，在这个例子中，直到找到 `$rootScope` 下时，才找到 `department` 属性，然后将其取回，计算，渲染输出。
 
 ## 从DOM中抓取Scopes
 
