@@ -20,18 +20,19 @@
 
   - Scopes 提供了 {@link guide/expression expressions} 的执行环境，比如像 `{{username}}` 这个表达式，必须得是在一个拥有属性这个属性的 scope 中执行才会有意义，也就是说，scope 中可能会像这样 `scope.username` 或是 `$scope.username`，至于有没有 $ 符号，看你是在哪里调用 scope 了
 
-## Scope作为数据模型注册的场所
+## Scope作为数据模型使用
 
-Scope is the glue between application controller and the view. During the template {@link compiler
-linking} phase the {@link api/ng.$compileProvider#methods_directive directives} set up
-{@link api/ng.$rootScope.Scope#methods_$watch `$watch`} expressions on the scope. The
-`$watch` allows the directives to be notified of property changes, which allows the directive to
-render the updated value to the DOM.
+Scope 是应用（注：一般指web应用）的控制器和视图之间的粘结剂。在 ng 中，最直观的表现是：在自定义指令中，处在模版的 {@link compiler
+linking} 阶段时， {@link api/ng.$compileProvider#methods_directive directives} （指令）会设置一个 {@link api/ng.$rootScope.Scope#methods_$watch `$watch`} 函数监听着 scope 中的各表达式（注：这个过程是隐性的）。这个 `$watch` 允许指令在 scope 中的属性变化时收到通知，进而指令能够根据这个改变来对DOM进行重新渲染，以便更新已改变的属性值（注：属性值就是scope对象中的属性，也就是数据模型）。
 
-Both controllers and directives have reference to the scope, but not to each other. This
-arrangement isolates the controller from the directive as well as from DOM. This is an important
-point since it makes the controllers view agnostic, which greatly improves the testing story of
-the applications.
+其实，不止上面所说的指令拥有指向 scope 的引用，控制器中也有（注：可以理解为控制器与指令均能引用到与它们相对应的DOM结构所处的 scope）。但是控制器与指令是相互分离的，而且它们与视图之间也是分离的，这样的分离，或者说耦合度低，可以大大提高对应用进行测试的这一块工作的效率。
+
+注：其实可以很简单地理解为有以下两个链条关系：
+
+- 控制器 --> scope --> 视图（DOM）
+- 指令 --> scope --> 视图（DOM）
+
+让我们来看下面一个例子，可以说明 scope 作为视图与控制器的黏合剂：
 
 <example>
   <file name="script.js">
@@ -54,30 +55,36 @@ the applications.
   </file>
 </example>
 
-In the above example notice that the `MyController` assigns `World` to the `username` property of
-the scope. The scope then notifies the `input` of the assignment, which then renders the input
-with username pre-filled. This demonstrates how a controller can write data into the scope.
+在上面这个例子中，我们有：
 
-Similarly the controller can assign behavior to scope as seen by the `sayHello` method, which is
-invoked when the user clicks on the 'greet' button. The `sayHello` method can read the `username`
-property and create a `greeting` property. This demonstrates that the properties on scope update
-automatically when they are bound to HTML input widgets.
+- 控制器：`MyController`，它引用了 `$scope` 并在其上注册了两个属性和一个方法
+- $scope 对象：持有上面例子所需的数据模型，包括 `username` 属性、`greeting`属性（注：这是在`sayHello()`方法被调用时注册的）和 `sayHello()` 方法
+- 视图：拥有一个输入框、一个按钮以及一个利用双向绑定来显示数据的内容块
 
-Logically the rendering of `{{greeting}}` involves:
+那么具体整个示例有这样两个流程，**从控制器发起的角度**来看就是：
 
-  * retrieval of the scope associated with DOM node where `{{greeting}}` is defined in template.
-    In this example this is the same scope as the scope which was passed into `MyController`. (We
-    will discuss scope hierarchies later.)
+1. 控制器往 scope 中写属性：
+    - 给 scope 中的 `username` 赋值，然后 scope 通知视图中的 `input` 数据变化了，`input` 因为通过 `ng-model` 实现了双向绑定可以知道 `username` 的变化，进而在视图中渲染出改变的值，这里是 `World`
+2. 控制器往 scope 中写方法
+    - 给 scope 中的 `sayHello()` 方法赋值，该方法接受视图中的 `button` 调用，因为 `button` 通过 `ng-click` 绑定了该方法，当用户点击按钮时，`sayHello()` 被调用，这个方法读取 scope 中的 `username` 属性，加上前缀字符串 `Hello`，然后赋值给在 scope 中新创建的 `greeting` 属性
 
-  * Evaluate the `greeting` {@link guide/expression expression} against the scope retrieved above,
-    and assign the result to the text of the enclosing DOM element.
+整个示例的过程如果**从视图的角度看**，那主要是以下三个部分：
 
+1. `input` 中的渲染逻辑：展示了通过 `ng-model` 进行的 scope 和 视图中某表单元素的双向绑定
+    - 根据 `ng-model` 中的 `username` 去 scope 中取，如果已经有赋值，那么用这个默认值填充当前的输入框
+    - 接受用户输入，并且将用户输入的字符串传给 `username`，这时候 scope 中的该属性值实时对应用户输入的值
 
-You can think of the scope and its properties as the data which is used to render the view. The
-scope is the single source-of-truth for all things view related.
+2. `button` 中的逻辑
+    - 接受用户单击，调用 scope 中的 `sayHello()` 方法
 
-From a testability point of view, the separation of the controller and the view is desirable, because it allows us
-to test the behavior without being distracted by the rendering details.
+3. `{{greeting}}` 的渲染逻辑
+    - 在用户未单击按钮时，不显示内容
+    - *取值阶段*：在用户单击后，这个表达式会去scope中取 `greeting` 属性，而这个 scope 和控制器是同一个的（这个例子中），这时候，该 scope 下 `greeting` 属性已经有了，这时候这个属性就被取回来了
+    - *计算阶段*：在当前 scope 下去计算 `greeting` {@link guide/expression expression} ，然后渲染视图，显示 `Hello World`
+
+经过以上的两种角度分析示例过程，我们可以知道：**scope 对象以及其属性是视图渲染的唯一数据来源。
+
+从测试的角度来看，视图与控制器分离的需求在于它允许测试人员可以单独对应用的操作逻辑进行测试，而不必考虑页面的渲染细节。
 
 <pre>
   it('should say hello', function() {
