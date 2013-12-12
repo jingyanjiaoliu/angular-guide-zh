@@ -2,48 +2,42 @@
 <div><span class="hint"></span>
 </div>
 </h1>
-<div><div class="templates-page"><p>Angular的模板是一个声明式的指定信息从模型，控制器变成用户在浏览器上可以看见的视图，他是一个静态的DOM，包含HTML，CSS以及一些引导Angular添加行为并且转换模板为动态视图的属性</p>
-<p>在Angular中有以下元素属性可以直接在模板中使用：</p>
+<div><div class="templates-page"><p>翻译者:<a href="https://github.com/why520crazy">@why520crazy</a></p>
+<p>Angular的模板是一个声明式的指定信息从模型，控制器变成用户在浏览器上可以看见的视图，
+他是一个静态的DOM，包含HTML，CSS以及一些引导Angular添加行为并且转换模板为动态视图的属性.</p>
+<p>在Angular中有以下元素属性可以直接在模板中使用:</p>
 <ul>
-<li><a href="guide/directive">Directive</a> — An attribute or element that
-augments an existing DOM element or represents a reusable DOM component - a widget.</li>
-<li><a href="api/ng.$interpolate"><code>Markup</code></a> — The double
-curly brace notation <code>{{ }}</code> to bind expressions to elements is built-in angular markup.</li>
-<li><a href="guide/filter">Filter</a> — Formats your data for display to the user.</li>
-<li><a href="guide/forms">Form controls</a> — Lets you validate user input.</li>
+<li><a href="guide/directive">Directive</a> — 一个可扩展已有DOM元素或者代表可重复使用的DOM组件，用扩展属性(或者元素)标记.</li>
+<li><a href="api/ng.$interpolate"><code>Markup</code></a> — 用双括弧 <code>{{ }}</code> 给元素绑定表达式.</li>
+<li><a href="guide/filter">Filter</a> — 格式化数据显示在界面上.</li>
+<li><a href="guide/forms">Form controls</a> — 验证用户输入.</li>
 </ul>
-<p>Note:  In addition to declaring the elements above in templates, you can also access these elements
-in JavaScript code.</p>
-<p>The following code snippet shows a simple Angular template made up of standard HTML tags along with
-Angular <a href="guide/directive">directives</a> and curly-brace bindings
-with <a href="guide/expression">expressions</a>:</p>
-<prev>
-<html ng-app>
- <!-- Body tag augmented with ngController directive  -->
- <body ng-controller="MyController">
-   <input ng-model="foo" value="bar">
-   <!-- Button tag with ng-click directive, and
+<p>注: 除了在模板中声明元素外, 你也可以在Javascript代码中访问这些元素.</p>
+<p>下面的代码片段展示了一个简单的Angular模板，主要由带有指令(<a href="guide/directive">directives</a>)的HTML标准标签和双花括弧表达式（<a href="guide/expression">expressions</a>）组成:</p>
+<pre class="prettyprint linenums">
+&lt;html ng-app&gt;
+ &lt;!-- Body tag augmented with ngController directive  --&gt;
+ &lt;body ng-controller="MyController"&gt;
+   &lt;input ng-model="foo" value="bar"&gt;
+   &lt;!-- Button tag with ng-click directive, and
           string expression 'buttonText'
-          wrapped in "{{ }}" markup -->
-   <button ng-click="changeFoo()">{{buttonText}}</button>
-   <script src="angular.js">
- </body>
-</html>
-</prev>
-
-<p>In a simple single-page app, the template consists of HTML, CSS, and angular directives contained
-in just one HTML file (usually <code>index.html</code>). In a more complex app, you can display multiple views
-within one main page using &quot;partials&quot;, which are segments of template located in separate HTML
-files.  You &quot;include&quot; the partials in the main page using the <a href="api/ngRoute.$route">$route</a> service in conjunction with the <a href="api/ngRoute.directive:ngView">ngView</a> directive. An
-example of this technique is shown in the <a href="tutorial/index">angular tutorial</a>, in steps seven and
-eight.</p>
-<h3 id="related-topics">Related Topics</h3>
+          wrapped in "{{ }}" markup --&gt;
+   &lt;button ng-click="changeFoo()"&gt;{{buttonText}}&lt;/button&gt;
+   &lt;script src="angular.js"&gt;
+ &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>在一个简单的单页程序中，模板包含HTML，CSS和Angular指令，通常只是一个HTML文件(如 <code>index.html</code>)，
+在一个更复杂的程序中，你可以在一个主要的页面用&quot;partials&quot;展示多个视图，这些 &quot;partials&quot;都是独立的HTML文件，在主页面可以包含（ &quot;include&quot; ）
+这些&quot;partials&quot;页面通过路由 <a href="api/ngRoute.$route">$route</a> 和 <a href="api/ngRoute.directive:ngView">ngView</a>指令结合
+相关的示例代码参考 <a href="tutorial/index">angular tutorial</a> 中的第七八步骤</p>
+<h3 id="相关主题">相关主题</h3>
 <ul>
-<li><a href="guide/filter">Angular Filters</a></li>
-<li><a href="guide/forms">Angular Forms</a></li>
+<li><a href="guide/filter">Angular Filters(过滤器)</a></li>
+<li><a href="guide/forms">Angular Forms(表单)</a></li>
 </ul>
-<h3 id="related-api">Related API</h3>
+<h3 id="相关的-api">相关的 API</h3>
 <ul>
-<li><a href="api/index">API Reference</a></li>
+<li><a href="api/index">API Reference(引用)</a></li>
 </ul>
 </div></div>
