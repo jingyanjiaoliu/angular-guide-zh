@@ -2,7 +2,8 @@
 <div><span class="hint"></span>
 </div>
 </h1>
-<div><div class="developer-guide-page developer-guide-scopes-page"><h3 id="何为scopes">何为Scopes</h3>
+<div><div class="developer-guide-page developer-guide-scopes-page"><p>Translated by <a href="https://github.com/grahamle">@GrahamLe</a></p>
+<h3 id="何为scopes">何为Scopes</h3>
 <p><a href="api/ng.$rootScope.Scope"><code>scope</code></a> 
 - 是一个存储应用数据模型的对象
 - 为 <a href="guide/expression">expressions</a> 提供了一个执行上下文
@@ -29,10 +30,10 @@
 </ul>
 <p>让我们来看下面一个例子，可以说明 scope 作为视图与控制器的黏合剂：</p>
 <h3 id="source">Source</h3>
-<div source-edit="" source-edit-deps="angular.js script.js" source-edit-html="index.html-267" source-edit-css="" source-edit-js="script.js-266" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="" source-edit-deps="angular.js script.js" source-edit-html="index.html-94" source-edit-css="" source-edit-js="script.js-93" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-267" ng-html-wrap=" angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-267">
+<pre class="prettyprint linenums" ng-set-text="index.html-94" ng-html-wrap=" angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-94">
     <div ng-controller="MyController">
       Your name:
         <input type="text" ng-model="username">
@@ -43,8 +44,8 @@
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-266"></pre>
-<script type="text/ng-template" id="script.js-266">
+<pre class="prettyprint linenums" ng-set-text="script.js-93"></pre>
+<script type="text/ng-template" id="script.js-93">
     function MyController($scope) {
       $scope.username = 'World';
 
@@ -55,7 +56,7 @@
   </script>
 </div>
 </div><h3 id="demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-267" ng-eval-javascript="script.js-266"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-94" ng-eval-javascript="script.js-93"></div>
 <p>在上面这个例子中，我们有：</p>
 <ul>
 <li>控制器：<code>MyController</code>，它引用了 <code>$scope</code> 并在其上注册了两个属性和一个方法</li>
@@ -111,23 +112,19 @@
   });
 </pre>
 <h3 id="scope分层结构">Scope分层结构</h3>
-<p>Each Angular application has exactly one <a href="api/ng.$rootScope"><code>root scope</code></a>, but
-may have several child scopes.</p>
-<p>The application can have multiple scopes, because some <a href="guide/directive">directives</a> create
-new child scopes (refer to directive documentation to see which directives create new scopes).
-When new scopes are created, they are added as children of their parent scope. This creates a tree
-structure which parallels the DOM where they&#39;re attached</p>
-<p>When Angular evaluates <code>{{name}}</code>, it first looks at the scope associated with the given
-element for the <code>name</code> property. If no such property is found, it searches the parent scope
-and so on until the root scope is reached. In JavaScript this behavior is known as prototypical
-inheritance, and child scopes prototypically inherit from their parents.</p>
-<p>This example illustrates scopes in application, and prototypical inheritance of properties. The example is followed by
-a diagram depicting the scope boundaries.</p>
+<p>如上所说，scope 的结构对应于DOM结构，那么最顶层，和DOM树有根节点一样，每个 ng 应用有且仅有一个 <a href="api/ng.$rootScope"><code>root scope</code></a>，当然啦，子级 scope 就和DOM树的子节点一样，可以有多个的。</p>
+<p>应用可以拥有多个 scope ，比如 <a href="guide/directive">directives</a> 会创建子级 scope （至于指令创建的 scope 是有多种类型的，详情参加指令相关文档）。一般情况下，当新的 scope 被创建时，它是以嵌入在父级 scope 的子级的形式被创建的，这样就形成了与其所关联的DOM树相对应的一个 scope 的树结构。（译者注：scope 的层级继承是基于原型链的继承，所以在下面的例子中会看到，读属性时会一直往上溯源，直到有未知）</p>
+<p>scope 的分层的一个简单例子是，假设现在HTML视图中有一个表达式 <code>{{name}}</code> ，正如上面解释过，ng 需要经历取值和计算两个阶段才能最终在视图渲染结果。那么这个取值的阶段，其实就是根据 scope 的这个层级结构（或树状结构）来进行的。</p>
+<ul>
+<li>首先，ng 在该表达式当前所在的DOM节点所对应的 scope 中去找有没有 <code>name</code> 这个属性</li>
+<li>如果有，ng 返回取值，计算渲染；如果在当前 scope 中没有找到，那么 ng 继续往上一层的父级 scope 中去找 <code>name</code> 属性，直到找到为止，最后实在没有，那就到达 <code>$rootScope</code> 了</li>
+</ul>
+<p>上面一个简单的例子展示了在 scope 分层结构中找属性，是基于原型继承的模式。接下来这个demo用一个图具体展示了 scope 的层级结构，让你可以有更直观的了解。</p>
 <h3 id="source">Source</h3>
-<div source-edit="" source-edit-deps="angular.js script.js" source-edit-html="index.html-268" source-edit-css="style.css-270" source-edit-js="script.js-269" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="" source-edit-deps="angular.js script.js" source-edit-html="index.html-95" source-edit-css="style.css-97" source-edit-js="script.js-96" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-268" ng-html-wrap=" angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-268">
+<pre class="prettyprint linenums" ng-set-text="index.html-95" ng-html-wrap=" angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-95">
   <div class="show-scope-demo">
     <div ng-controller="GreetCtrl">
       Hello {{name}}!
@@ -141,8 +138,8 @@ a diagram depicting the scope boundaries.</p>
   </script>
 </div>
 <div class="tab-pane" title="style.css">
-<pre class="prettyprint linenums" ng-set-text="style.css-270"></pre>
-<style type="text/css" id="style.css-270">
+<pre class="prettyprint linenums" ng-set-text="style.css-97"></pre>
+<style type="text/css" id="style.css-97">
     .show-scope-demo.ng-scope,
     .show-scope-demo .ng-scope  {
       border: 1px solid red;
@@ -151,8 +148,8 @@ a diagram depicting the scope boundaries.</p>
   </style>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-269"></pre>
-<script type="text/ng-template" id="script.js-269">
+<pre class="prettyprint linenums" ng-set-text="script.js-96"></pre>
+<script type="text/ng-template" id="script.js-96">
     function GreetCtrl($scope, $rootScope) {
       $scope.name = 'World';
       $rootScope.department = 'Angular';
@@ -164,39 +161,33 @@ a diagram depicting the scope boundaries.</p>
   </script>
 </div>
 </div><h3 id="demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-268" ng-eval-javascript="script.js-269"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-95" ng-eval-javascript="script.js-96"></div>
 <p><img class="center" src="img/guide/concepts-scope.png"></p>
-<p>Notice that Angular automatically places <code>ng-scope</code> class on elements where scopes are
-attached. The <code>&lt;style&gt;</code> definition in this example highlights in red the new scope locations. The
-child scopes are necessary because the repeater evaluates <code>{{name}}</code> expression, but
-depending on which scope the expression is evaluated it produces different result. Similarly the
-evaluation of <code>{{department}}</code> prototypically inherits from root scope, as it is the only place
-where the <code>department</code> property is defined.</p>
+<p>看到上面的框中，注意，ng 会自动为每个拥有 scope 的DOM节点加上 <code>ng-scope</code> 类。上图中，拥有红色边框样式的节点，就意味着该节点拥有了自己的 scope ，无论它是通过什么方式创建的（<em>译者注：上面可以看到有通过控制器创建的新的 scope ，也有通过指令如 <code>ng-repeat</code> 创建的</em>）。上例中，<code>ng-repeat</code> 创建的子级 scope 是极其必要的，因为每个 <code>&lt;li&gt;</code> 中想要渲染输出的 <code>{{name}}</code> 显然是不同的值，那就需要为它们提供不同的 scope 。同样的，ng 在渲染 <code>{{department}}</code> 表达式时，先在当前和 <code>&lt;li&gt;</code> 相对应的 scope 去找有没有这个属性，如果没有，接着往上找，在这个例子中，直到找到 <code>$rootScope</code> 下时，才找到 <code>department</code> 属性，然后将其取回，计算，渲染输出。</p>
 <h3 id="从dom中抓取scopes">从DOM中抓取Scopes</h3>
-<p>Scopes are attached to the DOM as <code>$scope</code> data property, and can be retrieved for debugging
-purposes. (It is unlikely that one would need to retrieve scopes in this way inside the
-application.) The location where the root scope is attached to the DOM is defined by the location
-of <a href="api/ng.directive:ngApp"><code><code>ng-app</code></code></a> directive. Typically
-<code>ng-app</code> is placed on the <code>&lt;html&gt;</code> element, but it can be placed on other elements as well, if,
-for example, only a portion of the view needs to be controlled by Angular.</p>
-<p>To examine the scope in the debugger:</p>
+<p>Scope 对象是与指令或控制器等 ng 元素所在的DOM节点相关联的，也就是说，其实DOM节点上是可以抓取到 scope 这个对象的（当然，为了调试偶尔会用，一般不用）。
+而对于 <code>$rootScope</code> 在哪里抓呢？它藏在 <code>ng-app</code> 指令所在的那个DOM节点之中，请看更多关于 <a href="api/ng.directive:ngApp"><code><code>ng-app</code></code></a> 指令。通常，<code>ng-app</code> 放在 <code>&lt;html&gt;</code> 标签中, 当然，如果你的应用中只是视图的某一部分想要用 ng 控制，那你可以把它放在想要控制的元素的最外层。</p>
+<p>那来看看如何在调试的时候抓取 scope 吧： </p>
 <ol>
-<li><p>right click on the element of interest in your browser and select &#39;inspect element&#39;. You
-should see the browser debugger with the element you clicked on highlighted.</p>
+<li><p>右键选去你想审查的元素，调出debugger，通常F12即可，这样你选中的元素会高亮显示（<em>译者注：感觉文档如果都看到这的人了，会需要这句提示么？原文档这是在卖萌么</em>）</p>
 </li>
-<li><p>The debugger allows you to access the currently selected element in the console as <code>$0</code>
-variable.</p>
+<li><p>此时，调试器（debugger）允许你用变量 <code>$0</code> 来获取当前选取的元素</p>
 </li>
-<li><p>To retrieve the associated scope in console execute: <code>angular.element($0).scope()</code> or just type $scope</p>
+<li><p>在console中执行 <code>angular.element($0).scope()</code> 或直接输入 $scope 即可看到你想要查询的当前DOM元素节点绑定的 scope 了</p>
 </li>
 </ol>
 <h3 id="基于scope的事件传播">基于Scope的事件传播</h3>
-<p>Scopes can propagate events in similar fashion to DOM events. The event can be <a href="api/ng.$rootScope.Scope#methods_$broadcast"><code>broadcasted</code></a> to the scope children or <a href="api/ng.$rootScope.Scope#methods_$emit"><code>emitted</code></a> to scope parents.</p>
+<p>Scope 可以像DOM节点一样，进行事件的传播。主要是有两个方法：</p>
+<ul>
+<li><a href="api/ng.$rootScope.Scope#methods_$broadcast"><code>broadcasted</code></a> ：从父级 scope 广播至子级 scope</li>
+<li><a href="api/ng.$rootScope.Scope#methods_$emit"><code>emitted</code></a> ：从子级 scope 往上发射到父级 scope </li>
+</ul>
+<p>让我们来看个例子：</p>
 <h3 id="source">Source</h3>
-<div source-edit="" source-edit-deps="angular.js script.js" source-edit-html="index.html-272" source-edit-css="" source-edit-js="script.js-271" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="" source-edit-deps="angular.js script.js" source-edit-html="index.html-99" source-edit-css="" source-edit-js="script.js-98" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-272" ng-html-wrap=" angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-272">
+<pre class="prettyprint linenums" ng-set-text="index.html-99" ng-html-wrap=" angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-99">
     <div ng-controller="EventController">
       Root scope <tt>MyEvent</tt> count: {{count}}
       <ul>
@@ -216,8 +207,8 @@ variable.</p>
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-271"></pre>
-<script type="text/ng-template" id="script.js-271">
+<pre class="prettyprint linenums" ng-set-text="script.js-98"></pre>
+<script type="text/ng-template" id="script.js-98">
     function EventController($scope) {
       $scope.count = 0;
       $scope.$on('MyEvent', function() {
@@ -227,17 +218,17 @@ variable.</p>
   </script>
 </div>
 </div><h3 id="demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-272" ng-eval-javascript="script.js-271"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-99" ng-eval-javascript="script.js-98"></div>
+<p>译者注：上面例子很简单，有几个需要注意的是：</p>
+<ul>
+<li><code>$emit</code> 和 <code>$broadcast</code> 是直接被写在 html 模版中的，而不是写在控制器的 js 代码中，因为这两个方法是直接在 $scope 中就有的，</li>
+<li>同一个控制器 <code>EventController</code> 被用在了三个不同的DOM节点中（<em>这是为了省事，通常不这样写的</em>）</li>
+<li>上面的事件无非就是点击两个按钮，分别出发广播/冒泡（发射）事件，然后在各节点设置监听，这里只要用 <code>$scope.$on()</code> 方法（注：如果在指令中，可能就是 <code>scope.$on()</code>），就可以进行监听了</li>
+</ul>
 <h3 id="scope轮循（生命周期）">Scope轮循（生命周期）</h3>
-<p>The normal flow of a browser receiving an event is that it executes a corresponding JavaScript
-callback. Once the callback completes the browser re-renders the DOM and returns to waiting for
-more events.</p>
-<p>When the browser calls into JavaScript the code executes outside the Angular execution context,
-which means that Angular is unaware of model modifications. To properly process model
-modifications the execution has to enter the Angular execution context using the <a href="api/ng.$rootScope.Scope#methods_$apply"><code><code>$apply</code></code></a> method. Only model modifications which
-execute inside the <code>$apply</code> method will be properly accounted for by Angular. For example if a
-directive listens on DOM events, such as <a href="api/ng.directive:ngClick"><code><code>ng-click</code></code></a> it must evaluate the
-expression inside the <code>$apply</code> method.</p>
+<p>浏览器接收一个事件的标准的工作流程应该是：</p>
+<pre><code>接收事件 --&gt; 触发回调 --&gt; 回调执行结束返回 --&gt; 浏览器重绘DOM --&gt; 浏览器返回等待下一个事件</code></pre>
+<p>上面的过程中，如果一切都发生在 ng 的执行上下文的话，那相安无事，ng 能够知道数据模型发生的改变；但是如果当浏览器的控制权跑到原生的 Js 中去时（译者注：比如回调是用jQuery做的之类的非 ng 的操作等），那么应用执行的上下文就发生在 ng 的上下文之外了，这样就导致 ng 无法知晓数据模型的任何改变。想要让 ng <em>重新掌权并知晓正在发生的数据模型的变化</em>的话，那就需要通过使用 <a href="api/ng.$rootScope.Scope#methods_$apply"><code><code>$apply</code></code></a> 方法让上下文执行环境重新进入到 ng 的上下文中（<em>注：用法 <code>$scope.$apply()</code></em>）。只有执行上下文重新回到 ng 中，那样数据模型的改变才能被 ng 所识别并作出相应操作（注：当然，如果执行上下文没有发生改变，也就没有必要显示地去进行 $apply 操作）。举个例子，像 <a href="api/ng.directive:ngClick"><code><code>ng-click</code></code></a> 这个指令，监听DOM事件时，表达式的计算就必须放在 <code>$apply()</code> 中（注：例子不够完备，待补充）。</p>
 <p>After evaluating the expression, the <code>$apply</code> method performs a <a href="api/ng.$rootScope.Scope#methods_$digest"><code><code>$digest</code></code></a>. In the $digest phase the scope examines all
 of the <code>$watch</code> expressions and compares them with the previous value. This dirty checking is done
 asynchronously. This means that assignment such as <code>$scope.username=&quot;angular&quot;</code> will not
