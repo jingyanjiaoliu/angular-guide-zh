@@ -2,14 +2,23 @@
 @name Developer Guide
 @description
 
-# Guide to AngularJS Documentation
+# 关于Angular Guide翻译的说明
 
-Everything you need to know about AngularJS
+一次偶然的机会，我们在Angular.js中文社区群里相遇，更是一次巧妙的交谈，大家对于Angular官方的Guide最新版本没有中文版本表示无助，
+所以，我们临时组织要为社区做一下贡献，所以Angular Guide翻译团队诞生了。
+我们是一群技术的热爱着，更是一群Angular的使用者，但是我们的翻译不代表官方，如有任何问题随时联系我们。
 
-* {@link guide/introduction What is AngularJS?}
-* {@link guide/concepts Conceptual Overview}
+目前参加翻译工作的人员有9位，分别是：
+ckken，grahamle，NigelYao，asnowwolf，lightma，joeylin，FrankyYang，lrrluo， why520crazy
 
-## Tutorials
+# AngularJS 文档指南
+
+你需要知道AngularJS的事
+
+* {@link guide/introduction What is AngularJS(什么是AngularJS)?}
+* {@link guide/concepts Conceptual Overview(概述)}
+
+## 教程
 
 * {@link tutorial/index Official AngularJS Tutorial}
 * [10 Reasons Why You Should Use AngularJS](http://www.sitepoint.com/10-reasons-use-angularjs/)
@@ -17,9 +26,9 @@ Everything you need to know about AngularJS
 * [Fundamentals in 60 Minutes (video)](http://www.youtube.com/watch?v=i9MHigUZKEM)
 * [For folks with jQuery background](http://stackoverflow.com/questions/14994391/how-do-i-think-in-angularjs-if-i-have-a-jquery-background)
 
-## Core Concepts
+## 核心概念
 
-### Templates
+### 模板
 
 In Angular applications, you move the job of filling page templates with data from the server to the client.  The result is a system better structured for dynamic page updates.  Below are the core features you'll use.
 
@@ -30,26 +39,26 @@ In Angular applications, you move the job of filling page templates with data fr
 * {@link guide/filter Filters}
 * {@link guide/forms Forms} and [Concepts of AngularJS Forms](http://mrbool.com/the-concepts-of-angularjs-forms/29117)
 
-### Application Structure
+### 程序结构
 
 * **Blog post: **[When to use directives, controllers or services](http://kirkbushell.me/when-to-use-directives-controllers-or-services-in-angular/)
 * **App wiring:** {@link guide/di Dependency injection}
 * **Exposing model to templates:** {@link guide/scope Scopes}
 * **Communicating with servers:** {@link api/ng.$http $http}, {@link api/ngResource.$resource $resource}
 
-### Other AngularJS Features
+### 其他 AngularJS 功能
 
 * **Animation:** {@link guide/animations Core concepts}, {@link api/ngAnimate ngAnimate API}, and [Animation in AngularJS 1.2](http://www.yearofmoo.com/2013/08/remastered-animation-in-angularjs-1-2.html)
 * **Security:** {@link api/ng.$sce Strict Contextual Escaping}, {@link api/ng.directive:ngCsp Content Security Policy}, {@link api/ngSanitize.$sanitize $sanitize}, [video](https://www.youtube.com/watch?v=18ifoT-Id54)
 * **Internationalization and Localization:** {@link guide/i18n Angular Guide to i18n and l10n}, {@link api/ng.filter:date date filter}, {@link api/ng.filter:currency currency filter}, [Creating multilingual support](http://www.novanet.no/blog/hallstein-brotan/dates/2013/10/creating-multilingual-support-using-angularjs/)
 * **Mobile:** {@link api/ngTouch Touch events}
 
-### Testing
+### 测试
 
 * **Unit testing:** [Using Karma (video)](http://www.youtube.com/watch?v=YG5DEzaQBIc), {@link guide/dev_guide.unit-testing Unit testing}, {@link guide/dev_guide.services.testing_services Testing services}, [Karma in Webstorm](http://blog.jetbrains.com/webstorm/2013/10/running-javascript-tests-with-karma-in-webstorm-7/)
 * **Scenario testing:** [Protractor](https://github.com/angular/protractor)
 
-## Specific Topics
+## 具体的主题
 
 * **Login: **[Google example](https://developers.google.com/+/photohunt/python), [Facebook example](http://blog.brunoscopelliti.com/facebook-authentication-in-your-angularjs-web-app), [authentication strategy](http://blog.brunoscopelliti.com/deal-with-users-authentication-in-an-angularjs-web-app), [unix-style authorization](http://frederiknakstad.com/authentication-in-single-page-applications-with-angular-js/)
 * **Mobile:** [Angular on Mobile Guide](http://www.ng-newsletter.com/posts/angular-on-mobile.html), [PhoneGap](http://devgirl.org/2013/06/10/quick-start-guide-phonegap-and-angularjs/)
@@ -57,14 +66,14 @@ In Angular applications, you move the job of filling page templates with data fr
 * **Realtime: **[Socket.io](http://www.creativebloq.com/javascript/angularjs-collaboration-board-socketio-2132885), [OmniBinder](https://github.com/jeffbcross/omnibinder)
 * **Visualization:** [SVG](http://gaslight.co/blog/angular-backed-svgs), [D3.js](http://www.ng-newsletter.com/posts/d3-on-angular.html)
 
-## Tools
+## 工具
 
 * **Debugging:** [Batarang](https://chrome.google.com/webstore/detail/angularjs-batarang/ighdmehidhipcmcojjgiloacoafjmpfk?hl=en)
 * **Testing:** [Karma](http://karma-runner.github.io), [Protractor](https://github.com/angular/protractor)
 * **Editor support:** [Webstorm](http://plugins.jetbrains.com/plugin/6971) (and [video](http://www.youtube.com/watch?v=LJOyrSh1kDU)), [Sublime Text](https://github.com/angular-ui/AngularJS-sublime-package), [Visual Studio](http://madskristensen.net/post/angularjs-intellisense-in-visual-studio-2012)
 * **Workflow:** [Yeoman.io](https://github.com/yeoman/generator-angular) and [Angular Yeoman Tutorial](http://www.sitepoint.com/kickstart-your-angularjs-development-with-yeoman-grunt-and-bower/)
 
-## Complementary Libraries
+## 补充 类库
 
 This is a short list of libraries with specific support and documentation for working with Angular.  You can find a full list of all known Angular external libraries at [ngmodules.org](http://ngmodules.org/).
 
@@ -73,15 +82,15 @@ This is a short list of libraries with specific support and documentation for wo
 * **SQL and NoSQL backends:** [BreezeJS](http://www.breezejs.com/), [AngularFire](http://angularfire.com/)
 * **UI Widgets: **[KendoUI](http://kendo-labs.github.io/angular-kendo/#/), [UI Bootstrap](http://angular-ui.github.io/bootstrap/), [Wijmo](http://wijmo.com/tag/angularjs-2/)
 
-## Deployment
+## 部署
 
-### General
+### 概括
 
 * **Javascript minification: **[Background](http://thegreenpizza.github.io/2013/05/25/building-minification-safe-angular.js-applications/), [ngmin automation tool](http://www.thinkster.io/pick/XlWneEZCqY/angularjs-ngmin)
 * **Tracking:** [Angularyitcs (Google Analytics)](http://ngmodules.org/modules/angularytics), [Logging Client-Side Errors](http://www.bennadel.com/blog/2542-Logging-Client-Side-Errors-With-AngularJS-And-Stacktrace-js.htm)
 * **SEO:** [By hand](http://www.yearofmoo.com/2012/11/angularjs-and-seo.html), [prerender.io](http://prerender.io/), [Brombone](http://www.brombone.com/), [SEO.js](http://getseojs.com/), [SEO4Ajax](http://www.seo4ajax.com/)
 
-### Server-Specific
+### 服务-指定
 
 * **Django:** [Tutorial](http://blog.mourafiq.com/post/55034504632/end-to-end-web-app-with-django-rest-framework), [Integrating AngularJS with Django](http://django-angular.readthedocs.org/en/latest/integration.html)
 * **FireBase:** [AngularFire](http://angularfire.com/), [Realtime Apps with AngularJS and FireBase (video)](http://www.youtube.com/watch?v=C7ZI7z7qnHU)
@@ -91,7 +100,7 @@ This is a short list of libraries with specific support and documentation for wo
 * **Rails: **[Tutorial](http://coderberry.me/blog/2013/04/22/angularjs-on-rails-4-part-1/), [AngularJS with Rails4](https://shellycloud.com/blog/2013/10/how-to-integrate-angularjs-with-rails-4), [angularjs-rails](https://github.com/hiravgandhi/angularjs-rails)
 * **PHP: **[Building a RESTful web service](http://blog.brunoscopelliti.com/building-a-restful-web-service-with-angularjs-and-php-more-power-with-resource), [End to End with Laravel 4 (video)](http://www.youtube.com/watch?v=hqAyiqUs93c)
 
-## Learning Resources
+## 学习资源
 
 ###Books
 * [AngularJS](http://www.amazon.com/AngularJS-Brad-Green/dp/1449344852) by Brad Green and Shyam Seshadri
@@ -101,11 +110,11 @@ This is a short list of libraries with specific support and documentation for wo
 * [Developing an AngularJS Edge](http://www.amazon.com/Developing-AngularJS-Edge-Christopher-Hiller-ebook/dp/B00CJLFF8K) by Christopher Hiller
 * [ng-book: The Complete Book on AngularJS](http://ng-book.com/) by Ari Lerner
 
-###Videos:
+###视频:
 * [egghead.io](http://egghead.io/)
 * [Angular on YouTube](http://youtube.com/angularjs)
 
-### Courses
+### 课程
 * **Free online:**
   [thinkster.io](http://thinkster.io),
   [CodeAcademy](http://www.codecademy.com/courses/javascript-advanced-en-2hJ3J/0/1)
@@ -116,7 +125,7 @@ This is a short list of libraries with specific support and documentation for wo
 * **Paid onsite:**
   [angularbootcamp.com](http://angularbootcamp.com/)
 
-## Getting Help
+## 帮助
 
 The recipe for getting help on your unique issue is to create an example that could work (even if it doesn't) in a shareable example on [Plunker](http://plnkr.co/), [JSFiddle](http://jsfiddle.net/), or similar site and then post to one of the following:
 

@@ -50,10 +50,10 @@ attributes on DOM elements (e.g. <code>ng-model</code>).</p>
 </ol>
 <p>Here are some equivalent examples of elements that match <code>ngBind</code>:</p>
 <h3 id="creating-custom-directives_source">Source</h3>
-<div source-edit="docsBindExample" source-edit-deps="angular.js script.js" source-edit-html="index.html-214" source-edit-css="" source-edit-js="script.js-213" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-215"></div>
+<div source-edit="docsBindExample" source-edit-deps="angular.js script.js" source-edit-html="index.html-41" source-edit-css="" source-edit-js="script.js-40" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-42"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-214" ng-html-wrap="docsBindExample angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-214">
+<pre class="prettyprint linenums" ng-set-text="index.html-41" ng-html-wrap="docsBindExample angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-41">
     <div ng-controller="Ctrl1">
       Hello <input ng-model='name'> <hr/>
       <span ng-bind="name"></span> <br/>
@@ -65,8 +65,8 @@ attributes on DOM elements (e.g. <code>ng-model</code>).</p>
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-213"></pre>
-<script type="text/ng-template" id="script.js-213">
+<pre class="prettyprint linenums" ng-set-text="script.js-40"></pre>
+<script type="text/ng-template" id="script.js-40">
     angular.module('docsBindExample', [])
       .controller('Ctrl1', function Ctrl1($scope) {
         $scope.name = 'Max Karl Ernst Ludwig Planck (April 23, 1858 – October 4, 1947)';
@@ -74,8 +74,8 @@ attributes on DOM elements (e.g. <code>ng-model</code>).</p>
   </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-215"></pre>
-<script type="text/ng-template" id="scenario.js-215">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-42"></pre>
+<script type="text/ng-template" id="scenario.js-42">
     it('should show off bindings', function() {
       expect(element('div[ng-controller="Ctrl1"] span[ng-bind]').text())
         .toBe('Max Karl Ernst Ludwig Planck (April 23, 1858 – October 4, 1947)');
@@ -83,7 +83,7 @@ attributes on DOM elements (e.g. <code>ng-model</code>).</p>
   </script>
 </div>
 </div><h3 id="creating-custom-directives_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="docsBindExample" ng-set-html="index.html-214" ng-eval-javascript="script.js-213"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="docsBindExample" ng-set-html="index.html-41" ng-eval-javascript="script.js-40"></div>
 <div class="alert alert-success">
 <strong>Best Practice:</strong> Prefer using the dash-delimited format (e.g. <code>ng-bind</code> for <code>ngBind</code>).
 If you want to use an HTML validating tool, you can instead use the <code>data</code>-prefixed version (e.g.
@@ -173,18 +173,18 @@ is repeated many times in your code. When you change it in one place, you have t
 several others. This is a good opportunity to use a directive to simplify your template.</p>
 <p>Let&#39;s create a directive that simply replaces its contents with a static template:</p>
 <h3 id="creating-custom-directives_source">Source</h3>
-<div source-edit="docsSimpleDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-217" source-edit-css="" source-edit-js="script.js-216" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="docsSimpleDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-44" source-edit-css="" source-edit-js="script.js-43" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-217" ng-html-wrap="docsSimpleDirective angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-217">
+<pre class="prettyprint linenums" ng-set-text="index.html-44" ng-html-wrap="docsSimpleDirective angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-44">
     <div ng-controller="Ctrl">
       <div my-customer></div>
     </div>
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-216"></pre>
-<script type="text/ng-template" id="script.js-216">
+<pre class="prettyprint linenums" ng-set-text="script.js-43"></pre>
+<script type="text/ng-template" id="script.js-43">
     angular.module('docsSimpleDirective', [])
       .controller('Ctrl', function($scope) {
         $scope.customer = {
@@ -200,7 +200,7 @@ several others. This is a good opportunity to use a directive to simplify your t
   </script>
 </div>
 </div><h3 id="creating-custom-directives_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="docsSimpleDirective" ng-set-html="index.html-217" ng-eval-javascript="script.js-216"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="docsSimpleDirective" ng-set-html="index.html-44" ng-eval-javascript="script.js-43"></div>
 <p>Notice that we have bindings in this directive. After <code>$compile</code> compiles and links
 <code>&lt;div my-customer&gt;
 &lt;/div&gt;</code>, it will try to match directives on the element&#39;s children. This means you
@@ -217,10 +217,10 @@ its own HTML file and load it with the <code>templateUrl</code> option.
 <p>If you are familiar with <code>ngInclude</code>, <code>templateUrl</code> works just like it. Here&#39;s the same example
 using <code>templateUrl</code> instead:</p>
 <h3 id="creating-custom-directives_source">Source</h3>
-<div source-edit="docsTemplateUrlDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-219 my-customer.html" source-edit-css="" source-edit-js="script.js-218" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="docsTemplateUrlDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-46 my-customer.html" source-edit-css="" source-edit-js="script.js-45" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-219" ng-html-wrap="docsTemplateUrlDirective angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-219">
+<pre class="prettyprint linenums" ng-set-text="index.html-46" ng-html-wrap="docsTemplateUrlDirective angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-46">
     <div ng-controller="Ctrl">
       <div my-customer></div>
     </div>
@@ -233,8 +233,8 @@ using <code>templateUrl</code> instead:</p>
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-218"></pre>
-<script type="text/ng-template" id="script.js-218">
+<pre class="prettyprint linenums" ng-set-text="script.js-45"></pre>
+<script type="text/ng-template" id="script.js-45">
     angular.module('docsTemplateUrlDirective', [])
       .controller('Ctrl', function($scope) {
         $scope.customer = {
@@ -250,7 +250,7 @@ using <code>templateUrl</code> instead:</p>
   </script>
 </div>
 </div><h3 id="creating-custom-directives_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="docsTemplateUrlDirective" ng-set-html="index.html-219" ng-eval-javascript="script.js-218"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="docsTemplateUrlDirective" ng-set-html="index.html-46" ng-eval-javascript="script.js-45"></div>
 <p>Great! But what if we wanted to have our directive match the tag name <code>&lt;my-customer&gt;</code> instead?
 If we simply put a <code>&lt;my-customer&gt;</code> element into the HMTL, it doesn&#39;t work.</p>
 <div class="alert alert-waring">
@@ -266,10 +266,10 @@ create directives that are triggered by element name, you need to use the <code>
 </ul>
 <p>Let&#39;s change our directive to use <code>restrict: &#39;E&#39;</code>:</p>
 <h3 id="creating-custom-directives_source">Source</h3>
-<div source-edit="docsRestrictDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-221 my-customer.html" source-edit-css="" source-edit-js="script.js-220" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="docsRestrictDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-48 my-customer.html" source-edit-css="" source-edit-js="script.js-47" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-221" ng-html-wrap="docsRestrictDirective angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-221">
+<pre class="prettyprint linenums" ng-set-text="index.html-48" ng-html-wrap="docsRestrictDirective angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-48">
     <div ng-controller="Ctrl">
       <my-customer></my-customer>
     </div>
@@ -282,8 +282,8 @@ create directives that are triggered by element name, you need to use the <code>
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-220"></pre>
-<script type="text/ng-template" id="script.js-220">
+<pre class="prettyprint linenums" ng-set-text="script.js-47"></pre>
+<script type="text/ng-template" id="script.js-47">
     angular.module('docsRestrictDirective', [])
       .controller('Ctrl', function($scope) {
         $scope.customer = {
@@ -300,7 +300,7 @@ create directives that are triggered by element name, you need to use the <code>
   </script>
 </div>
 </div><h3 id="creating-custom-directives_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="docsRestrictDirective" ng-set-html="index.html-221" ng-eval-javascript="script.js-220"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="docsRestrictDirective" ng-set-html="index.html-48" ng-eval-javascript="script.js-47"></div>
 <p>For more on the
 <a href="api/ng.$compile#description_comprehensive-directive-api_directive-definition-object"><code><code>restrict</code></code></a>
 property, see the
@@ -323,10 +323,10 @@ given scope.</p>
 <p>In its current implementation, we&#39;d need to create a different controller each time In order to
 re-use such a directive:</p>
 <h3 id="creating-custom-directives_source">Source</h3>
-<div source-edit="docsScopeProblemExample" source-edit-deps="angular.js script.js" source-edit-html="index.html-223 my-customer.html" source-edit-css="" source-edit-js="script.js-222" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="docsScopeProblemExample" source-edit-deps="angular.js script.js" source-edit-html="index.html-50 my-customer.html" source-edit-css="" source-edit-js="script.js-49" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-223" ng-html-wrap="docsScopeProblemExample angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-223">
+<pre class="prettyprint linenums" ng-set-text="index.html-50" ng-html-wrap="docsScopeProblemExample angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-50">
     <div ng-controller="NaomiCtrl">
       <my-customer></my-customer>
     </div>
@@ -343,8 +343,8 @@ re-use such a directive:</p>
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-222"></pre>
-<script type="text/ng-template" id="script.js-222">
+<pre class="prettyprint linenums" ng-set-text="script.js-49"></pre>
+<script type="text/ng-template" id="script.js-49">
     angular.module('docsScopeProblemExample', [])
       .controller('NaomiCtrl', function($scope) {
         $scope.customer = {
@@ -367,16 +367,16 @@ re-use such a directive:</p>
   </script>
 </div>
 </div><h3 id="creating-custom-directives_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="docsScopeProblemExample" ng-set-html="index.html-223" ng-eval-javascript="script.js-222"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="docsScopeProblemExample" ng-set-html="index.html-50" ng-eval-javascript="script.js-49"></div>
 <p>This is clearly not a great solution.</p>
 <p>What we want to be able to do is separate the scope inside a directive from the scope
 outside, and then map the outer scope to a directive&#39;s inner scope. We can do this by creating what
 we call an <strong>isolate scope</strong>. To do this, we can use a directive&#39;s <code>scope</code> option:</p>
 <h3 id="creating-custom-directives_source">Source</h3>
-<div source-edit="docsIsolateScopeDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-225 my-customer-iso.html" source-edit-css="" source-edit-js="script.js-224" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="docsIsolateScopeDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-52 my-customer-iso.html" source-edit-css="" source-edit-js="script.js-51" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-225" ng-html-wrap="docsIsolateScopeDirective angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-225">
+<pre class="prettyprint linenums" ng-set-text="index.html-52" ng-html-wrap="docsIsolateScopeDirective angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-52">
     <div ng-controller="Ctrl">
       <my-customer info="naomi"></my-customer>
       <hr>
@@ -391,8 +391,8 @@ we call an <strong>isolate scope</strong>. To do this, we can use a directive&#3
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-224"></pre>
-<script type="text/ng-template" id="script.js-224">
+<pre class="prettyprint linenums" ng-set-text="script.js-51"></pre>
+<script type="text/ng-template" id="script.js-51">
     angular.module('docsIsolateScopeDirective', [])
       .controller('Ctrl', function($scope) {
         $scope.naomi = { name: 'Naomi', address: '1600 Amphitheatre' };
@@ -410,7 +410,7 @@ we call an <strong>isolate scope</strong>. To do this, we can use a directive&#3
   </script>
 </div>
 </div><h3 id="creating-custom-directives_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="docsIsolateScopeDirective" ng-set-html="index.html-225" ng-eval-javascript="script.js-224"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="docsIsolateScopeDirective" ng-set-html="index.html-52" ng-eval-javascript="script.js-51"></div>
 <p>Looking at <code>index.html</code>, the first <code>&lt;my-customer&gt;</code> element binds the <code>info</code> attribute to <code>naomi</code>,
 which we have exposed on our controller&#39;s scope. The second binds <code>info</code> to <code>igor</code>.</p>
 <p>Let&#39;s take a closer look at the scope option:</p>
@@ -445,10 +445,10 @@ scope has another effect.</p>
 <p>We can show this by adding another property, <code>vojta</code>, to our scope and trying to access it from
 within our directive&#39;s template:</p>
 <h3 id="creating-custom-directives_source">Source</h3>
-<div source-edit="docsIsolationExample" source-edit-deps="angular.js script.js" source-edit-html="index.html-227 my-customer-plus-vojta.html" source-edit-css="" source-edit-js="script.js-226" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="docsIsolationExample" source-edit-deps="angular.js script.js" source-edit-html="index.html-54 my-customer-plus-vojta.html" source-edit-css="" source-edit-js="script.js-53" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-227" ng-html-wrap="docsIsolationExample angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-227">
+<pre class="prettyprint linenums" ng-set-text="index.html-54" ng-html-wrap="docsIsolationExample angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-54">
     <div ng-controller="Ctrl">
       <my-customer info="naomi"></my-customer>
     </div>
@@ -463,8 +463,8 @@ within our directive&#39;s template:</p>
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-226"></pre>
-<script type="text/ng-template" id="script.js-226">
+<pre class="prettyprint linenums" ng-set-text="script.js-53"></pre>
+<script type="text/ng-template" id="script.js-53">
     angular.module('docsIsolationExample', [])
       .controller('Ctrl', function($scope) {
         $scope.naomi = { name: 'Naomi', address: '1600 Amphitheatre' };
@@ -483,7 +483,7 @@ within our directive&#39;s template:</p>
   </script>
 </div>
 </div><h3 id="creating-custom-directives_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="docsIsolationExample" ng-set-html="index.html-227" ng-eval-javascript="script.js-226"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="docsIsolationExample" ng-set-html="index.html-54" ng-eval-javascript="script.js-53"></div>
 <p>Notice that <code>{{vojta.name}}</code> and <code>{{vojta.address}}</code> are empty, meaning they are undefined.
 Although we defined <code>vojta</code> in the controller, it&#39;s not available within the directive.</p>
 <p>As the name suggests, the <strong>isolate scope</strong> of the directive isolates everything except models that
@@ -515,10 +515,10 @@ where:</p>
 changes the time formatting string that our directive binds to. We also want to remove the timeout
 if the directive is deleted so we don&#39;t introduce a memory leak.</p>
 <h3 id="creating-custom-directives_source">Source</h3>
-<div source-edit="docsTimeDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-229" source-edit-css="" source-edit-js="script.js-228" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="docsTimeDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-56" source-edit-css="" source-edit-js="script.js-55" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-229" ng-html-wrap="docsTimeDirective angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-229">
+<pre class="prettyprint linenums" ng-set-text="index.html-56" ng-html-wrap="docsTimeDirective angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-56">
     <div ng-controller="Ctrl2">
       Date format: <input ng-model="format"> <hr/>
       Current time is: <span my-current-time="format"></span>
@@ -526,8 +526,8 @@ if the directive is deleted so we don&#39;t introduce a memory leak.</p>
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-228"></pre>
-<script type="text/ng-template" id="script.js-228">
+<pre class="prettyprint linenums" ng-set-text="script.js-55"></pre>
+<script type="text/ng-template" id="script.js-55">
     angular.module('docsTimeDirective', [])
       .controller('Ctrl2', function($scope) {
         $scope.format = 'M/d/yy h:mm:ss a';
@@ -570,7 +570,7 @@ if the directive is deleted so we don&#39;t introduce a memory leak.</p>
   </script>
 </div>
 </div><h3 id="creating-custom-directives_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="docsTimeDirective" ng-set-html="index.html-229" ng-eval-javascript="script.js-228"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="docsTimeDirective" ng-set-html="index.html-56" ng-eval-javascript="script.js-55"></div>
 <p>There are a couple of things to note here.
 Just like the <code>module.controller</code> API, the function argument in <code>module.directive</code> is dependency
 injected. Because of this, we can use <code>$timeout</code> and <code>dateFilter</code> inside our directive&#39;s <code>link</code>
@@ -597,10 +597,10 @@ Let&#39;s say that we want to create a &quot;dialog box&quot; component. The dia
 wrap any arbitrary content.</p>
 <p>To do this, we need to use the <code>transclude</code> option.</p>
 <h3 id="creating-custom-directives_source">Source</h3>
-<div source-edit="docsTransclusionDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-231 my-dialog.html" source-edit-css="" source-edit-js="script.js-230" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="docsTransclusionDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-58 my-dialog.html" source-edit-css="" source-edit-js="script.js-57" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-231" ng-html-wrap="docsTransclusionDirective angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-231">
+<pre class="prettyprint linenums" ng-set-text="index.html-58" ng-html-wrap="docsTransclusionDirective angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-58">
     <div ng-controller="Ctrl">
       <my-dialog>Check out the contents, {{name}}!</my-dialog>
     </div>
@@ -614,8 +614,8 @@ wrap any arbitrary content.</p>
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-230"></pre>
-<script type="text/ng-template" id="script.js-230">
+<pre class="prettyprint linenums" ng-set-text="script.js-57"></pre>
+<script type="text/ng-template" id="script.js-57">
     angular.module('docsTransclusionDirective', [])
       .controller('Ctrl', function($scope) {
         $scope.name = 'Tobias';
@@ -630,16 +630,16 @@ wrap any arbitrary content.</p>
   </script>
 </div>
 </div><h3 id="creating-custom-directives_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="docsTransclusionDirective" ng-set-html="index.html-231" ng-eval-javascript="script.js-230"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="docsTransclusionDirective" ng-set-html="index.html-58" ng-eval-javascript="script.js-57"></div>
 <p>What does this <code>transclude</code> option do, exactly? <code>transclude</code> makes the contents of a directive with
 this option have access to the scope <strong>outside</strong> of the directive rather than inside.</p>
 <p>To illustrate this, see the example below. Notice that we&#39;ve added a <code>link</code> function in <code>script.js</code>
 that redefines <code>name</code> as <code>Jeff</code>. What do you think the <code>{{name}}</code> binding will resolve to now?</p>
 <h3 id="creating-custom-directives_source">Source</h3>
-<div source-edit="docsTransclusionExample" source-edit-deps="angular.js script.js" source-edit-html="index.html-233 my-dialog.html" source-edit-css="" source-edit-js="script.js-232" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="docsTransclusionExample" source-edit-deps="angular.js script.js" source-edit-html="index.html-60 my-dialog.html" source-edit-css="" source-edit-js="script.js-59" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-233" ng-html-wrap="docsTransclusionExample angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-233">
+<pre class="prettyprint linenums" ng-set-text="index.html-60" ng-html-wrap="docsTransclusionExample angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-60">
     <div ng-controller="Ctrl">
       <my-dialog>Check out the contents, {{name}}!</my-dialog>
     </div>
@@ -653,8 +653,8 @@ that redefines <code>name</code> as <code>Jeff</code>. What do you think the <co
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-232"></pre>
-<script type="text/ng-template" id="script.js-232">
+<pre class="prettyprint linenums" ng-set-text="script.js-59"></pre>
+<script type="text/ng-template" id="script.js-59">
     angular.module('docsTransclusionExample', [])
       .controller('Ctrl', function($scope) {
         $scope.name = 'Tobias';
@@ -673,7 +673,7 @@ that redefines <code>name</code> as <code>Jeff</code>. What do you think the <co
   </script>
 </div>
 </div><h3 id="creating-custom-directives_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="docsTransclusionExample" ng-set-html="index.html-233" ng-eval-javascript="script.js-232"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="docsTransclusionExample" ng-set-html="index.html-60" ng-eval-javascript="script.js-59"></div>
 <p>Ordinarily, we would expect that <code>{{name}}</code> would be <code>Jeff</code>. However, we see in this example that
 the <code>{{name}}</code> binding is still <code>Tobias</code>.</p>
 <p>The <code>transclude</code> option changes the way scopes are nested. It makes it so that the <strong>contents</strong> of a
@@ -692,10 +692,10 @@ arbitrary content.
 <p>Next, we want to add buttons to this dialog box, and allow someone using the directive to bind their
 own behavior to it.</p>
 <h3 id="creating-custom-directives_source">Source</h3>
-<div source-edit="docsIsoFnBindExample" source-edit-deps="angular.js script.js" source-edit-html="index.html-235 my-dialog-close.html" source-edit-css="" source-edit-js="script.js-234" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="docsIsoFnBindExample" source-edit-deps="angular.js script.js" source-edit-html="index.html-62 my-dialog-close.html" source-edit-css="" source-edit-js="script.js-61" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-235" ng-html-wrap="docsIsoFnBindExample angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-235">
+<pre class="prettyprint linenums" ng-set-text="index.html-62" ng-html-wrap="docsIsoFnBindExample angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-62">
     <div ng-controller="Ctrl">
       <my-dialog ng-hide="dialogIsHidden" on-close="hideDialog()">
         Check out the contents, {{name}}!
@@ -713,8 +713,8 @@ own behavior to it.</p>
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-234"></pre>
-<script type="text/ng-template" id="script.js-234">
+<pre class="prettyprint linenums" ng-set-text="script.js-61"></pre>
+<script type="text/ng-template" id="script.js-61">
     angular.module('docsIsoFnBindExample', [])
       .controller('Ctrl', function($scope, $timeout) {
         $scope.name = 'Tobias';
@@ -738,7 +738,7 @@ own behavior to it.</p>
   </script>
 </div>
 </div><h3 id="creating-custom-directives_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="docsIsoFnBindExample" ng-set-html="index.html-235" ng-eval-javascript="script.js-234"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="docsIsoFnBindExample" ng-set-html="index.html-62" ng-eval-javascript="script.js-61"></div>
 <p>We want to run the function we pass by invoking it from the directive&#39;s scope, but have it run
 in the context of the scope where its registered.</p>
 <p>We saw earlier how to use <code>=prop</code> in the <code>scope</code> option, but in the above example, we&#39;re using
@@ -758,16 +758,16 @@ its elements.</p>
 <p>For instance, what if we wanted to create a directive that lets a user drag an
 element?</p>
 <h3 id="creating-custom-directives_source">Source</h3>
-<div source-edit="dragModule" source-edit-deps="angular.js script.js" source-edit-html="index.html-237" source-edit-css="" source-edit-js="script.js-236" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="dragModule" source-edit-deps="angular.js script.js" source-edit-html="index.html-64" source-edit-css="" source-edit-js="script.js-63" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-237" ng-html-wrap="dragModule angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-237">
+<pre class="prettyprint linenums" ng-set-text="index.html-64" ng-html-wrap="dragModule angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-64">
     <span my-draggable>Drag ME</span>
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-236"></pre>
-<script type="text/ng-template" id="script.js-236">
+<pre class="prettyprint linenums" ng-set-text="script.js-63"></pre>
+<script type="text/ng-template" id="script.js-63">
     angular.module('dragModule', []).
       directive('myDraggable', function($document) {
         return function(scope, element, attr) {
@@ -807,17 +807,17 @@ element?</p>
   </script>
 </div>
 </div><h3 id="creating-custom-directives_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="dragModule" ng-set-html="index.html-237" ng-eval-javascript="script.js-236"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="dragModule" ng-set-html="index.html-64" ng-eval-javascript="script.js-63"></div>
 <h4 id="creating-custom-directives_demo_creating-directives-that-communicate">Creating Directives that Communicate</h4>
 <p>You can compose any directives by using them within templates.</p>
 <p>Sometimes, you want a component that&#39;s built from a combination of directives.</p>
 <p>Imagine you want to have a container with tabs in which the contents of the container correspond
 to which tab is active.</p>
 <h3 id="creating-custom-directives_source">Source</h3>
-<div source-edit="docsTabsExample" source-edit-deps="angular.js script.js" source-edit-html="index.html-239 my-tabs.html my-pane.html" source-edit-css="" source-edit-js="script.js-238" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="docsTabsExample" source-edit-deps="angular.js script.js" source-edit-html="index.html-66 my-tabs.html my-pane.html" source-edit-css="" source-edit-js="script.js-65" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-239" ng-html-wrap="docsTabsExample angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-239">
+<pre class="prettyprint linenums" ng-set-text="index.html-66" ng-html-wrap="docsTabsExample angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-66">
     <my-tabs>
       <my-pane title="Hello">
         <h5 id="creating-custom-directives_source_hello">Hello</h5>
@@ -852,8 +852,8 @@ to which tab is active.</p>
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-238"></pre>
-<script type="text/ng-template" id="script.js-238">
+<pre class="prettyprint linenums" ng-set-text="script.js-65"></pre>
+<script type="text/ng-template" id="script.js-65">
     angular.module('docsTabsExample', [])
       .directive('myTabs', function() {
         return {
@@ -897,7 +897,7 @@ to which tab is active.</p>
   </script>
 </div>
 </div><h3 id="creating-custom-directives_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="docsTabsExample" ng-set-html="index.html-239" ng-eval-javascript="script.js-238"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="docsTabsExample" ng-set-html="index.html-66" ng-eval-javascript="script.js-65"></div>
 <p>The <code>myPane</code> directive has a <code>require</code> option with value <code>^myTabs</code>. When a directive uses this
 option, <code>$compile</code> will throw an error unless the specified controller is found. The <code>^</code> prefix
 means that this directive searches for the controller on its parents (without the <code>^</code> prefix, the

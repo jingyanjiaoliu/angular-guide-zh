@@ -9,8 +9,12 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 1. http://docs.angularjs.org/guide
 1. https://github.com/angular/angular.js/tree/master/docs/content/guide
 
+翻译后的文档：
 
-* 01-Controllers（控制器）翻译者:
+1. http://angular.wvovo.com/guide
+1. http://angular.duapp.com/
+
+* 01-Controllers（控制器）翻译者:@GrahamLe
 * 02-Filters（过滤器）翻译者:@NigelYao
 * 03-Templates（模板）翻译者:@why520crazy
 * 04-Introduction（介绍）翻译者:
@@ -26,7 +30,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * 14-Working With CSS in Angular @ckken
 * 15-Dependency Injection
 * 16-Providers （Providers）翻译者: @lightma
-* 17-Modules
+* 17-Modules 翻译者: @GrahamLe
 * 18-Scopes 翻译者: @GrahamLe
 * 19-Expressions
 * 20-Bootstrap
@@ -60,5 +64,4 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 
 @why520crazy， QQ:why520crazy(601213834)...
 
-
----heather(2751502325)
+heather(2751502325)

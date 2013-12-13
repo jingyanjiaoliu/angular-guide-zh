@@ -31,7 +31,8 @@
     }
 
     app.get('/', function (req, res) {
-        res.render('index.html', { title: '' });
+        res.redirect("/guide");
+        //res.render('index.html', { title: '' });
     });
     app.get('/guide*', function (req, res) {
         res.render('index.html', { title: '' });

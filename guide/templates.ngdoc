@@ -2,6 +2,8 @@
 @name Templates
 @description
 
+翻译者:[@why520crazy](https://github.com/why520crazy)
+
 Angular的模板是一个声明式的指定信息从模型，控制器变成用户在浏览器上可以看见的视图，
 他是一个静态的DOM，包含HTML，CSS以及一些引导Angular添加行为并且转换模板为动态视图的属性.
 
@@ -12,12 +14,9 @@ Angular的模板是一个声明式的指定信息从模型，控制器变成用�
 * {@link filter Filter} — 格式化数据显示在界面上.
 * {@link forms Form controls} — 验证用户输入.
 
-Note:  In addition to declaring the elements above in templates, you can also access these elements
-in JavaScript code.
+注: 除了在模板中声明元素外, 你也可以在Javascript代码中访问这些元素.
 
-The following code snippet shows a simple Angular template made up of standard HTML tags along with
-Angular {@link guide/directive directives} and curly-brace bindings
-with {@link expression expressions}:
+下面的代码片段展示了一个简单的Angular模板，主要由带有指令({@link guide/directive directives})的HTML标准标签和双花括弧表达式（{@link expression expressions}）组成:
 
 <pre>
 <html ng-app>
@@ -33,20 +32,17 @@ with {@link expression expressions}:
 </html>
 </pre>
 
-In a simple single-page app, the template consists of HTML, CSS, and angular directives contained
-in just one HTML file (usually `index.html`). In a more complex app, you can display multiple views
-within one main page using "partials", which are segments of template located in separate HTML
-files.  You "include" the partials in the main page using the {@link api/ngRoute.$route
-$route} service in conjunction with the {@link api/ngRoute.directive:ngView ngView} directive. An
-example of this technique is shown in the {@link tutorial/ angular tutorial}, in steps seven and
-eight.
+在一个简单的单页程序中，模板包含HTML，CSS和Angular指令，通常只是一个HTML文件(如 `index.html`)，
+在一个更复杂的程序中，你可以在一个主要的页面用"partials"展示多个视图，这些 "partials"都是独立的HTML文件，在主页面可以包含（ "include" ）
+这些"partials"页面通过路由 {@link api/ngRoute.$route $route} 和 {@link api/ngRoute.directive:ngView ngView}指令结合
+相关的示例代码参考 {@link tutorial/ angular tutorial} 中的第七八步骤
 
 
-## Related Topics
+## 相关主题
 
-* {@link filter Angular Filters}
-* {@link forms Angular Forms}
+* {@link filter Angular Filters(过滤器)}
+* {@link forms Angular Forms(表单)}
 
-## Related API
+## 相关的 API
 
-* {@link api/index API Reference}
+* {@link api/index API Reference(引用)}
