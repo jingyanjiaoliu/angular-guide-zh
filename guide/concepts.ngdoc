@@ -25,7 +25,7 @@
 |{@link concepts#module 模块(Module)}            | 用来配置注入器 |
 |{@link concepts#service 服务(Service)}           | 独立于视图(View)的、**可复用**的业务逻辑 |
 
-# 例一：数据绑定
+# 最初的例子：数据绑定
 
 下面我们将编写一个表单，用来计算一个订单在不同币种下的总价。
 
@@ -343,4 +343,4 @@ Angular通过这种数组语法定义依赖，以避免js代码压缩器(Minifie
 
 这次有什么变动？
 我们的`finance`模块中的`currencyConverter`服务这次使用了{@link api/ng.$http $http}服务，它是由Angular内建的用于访问后端API的服务。
-它是对[`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)以及[JSONP](http://en.wikipedia.org/wiki/JSONP)的封装。详情参阅$http的API文档 - {@link api/ng.$http `$http`}。
+它是对[`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)以及[JSONP](http://en.wikipedia.org/wiki/JSONP)的封装。详情参阅$http的API文档 - {@link api/$http `$http`}。
