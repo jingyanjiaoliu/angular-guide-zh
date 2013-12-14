@@ -1,33 +1,14 @@
 @ngdoc overview
-@name Migrating from 1.0 to 1.2
 @name Angular 1.0到1.2移植指南
 @description
 
 
-AngularJS version 1.2 introduces several breaking changes that may require changes to your
-application's source code.
-
 这次AngularJS 1.2的升级产生了一系列破坏性更改，你可能需要修改应用程序的部分源代码。
-
-Although we try to avoid breaking changes, there are some cases where it is unavoidable.
-AngularJS 1.2 has undergone a thourough security review to make applications safer by default,
-which has driven many of these changes. Several new features, especially animations, would not
-be possible without a few changes. Finally, some outstanding bugs were best fixed by changing
-an existing API.
 
 虽然我们尽力去消除破坏性更改，却仍有一些地方没法消除。
 AngularJS 1.2进行了一次关于安全性的彻底复查，来让应用程序在默认配置下更加安全，这导致了很多破坏性更改。
 一系列新增的特性，特别是关于动画方面的，也无法排除一些此类更改。
 最后，有一些突出的bug也最好通过修改现有API来纠正。
-
-<div class="alert alert-warning">
-<p>**Note:** AngularJS versions 1.1.x are considered "experimental" with breaking changes between minor releases.
-Version 1.2 is the result of several versions on the 1.1 branch, and has a stable API.</p>
-
-<p>If you have an application on 1.1 and want to migrate it to 1.2, everything in the guide
-below should still apply, but you may want to consult the
-[changelog](https://github.com/angular/angular.js/blob/master/CHANGELOG.md) as well.</p>
-</div>
 
 <div class="alert alert-warning">
 <p>**注意:** AngularJS的1.1.x版本是一个实验性版本，所以它的API在小版本之间会有破坏性更改。
@@ -38,39 +19,9 @@ below should still apply, but you may want to consult the
 </div>
 
 <ul class="nav nav-list">
-  <li class="nav-header">Summary of Breaking Changes</li>
-  <li>{@link guide/migration#ngroute-has-been-moved-into-its-own-module ngRoute has been moved into its own module}</li>
-  <li>{@link guide/migration#templates-no-longer-automatically-unwrap-promises Templates no longer automatically unwrap promises}</li>
-  <li>{@link guide/migration#syntax-for-named-wildcard-parameters-changed-in Syntax for named wildcard parameters changed in <code>$route</code>}</li>
-  <li>{@link guide/migration#you-can-only-bind-one-expression-to You can only bind one expression to <code>*[src]</code> or <code>*[ng-src]</code>}</li>
-  <li>{@link guide/migration#interpolations-inside-dom-event-handlers-are-now-disallowed Interpolations inside DOM event handlers are now disallowed}</li>
-  <li>{@link guide/migration#directives-cannot-end-with--start-or--end Directives cannot end with -start or -end}</li>
-  <li>{@link guide/migration#in-$q,-promisealways-has-been-renamed-promisefinally In $q, promise.always has been renamed promise.finally}</li>
-  <li>{@link guide/migration#ngmobile-is-now-ngtouch ngMobile is now ngTouch}</li>
-  <li>{@link guide/migration#resource$then-has-been-removed resource.$then has been removed}</li>
-  <li>{@link guide/migration#resource-methods-return-the-promise Resource methods return the promise}</li>
-  <li>{@link guide/migration#resource-promises-are-resolved-with-the-resource-instance Resource promises are resolved with the resource instance}</li>
-  <li>{@link guide/migration#$locationsearch-supports-multiple-keys $location.search supports multiple keys}</li>
-  <li>{@link guide/migration#ngbindhtmlunsafe-has-been-removed-and-replaced-by-ngbindhtml ngBindHtmlUnsafe has been removed and replaced by ngBindHtml}</li>
-  <li>{@link guide/migration#form-names-that-are-expressions-are-evaluated Form names that are expressions are evaluated}</li>
-  <li>{@link guide/migration#hasownproperty-disallowed-as-an-input-name hasOwnProperty disallowed as an input name}</li>
-  <li>{@link guide/migration#directives-order-of-postlink-functions-reversed Directives: Order of postLink functions reversed}</li>
-  <li>{@link guide/migration#directive-priority Directive priority}</li>
-  <li>{@link guide/migration#ngscenario ngScenario}</li>
-  <li>{@link guide/migration#nginclude-and-ngview-replace-its-entire-element-on-update ngInclude and ngView replace its entire element on update}</li>
-  <li>{@link guide/migration#urls-are-now-sanitized-against-a-whitelist URLs are now sanitized against a whitelist}</li>
-  <li>{@link guide/migration#isolate-scope-only-exposed-to-directives-with-property Isolate scope only exposed to directives with <code>scope</code> property}</li>
-  <li>{@link guide/migration#change-to-interpolation-priority Change to interpolation priority}</li>
-  <li>{@link guide/migration#underscore-prefixed/suffixed-properties-are-non-bindable Underscore-prefixed/suffixed properties are non-bindable}</li>
-  <li>{@link guide/migration#you-cannot-bind-to-select[multiple] You cannot bind to select[multiple]}</li>
-  <li>{@link guide/migration#uncommon-region-specific-local-files-were-removed-from-i18n Uncommon region-specific local files were removed from i18n}</li>
-</ul>
-
-
-<ul class="nav nav-list">
   <li class="nav-header">变更汇总表</li>
   <li>{@link guide/migration#ngroute-has-been-moved-into-its-own-module ngRoute移到了独立的模块中}</li>
-  <li>{@link guide/migration#templates-no-longer-automatically-unwrap-promises 模板不再自动支持promise}</li>
+  <li>{@link guide/migration#templates-no-longer-automatically-unwrap-promises 模板不再支持promise自动解包}</li>
   <li>{@link guide/migration#syntax-for-named-wildcard-parameters-changed-in 修改了<code>$route</code>中的命名通配符语法}</li>
   <li>{@link guide/migration#you-can-only-bind-one-expression-to <code>*[src]</code>和<code>*[ng-src]</code>}属性中不再允许出现多个{{}}表达式</li>
   <li>{@link guide/migration#interpolations-inside-dom-event-handlers-are-now-disallowed DOM事件处理器中不再允许出现求值表达式}</li>
@@ -96,20 +47,11 @@ below should still apply, but you may want to consult the
   <li>{@link guide/migration#uncommon-region-specific-local-files-were-removed-from-i18n 从i18n中移除了不常用的本地化文件}</li>
 </ul>
 
-## ngRoute has been moved into its own module
-
 ## ngRoute移到了独立的模块中
-
-Just like `ngResource`, `ngRoute` is now its own module.
 
 像`ngResource`一样，`ngRoute`也有自己的模块了。
 
-Applications that use `$route`, `ngView`, and/or `$routeParams` will now need to load an
-`angular-route.js` file and have their application's module dependency on the `ngRoute` module.
-
 使用`$route`, `ngView`, `$routeParams`的应用程序现在需要主动加载`angualr-route.js`文件，并且让应用程序显式依赖`ngRoute`模块。
-
-Before:
 
 以前：
 
@@ -120,8 +62,6 @@ Before:
 ```javascript
 var myApp = angular.module('myApp', ['someOtherModule']);
 ```
-
-After:
 
 现在：
 
@@ -134,20 +74,11 @@ After:
 var myApp = angular.module('myApp', ['ngRoute', 'someOtherModule']);
 ```
 
-See [5599b55b](https://github.com/angular/angular.js/commit/5599b55b04788c2e327d7551a4a699d75516dd21).
-
-
 参见 [5599b55b](https://github.com/angular/angular.js/commit/5599b55b04788c2e327d7551a4a699d75516dd21).
 
-## Templates no longer automatically unwrap promises
+## 模板不再支持promise自动解包。
 
-## 模板不再自动支持promise
-
-`$parse` and templates in general will no longer automatically unwrap promises.
-
-`$parse`和模板不再自动支持promise。
-
-Before:
+`$parse`和模板不再支持promise自动解包。
 
 以前：
 
@@ -158,8 +89,6 @@ $scope.foo = $http({method: 'GET', url: '/someUrl'});
 ```html
 <p>{{foo}}</p>
 ```
-
-After:
 
 现在：
 
@@ -174,27 +103,15 @@ $http({method: 'GET', url: '/someUrl'})
 <p>{{foo}}</p>
 ```
 
-This feature has been deprecated. If absolutely needed, it can be reenabled for now via the
-`$parseProvider.unwrapPromises(true)` API.
-
-自动支持promise的这个特性已经过时了。如果确实需要，你可以通过调用`$parseProvider.unwrapPromises(true)` API来启用它。
-
-See [5dc35b52](https://github.com/angular/angular.js/commit/5dc35b527b3c99f6544b8cb52e93c6510d3ac577),
-[b6a37d11](https://github.com/angular/angular.js/commit/b6a37d112b3e1478f4d14a5f82faabf700443748).
+自动支持promise解包这个特性已经过时了。如果确实需要，你可以通过调用`$parseProvider.unwrapPromises(true)` API来启用它。
 
 参见 [5dc35b52](https://github.com/angular/angular.js/commit/5dc35b527b3c99f6544b8cb52e93c6510d3ac577),
 [b6a37d11](https://github.com/angular/angular.js/commit/b6a37d112b3e1478f4d14a5f82faabf700443748).
 
 
-## Syntax for named wildcard parameters changed in `$route`
-
 ## 修改了<code>$route</code>中的命名通配符语法
 
-To migrate the code, follow the example below. Here, `*highlight` becomes `:highlight*`
-
 要移植此类代码，请参考下面的范例。注意，这里的`*highlight`变为了`:highlight*`。
-
-Before:
 
 以前：
 
@@ -203,8 +120,6 @@ $routeProvider.when('/Book1/:book/Chapter/:chapter/*highlight/edit',
           {controller: noop, templateUrl: 'Chapter.html'});
 ```
 
-After:
-
 现在：
 
 ```javascript
@@ -212,28 +127,14 @@ $routeProvider.when('/Book1/:book/Chapter/:chapter/:highlight*/edit',
         {controller: noop, templateUrl: 'Chapter.html'});
 ```
 
-See [04cebcc1](https://github.com/angular/angular.js/commit/04cebcc133c8b433a3ac5f72ed19f3631778142b).
-
 参见 [04cebcc1](https://github.com/angular/angular.js/commit/04cebcc133c8b433a3ac5f72ed19f3631778142b).
 
 
-## You can only bind one expression to `*[src]` or `*[ng-src]`
-
 ## 在`*[src]`或`*[ng-src]`属性中只允许出现一个{{}}表达式
-
-With the exception of `<a>` and `<img>` elements, you cannot bind more than one expression to the
-`src` attribute of elements.
 
 除了`<a>`和`<img>`元素之外，不允许再绑定多个{{}}表达式到`src`或`ng-src`属性上。
 
-This is one of several improvements to security introduces by Angular 1.2.
-
 这是Angular 1.2进行的一系列安全性增强之一。
-
-Concatenating expressions makes it hard to understand whether some combination of concatenated
-values are unsafe to use and potentially subject to XSS vulnerabilities. To simplify the task of
-auditing for XSS issues, we now require that a single expression be used for `*[src/ng-src]`
-bindings such as bindings for `iframe[src]`, `object[src]`, etc.
 
 复合表达式让Angular难以判断哪种表达式组合出的值是安全的，可能隐含XSS跨站脚本攻击风险。
 为了简化防范XSS风险的工作，我们限制了`*[src/ng-src]`中只能出现一个表达式，比如在`iframe[src]`, `object[src]`等。
@@ -261,11 +162,7 @@ bindings such as bindings for `iframe[src]`, `object[src]`, etc.
 </table>
 
 
-To migrate your code, you can combine multiple expressions using a method attached to your scope.
-
 要想移植你的代码，你需要在你的作用域中定义一个方法来组合多个表达式。
-
-Before:
 
 以前：
 
@@ -276,12 +173,9 @@ scope.b = 2;
 ```
 
 ```html
-<!-- Are a and b properly escaped here? Is baseUrl controlled by user? -->
 <!-- 这里的a和b属性被转义了吗？baseUrl会不会受到用户（特别是潜藏的攻击者）的控制？ -->
 <iframe src="{{baseUrl}}?a={{a}&b={{b}}">
 ```
-
-After:
 
 现在：
 
@@ -289,15 +183,13 @@ After:
 var baseUrl = "page";
 scope.getIframeSrc = function() {
 
-  // One should think about their particular case and sanitize accordingly
   // 有人可能希望进行特殊处理和相应的清理工作
   var qs = ["a", "b"].map(function(value, name) {
       return encodeURIComponent(name) + "=" +
              encodeURIComponent(value);
     }).join("&");
 
-  // `baseUrl` isn't exposed to a user's control, so we don't have to worry about escaping it.
-  // `baseUrl`不会暴露在用户的控制之下，所以我们不用担心忘记编码它。
+  // `baseUrl`不会暴露在用户的控制之下，所以我们不用担心忘记转义它。
   return baseUrl + "?" + qs;
 };
 ```
@@ -306,27 +198,13 @@ scope.getIframeSrc = function() {
 <iframe src="{{getIframeSrc()}}">
 ```
 
-See [38deedd6](https://github.com/angular/angular.js/commit/38deedd6e3d806eb8262bb43f26d47245f6c2739).
-
 参见 [38deedd6](https://github.com/angular/angular.js/commit/38deedd6e3d806eb8262bb43f26d47245f6c2739).
-
-## Interpolations inside DOM event handlers are now disallowed
 
 ## 在DOM事件处理器中不再允许出现求值表达式。
 
-DOM event handlers execute arbitrary Javascript code. Using an interpolation for such handlers
-means that the interpolated value is a JS string that is evaluated. Storing or generating such
-strings is error prone and leads to XSS vulnerabilities. On the other hand, `ngClick` and other
-Angular specific event handlers evaluate Angular expressions in non-window (Scope) context which
-makes them much safer.
-
 DOM事件处理器可以执行任意Javascript代码。在这里使用求值表达式，意味着表达式的结果会作为一个JS字符串而被执行。存储或生成这样一个字符串，是招来XSS攻击的前奏。而另一方面，`ngClick`和其他Angular专用的事件处理器在Scope作用域而非Window(全局)作用域下执行Angular表达式 —— 这显然要安全得多。
 
-To migrate the code follow the example below:
-
 要移植代码，参见下面的范例：
-
-Before:
 
 以前：
 
@@ -335,8 +213,6 @@ JS:   scope.foo = 'alert(1)';
 HTML: <div onclick="{{foo}}">
 ```
 
-After:
-
 现在：
 
 ```
@@ -344,44 +220,22 @@ JS:   scope.foo = function() { alert(1); }
 HTML: <div ng-click="foo()">
 ```
 
-See [39841f2e](https://github.com/angular/angular.js/commit/39841f2ec9b17b3b2920fd1eb548d444251f4f56).
-
-参见 [39841f2e](https://github.com/angular/angular.js/commit/39841f2ec9b17b3b2920fd1eb548d444251f4f56).
-
-## Directives cannot end with -start or -end
+参见 [39841f2e](https://github.com/angular/angular.js/commit/39841f2ec9b17b3b2920fd1eb548d444251f4f56)。
 
 ## 指令不再允许以-start或-end结尾
 
-This change was necessary to enable multi-element directives. The best fix is to rename existing
-directives so that they don't end with these suffixes.
-
 这个更改的目的是为了支持多元素(multi-element)指令。最好的修改方案是重命名现有的指令，让他们不再以这些后缀结尾。
-
-See [e46100f7](https://github.com/angular/angular.js/commit/e46100f7097d9a8f174bdb9e15d4c6098395c3f2).
 
 参见 [e46100f7](https://github.com/angular/angular.js/commit/e46100f7097d9a8f174bdb9e15d4c6098395c3f2).
 
-## In $q, promise.always has been renamed promise.finally
-
 ## $q中的promise.always改名为promise.finally
-
-The reason for this change is to align `$q` with the [Q promise
-library](https://github.com/kriskowal/q), despite the fact that this makes it a bit more difficult
-to use with non-ES5 browsers, like IE8.
 
 做这项更改的原因是要让`$q`和[Q promise
 library](https://github.com/kriskowal/q)保持一致，即使这项修改事实上为兼容非ES5的浏览器（比如IE8）制造了一些困难。
 
-`finally` also goes well together with the `catch` API that was added to `$q` recently and is part
-of the [DOM promises standard](http://dom.spec.whatwg.org/).
+`finally`也可以很好地与最近加入到`$q`中的`catch` api协同工作，并且它还是[DOM promises标准](http://dom.spec.whatwg.org/)的一部分。
 
-`finally`也可以很好地与最近加入到`$q`中的`catch` api协同工作，并且它还是[DOM promises标准](http://dom.spec.whatwg.org/)的一部分
-
-To migrate the code follow the example below.
-
-要移植这种代码，参阅下面的范例。
-
-Before:
+要移植这种代码，参阅下面的范例：
 
 以前：
 
@@ -389,15 +243,11 @@ Before:
 $http.get('/foo').always(doSomething);
 ```
 
-After:
-
 现在：
 
 ```javascript
 $http.get('/foo').finally(doSomething);
 ```
-
-Or for IE8-compatible code:
 
 或者用兼容IE8的方式：
 
@@ -405,37 +255,19 @@ Or for IE8-compatible code:
 $http.get('/foo')['finally'](doSomething);
 ```
 
-See [f078762d](https://github.com/angular/angular.js/commit/f078762d48d0d5d9796dcdf2cb0241198677582c).
-
-参见 [f078762d](https://github.com/angular/angular.js/commit/f078762d48d0d5d9796dcdf2cb0241198677582c).
-
-## ngMobile is now ngTouch
+参见 [f078762d](https://github.com/angular/angular.js/commit/f078762d48d0d5d9796dcdf2cb0241198677582c)。
 
 ## ngMobile改名为ngTouch
 
-Many touch-enabled devices are not mobile devices, so we decided to rename this module to better
-reflect its concerns.
-
-很多支持触控的设备不是移动设备，所以，我们决定把这个模块改名，来更好地反应它的实际内涵。
-
-To migrate, replace all references to `ngMobile` with `ngTouch` and `angular-mobile.js` with
-`angular-touch.js`.
+很多支持触控的设备并不是移动设备，所以，我们决定把这个模块改名，来更好地体现它的实际内涵。
 
 要做这项移植，只要把所有对`ngMobile`的引用改为`ngTouch`，并且把`angular-mobile.js`替换为`angular-touch.js`就可以了。
 
-See [94ec84e7](https://github.com/angular/angular.js/commit/94ec84e7b9c89358dc00e4039009af9e287bbd05).
-
 参见 [94ec84e7](https://github.com/angular/angular.js/commit/94ec84e7b9c89358dc00e4039009af9e287bbd05).
-
-## resource.$then has been removed
 
 ## resource.$then被移除了
 
-Resource instances do not have a `$then` function anymore. Use the `$promise.then` instead.
-
 Resource的实例不再有一个$then函数。请用`$promise.then`代替。
-
-Before:
 
 以前：
 
@@ -445,33 +277,21 @@ Resource.query().$then(callback);
 
 After:
 
-现在：
-
 ```javascript
 Resource.query().$promise.then(callback);
 ```
 
-See [05772e15](https://github.com/angular/angular.js/commit/05772e15fbecfdc63d4977e2e8839d8b95d6a92d).
-
 参见 [05772e15](https://github.com/angular/angular.js/commit/05772e15fbecfdc63d4977e2e8839d8b95d6a92d).
-
-## Resource methods return the promise
 
 ## Resource方法返回promise对象
 
-Methods of a resource instance return the promise rather than the instance itself.
-
 resource实例的方法返回一个promise对象，而不再是它自身。
-
-Before:
 
 以前：
 
 ```javascript
 resource.$save().chaining = true;
 ```
-
-After:
 
 现在：
 
@@ -480,31 +300,19 @@ resource.$save();
 resource.chaining = true;
 ```
 
-See [05772e15](https://github.com/angular/angular.js/commit/05772e15fbecfdc63d4977e2e8839d8b95d6a92d).
-
 参见 [05772e15](https://github.com/angular/angular.js/commit/05772e15fbecfdc63d4977e2e8839d8b95d6a92d).
-
-## Resource promises are resolved with the resource instance
 
 ## Resource的promise将以resource实例为参数触发
 
-On success, the resource promise is resolved with the resource instance rather than HTTP response object.
-
 调用成功时，resource的promise将以resource实例为参数触发，而不再是HTTP response对象。
 
-Use interceptor API to access the HTTP response object.
-
 通过自定义拦截器(interceptor)API来访问HTTP response对象。
-
-Before:
 
 以前：
 
 ```javascript
 Resource.query().$then(function(response) {...});
 ```
-
-After:
 
 现在：
 
@@ -522,69 +330,33 @@ var Resource = $resource('/url', {}, {
 });
 ```
 
-See [05772e15](https://github.com/angular/angular.js/commit/05772e15fbecfdc63d4977e2e8839d8b95d6a92d).
-
 参见 [05772e15](https://github.com/angular/angular.js/commit/05772e15fbecfdc63d4977e2e8839d8b95d6a92d).
 
 
-## $location.search supports multiple keys
-
 ## $location.search支持多重关键字
-
-{@link api/ng.$location#methods_search `$location.search`} now supports multiple keys with the
-same value provided that the values are stored in an array.
 
 {@link api/ng.$location#methods_search `$location.search`}现在支持多重关键字，相同关键字的值将被存储到一个数组里。
 
-Before this change:
-
 在这项修正之前：
-
-* `parseKeyValue` only took the last key overwriting all the previous keys.
-* `toKeyValue` joined the keys together in a comma delimited string.
 
 * `parseKeyValue`用最后一个关键字的值，覆盖以前所有的值。
 * `toKeyValue`把这些关键字组合成一个逗号分隔的字符串。
 
-
-This was deemed buggy behavior. If your server relied on this behavior then either the server
-should be fixed, or a simple serialization of the array should be done on the client before
-passing it to `$location`.
-
 这种行为显然是错误的。如果你的服务器依赖这种错误的行为，那么活着修改服务器断，或者在客户端把这些值进行序列化，然后传给`$location`。
-
-See [80739409](https://github.com/angular/angular.js/commit/807394095b991357225a03d5fed81fea5c9a1abe).
 
 参见 [80739409](https://github.com/angular/angular.js/commit/807394095b991357225a03d5fed81fea5c9a1abe).
 
-## ngBindHtmlUnsafe has been removed and replaced by ngBindHtml
-
 ## 移除了ngBindHtmlUnsafe，由ngBindHtml代替
 
-`ngBindHtml` which has been moved from `ngSanitize` module to the core `ng` module.
-
 `ngBindHtml`从`ngSanitize`模块中移到了核心的`ng`模块。
-
-`ngBindHtml` provides `ngBindHtmlUnsafe` like
-behavior (evaluate an expression and innerHTML the result into the DOM) when bound to the result
-of `$sce.trustAsHtml(string)`. When bound to a plain string, the string is sanitized via
-`$sanitize` before being innerHTML'd. If the `$sanitize` service isn't available (`ngSanitize`
-module is not loaded) and the bound expression evaluates to a value that is not trusted an
-exception is thrown.
 
 `ngBindHtml`可以提供和`ngBindHtmlUnsafe`类似的行为（计算表达式，然后通过innerHTML把结果放到DOM中） —— 只要把值用`$sce.trustAsHtml(string)`进行包装就可以了。
 如果绑定到一个普通字符串，这个字符串会在被innerHTML之前交给`$santitize`进行“消毒”。
 如果`$santitize`服务不可用（`ngSantitize`模块没有被加载），并且绑定表达式的结果不安全，就会触发一个异常。
 
-See [dae69473](https://github.com/angular/angular.js/commit/dae694739b9581bea5dbc53522ec00d87b26ae55).
-
 参见 [dae69473](https://github.com/angular/angular.js/commit/dae694739b9581bea5dbc53522ec00d87b26ae55).
 
-## Form names that are expressions are evaluated
-
 ## 支持以表达式作为表单的name属性
-
-If you have form names that will evaluate as an expression:
 
 如果你有一个表单的名字是一个表达式：
 
@@ -592,11 +364,7 @@ If you have form names that will evaluate as an expression:
 <form name="ctrl.form">
 ```
 
-And if you are accessing the form from your controller:
-
 如果你要从控制器中访问这个表单：
-
-Before:
 
 以前：
 
@@ -606,8 +374,6 @@ function($scope) {
 }
 ```
 
-After:
-
 现在：
 
 ```javascript
@@ -616,43 +382,22 @@ function($scope) {
 }
 ```
 
-This makes it possible to access a form from a controller using the new "controller as" syntax.
-Supporting the previous behavior offers no benefit.
-
 这种形式允许你从控制器中通过新的"controller as"语法风格访问表单。沿用以前的风格没什么好处。
-
-See [8ea802a1](https://github.com/angular/angular.js/commit/8ea802a1d23ad8ecacab892a3a451a308d9c39d7).
 
 参见 [8ea802a1](https://github.com/angular/angular.js/commit/8ea802a1d23ad8ecacab892a3a451a308d9c39d7).
 
-## hasOwnProperty disallowed as an input name
-
 ## hasOwnProperty不允许作为input的名字
 
-Inputs with name equal to `hasOwnProperty` are not allowed inside form or ngForm directives.
-
 在form或ngForm的指令中，不再允许以`hasOwnProperty`作为input的名字。
-
-Before, inputs whose name was "hasOwnProperty" were quietly ignored and not added to the scope.
-Now a badname exception is thrown. Using "hasOwnProperty" for an input name would be very unusual
-and bad practice. To migrate, change your input name.
 
 以前，名字为"hasOwnProperty"的input会被悄悄地忽略，不会被加入到作用域中。现在则会触发一个badname异常。
 使用"hasOwnProperty"作为input的名字是个很少用而且很不好的实践。要想移植，改下input的名字吧。
 
-See [7a586e5c](https://github.com/angular/angular.js/commit/7a586e5c19f3d1ecc3fefef084ce992072ee7f60).
-
 参见 [7a586e5c](https://github.com/angular/angular.js/commit/7a586e5c19f3d1ecc3fefef084ce992072ee7f60).
-
-## Directives: Order of postLink functions reversed
 
 ## 指令：逆转了postLink函数的调用顺序
 
-The order of postLink fn is now mirror opposite of the order in which corresponding preLinking and compile functions execute.
-
 逆转了postLink函数的执行顺序，以便让它和preLink和compile函数的执行顺序相对称。（译注：后进先出 —— 最后执行preLink的指令会最先执行postLink）
-
-Previously the compile/link fns executed in order, sorted by priority:
 
 以前的compile/link函数都是按照优先级(priority)的顺序依次执行的。
 
@@ -695,31 +440,15 @@ Previously the compile/link fns executed in order, sorted by priority:
 
 <small>"高 → 低" 这里是指指令的 `priority`(优先级)选项。</small>
 
-Very few directives in practice rely on the order of postLinking functions (unlike on the order
-of compile functions), so in the rare case of this change affecting an existing directive, it might
-be necessary to convert it to a preLinking function or give it negative priority.
-
 现实中只有极少量指令是是依赖postLink函数的执行顺序的（不像对compile函数的顺序依赖那么严重），所以这项改动很少会影响到现有的指令，它可能需要移到preLink函数中，或者提供一个负数的优先级。
 
-You can look at [the diff of this
-commit](https://github.com/angular/angular.js/commit/31f190d4d53921d32253ba80d9ebe57d6c1de82b) to see how an internal
-attribute interpolation directive was adjusted.
-
-你可以看[这次提交的diff](https://github.com/angular/angular.js/commit/31f190d4d53921d32253ba80d9ebe57d6c1de82b)来看看指令内部的解释过程修改了什么。
-
-See [31f190d4](https://github.com/angular/angular.js/commit/31f190d4d53921d32253ba80d9ebe57d6c1de82b).
+你可以访问[这次提交的diff](https://github.com/angular/angular.js/commit/31f190d4d53921d32253ba80d9ebe57d6c1de82b)来看看指令内部的解释过程修改了什么。
 
 参见 [31f190d4](https://github.com/angular/angular.js/commit/31f190d4d53921d32253ba80d9ebe57d6c1de82b).
 
-## Directive priority
-
 ## 指令优先级
 
-the priority of ngRepeat, ngSwitchWhen, ngIf, ngInclude and ngView has changed. This could affect directives that explicitly specify their priority.
-
 ngRepeat, ngSwitchWhen, ngIf, ngInclude 和 ngView 这几个指令的优先级被修改了。这将更明确的规定出它们之间的相对优先级。
-
-In order to make ngRepeat, ngSwitchWhen, ngIf, ngInclude and ngView work together in all common scenarios their directives are being adjusted to achieve the following precendence:
 
 为了让ngRepeat, ngSwitchWhen, ngIf, ngInclude 和 ngView指令在通常的场景下都能正常工作，它们被调整到了下列优先级：
 
@@ -731,70 +460,34 @@ ngIf             | 1000         | 600
 ngInclude        | 1000         | 400
 ngView           | 1000         | 400
 
-See [b7af76b4](https://github.com/angular/angular.js/commit/b7af76b4c5aa77648cc1bfd49935b48583419023).
-
 参见 [b7af76b4](https://github.com/angular/angular.js/commit/b7af76b4c5aa77648cc1bfd49935b48583419023).
 
 ## ngScenario
 
-browserTrigger now uses an eventData object instead of direct parameters for mouse events.
-To migrate, place the `keys`,`x` and `y` parameters inside of an object and place that as the
-third parameter for the browserTrigger function.
-
 browserTrigger函数使用eventData对象代替了以前的原生鼠标事件event对象。
 做这项移植，只要把`key`,`x`,`y`这几个参数放到一个对象中，然后作为browserTrigger函数的第三个参数传进去就可以了。
 
-See [28f56a38](https://github.com/angular/angular.js/commit/28f56a383e9d1ff378e3568a3039e941c7ffb1d8).
-
 参见 [28f56a38](https://github.com/angular/angular.js/commit/28f56a383e9d1ff378e3568a3039e941c7ffb1d8).
-
-## ngInclude and ngView replace its entire element on update
 
 ## ngInclude和ngView在更新后会替换掉它所在的整个元素
 
-Previously `ngInclude` and `ngView` only updated its element's content. Now these directives will
-recreate the element every time a new content is included.
-
 以前的`ngInclude`和`ngView`指令只是更新它所在元素的内容。现在，这些指令将会在每次加载了新内容的时候重建这个元素本身。
-
-This ensures that a single rootElement for all the included contents always exists, which makes
-definition of css styles for animations much easier.
 
 这确保所有被包括进来的内容都始终存在一个单一的根元素，这可以让定义与动画效果有关的css更为容易。
 
-See [7d69d52a](https://github.com/angular/angular.js/commit/7d69d52acff8578e0f7d6fe57a6c45561a05b182),
-[aa2133ad](https://github.com/angular/angular.js/commit/aa2133ad818d2e5c27cbd3933061797096356c8a).
-
-参见 [7d69d52a](https://github.com/angular/angular.js/commit/7d69d52acff8578e0f7d6fe57a6c45561a05b182),
-[aa2133ad](https://github.com/angular/angular.js/commit/aa2133ad818d2e5c27cbd3933061797096356c8a).
-
-## URLs are now sanitized against a whitelist
+参见 [7d69d52a](https://github.com/angular/angular.js/commit/7d69d52acff8578e0f7d6fe57a6c45561a05b182)，
+[aa2133ad](https://github.com/angular/angular.js/commit/aa2133ad818d2e5c27cbd3933061797096356c8a)。
 
 ## URL改为根据白名单进行“消毒”
 
-A whitelist configured via `$compileProvider` can be used to configure what URLs are considered safe.
-By default all common protocol prefixes are whitelisted including `data:` URIs with mime types `image/*`.
-This change sholdn't impact apps that don't contain malicious image links.
-
 通过`compileProvider`配置一个白名单，可用来指定想把哪些url视为安全的。默认情况下，所有通用的前缀被视为安全的，包括带有`image/*`这种mime头的`data:`协议。这种修改不会干扰哪些未包含恶意图片的正常应用。
 
-See [1adf29af](https://github.com/angular/angular.js/commit/1adf29af13890d61286840177607edd552a9df97),
-[3e39ac7e](https://github.com/angular/angular.js/commit/3e39ac7e1b10d4812a44dad2f959a93361cd823b).
-
-参见 [1adf29af](https://github.com/angular/angular.js/commit/1adf29af13890d61286840177607edd552a9df97),
-[3e39ac7e](https://github.com/angular/angular.js/commit/3e39ac7e1b10d4812a44dad2f959a93361cd823b).
-
-## Isolate scope only exposed to directives with `scope` property
+参见 [1adf29af](https://github.com/angular/angular.js/commit/1adf29af13890d61286840177607edd552a9df97)，
+[3e39ac7e](https://github.com/angular/angular.js/commit/3e39ac7e1b10d4812a44dad2f959a93361cd823b)。
 
 ## 独立作用域(Isolate scope)只能通过<code>scope</code>属性导出给指令
 
-Directives without isolate scope do not get the isolate scope from an isolate directive on the
-same element. If your code depends on this behavior (non-isolate directive needs to access state
-from within the isolate scope), change the isolate directive to use scope locals to pass these explicitly.
-
 没有独立作用域的指令不能访问同一个元素上其它带有独立作用域的指令的作用域。如果你的代码依赖这种行为（即“非独立作用域指令”需要访问同一个元素上另一个指令的“独立作用域”），那么，就要改为独立作用域指令，把所需要的变量显式传进去。
-
-**Before**
 
 ** 以前 **
 
@@ -809,8 +502,6 @@ from within the isolate scope), change the isolate directive to use scope locals
 });
 ```
 
-**After**
-
 ** 现在 **
 
 ```
@@ -824,128 +515,59 @@ from within the isolate scope), change the isolate directive to use scope locals
 });
 ```
 
-See [909cabd3](https://github.com/angular/angular.js/commit/909cabd36d779598763cc358979ecd85bb40d4d7),
-[#1924](https://github.com/angular/angular.js/issues/1924) and
-[#2500](https://github.com/angular/angular.js/issues/2500).
-
 参见 [909cabd3](https://github.com/angular/angular.js/commit/909cabd36d779598763cc358979ecd85bb40d4d7),
 [#1924](https://github.com/angular/angular.js/issues/1924) 和
 [#2500](https://github.com/angular/angular.js/issues/2500)。
 
-## Change to interpolation priority
-
 ## 修改了求值表达式{{}}的优先级
-
-Previously, the interpolation priority was `-100` in 1.2.0-rc.2, and `100` before 1.2.0-rc.2.
-Before this change the binding was setup in the post-linking phase.
 
 1.2.0-rc.2版本中，求值表达式的优先级是`-100`，更早的版本中则是`100`，而且，绑定发生在链接后(post-linking)阶段。
 
-Now the attribute interpolation (binding) executes as a directive with priority 100 and the
-binding is set up in the pre-linking phase.
-
-这个正式版中，属性中的求值表达式则相当于一个优先级是100的指令，而且，绑定发生在链接前(pre-linking)阶段。
-
-See [79223eae](https://github.com/angular/angular.js/commit/79223eae5022838893342c42dacad5eca83fabe8),
-[#4525](https://github.com/angular/angular.js/issues/4525),
-[#4528](https://github.com/angular/angular.js/issues/4528), and
-[#4649](https://github.com/angular/angular.js/issues/4649)
+现在这个正式版中，属性中的求值表达式则相当于一个优先级是100的指令，而且，绑定发生在链接前(pre-linking)阶段。
 
 参见 [79223eae](https://github.com/angular/angular.js/commit/79223eae5022838893342c42dacad5eca83fabe8),
 [#4525](https://github.com/angular/angular.js/issues/4525),
 [#4528](https://github.com/angular/angular.js/issues/4528), 和
 [#4649](https://github.com/angular/angular.js/issues/4649)
 
-## Underscore-prefixed/suffixed properties are non-bindable
-
 ## 以下划线开头或结尾的属性不会再被绑定
-
-<div class="alert alert-info">
-<p>**Reverted**: This breaking change has been reverted in 1.2.1, and so can be ignored if you're using **version 1.2.1 or higher**</p>
-</div>
 
 <div class="alert alert-info">
 <p>**它已经被改回去了**: 这个改动已经在1.2.1中改回了以前的样子，所以如果你在使用**1.2.1或更高**的版本，请忽略这一条。</p>
 </div>
 
-This change introduces the notion of "private" properties (properties
-whose names begin and/or end with an underscore) on the scope chain.
-These properties will not be available to Angular expressions (i.e. {{
-}} interpolation in templates and strings passed to `$parse`)  They are
-freely available to JavaScript code (as before).
-
 这个改动准备用来在作用域链上实现“私有”属性（即名字用下划线开头和/或结尾的属性）。
 这些属性将不能被模板或字符串中的Angular表达式（比如{{}}）使用。但是它们仍然可以被JavaScript代码任意使用（就像以前那样）。
 
-**Motivation**
-
 **改动动机**
-
-Angular expressions execute in a limited context. They do not have
-direct access to the global scope, `window`, `document` or the Function
-constructor. However, they have direct access to names/properties on
-the scope chain. It has been a long standing best practice to keep
-sensitive APIs outside of the scope chain (in a closure or your
-controller.) That's easier said that done for two reasons:
 
 Angular表达式执行在一个受限的语境中。它们不能直接访问全局作用域，比如`window`，`document`或者Function的构造函数。但是他们仍然可以直接访问作用域链上的各个“名称/属性”等。一直以来，把敏感的API保护在作用域链之外都是一个好主意（比如定义在一个闭包或者你的控制器中）。
 这样的说法是出于两个原因：
 
-1. JavaScript does not have a notion of private properties so if you need
-someone on the scope chain for JavaScript use, you also expose it to
-Angular expressions
-2. The new `controller as` syntax that's now in increased usage exposes the
-entire controller on the scope chain greatly increaing the exposed surface.
-
 1. JavaScript没有私有属性的概念，所以你需要在作用域链上供JavaScript使用，你就同时也把它们开放给了Angular表达式，让它们任意使用。
 2. 新的`controller as`语法，导出了整个控制器，也就极大地增加了作用域链中这些变量的可见性。
 
-Though Angular expressions are written and controlled by the developer, they:
-
 尽管Angular表达式是被开发人员书写和控制的，但他们：
 
-1. Typically deal with user input
-2. Don't get the kind of test coverage that JavaScript code would
-
 1. 通常需要接受用户输入
-2. JavaScript代码的覆盖率不够
-
-This commit provides a way, via a naming convention, to allow restricting properties from
-controllers/scopes. This means Angular expressions can access only those properties that
-are actually needed by the expressions.
+2. JavaScript代码的测试覆盖率往往不够
 
 这次提交的版本提供了一种机制，通过命名约定，来允许在控制器/作用域这一层对这些属性的访问进行限制。
 这意味着Angular的表达式中只能访问到自己确实需要的那些属性。
 
-See [3d6a89e8](https://github.com/angular/angular.js/commit/3d6a89e8888b14ae5cb5640464e12b7811853c7e).
-
 参见 [3d6a89e8](https://github.com/angular/angular.js/commit/3d6a89e8888b14ae5cb5640464e12b7811853c7e).
 
 
-## You cannot bind to select[multiple]
-
 ## 不再支持绑定到多选框(select[multiple])
-
-Switching between `select[single]` and `select[multiple]` has always been odd due to browser quirks.
-This feature never worked with two-way data-binding so it's not expected that anyone is using it.
 
 在`select[single]`和`select[multiple]`形态之间切换经常触犯浏览器的怪癖（不兼容特性）。
 这个特性在双向数据绑定中从来没有正常工作过，所以也不用担心谁会用到它。
 
-If you are interested in properly adding this feature, please submit a pull request on Github.
-
 如果你有兴趣自己来添加这个特性，请到Github上给我们提交一个pull request。
-
-See [d87fa004](https://github.com/angular/angular.js/commit/d87fa0042375b025b98c40bff05e5f42c00af114).
 
 参见 [d87fa004](https://github.com/angular/angular.js/commit/d87fa0042375b025b98c40bff05e5f42c00af114).
 
-## Uncommon region-specific local files were removed from i18n
-
 ## 从i18n中移除了不常用的本地化文件
-
-AngularJS uses the Google Closure library's locale files. The following locales were removed from
-Closure, so Angular is not able to continue to support them:
 
 AngularJS使用的是Google Closure Library中的本地化文件。下列本地化文件已经从Closure中移除了，因此Angular也无法再继续支持：
 
@@ -955,11 +577,6 @@ AngularJS使用的是Google Closure Library中的本地化文件。下列本地�
 `sw-ke`, `ta-lk`, `tl-ph`, `ur-in`, `zh-hans-hk`, `zh-hans-mo`, `zh-hans-sg`, `zh-hans`,
 `zh-hant-hk`, `zh-hant-mo`, `zh-hant-tw`, `zh-hant`
 
-Although these locales were removed from the official AngularJS repository, you can continue to
-load and use your copy of the locale file provided that you maintain it yourself.
-
-虽然这些本地化区域已经从AngularJS的库中移除了，你仍然可以加载和使用你自己的本地化文件，不过你就得自己维护它了。
-
-See [6382e21f](https://github.com/angular/angular.js/commit/6382e21fb28541a2484ac1a241d41cf9fbbe9d2c).
+虽然这些本地化区域已经从AngularJS的库中移除了，你仍然可以加载和使用你自己的本地化文件，不过就得你去自己维护它们了。
 
 参见 [6382e21f](https://github.com/angular/angular.js/commit/6382e21fb28541a2484ac1a241d41cf9fbbe9d2c).
