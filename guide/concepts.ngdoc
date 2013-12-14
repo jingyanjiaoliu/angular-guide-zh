@@ -65,7 +65,7 @@ Angular还为{@link api/ng.directive:input `input`}
 比如在上面这个例子中，我们就通过这些css类把空白`input`元素的边框设置为红色，来表示无效的输入。
 
 <div class="alert alert-info">
-**自定义指令来访问DOM**: 对于Angular，一个程序中唯一允许接触DOM的地方就是指令中。之所以这样要求，是因为带有DOM访问的代码难以进行自动化测试。
+**通过自定义指令访问DOM**: 对于Angular，一个程序中唯一允许接触DOM的地方就是“指令”。之所以这样要求，是因为带有DOM访问的代码难以进行自动化测试。
  如果你需要直接访问DOM，那么你就应该为此写一个自定义指令。在
  {@link directive 指令指南}一章中详细解释了该怎样实现自定义指令。
 </div>
