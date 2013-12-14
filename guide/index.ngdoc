@@ -5,22 +5,24 @@
 # 关于Angular Guide翻译的说明
 
 一次偶然的机会，我们在Angular.js中文社区群里相遇，更是一次巧妙的交谈，大家对于Angular官方的Guide最新版本没有中文版本表示无助，
-所以，我们临时组织要为社区做一下贡献，所以Angular Guide翻译团队诞生了。
-我们是一群技术的热爱着，更是一群Angular的使用者，但是我们的翻译不代表官方，如有任何问题随时联系我们。
+所以，本着为社区做贡献的心态，我们临时组织了一个Angular 开发指南翻译团队。
+
+我们是一群技术的热爱者，更是一群Angular的使用者，但是我们的翻译不代表官方，如有任何问题随时联系我们。
 
 目前参加翻译工作的人员有9位，分别是：
+
 ckken，grahamle，NigelYao，asnowwolf，lightma，joeylin，FrankyYang，lrrluo， why520crazy
 
 # AngularJS 文档指南
 
-你需要知道AngularJS的事
+你需要知道AngularJS
 
 * {@link guide/introduction What is AngularJS(什么是AngularJS)?}
 * {@link guide/concepts Conceptual Overview(概述)}
 
 ## 教程
 
-* {@link tutorial/index Official AngularJS Tutorial}
+* {@link tutorial/index Official AngularJS Tutorial(官方教程)}
 * [10 Reasons Why You Should Use AngularJS](http://www.sitepoint.com/10-reasons-use-angularjs/)
 * [Design Principles of AngularJS (video)](https://www.youtube.com/watch?v=HCR7i5F5L8c)
 * [Fundamentals in 60 Minutes (video)](http://www.youtube.com/watch?v=i9MHigUZKEM)
@@ -127,21 +129,23 @@ This is a short list of libraries with specific support and documentation for wo
 
 ## 帮助
 
+如果你有个Issue想得到帮助，最好在[Plunker](http://plnkr.co/), [JSFiddle](http://jsfiddle.net/), 或者类似的站点创建一个示例，并提交给下面的网站：
 The recipe for getting help on your unique issue is to create an example that could work (even if it doesn't) in a shareable example on [Plunker](http://plnkr.co/), [JSFiddle](http://jsfiddle.net/), or similar site and then post to one of the following:
 
 * [Stackoverflow.com](http://stackoverflow.com/search?q=angularjs)
 * [AngularJS mailing list](https://groups.google.com/forum/#!forum/angular)
 * [AngularJS IRC channel](http://webchat.freenode.net/?channels=angularjs&uio=d4)
 
-## Social Channels
+## 社会渠道
 
 * **Daily updates:** [Google+](https://plus.google.com/u/0/+AngularJS) or [Twitter](https://twitter.com/angularjs)
 * **Weekly newsletter:** [ng-newsletter](http://www.ng-newsletter.com/)
 * **Meetups: **[meetup.com](http://www.meetup.com/find/?keywords=angularJS&radius=Infinity&userFreeform=San+Francisco%2C+CA&mcId=z94108&mcName=San+Francisco%2C+CA&sort=member_count&eventFilter=mysugg)
 * **Official news and releases: **[AngularJS Blog](http://blog.angularjs.org/)
 
-## Contributing to AngularJS
+## 贡献给 AngularJS
 
+虽然我们已经有在Google的核心成员，但是Angular是一个凝聚100位贡献者的开源项目，如果你想成为其中一员并且已经准备好了，请阅读{@link misc/contribute AngularJS贡献指南}
 Though we have a core group of core contributors at Google, Angular is an open source project with hundreds of contributors.  We'd love you to be one of them.  When you're ready, please read the {@link misc/contribute Guide for contributing to AngularJS}.
 
 ## Final Bits

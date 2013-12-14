@@ -14,25 +14,25 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 1. http://angular.wvovo.com/guide
 1. http://angular.duapp.com/
 
-* 01-Controllers（控制器）翻译者:@GrahamLe
-* 02-Filters（过滤器）翻译者:@NigelYao
-* 03-Templates（模板）翻译者:@why520crazy
+* [01-Controllers（控制器）](http://angular.duapp.com/guide/controller)翻译者:@GrahamLe
+* [02-Filters（过滤器）](http://angular.duapp.com/guide/filter) 翻译者:@NigelYao
+* [03-Templates（模板）](http://angular.duapp.com/guide/templates) 翻译者:@why520crazy 已完成翻译
 * 04-Introduction（介绍）翻译者:
 * [05-Conceptual Overview（概念总览）](http://angular.duapp.com/guide/concepts) 翻译者: @asnowwolf 已完成翻译
-* [06-Understanding Angular Services（理解ng的服务）](https://github.com/jingyanjiaoliu/angular-guide-zh/blob/master/06-Understanding%20Angular%20Services\(%E7%90%86%E8%A7%A3%E6%9C%8D%E5%8A%A1\).md)翻译者: @lightma 已完成翻译
+* [06-Understanding Angular Services（理解ng的服务）](http://angular.duapp.com/guide/dev_guide.services.understanding_services)翻译者: @lightma 已完成翻译
 * 07-Managing Service Dependencies @joe
 * 08-Creating Services 翻译者: @FrankyYang
 * 09-Injecting Services Into Controllers 翻译者: @FrankyYang
 * 10-Testing Angular Services 翻译者: @FrankyYang
 * 11-Using $location
 * 12-Angular Services 翻译者: @FrankyYang
-* 13-Data Binding @NigelYao
+* [13-Data Binding](http://angular.duapp.com/guide/databinding) 翻译者：@NigelYao
 * 14-Working With CSS in Angular @ckken
 * 15-Dependency Injection
 * 16-Providers （Providers）翻译者: @lightma
 * 17-Modules 翻译者: @GrahamLe
-* 18-Scopes 翻译者: @GrahamLe
-* 19-Expressions
+* [18-Scopes](http://angular.duapp.com/guide/scope) 翻译者: @GrahamLe
+* 19-Expressions 翻译者:@NigelYao
 * 20-Bootstrap
 * 21-Directives 翻译者: @lrrluo
 * 22-HTML Compiler

@@ -4,8 +4,8 @@
 
 翻译者:[@why520crazy](https://github.com/why520crazy)
 
-Angular的模板是一个声明式的指定信息从模型，控制器变成用户在浏览器上可以看见的视图，
-他是一个静态的DOM，包含HTML，CSS以及一些引导Angular添加行为并且转换模板为动态视图的属性.
+Angular的模板是一个声明式的视图，它指定信息从模型，控制器变成用户在浏览器上可以看见的视图，
+并且是一个静态的DOM，包含HTML，CSS以及一些引导Angular添加行为并且转换模板为动态视图的属性.
 
 在Angular中有以下元素属性可以直接在模板中使用:
 
@@ -34,8 +34,8 @@ Angular的模板是一个声明式的指定信息从模型，控制器变成用�
 
 在一个简单的单页程序中，模板包含HTML，CSS和Angular指令，通常只是一个HTML文件(如 `index.html`)，
 在一个更复杂的程序中，你可以在一个主要的页面用"partials"展示多个视图，这些 "partials"都是独立的HTML文件，在主页面可以包含（ "include" ）
-这些"partials"页面通过路由 {@link api/ngRoute.$route $route} 和 {@link api/ngRoute.directive:ngView ngView}指令结合
-相关的示例代码参考 {@link tutorial/ angular tutorial} 中的第七八步骤
+这些"partials"页面，通过路由 {@link api/ngRoute.$route $route} 和 {@link api/ngRoute.directive:ngView ngView}指令结合，
+相关的示例代码参考 {@link tutorial/ angular 教程} 中的第七，八步骤。
 
 
 ## 相关主题
