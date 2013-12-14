@@ -2,6 +2,7 @@
 @name Angular 1.0到1.2迁移指南
 @description
 
+翻译者：[@asnowwolf](https://github.com/asnowwolf)
 
 这次AngularJS 1.2的升级破坏了API兼容性，你可能需要修改应用程序的部分源代码。
 
