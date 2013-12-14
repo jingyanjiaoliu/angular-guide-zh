@@ -1,6 +1,7 @@
 @ngdoc overview
 @name Filters
 @description
+@translator @NigelYao
 
 过滤器是用来格式化显示表达式中的值。它可以用在视图模板(templates)、控制器(controllers)或者服务(services)中。我们很容易自定义过滤器。
 
