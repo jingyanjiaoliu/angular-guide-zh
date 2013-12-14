@@ -225,65 +225,45 @@
 <li>同一个控制器 <code>EventController</code> 被用在了三个不同的DOM节点中（<em>这是为了省事，通常不这样写的</em>）</li>
 <li>上面的事件无非就是点击两个按钮，分别出发广播/冒泡（发射）事件，然后在各节点设置监听，这里只要用 <code>$scope.$on()</code> 方法（注：如果在指令中，可能就是 <code>scope.$on()</code>），就可以进行监听了</li>
 </ul>
-<h3 id="scope轮循（生命周期）">Scope轮循（生命周期）</h3>
+<h3 id="scope的生命周期">Scope的生命周期</h3>
+<h4 id="scope的生命周期_scope-的执行上下文">scope 的执行上下文</h4>
+<p><em>译者注</em>：这个小节应该是在看完下个小节的基础上再回过来看这个，所以建议先看下个小节：scope生命周期拆解。由于要遵从原文档的大体顺序，所以顺序没做改动。</p>
 <p>浏览器接收一个事件的标准的工作流程应该是：</p>
 <pre><code>接收事件 --&gt; 触发回调 --&gt; 回调执行结束返回 --&gt; 浏览器重绘DOM --&gt; 浏览器返回等待下一个事件</code></pre>
 <p>上面的过程中，如果一切都发生在 ng 的执行上下文的话，那相安无事，ng 能够知道数据模型发生的改变；但是如果当浏览器的控制权跑到原生的 Js 中去时（译者注：比如回调是用jQuery做的之类的非 ng 的操作等），那么应用执行的上下文就发生在 ng 的上下文之外了，这样就导致 ng 无法知晓数据模型的任何改变。想要让 ng <em>重新掌权并知晓正在发生的数据模型的变化</em>的话，那就需要通过使用 <a href="api/ng.$rootScope.Scope#methods_$apply"><code><code>$apply</code></code></a> 方法让上下文执行环境重新进入到 ng 的上下文中（<em>注：用法 <code>$scope.$apply()</code></em>）。只有执行上下文重新回到 ng 中，那样数据模型的改变才能被 ng 所识别并作出相应操作（注：当然，如果执行上下文没有发生改变，也就没有必要显示地去进行 $apply 操作）。举个例子，像 <a href="api/ng.directive:ngClick"><code><code>ng-click</code></code></a> 这个指令，监听DOM事件时，表达式的计算就必须放在 <code>$apply()</code> 中（注：例子不够完备，待补充）。</p>
-<p>After evaluating the expression, the <code>$apply</code> method performs a <a href="api/ng.$rootScope.Scope#methods_$digest"><code><code>$digest</code></code></a>. In the $digest phase the scope examines all
-of the <code>$watch</code> expressions and compares them with the previous value. This dirty checking is done
-asynchronously. This means that assignment such as <code>$scope.username=&quot;angular&quot;</code> will not
-immediately cause a <code>$watch</code> to be notified, instead the <code>$watch</code> notification is delayed until
-the <code>$digest</code> phase. This delay is desirable, since it coalesces multiple model updates into one
-<code>$watch</code> notification as well as it guarantees that during the <code>$watch</code> notification no other
-<code>$watch</code>es are running. If a <code>$watch</code> changes the value of the model, it will force additional
-<code>$digest</code> cycle.</p>
+<p>在计算完表达式之后，<code>$apply()</code> 方法执行 ng 的 <a href="api/ng.$rootScope.Scope#methods_$digest"><code><code>$digest</code></code></a> 阶段。在 <code>$digest</code> 阶段，scope 检查所有通过 <code>$watch()</code> 监测的表达式（或别的数据）并将其与它们自己之前的值进行比较。这就是所谓的 <code>dirty checking</code> （注：脏值检查）。另外，需要注意的是，<code>$watch()</code> 的监测是异步执行的。这就意味着当给一个 scope 中的属性赋值时，如：<code>$scope.username=&quot;angular&quot;</code>，<code>$watch()</code> 方法不会马上被调用，它会被延迟直到 <code>digest()</code> 阶段跑完（<em>注：至于 $digest 阶段到底是干嘛的，你可以认为就是个缓冲阶段，而且是必要的</em>）。通过 <code>$digest()</code> 给我们提供的这个延迟是很有必要的，也正是应用程序常常想要的（注：出于性能的考虑），因为有这个延迟，我们可以等待几个或多个数据模型的改变/更新攒到一块，合并起来放到一个 <code>$watch()</code> 中去监测，而且这样也能从一定程度上保证在一个 <code>$wathc()</code> 在监测期间没有别的 <code>$watch()</code> 在执行，这样，当前的 <code>$watch()</code> 可以返回给应用最准确的更新通知，进而刷新试图或是进入一个新的 <code>$digest()</code> 阶段。（译者注：这一段有点晦涩，可以看下面的一张图结合着学习；还有就是可以把整个过程想象为为了提升效率，把多个同性质的数据放在同一个 $digest 轮循中处理能够大大提高效率，就像zf办事经常这样，当然，它们的效率不高，ng则不同，效率相对高）</p>
+<h4 id="scope的生命周期_scope生命周期拆解">scope生命周期拆解</h4>
+<p>相信看了上面一段话，没理解的还是很多人，因为标题虽说是讲 scope 的生命周期，但是一上来就跟我讲的是关于 ng 的执行上下文，怎么也没联系到一块。说实话，翻译这段，真心有点要命的感觉。当然，把它拆分成多个步骤来看，相信会更清晰，因为下面我们是真要讲 scope 的生命周期，让我们来过一遍。</p>
 <ol>
-<li><p><strong>Creation</strong></p>
-<p>The <a href="api/ng.$rootScope"><code>root scope</code></a> is created during the application
-bootstrap by the <a href="api/AUTO.$injector"><code>$injector</code></a>. During template
-linking, some directives create new child scopes.</p>
+<li><p><strong>创建期</strong></p>
+<p><a href="api/ng.$rootScope"><code>root scope</code></a> 是在应用程序启动时由 <a href="api/AUTO.$injector"><code>$injector</code></a> 创建的。另外，在指令的模版链接阶段（template
+linking），指令会创建一些新的子级 scope。</p>
 </li>
-<li><p><strong>Watcher registration</strong></p>
-<p>During template linking directives register <a href="api/ng.$rootScope.Scope#methods_$watch"><code>watches</code></a> on the scope. These watches will be
-used to propagate model values to the DOM.</p>
+<li><p><strong>注册$watch</strong></p>
+<p>在模版链接阶段（template linking），指令会往 scope 中注册 <a href="api/ng.$rootScope.Scope#methods_$watch"><code>watches</code></a> 。不止一个的。这些 <code>$watch</code> 用来监测数据模型的更新并将更新值传给DOM。</p>
 </li>
-<li><p><strong>Model mutation</strong></p>
-<p>For mutations to be properly observed, you should make them only within the <a href="api/ng.$rootScope.Scope#methods_$apply"><code>scope.$apply()</code></a>. (Angular APIs do this
-implicitly, so no extra <code>$apply</code> call is needed when doing synchronous work in controllers,
-or asynchronous work with <a href="api/ng.$http"><code>$http</code></a> or <a href="api/ng.$timeout"><code>$timeout</code></a> services.</p>
+<li><p><strong>数据模型变化</strong></p>
+<p>正如上面一节所提到的，要想让数据模型的变化能够很好的被 ng 监测，需要让它们在 <a href="api/ng.$rootScope.Scope#methods_$apply"><code>scope.$apply()</code></a> 里发生。当然，对于 ng 本身的API来讲，无论是在控制器中做同步操作，还是通过 <a href="api/ng.$http"><code>$http</code></a> 或者 <a href="api/ng.$timeout"><code>$timeout</code></a> 做的非同步操作，抑或是 ng 的服务机制中，是没有必要手动去将数据模型变化的操作放到 <code>$apply()</code> 中去的，因为 ng 已经隐式的为我们做了这一点。</p>
 </li>
-<li><p><strong>Mutation observation</strong></p>
-<p>At the end <code>$apply</code>, Angular performs a <a href="api/ng.$rootScope.Scope#methods_$digest"><code>$digest</code></a> cycle on the root scope, which then propagates throughout all child scopes. During
-the <code>$digest</code> cycle, all <code>$watch</code>ed expressions or functions are checked for model mutation
-and if a mutation is detected, the <code>$watch</code> listener is called.</p>
+<li><p><strong>数据模型变化监测</strong></p>
+<p>在把数据变化 <code>$apply</code> 进来之后，ng 开始进入 <a href="api/ng.$rootScope.Scope#methods_$digest"><code>$digest</code></a> 轮循（就是调用 <code>$digest()</code> 方法），首先是 rootscope 进入 <code>$digest</code> ，然后由其把各个监听表达式或是函数的任务传播分配给所有的子级 scope ，那样各个 scope 就各司其职了，如果监听到自己负责的数据模型有变化，马上就调用 <code>$watch</code> 。（<em>译者注：这里所说的从根scope往下分发是译者自己的想法，如有错误，请纠正</em>）</p>
 </li>
-<li><p><strong>Scope destruction</strong></p>
-<p>When child scopes are no longer needed, it is the responsibility of the child scope creator
-to destroy them via <a href="api/ng.$rootScope.Scope#methods_$destroy"><code>scope.$destroy()</code></a>
-API. This will stop propagation of <code>$digest</code> calls into the child scope and allow for memory
-used by the child scope models to be reclaimed by the garbage collector.</p>
+<li><p><strong>销毁scope</strong></p>
+<p>当子级 scope 不再需要的时候，这时候创建它们的就得负责把它们回收或是销毁（注：比如在指令中，创建是隐式的，销毁可以是显式的，如 <code>scope.$destroy()</code>）。销毁是通过 <a href="api/ng.$rootScope.Scope#methods_$destroy"><code>scope.$destroy()</code></a> 这个方法。销毁之后，<code>$digest()</code> 方法就不会继续往子级 scope 传播了，这样也就可以让垃圾回收系统把这一个 scope 上用来存放数据模型的内存给回收利用了。</p>
 </li>
 </ol>
-<h4 id="scope轮循（生命周期）_scopes和指令">Scopes和指令</h4>
-<p>During the compilation phase, the <a href="guide/compiler">compiler</a> matches <a href="api/ng.$compileProvider#methods_directive"><code>directives</code></a> against the DOM template. The directives
-usually fall into one of two categories:</p>
+<h4 id="scope的生命周期_scopes和指令">Scopes和指令</h4>
+<p>在编译（或说解析）阶段, <a href="guide/compiler">compiler</a> （译者注：ng 解析器）在HTML解析器解析页面遇到非传统的或是自己不能识别的标签或别的表达式等时，ng 解析器，这时候就将这些HTML解析器不懂的东西（其实就是指令） <a href="api/ng.$compileProvider#methods_directive"><code>directives</code></a> 在当前的DOM环境下解析出来。通常，指令分为两种，一种就是我们常说的指令，另外一种就是我们通常叫它 ng 表达式的双大括号形式，具体如下：</p>
 <ul>
-<li><p>Observing <a href="api/ng.$compileProvider#methods_directive"><code>directives</code></a>, such as
-double-curly expressions <code>{{expression}}</code>, register listeners using the <a href="api/ng.$rootScope.Scope#methods_$watch"><code>$watch()</code></a> method. This type of directive needs
-to be notified whenever the expression changes so that it can update the view.</p>
+<li><p>监测型 <a href="api/ng.$compileProvider#methods_directive"><code>directives</code></a> ，像双大括号表达式 <code>{{expression}}</code> 。这种类型的指令需要在 <a href="api/ng.$rootScope.Scope#methods_$watch"><code>$watch()</code></a> 方法中注册一个监听处理器（译者注：隐式还是显式的需要看执行上下文），来监听控制器或是别的操作引起的表达式值改变，进而来更新试图。</p>
 </li>
-<li><p>Listener directives, such as <a href="api/ng.directive:ngClick"><code>ng-click</code></a>, register a listener with the DOM. When the DOM listener fires, the directive
-executes the associated expression and updates the view using the <a href="api/ng.$rootScope.Scope#methods_$apply"><code>$apply()</code></a> method.</p>
+<li><p>监听型 <a href="api/ng.$compileProvider#methods_directive"><code>directives</code></a> ，像 <a href="api/ng.directive:ngClick"><code>ng-click</code></a> ， 这种是在HTML标签属性中直接写好当 <code>ng-click</code> 发生时调用什么处理器，当DOM监听到 <code>ng-click</code> 被触发时，这个指令就会通过 <a href="api/ng.$rootScope.Scope#methods_$apply"><code>$apply()</code></a> 方法执行相关的表达式操作或是别的操作进而更新试图。</p>
 </li>
 </ul>
-<p>When an external event (such as a user action, timer or XHR) is received, the associated <a href="guide/expression">expression</a> must be applied to the scope through the <a href="api/ng.$rootScope.Scope#methods_$apply"><code>$apply()</code></a> method so that all listeners are updated
-correctly.</p>
-<h4 id="scope轮循（生命周期）_可以创建scopes的指令">可以创建Scopes的指令</h4>
-<p>In most cases, <a href="api/ng.$compileProvider#methods_directive"><code>directives</code></a> and scopes interact
-but do not create new instances of scope. However, some directives, such as <a href="api/ng.directive:ngController"><code>ng-controller</code></a> and <a href="api/ng.directive:ngRepeat"><code>ng-repeat</code></a>, create new child scopes
-and attach the child scope to the corresponding DOM element. You can retrieve a scope for any DOM
-element by using an <code>angular.element(aDomElement).scope()</code> method call.</p>
-<h4 id="scope轮循（生命周期）_scopes与控制器">Scopes与控制器</h4>
+<p>综上，无论是哪种类型的指令，当外部事件（可能是用户输入，定时器，ajax等）发生时，相关的 <a href="guide/expression">expression</a> 必须要通过 <a href="api/ng.$rootScope.Scope#methods_$apply"><code>$apply()</code></a> 作用于相应的 scope ，这样所有的监听器才能被正确更新，然后进行后续的相关操作。</p>
+<h4 id="scope的生命周期_可以创建scopes的指令">可以创建Scopes的指令</h4>
+<p>大多数情况下， <a href="api/ng.$compileProvider#methods_directive"><code>directives</code></a> 和 scope 相互作用，但并不创建 scope 的新实例。但是，有一些特殊的指令，如 <a href="api/ng.directive:ngController"><code>ng-controller</code></a> 和 <a href="api/ng.directive:ngRepeat"><code>ng-repeat</code></a> 等，则会创建新的子级 scope，并且把这个新创建的 scope 和相应的DOM元素相关联。如前面说过的从DOM元素抓取 scope 的方式（如果你还记得的话），是调用 <code>angular.element(aDomElement).scope()</code> 方法。</p>
+<h4 id="scope的生命周期_scopes与控制器">Scopes与控制器</h4>
 <p>Scopes and controllers interact with each other in the following situations:</p>
 <ul>
 <li><p>Controllers use scopes to expose controller methods to templates (see <a href="api/ng.directive:ngController"><code>ng-controller</code></a>).</p>
@@ -296,7 +276,7 @@ the model. These watches execute immediately after the controller behavior execu
 </ul>
 <p>See the <a href="api/ng.directive:ngController"><code>ng-controller</code></a> for more
 information.</p>
-<h4 id="scope轮循（生命周期）_scope-性能">Scope <code>$watch</code> 性能</h4>
+<h4 id="scope的生命周期_scope-性能">Scope <code>$watch</code> 性能</h4>
 <p>Dirty checking the scope for property changes is a common operation in Angular and for this reason
 the dirty checking function must be efficient. Care should be taken that the dirty checking
 function does not do any DOM access, as DOM access is orders of magnitude slower then property
