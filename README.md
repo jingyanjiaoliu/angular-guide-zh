@@ -18,7 +18,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * 02-Filters（过滤器）翻译者:@NigelYao
 * 03-Templates（模板）翻译者:@why520crazy
 * 04-Introduction（介绍）翻译者:
-* 05-Conceptual Overview（概述）翻译者: @asnowwolf
+* [05-Conceptual Overview（概念总览）](http://angular.duapp.com/guide/concepts) 翻译者: @asnowwolf 已完成翻译
 * [06-Understanding Angular Services（理解ng的服务）](https://github.com/jingyanjiaoliu/angular-guide-zh/blob/master/06-Understanding%20Angular%20Services\(%E7%90%86%E8%A7%A3%E6%9C%8D%E5%8A%A1\).md)翻译者: @lightma 已完成翻译
 * 07-Managing Service Dependencies @joe
 * 08-Creating Services 翻译者: @FrankyYang
@@ -42,7 +42,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * 26-Unit Testing
 * 27-i18n and l10n
 * 28-Internet Explorer Compatibility
-* 29-Migrating from 1.0 to 1.2
+* 29-Migrating from 1.0 to 1.2 翻译者: @asnowwolf
 
 目前加入者：
 
