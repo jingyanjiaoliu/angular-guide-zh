@@ -25,7 +25,7 @@
 |{@link concepts#module 模块(Module)}            | 用来配置注入器 |
 |{@link concepts#service 服务(Service)}           | 独立于视图(View)的、**可复用**的业务逻辑 |
 
-# 最初的例子：数据绑定
+# 例子的第一步：数据绑定
 
 下面我们将编写一个表单，用来计算一个订单在不同币种下的总价。
 
@@ -65,7 +65,7 @@ Angular还为{@link api/ng.directive:input `input`}
 比如在上面这个例子中，我们就通过这些css类把空白`input`元素的边框设置为红色，来表示无效的输入。
 
 <div class="alert alert-info">
-**通过自定义指令访问DOM**: 对于Angular，一个程序中唯一允许接触DOM的地方就是“指令”。之所以这样要求，是因为带有DOM访问的代码难以进行自动化测试。
+**通过自定义指令访问DOM**: 对于Angular，一个程序中唯一允许接触DOM的地方就是“指令”。之所以这样要求，是因为需要访问DOM的代码难以进行自动化测试。
  如果你需要直接访问DOM，那么你就应该为此写一个自定义指令。在
  {@link directive 指令指南}一章中详细解释了该怎样实现自定义指令。
 </div>
@@ -145,7 +145,7 @@ Angular还为{@link api/ng.directive:input `input`}
 
 在创建一个控制器的同时，我们还往HTML中添加了一个{@link api/ng.directive:ngController `ng-controller`}指令。
 这个指令告诉Angular，我们创建的这个`InvoiceController`控制器将会负责管理这个带有ng-controller指令的div节点，及其各级子节点。
-`InvoiceController as invoice`这个语法告诉Angular，创建这个`InvoiceController`的实例，并且把这个实例赋值给当前作用域(Scope)中的`invoice`变量。
+`InvoiceController as invoice`这个语法告诉Angular：创建这个`InvoiceController`的实例，并且把这个实例赋值给当前作用域(Scope)中的`invoice`变量。
 
 同时，我们修改了页面中所有用于读写Scope变量的表达式，给它们加上了一个`invoice.`前缀。
 我们还把可选的币种作为一个数组定义在控制器中，并且通过{@link api/ng.directive:ngRepeat `ng-repeat`}指令把它们添加到模板。
@@ -231,9 +231,10 @@ Angular还为{@link api/ng.directive:input `input`}
 <img class="pull-right" style="padding-left: 3em; padding-bottom: 1em;" src="img/guide/concepts-module-service.png">
 
 这次有什么改动？
-我们把`convertCurrency`函数和所支持的币种的定义移入了一个新的文件：`finance.js`。但是控制器怎样才能找到这个独立的函数呢？
 
-该<a name="di">“{@link di 依赖注入(Dependency Injection)}”</a>出场了。依赖注入(DI)是一种设计模式(Design Pattern)，它用于解决下列问题：我们创建了对象和函数，但是它们怎么得到自己所依赖的对象呢？
+我们把`convertCurrency`函数和所支持的币种的定义独立到一个新的文件：`finance.js`。但是控制器怎样才能找到这个独立的函数呢？
+
+这下该<a name="di">“{@link di 依赖注入(Dependency Injection)}”</a>出场了。依赖注入(DI)是一种设计模式(Design Pattern)，它用于解决下列问题：我们创建了对象和函数，但是它们怎么得到自己所依赖的对象呢？
 Angular中的每一样东西都是用依赖注入(DI)的方式来创建和使用的，比如指令(Directive)、过滤器(Filter)、控制器(Controller)、服务(Service)。
 在Angular中，依赖注入(DI)的容器(container)叫做<a name="injector">"{@link di 注射器(injector)}"</a>。
 
@@ -241,12 +242,12 @@ Angular中的每一样东西都是用依赖注入(DI)的方式来创建和使用
 
 在上面这个例子中：
 模板包含了一个`ng-app="invoice2"`指令。这告诉Angular使用`invoice`模块作为该应用程序的主模块。
-像`angular.module('invoice', ['finance'])`这样的代码告诉Angular，`invoice`模块依赖于`finance`模块。
+像`angular.module('invoice', ['finance'])`这样的代码告诉Angular：`invoice`模块依赖于`finance`模块。
 这样一来，Angular就能同时使用`InvoiceController`这个控制器和`currencyConverter`这个服务了。
 
 刚才我们已经定义了应用程序的所有部分，现在，需要Angular来创建它们了。
-上一节，我们知道了控制器(controller)是通过一个工厂函数创建的。
-而对于服务(service)，有多种方式来定义它们的工厂函数（参见{@link dev_guide.services 服务指南}）。
+在上一节，我们了解到控制器(controller)是通过一个工厂函数创建的。
+而对于服务(service)，则有多种方式来定义它们的工厂函数（参见{@link dev_guide.services 服务指南}）。
 上面这个例子中，我们通过一个返回`currencyConverter`函数的函数作为创建`currencyConverter`服务的工厂。
 （译注：js中的“工厂(factory)”是指一个以函数作为“返回值”的函数）
 
@@ -254,11 +255,11 @@ Angular中的每一样东西都是用依赖注入(DI)的方式来创建和使用
 在Angular中，这非常简单，只要在构造函数中定义一些具有特定名字的参数就可以了。
 这时，注射器(injector)就可以按照正确的依赖关系创建这些对象，并且根据名字把它们传入那些依赖它们的对象工厂中。
 在我们的例子中，`InvoiceController`有一个叫做`currencyConverter`的参数。
-根据这个参数，Angular就知道`InvoiceController`依赖于`currencyConverter`，取得`currencyConverter`服务的实例，并且把它作为参数来调用`InvoiceController`。
+根据这个参数，Angular就知道`InvoiceController`依赖于`currencyConverter`，取得`currencyConverter`服务的实例，并且把它作为参数传给`InvoiceController`的构造函数。
 
 这次改动中的最后一点是我们现在把一个数组作为参数传入到`module.controller`函数中，而不再是一个普通函数。
-这个数组前面部分的元素包含这个控制器所依赖的一连串服务的名字，最后一个元素则是这个控制器的构造函数。
-Angular通过这种数组语法定义依赖，以避免js代码压缩器(Minifier)破坏这个“依赖注入”过程。
+这个数组前面部分的元素包含这个控制器所依赖的一系列服务的名字，最后一个元素则是这个控制器的构造函数。
+Angular可以通过这种数组语法来定义依赖，以免js代码压缩器(Minifier)破坏这个“依赖注入”的过程。
 因为这些js代码压缩器通常都会把构造函数的参数重命名为很短的名字，比如`a`，而常规的依赖注入是需要根据参数名来查找“被注入对象”的。
 （译注：因为字符串不会被js代码压缩器重命名，所以数组语法可以解决这个问题。）
 
@@ -342,5 +343,6 @@ Angular通过这种数组语法定义依赖，以避免js代码压缩器(Minifie
 </example>
 
 这次有什么变动？
-我们的`finance`模块中的`currencyConverter`服务这次使用了{@link api/ng.$http $http}服务，它是由Angular内建的用于访问后端API的服务。
-它是对[`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)以及[JSONP](http://en.wikipedia.org/wiki/JSONP)的封装。详情参阅$http的API文档 - {@link api/$http `$http`}。
+
+这次我们的`finance`模块中的`currencyConverter`服务使用了{@link api/ng.$http $http}服务 —— 它是由Angular内建的用于访问后端API的服务。
+是对[`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)以及[JSONP](http://en.wikipedia.org/wiki/JSONP)的封装。详情参阅$http的API文档 - {@link api/ng.$http `$http`}。
