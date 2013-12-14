@@ -2,6 +2,8 @@
 @name 概念总览
 @description
 
+翻译者：[@asnowwolf](https://github.com/asnowwolf)
+
 在创建第一个应用程序之前，你需要理解Angular中的一些概念。
 在本章，通过一个简单的例子，你可以快速接触Angular中所有重要的部分。
 但是，我不会花时间去解释细节，而是着重于帮助你建立一个全局性的“概观”。
