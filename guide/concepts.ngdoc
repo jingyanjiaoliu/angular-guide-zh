@@ -22,7 +22,7 @@
 |{@link concepts#view 视图(View)}              | 用户看到的内容（即**DOM**） |
 |{@link concepts#databinding 数据绑定(Data Binding)}      | **自动同步**模型(Model)中的数据和视图(View)表现 |
 |{@link concepts#controller 控制器(Controller)}        | 视图(View)背后的**业务逻辑** |
-|{@link concepts#di Dependency 依赖注入(Injection)} | 负责创建和自动装载对象或函数 |
+|{@link concepts#di 依赖注入(Dependency Injection)} | 负责创建和自动装载对象或函数 |
 |{@link concepts#injector 注射器(Injector)}          | 用来实现依赖注入(Injection)的容器 |
 |{@link concepts#module 模块(Module)}            | 用来配置注入器 |
 |{@link concepts#service 服务(Service)}           | 独立于视图(View)的、**可复用**的业务逻辑 |
