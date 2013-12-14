@@ -1,106 +1,93 @@
 @ngdoc overview
-@name Conceptual Overview
+@name 概念总览
 @description
 
-There are some concepts within Angular that you should understand before creating your first application.
-This section touches all important parts of Angular really quickly using a simple example.
-However, it won't explain all details.
-For a more in-depth explanation, have a look at the {@link tutorial/ tutorial}.
+在创建第一个应用程序之前，你需要理解Angular中的一些概念。
+在本章，通过一个简单的例子，你可以快速接触Angular中所有重要的部分。
+但是，我不会花时间去解释细节，而是着重于帮助你建立一个全局性的“概观”。
+更深入的解释，请参见{@link tutorial/ 向导}。
 
-| Concept          | Description                     |
+
+| 概念          | 说明                     |
 |------------------|------------------------------------------|
-|{@link concepts#template Template}          | HTML with additional markup |
-|{@link concepts#directive Directives}        | extend HTML with custom attributes and elements |
-|{@link concepts#model Model}             | the data that is shown to the user and with which the user interacts |
-|{@link concepts#scope Scope}             | context where the model is stored so that controllers, directives and expressions can access it |
-|{@link concepts#expression Expressions}       | access variables and functions from the scope |
-|{@link concepts#compiler Compiler}          | parses the template and instantiates directives and expressions |
-|{@link concepts#filter Filter}            | formats the value of an expression for display to the user |
-|{@link concepts#view View}              | what the user sees (the DOM) |
-|{@link concepts#databinding Data Binding}      | sync data between the model and the view |
-|{@link concepts#controller Controller}        | the business logic behind views |
-|{@link concepts#di Dependency Injection} | Creates and wires objects / functions |
-|{@link concepts#injector Injector}          | dependency injection container |
-|{@link concepts#module Module}            | configures the Injector |
-|{@link concepts#service Service}           | reusable business logic independent of views |
+|{@link concepts#template 模板(Template)}          | 带有Angular扩展标记的**HTML** |
+|{@link concepts#directive 指令(Directive)}        | 用于通过**自定义属性和元素**扩展HTML的行为 |
+|{@link concepts#model 模型(Model)}             | 用于显示给用户并且与用户互动的**数据** |
+|{@link concepts#scope 作用域(Scope)}             | 用来存储模型(Model)的语境(context)。模型放在这个语境中才能被控制器、指令和表达式等访问到 |
+|{@link concepts#expression 表达式(Expression)}       | 模板中可以通过它来访问作用域（Scope）中的变量和函数 |
+|{@link concepts#compiler 编译器(Compiler)}          | 用来**编译**模板(Template)，并且对其中包含的指令(Directive)和表达式(Expression)进行**实例化** |
+|{@link concepts#filter 过滤器(Filter)}            | 负责**格式化**表达式(Expression)的值，以便呈现给用户 |
+|{@link concepts#view 视图(View)}              | 用户看到的内容（即**DOM**） |
+|{@link concepts#databinding 数据绑定(Data Binding)}      | **自动同步**模型(Model)中的数据和视图(View)表现 |
+|{@link concepts#controller 控制器(Controller)}        | 视图(View)背后的**业务逻辑** |
+|{@link concepts#di Dependency 依赖注入(Injection)} | 负责创建和自动装载对象或函数 |
+|{@link concepts#injector 注射器(Injector)}          | 用来实现依赖注入(Injection)的容器 |
+|{@link concepts#module 模块(Module)}            | 用来配置注入器 |
+|{@link concepts#service 服务(Service)}           | 独立于视图(View)的、**可复用**的业务逻辑 |
 
+# 例子的第一步：数据绑定
 
-# A first example: Data binding
+下面我们将编写一个表单，用来计算一个订单在不同币种下的总价。
 
-In the following we will build a form to calculate the costs of an invoice in different currencies.
-
-Let's start with input fields for quantity and cost whose values are multiplied to produce the total of the invoice:
-
+首先，我们做一个单币种表单，它有数量和单价两个输入框，并且把数量和单价相乘得出该订单的总价。
 
 <example>
   <file name="index.html">
       <div ng-init="qty=1;cost=2">
-        <b>Invoice:</b>
+        <b>订单:</b>
         <div>
-          Quantity: <input type="number" ng-model="qty" required >
+          数量: <input type="number" ng-model="qty" required >
         </div>
         <div>
-          Costs: <input type="number" ng-model="cost" required >
+          单价: <input type="number" ng-model="cost" required >
         </div>
         <div>
-          <b>Total:</b> {{qty * cost | currency}}
+          <b>总价:</b> {{qty * cost | currency}}
         </div>
       </div>
   </file>
 </example>
 
-Try out the Live Preview above, and then let's walk through the example and describe what's going on.
+你可以先在Demo区体验一下操作，接下来我们将通读这个例子，并且详细讲解这里所发生的事情。
 
 <img class="pull-right" style="padding-left: 3em; padding-bottom: 1em;" src="img/guide/concepts-databinding1.png">
 
-This looks like normal HTML, with some new markup. In Angular, a file like this is called a
-<a name="template">"{@link templates template}"</a>. When Angular starts your application, it parses and 
-processes this new markup from the template using the so called <a name="compiler">"{@link compiler compiler}"</a>.
-The loaded, transformed and rendered DOM is then called the <a name="view">"view"</a>.
+这看起来很像标准的HTML，只是带了一些新的标记。在Angular中，像这样的文件叫做<a name="template">“{@link templates 模板(template)}”</a>。
+当Angular启动你的应用时，它通过<a name="compiler">“{@link compiler 编译器(compiler)}”</a>来解析并处理模板中的这些新标记。
+这些经过加载、转换、渲染而成的DOM就叫做<a name="view">“视图(view)”</a>
 
-The first kind of new markup are the so called <a name="directive">"{@link directive directives}"</a>.
-They apply special behavior to attributes or elements in the HTML. In the example above we use the 
-{@link api/ng.directive:ngApp `ng-app`} attribute, which is linked to a directive that automatically
-initializes our application. Angular also defines a directive for the {@link api/ng.directive:input `input`}
-element that adds extra behavior to the element. E.g. it is able to automatically validate that the entered 
-text is non empty by evaluating the `required` attribute. 
-The {@link api/ng.directive:ngModel `ng-model`} directive stores/updates
-the value of the input field into/from a variable and shows the validation state of the input field by 
-adding css classes. In the example we use these css classes to mark an empty input field with a red border.
+第一类新标记叫做<a name="directive">“{@link directive 指令(directive)}”</a>。
+它们通过HTML中的属性或元素来为页面添加特定的行为。上面的例子中，我们使用了
+{@link api/ng.directive:ngApp `ng-app`} 属性，与此相关的指令(directive)则负责自动初始化我们的应用程序。
+Angular还为{@link api/ng.directive:input `input`}
+元素定义了一个指令，它负责添加额外的行为到这个元素上。例如，当它发现了`input`元素的`required`属性，它就会自动进行验证，确保所输入的文本不会是空白。
+{@link api/ng.directive:ngModel `ng-model`}指令则负责从变量(比如这里的qty、cost等)加载`input`元素的`value`值，并且把`input`元素的`value`值写回变量中。并且，还会根据对`input`元素进行校验的结果自动添加相应的css类。
+比如在上面这个例子中，我们就通过这些css类把空白`input`元素的边框设置为红色，来表示无效的输入。
 
 <div class="alert alert-info">
-**Custom directives to access the DOM**: In Angular, the only place where an application touches the DOM is
- within directives. This is good as artifacts that access the DOM are hard to test.
- If you need to access the DOM directly you should write a custom directive for this. The
- {@link directive directives guide} explains how to do this.
+**通过自定义指令访问DOM**: 对于Angular，一个程序中唯一允许接触DOM的地方就是“指令”。之所以这样要求，是因为需要访问DOM的代码难以进行自动化测试。
+ 如果你需要直接访问DOM，那么你就应该为此写一个自定义指令。在
+ {@link directive 指令指南}一章中详细解释了该怎样实现自定义指令。
 </div>
 
-The second kind of new markup are the double curly braces `{{ expression | filter }}`:
-When the compiler encounters this markup, it will replace it with the evaluated value of the markup.
-An <a name="expression">"{@link expression expression}"</a> in a template is a JavaScript-like code snippet that allows
-to read and write variables. Note that those variables are not global variables.
-Just like variables in a JavaScript function live in a scope,
-Angular provides a <a name="scope">"{@link scope scope}"</a> for the variables accessible to expressions.
-The values that are stored in variables on the scope are referred to as the <a name="model">"model"</a>
-in the rest of the documentation.
-Applied to the example above, the markup directs Angular to "take the data we got from the input widgets
-and multiply them together".
+第二类新标记是双大括号`{{ expression | filter }}`，其中expression是“表达式”语句，filter是“过滤器”语句。
+当编译器遇到这种标记时，它会把这些标记替换为这个表达式的计算结果。
+模板中的<a name="expression">"{@link expression 表达式}"</a>是一种**类似于**JavaScript的代码片段，它允许你读写变量。注意，表达式中所用的变量**并不是**全局变量。
+就像JavaScript函数定义中的变量都属于某个作用域一样，Angular也为这些能从表达式中访问的变量提供了一个<a name="scope">“{@link scope 作用域(scope)}”</a>。
+这些存储于Angular作用域(Scope)中的变量叫做Scope变量，这些变量所代表的数据叫做<a name="model">“模型(model)”</a>。
+在上面的例子中，这些标记告诉Angular：“从这两个`input`元素中获取数据，并把它们乘在一起。”
 
-The example above also contains a <a name="filter">"{@link filter filter}"</a>.
-A filter formats the value of an expression for display to the user.
-In the example above, the filter {@link api/ng.filter:currency `currency`} formats a number
-into an output that looks like money.
+上面这个例子中还包含一个<a name="filter">"{@link filter 过滤器(filter)}"</a>。
+过滤器格式化表达式的值，以便呈现给用户。
+上面的例子中{@link api/ng.filter:currency `currency`}过滤器把一个数字格式化为金额的形式进行输出。
 
-The important thing in the example is that angular provides _live_ bindings:
-Whenever the input values change, the value of the expressions are automatically
-recalculated and the DOM is updated with their values.
-The concept behind this is <a name="databinding">"{@link databinding two-way data binding}"</a>.
+这个例子中最重要的一点是：Angular提供了**动态(live)**的绑定：
+当`input`元素的值变化的时候，表达式的值也会自动重新计算，并且DOM所呈现的内容也会随着这些值的变化而自动更新。
+这种模型(model)与视图(view)的联动就叫做<a name="databinding">“{@link databinding 双向数据绑定}”</a>。
 
+# 添加UI逻辑：控制器
 
-# Adding UI logic: Controllers
-
-Let's add some more logic to the example that allows us to enter and calculate the costs in
-different currencies and also pay the invoice.
+现在，我们添加一些逻辑，以便让这个例子支持不同的币种。它将允许我们使用不同的币种来输入、计算和支付这个订单。
 
 <example module="invoice1">
   <file name="invoice1.js">
@@ -123,73 +110,64 @@ different currencies and also pay the invoice.
           return amount * this.usdToForeignRates[outCurr] * 1 / this.usdToForeignRates[inCurr];
         };
         this.pay = function pay() {
-          window.alert("Thanks!");
+          window.alert("谢谢！");
         };
       });
   </file>
   <file name="index.html">
       <div ng-controller="InvoiceController as invoice">
-        <b>Invoice:</b>
+        <b>订单:</b>
         <div>
-          Quantity: <input type="number" ng-model="invoice.qty" required >
+          数量: <input type="number" ng-model="invoice.qty" required >
         </div>
         <div>
-          Costs: <input type="number" ng-model="invoice.cost" required >
+          单价: <input type="number" ng-model="invoice.cost" required >
           <select ng-model="invoice.inCurr">
             <option ng-repeat="c in invoice.currencies">{{c}}</option>
           </select>
         </div>
         <div>
-          <b>Total:</b>
+          <b>总价:</b>
           <span ng-repeat="c in invoice.currencies">
             {{invoice.total(c) | currency:c}}
           </span>
-          <button class="btn" ng-click="invoice.pay()">Pay</button>
+          <button class="btn" ng-click="invoice.pay()">支付</button>
         </div>
       </div>
   </file>
 </example>
 
-What changed?
+这次有什么变动？
 
-First, there is a new JavaScript file that contains a so called <a name="controller">"{@link controller controller}"</a>.
-More exactly, the file contains a constructor function that creates the actual controller instance.
-The purpose of controllers is to expose variables and functionality to expressions and directives.
+首先，出现了一个新的JavaScript文件，它包含一个被称为<a name="controller">"{@link controller 控制器(controller)}"</a>的函数。
+更确切点说：这个文件中定义了一个构造函数，它用来在将来真正需要的时候创建这个控制器函数的实例。
+控制器的用途是导出一些变量和函数，供模板中的表达式(expression)和指令(directive)使用。
 
-Besides the new file that contains the controller code we also added a
-{@link api/ng.directive:ngController `ng-controller`} directive to the HTML.
-This directive tells angular that the new `InvoiceController` is responsible for the element with the directive
-and all of the element's children.
-The syntax `InvoiceController as invoice` tells Angular to instantiate the controller
-and save it in the variable `invoice` in the current scope.
+在创建一个控制器的同时，我们还往HTML中添加了一个{@link api/ng.directive:ngController `ng-controller`}指令。
+这个指令告诉Angular，我们创建的这个`InvoiceController`控制器将会负责管理这个带有ng-controller指令的div节点，及其各级子节点。
+`InvoiceController as invoice`这个语法告诉Angular：创建这个`InvoiceController`的实例，并且把这个实例赋值给当前作用域(Scope)中的`invoice`变量。
 
-We also changed all expressions in the page to read and write variables within that
-controller instance by prefixing them with `invoice.` . The possible currencies are defined in the controller
-and added to the template using {@link api/ng.directive:ngRepeat `ng-repeat`}.
-As the controller contains a `total` function
-we are also able to bind the result of that function to the DOM using `{{ invoice.total(...) }}`.
+同时，我们修改了页面中所有用于读写Scope变量的表达式，给它们加上了一个`invoice.`前缀。
+我们还把可选的币种作为一个数组定义在控制器中，并且通过{@link api/ng.directive:ngRepeat `ng-repeat`}指令把它们添加到模板。
+由于控制器中还包含了一个`total`函数，我们也能在DOM中使用`{{ invoice.total(...) }}`表达式来绑定总价的计算结果。
 
-Again, this binding is live, i.e. the DOM will be automatically updated
-whenever the result of the function changes.
-The button to pay the invoice uses the directive {@link api/ng.directive:ngClick `ngClick`}. This will evaluate the
-corresponding expression whenever the button is clicked.
+同样，这个绑定也是动态(live)的，也就是说：当invoice.total函数的返回值变化的时候，DOM也会跟着自动更新。
+表单中的“支付”按钮附加上了指令{@link api/ng.directive:ngClick `ngClick`}。
+这意味着当它被点击时，会自动执行`invoice.pay()`这个表达式，即：调用当前作用域中的pay函数。
 
-In the new JavaScript file we are also creating a {@link concepts#module module}
-at which we register the controller. We will talk about modules in the next section.
+在这个新的JavaScript文件中，我们还创建了一个{@link concepts#module 模块(module)}，并且在这个模块中注册了控制器(controller)。
+接下来我们就讲一下模块(module)这个概念。
 
-The following graphic shows how everything works together after we introduced the controller:
+下面这个图表现的是我们声明了这个控制器(controller)之后，它们是如何协作的。
 
 <img style="padding-left: 3em; padding-bottom: 1em;" src="img/guide/concepts-databinding2.png">
 
-# View independent business logic: Services
+# 与视图(View)无关的业务逻辑：服务(Service)
 
-Right now, the `InvoiceController` contains all logic of our example. When the application grows it
-is a good practise to move view independent logic from the controller into a so called
-<a name="service">"{@link dev_guide.services service}"</a>, so it can be reused by other parts
-of the application as well. Later on, we could also change that service to load the exchange rates
-from the web, e.g. by calling the Yahoo Finance API, without changing the controller.
+现在，`InvoiceController`包含了我们这个例子中的所有逻辑。如果这个应用程序的规模继续成长，最好的做法是：把控制器中与视图无关的逻辑都移到<a name="service">"{@link dev_guide.services 服务(service)}"</a>中。
+以便这个应用程序的其他部分也能复用这些逻辑。
 
-Let's refactor our example and move the currency conversion into a service in another file:
+接下来，就让我们重构我们的例子，并且把币种兑换的逻辑移入到一个独立的服务(service)中。
 
 <example module="invoice2">
   <file name="finance2.js">
@@ -223,28 +201,28 @@ Let's refactor our example and move the currency conversion into a service in an
           return currencyConverter.convert(this.qty * this.cost, this.inCurr, outCurr);
         };
         this.pay = function pay() {
-          window.alert("Thanks!");
+          window.alert("谢谢！");
         };
       }]);
   </file>
   <file name="index.html">
       <div ng-controller="InvoiceController as invoice">
-        <b>Invoice:</b>
+        <b>订单:</b>
         <div>
-          Quantity: <input type="number" ng-model="invoice.qty" required >
+          数量: <input type="number" ng-model="invoice.qty" required >
         </div>
         <div>
-          Costs: <input type="number" ng-model="invoice.cost" required >
+          单价: <input type="number" ng-model="invoice.cost" required >
           <select ng-model="invoice.inCurr">
             <option ng-repeat="c in invoice.currencies">{{c}}</option>
           </select>
         </div>
         <div>
-          <b>Total:</b>
+          <b>总价:</b>
           <span ng-repeat="c in invoice.currencies">
             {{invoice.total(c) | currency:c}}
           </span>
-          <button class="btn" ng-click="invoice.pay()">Pay</button>
+          <button class="btn" ng-click="invoice.pay()">支付</button>
         </div>
       </div>
   </file>
@@ -252,55 +230,43 @@ Let's refactor our example and move the currency conversion into a service in an
 
 <img class="pull-right" style="padding-left: 3em; padding-bottom: 1em;" src="img/guide/concepts-module-service.png">
 
-What changed?
-We moved the `convertCurrency` function and the definition of the existing currencies
-into the new file `finance.js`. But how does the controller
-get a hold of the now separated function?
+这次有什么改动？
 
-This is where <a name="di">"{@link di Dependency Injection}"</a> comes into play.
-Dependency Injection (DI) is a software design pattern that
-deals with how objects and functions get created and how they get a hold of their dependencies.
-Everything within Angular (directives, filters, controllers,
-services, ...) is created and wired using dependency injection. Within Angular,
-the DI container is called the <a name="injector">"{@link di injector}"</a>.
+我们把`convertCurrency`函数和所支持的币种的定义独立到一个新的文件：`finance.js`。但是控制器怎样才能找到这个独立的函数呢？
 
-To use DI, there needs to be a place where all the things that should work together are registered.
-In Angular, this is the purpose of the so called <a name="module">"{@link module modules}"</a>.
-When Angular starts, it will use the configuration of the module with the name defined by the `ng-app` directive,
-including the configuration of all modules that this module depends on.
+这下该<a name="di">“{@link di 依赖注入(Dependency Injection)}”</a>出场了。依赖注入(DI)是一种设计模式(Design Pattern)，它用于解决下列问题：我们创建了对象和函数，但是它们怎么得到自己所依赖的对象呢？
+Angular中的每一样东西都是用依赖注入(DI)的方式来创建和使用的，比如指令(Directive)、过滤器(Filter)、控制器(Controller)、服务(Service)。
+在Angular中，依赖注入(DI)的容器(container)叫做<a name="injector">"{@link di 注射器(injector)}"</a>。
 
-In the example above:
-The template contains the directive `ng-app="invoice2"`. This tells Angular
-to use the `invoice` module as the main module for the application.
-The code snippet `angular.module('invoice', ['finance'])`  specifies that the `invoice` module depends on the
-`finance` module. By this, Angular uses the `InvoiceController` as well as the `currencyConverter` service.
+要想进行依赖注入，你必须先把这些需要协同工作的对象和函数注册(Register)到某个地方。在Angular中，这个地方叫做<a name="module">“{@link module 模块(module)}”</a>。
 
-Now that Angular knows of all the parts of the application, it needs to create them.
-In the previous section we saw that controllers are created using a factory function.
-For services there are multiple ways to define their factory
-(see the {@link dev_guide.services service guide}).
-In the example above, we are using a function that returns the `currencyConverter` function as the factory
-for the service.
+在上面这个例子中：
+模板包含了一个`ng-app="invoice2"`指令。这告诉Angular使用`invoice`模块作为该应用程序的主模块。
+像`angular.module('invoice', ['finance'])`这样的代码告诉Angular：`invoice`模块依赖于`finance`模块。
+这样一来，Angular就能同时使用`InvoiceController`这个控制器和`currencyConverter`这个服务了。
 
-Back to the initial question: How does the `InvoiceController` get a reference to the `currencyConverter` function?
-In Angular, this is done by simply defining arguments on the constructor function. With this, the injector
-is able to create the objects in the right order and pass the previously created objects into the
-factories of the objects that depend on them.
-In our example, the `InvoiceController` has an argument named `currencyConverter`. By this, Angular knows about the
-dependency between the controller and the service and calls the controller with the service instance as argument.
+刚才我们已经定义了应用程序的所有部分，现在，需要Angular来创建它们了。
+在上一节，我们了解到控制器(controller)是通过一个工厂函数创建的。
+而对于服务(service)，则有多种方式来定义它们的工厂函数（参见{@link dev_guide.services 服务指南}）。
+上面这个例子中，我们通过一个返回`currencyConverter`函数的函数作为创建`currencyConverter`服务的工厂。
+（译注：js中的“工厂(factory)”是指一个以函数作为“返回值”的函数）
 
-The last thing that changed in the example between the previous section and this section is that we
-now pass an array to the `module.controller` function, instead of a plain function. The array first
-contains the names of the service dependencies that the controller needs. The last entry
-in the array is the controller constructor function.
-Angular uses this array syntax to define the dependencies so that the DI also works after minifying
-the code, which will most probably rename the argument name of the controller constructor function
-to something shorter like `a`.
+回到刚才的问题：`InvoiceController`该怎样获得这个`currencyConverter`函数的引用呢？
+在Angular中，这非常简单，只要在构造函数中定义一些具有特定名字的参数就可以了。
+这时，注射器(injector)就可以按照正确的依赖关系创建这些对象，并且根据名字把它们传入那些依赖它们的对象工厂中。
+在我们的例子中，`InvoiceController`有一个叫做`currencyConverter`的参数。
+根据这个参数，Angular就知道`InvoiceController`依赖于`currencyConverter`，取得`currencyConverter`服务的实例，并且把它作为参数传给`InvoiceController`的构造函数。
 
-# Accessing the backend
+这次改动中的最后一点是我们现在把一个数组作为参数传入到`module.controller`函数中，而不再是一个普通函数。
+这个数组前面部分的元素包含这个控制器所依赖的一系列服务的名字，最后一个元素则是这个控制器的构造函数。
+Angular可以通过这种数组语法来定义依赖，以免js代码压缩器(Minifier)破坏这个“依赖注入”的过程。
+因为这些js代码压缩器通常都会把构造函数的参数重命名为很短的名字，比如`a`，而常规的依赖注入是需要根据参数名来查找“被注入对象”的。
+（译注：因为字符串不会被js代码压缩器重命名，所以数组语法可以解决这个问题。）
 
-Let's finish our example by fetching the exchange rates from the Yahoo Finance API.
-The following example shows how this is done with Angular:
+# 访问后端
+
+现在开始最后一个改动：通过Yahoo Finance API来获得货币之间的当前汇率。
+下面的例子将告诉你在Angular中应该怎么做。
 
 <example module="invoice3">
   <file name="invoice3.js">
@@ -315,7 +281,7 @@ The following example shows how this is done with Angular:
           return currencyConverter.convert(this.qty * this.cost, this.inCurr, outCurr);
         };
         this.pay = function pay() {
-          window.alert("Thanks!");
+          window.alert("谢谢！");
         };
       }]);
   </file>
@@ -355,18 +321,18 @@ The following example shows how this is done with Angular:
   </file>
   <file name="index.html">
       <div ng-controller="InvoiceController as invoice">
-        <b>Invoice:</b>
+        <b>订单:</b>
         <div>
-          Quantity: <input type="number" ng-model="invoice.qty" required >
+          数量: <input type="number" ng-model="invoice.qty" required >
         </div>
         <div>
-          Costs: <input type="number" ng-model="invoice.cost" required >
+          单价: <input type="number" ng-model="invoice.cost" required >
           <select ng-model="invoice.inCurr">
             <option ng-repeat="c in invoice.currencies">{{c}}</option>
           </select>
         </div>
         <div>
-          <b>Total:</b>
+          <b>总价:</b>
           <span ng-repeat="c in invoice.currencies">
             {{invoice.total(c) | currency:c}}
           </span>
@@ -376,9 +342,7 @@ The following example shows how this is done with Angular:
   </file>
 </example>
 
-What changed?
-Our `currencyConverter` service of the `finance` module now uses the
-{@link api/ng.$http $http} service, a builtin service provided by Angular
-for accessing the backend. It is a wrapper around [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)
-and [JSONP](http://en.wikipedia.org/wiki/JSONP) transports. Details can be found in the api docs of that service.
+这次有什么变动？
 
+这次我们的`finance`模块中的`currencyConverter`服务使用了{@link api/ng.$http $http}服务 —— 它是由Angular内建的用于访问后端API的服务。
+是对[`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)以及[JSONP](http://en.wikipedia.org/wiki/JSONP)的封装。详情参阅$http的API文档 - {@link api/ng.$http `$http`}。
