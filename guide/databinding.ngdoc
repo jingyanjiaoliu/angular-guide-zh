@@ -1,13 +1,14 @@
 @ngdoc overview
 @name Data Binding
 @description
+@translator @NigelYao
 
 Data-binding in Angular web apps is the automatic synchronization of data between the model and view
 components.  The way that Angular implements data-binding lets you treat the model as the
 single-source-of-truth in your application.  The view is a projection of the model at all times.
 When the model changes, the view reflects the change, and vice versa.
 
-在Angular网页应用中，数据绑定是数据模型(model)与视图(view)组件的自动同步。Angular的实现方式可以让你只需要关心应用中的数据模型部分。视图始终是数据模型的一种展现形式。当模型改变时，视图能反映这种改变；反之亦然。
+在Angular网页应用中，数据绑定是数据模型(model)与视图(view)组件的自动同步。Angular的实现方式可以让你只需要把应用中的模型当做单一数据来源。视图始终是数据模型的一种展现形式。当模型改变时，视图能反映这种改变；反之亦然。
 
 ## Data Binding in Classical Template Systems
 
@@ -35,7 +36,7 @@ the model are propagated to the view. This makes the model always the single-sou
 the application state, greatly simplifying the programming model for the developer. You can think of
 the view as simply an instant projection of your model.
 
-Angular模板的工作方式不同，如图表中所示。主要体现在其一，模板（指未经编译的附加了标记及指令的HTML）是在浏览器编译的。其二，编译阶段生成了动态视图。保持视图动态的原因是，任何视图中的改变都会立刻反映到数据模型中去，任何数据模型的改变都会传播到视图中去。这使得数据模型始终是应用的单一操作来源。大幅的简化了开发者的编程核心。你可以将视图简单的理解为数据模型的实时映射。
+Angular模板的工作方式不同，如图表中所示。主要体现在其一，模板（指未经编译的附加了标记及指令的HTML）是在浏览器编译的。其二，编译阶段生成了动态(live)视图。保持视图动态的原因是，任何视图中的改变都会立刻反映到数据模型中去，任何数据模型的改变都会传播到视图中去。这使得数据模型始终是应用的单一数据源。大幅的简化了开发者的编程核心。你可以将视图简单的理解为数据模型的实时映射。
 
 Because the view is just a projection of the model, the controller is completely separated from the
 view and unaware of it. This makes testing a snap because it is easy to test your controller in
