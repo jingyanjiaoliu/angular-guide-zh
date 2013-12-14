@@ -32,7 +32,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * 16-Providers （Providers）翻译者: @lightma
 * 17-Modules 翻译者: @GrahamLe
 * [18-Scopes](http://angular.duapp.com/guide/scope) 翻译者: @GrahamLe
-* 19-Expressions
+* 19-Expressions 翻译者:@NigelYao
 * 20-Bootstrap
 * 21-Directives 翻译者: @lrrluo
 * 22-HTML Compiler
