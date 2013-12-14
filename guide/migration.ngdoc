@@ -23,7 +23,7 @@ AngularJS 1.2进行了一次关于安全性的彻底复查，来让应用程序�
   <li>{@link guide/migration#ngroute-has-been-moved-into-its-own-module ngRoute移到了独立的模块中}</li>
   <li>{@link guide/migration#templates-no-longer-automatically-unwrap-promises 模板不再支持promise自动解包}</li>
   <li>{@link guide/migration#syntax-for-named-wildcard-parameters-changed-in 修改了<code>$route</code>中的命名通配符语法}</li>
-  <li>{@link guide/migration#you-can-only-bind-one-expression-to <code>*[src]</code>和<code>*[ng-src]</code>}属性中不再允许出现多个{{}}表达式</li>
+  <li>{@link guide/migration#you-can-only-bind-one-expression-to <code>*[src]</code>和<code>*[ng-src]</code>属性中不再允许出现多个表达式}</li>
   <li>{@link guide/migration#interpolations-inside-dom-event-handlers-are-now-disallowed DOM事件处理器中不再允许出现求值表达式}</li>
   <li>{@link guide/migration#directives-cannot-end-with--start-or--end 指令名不再允许以-start或-end结尾}</li>
   <li>{@link guide/migration#in-$q,-promisealways-has-been-renamed-promisefinally $q中的promise.always被改名为promise.finally}</li>
