@@ -21,31 +21,31 @@ AngularJS 1.2进行了一次关于安全性的彻底复查，来让应用程序�
 
 <ul class="nav nav-list">
   <li class="nav-header">变更汇总表</li>
-  <li>{@link guide/migration#ngroute-has-been-moved-into-its-own-module ngRoute移到了独立的模块中}</li>
-  <li>{@link guide/migration#templates-no-longer-automatically-unwrap-promises 模板不再支持promise自动解包}</li>
-  <li>{@link guide/migration#syntax-for-named-wildcard-parameters-changed-in 修改了<code>$route</code>中的命名通配符语法}</li>
-  <li>{@link guide/migration#you-can-only-bind-one-expression-to <code>*[src]</code>和<code>*[ng-src]</code>属性中不再允许出现多个表达式}</li>
-  <li>{@link guide/migration#interpolations-inside-dom-event-handlers-are-now-disallowed DOM事件处理器中不再允许出现求值表达式}</li>
-  <li>{@link guide/migration#directives-cannot-end-with--start-or--end 指令名不再允许以-start或-end结尾}</li>
+  <li>{@link guide/migration#ngRoute移到了独立的模块中 ngroute移到了独立的模块中}</li>
+  <li>{@link guide/migration#模板不再支持promise自动解包 模板不再支持promise自动解包}</li>
+  <li>{@link guide/migration#修改了中的命名通配符语法 修改了<code>$route</code>中的命名通配符语法}</li>
+  <li>{@link guide/migration#和属性中不再允许出现多个表达式 <code>*[src]</code>和<code>*[ng-src]</code>属性中不再允许出现多个表达式}</li>
+  <li>{@link guide/migration#dom事件处理器中不再允许出现求值表达式 DOM事件处理器中不再允许出现求值表达式}</li>
+  <li>{@link guide/migration#指令名不再允许以-start或-end结尾 指令名不再允许以-start或-end结尾}</li>
   <li>{@link guide/migration#in-$q,-promisealways-has-been-renamed-promisefinally $q中的promise.always改名为promise.finally}</li>
   <li>{@link guide/migration#ngmobile-is-now-ngtouch ngMobile改名为ngTouch}</li>
   <li>{@link guide/migration#resource$then-has-been-removed 移除了resource.$then}</li>
-  <li>{@link guide/migration#resource-methods-return-the-promise Resource调用将返回promise对象}</li>
-  <li>{@link guide/migration#resource-promises-are-resolved-with-the-resource-instance Resource的promise将以resource实例为参数触发}</li>
-  <li>{@link guide/migration#$locationsearch-supports-multiple-keys $location.search支持多重关键字}</li>
-  <li>{@link guide/migration#ngbindhtmlunsafe-has-been-removed-and-replaced-by-ngbindhtml 移除了ngBindHtmlUnsafe，由ngBindHtml代替}</li>
-  <li>{@link guide/migration#form-names-that-are-expressions-are-evaluated 支持以表达式作为表单的name属性}</li>
+  <li>{@link guide/migration#resource调用将返回promise对象 Resource调用将返回promise对象}</li>
+  <li>{@link guide/migration#resource的promise将以resource实例为参数触发 Resource的promise将以resource实例为参数触发}</li>
+  <li>{@link guide/migration#$locationsearch支持多重关键字 $location.search支持多重关键字}</li>
+  <li>{@link guide/migration#移除了ngbindhtmlunsafe，由ngbindhtml代替 移除了ngBindHtmlUnsafe，由ngBindHtml代替}</li>
+  <li>{@link guide/migration#支持以表达式作为表单的name属性 支持以表达式作为表单的name属性}</li>
   <li>{@link guide/migration#hasownproperty-disallowed-as-an-input-name hasOwnProperty不再允许作为input元素的name属性}</li>
-  <li>{@link guide/migration#directives-order-of-postlink-functions-reversed 指令：逆转了postLink函数的调用顺序}</li>
-  <li>{@link guide/migration#directive-priority 调整了指令优先级}</li>
-  <li>{@link guide/migration#ngscenario 修改了ngScenario模块}</li>
-  <li>{@link guide/migration#nginclude-and-ngview-replace-its-entire-element-on-update ngInclude和ngView在更新后会替换掉它所在的整个元素}</li>
-  <li>{@link guide/migration#urls-are-now-sanitized-against-a-whitelist URL改为根据白名单进行“消毒”}</li>
-  <li>{@link guide/migration#isolate-scope-only-exposed-to-directives-with-property 独立作用域只能通过<code>scope</code>属性导出给指令}</li>
-  <li>{@link guide/migration#change-to-interpolation-priority 调整了表达式解释器的优先级}</li>
-  <li>{@link guide/migration#underscore-prefixed/suffixed-properties-are-non-bindable 用下划线开头/结尾的属性不会再被绑定}</li>
-  <li>{@link guide/migration#you-cannot-bind-to-select[multiple] 不再支持绑定到多选框(select[multiple])}</li>
-  <li>{@link guide/migration#uncommon-region-specific-local-files-were-removed-from-i18n 从i18n中移除了不常用的本地化文件}</li>
+  <li>{@link guide/migration#指令：逆转了postlink函数的调用顺序 指令：逆转了postLink函数的调用顺序}</li>
+  <li>{@link guide/migration#调整了指令优先级 调整了指令优先级}</li>
+  <li>{@link guide/migration#修改了ngscenario模块 修改了ngScenario模块}</li>
+  <li>{@link guide/migration#nginclude和ngview在更新后会替换掉它所在的整个元素 ngInclude和ngView在更新后会替换掉它所在的整个元素}</li>
+  <li>{@link guide/migration#url改为根据白名单进行“消毒” URL改为根据白名单进行“消毒”}</li>
+  <li>{@link guide/migration#独立作用域只能通过属性导出给指令 独立作用域只能通过<code>scope</code>属性导出给指令}</li>
+  <li>{@link guide/migration#调整了表达式解释器的优先级 调整了表达式解释器的优先级}</li>
+  <li>{@link guide/migration#用下划线开头或结尾的属性不会再被绑定 用下划线开头或结尾的属性不会再被绑定}</li>
+  <li>{@link guide/migration#不再支持绑定到多选框 不再支持绑定到多选框(select[multiple])}</li>
+  <li>{@link guide/migration#从i18n中移除了不常用的本地化文件 从i18n中移除了不常用的本地化文件}</li>
 </ul>
 
 ## ngRoute移到了独立的模块中
