@@ -39,7 +39,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * 23-Forms
 * 24-Animations
 * 25-E2E Testing
-* 26-Unit Testing
+* 26-Unit Testing 翻译者: @asnowwolf
 * 27-i18n and l10n
 * 28-Internet Explorer Compatibility
 * 29-[Migrating from 1.0 to 1.2 - 迁移指南](http://angular.duapp.com/guide/migration) 翻译者: @asnowwolf 已完成翻译
