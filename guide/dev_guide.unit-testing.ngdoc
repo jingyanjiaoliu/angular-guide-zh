@@ -7,7 +7,7 @@ JavaScript是一个动态类型的语言，具有强大的表达能力，但同�
 我们在angular中引入了很多特性来让你更轻松的测试应用程序。
 所以，想不写测试？不，没有任何借口！
 
-# 一切的关键是：不要把任务不同的揉成一团
+# 一切的关键是：不要把不同的任务揉成一团
 
 单元测试，顾名思义就是用于测试代码中不可分割的单元。单元测试试图回答下列问题：“我所认为的逻辑正确吗？”或者“我的sort函数是否按照正确的顺序排序了这个列表？”
 
@@ -17,11 +17,10 @@ JavaScript是一个动态类型的语言，具有强大的表达能力，但同�
 虽然这看起来无所谓，但在一个典型的项目中，想要调用一个独立函数确实是非常困难的。
 原因在于，开发人员经常会把不同的任务揉成一团，导致一部分代码中往往会做很多很多事：发起XHR请求，对返回的数据进行排序，然后更新到DOM。
 
-在Angular中，我们尝试进行简化，来确保你总能“做正确的事”，所以，我们：
-提供了依赖注入（DI），来让你自由使用XHR（这样你就能mock它了）；
+在Angular中，我们尝试进行简化，来确保你总能“做正确的事”，所以，我们提供了依赖注入（DI），来让你自由使用XHR（这样你就能mock它了）；
 我们创建了抽象层，让你可以排序你的模型(Model)，而不用去管DOM。
-最终的结果就是：很容易写出这样一个对一些数据进行排序的sort函数，你的测试程序可以创建一组数据、调用sort函数，然后验证这些数据是否按照正确的顺序排列着。
-这个测试不用等XHR返回结果，不用想方设法创建正确类型的测试用DOM，也不用验证DOM节点是否根据正确的顺序发生了变化。
+最终的结果就是：很容易写出这样一个对一些数据进行排序的sort函数，你的测试程序可以创建一组数据、调用sort函数，然后验证这些数据是否被按照正确的顺序排列了。
+这个测试不用等XHR返回结果，不用想方设法创建正确类型的测试用DOM，也不用验证DOM节点是否根据排好的顺序发生了变化。
 
 ## 能力越大，责任越大
 
@@ -30,18 +29,19 @@ JavaScript是一个动态类型的语言，具有强大的表达能力，但同�
 
 ## 依赖注入(DI)
 
-你可以有很多种方式保存所依赖的对象。比如：
+你可以有很多种方式获得所依赖的对象。比如：
+
 1. 通过`new`运算符创建一个。
 2. 在一个众所周知的地方找一个现成的，比如全局性的单例(singleton)对象。
 3. 从一个注册表(registry)（比如服务注册表）中找一个现成的。（但是你如何找到一个注册表的引用呢？通常要从一个众所周知的地方寻找。参见#2。）
-4. 期望它被某些人直接交到你手里。
+4. 等它被某直接交到你手里。
 
-在这四种方案中，只有最后一个是可测试的。让我们分析一下这是为什么：
+在这四种方案中，只有最后一种是可测试的。让我们分析一下这是为什么：
 
 ### 使用`new`运算符
 
-本质上，使用`new`运算符没有任何错误，问题出现在从构造函数中调用`new`运算符的时候。
-这种情况下，调用者被永久性的和它要`new`的这个类型打包在一起。比如，我们看看为了从服务器获得数据而对XHR进行实例化，会导致什么后果。
+本质上，使用`new`运算符没有错，问题出现在从构造函数中调用`new`运算符的时候。
+这种情况下，调用者被永久性的和它要`new`的这个类型绑定在一起。比如，如果为了从服务器获得数据而对XHR进行实例化会导致什么后果？
 
 <pre>
 function MyClass() {
@@ -65,7 +65,7 @@ XHR = function MockXHR() {};
 var myClass = new MyClass();
 myClass.doWork();
 // 确保MockXHR按照正确的参数进行了调用
-XHR = oldXHR; // 如果你忘了写这句，就糟糕了
+XHR = oldXHR; // 如果你忘了写这句，就糟了
 </pre>
 
 ### 全局查找：
@@ -84,10 +84,10 @@ function MyClass() {
 }
 </pre>
 
-虽然这次没有直接创建新的依赖对象，问题仍然和`new`方案一样的：测试方仍然无法拦截对`global.xhr`的调用 —— 就算通过猴子补丁。
+虽然这次没有直接创建新的依赖对象，问题和`new`方案仍是一样的：测试方无法拦截对`global.xhr`的调用 —— 除非通过猴子补丁。
 对测试来说，根本问题在于全局变量应该允许被测试方修改，以便能替换它，并且调用一个mock函数。
 关于“这种方式为什么不好”的详细论述请参见：
-{@link http://misko.hevery.com/code-reviewers-guide/flaw-brittle-global-state-singletons/ Brittle Global State & Singletons}
+{@link http://misko.hevery.com/code-reviewers-guide/flaw-brittle-global-state-singletons/ 孤僻的全局状态和单例对象}
 
 上面这个类之所以难于测试，原因就在于我们不得不修改全局状态：
 <pre>
@@ -96,7 +96,7 @@ global.xhr = function mockXHR() {};
 var myClass = new MyClass();
 myClass.doWork();
 // 确保mockXHR使用正确的参数调用了
-global.xhr = oldXHR; // 如果你忘了写这句，就糟糕了
+global.xhr = oldXHR; // 如果你忘了写这句，就糟了
 </pre>
 
 
@@ -118,8 +118,9 @@ function MyClass() {
 </pre>
 
 问题在于，serviceRegistry从哪里来呢？如果：
-* `new`出来的，那么测试方没有机会重定义这些服务以供测试。
-* 全局查找，所返回的服务也是全局的（但是重定义比较容易，因为需要重定义的只有一个全局变量）
+
+* 是 new 出来的，那么测试方没有机会重定义这些服务以供测试。
+* 来自全局查找，那么所返回的服务也是全局的（但是重定义比较容易，因为需要重定义的只有一个全局变量）
 
 上面的这个类仍然难于测试，因为我们还是不得不修改全局状态：
 <pre>
@@ -128,12 +129,12 @@ global.serviceLocator.set('xhr', function mockXHR() {});
 var myClass = new MyClass();
 myClass.doWork();
 // 确保mockXHR被使用正确的参数调用
-global.serviceLocator = oldServiceLocator; // 如果你忘了写这句，就糟糕了
+global.serviceLocator = oldServiceLocator; // 如果你忘了写这句，就糟了
 </pre>
 
 
 ### 传入依赖对象
-最后，可以被动接收所依赖对象。
+最后，可以被动接收所依赖的对象。
 
 <pre>
 function MyClass(xhr) {
@@ -147,7 +148,7 @@ function MyClass(xhr) {
 </pre>
 
 这是首选方案！因为这段代码让我们不用对`xhr`从哪里来作出任何假设，而只要知道谁负责创建这个类并且传给我们就够了。
-因为类的创建者和类的使用者一般不是同一个段代码，这里把创建类的职责从逻辑里面分离出去。这就是依赖注入的简易原理。
+因为类的创建者和类的使用者一般不是同一段代码，这里把创建类的职责从应用逻辑里分离出去。这就是依赖注入的简易原理。
 
 上面这个类是可测试的，在测试代码中我们可以这样写：
 <pre>
@@ -191,7 +192,7 @@ function PasswordCtrl() {
 }
 </pre>
 
-上述代码在可测试性方面的问题在于，它需要你的测试代码在执行被测代码时提供正确类型的DOM。测试代码看起来是这样的：
+上述代码在可测试性方面的问题在于，它需要你的测试代码在执行被测代码时提供正确类型的DOM。测试代码看起来将是这样的：
 
 <pre>
 var input = $('<input type="text"/>');
@@ -207,7 +208,7 @@ expect(span.text()).toEqual('weak');
 $('body').html('');
 </pre>
 
-angular中，控制器被严格的与DOM操作相隔离。结果就是更轻易的提供可测试性，如下所示：
+angular中，控制器被严格的与DOM操作相隔离。其成果就是可以更轻易的提供可测试性，如下所示：
 
 <pre>
 function PasswordCtrl($scope) {
@@ -235,12 +236,12 @@ $scope.grade();
 expect($scope.strength).toEqual('weak');
 </pre>
 
-注意，测试代码不仅仅是变短了，也能更简明的看出发生了什么。我们看到这段代码“描述了一个故事”，而不只是一组看起来互不相关的“点”。
+注意，测试代码不仅仅是变短了，也能更简明的体现出发生了什么。我们看到这段代码“描述了一个故事”，而不只是一组看起来互不相关的“点”。
 
 ## 过滤器(Filter)
 
-{@link api/ng.$filterProvider Filters}是一个函数，用来把数据转换成用户可读的格式。
-他们的重要性在于可把数据格式化方面的职责从应用逻辑中移除，从而简化了应用逻辑。
+{@link api/ng.$filterProvider 过滤器}是一个函数，用来把数据转换成用户可读的格式。
+它们的重要性在于把数据格式化方面的职责从应用逻辑中移除了，从而简化了应用逻辑。
  
 <pre>
 myModule.filter('length', function() {
@@ -261,7 +262,7 @@ Angular中的指令，用于通过自定义HTML标记(Tag)、属性(Attribute)�
 
 ### 简单HTML型元素指令
 
-我们先使用无依赖的形式启动一个angular应用。
+我们先定义一个不依赖其他模块的angular应用。
 
 <pre>
 var app = angular.module('myApp', []);
@@ -285,7 +286,7 @@ app.directive('aGreatEye', function () {
 接下来，我们将写一个jasmine（一种单元测试框架）单元测试，来验证这个功能。
 
 <pre>
-describe('单元测试（大块）', function() {
+describe('单元测试集', function() {
     var $compile;
     var $rootScope;
 
@@ -302,7 +303,7 @@ describe('单元测试（大块）', function() {
     it('用适当的内容替换元素', function() {
         // 编译一块包含指令的HTML
         var element = $compile("<a-great-eye></a-great-eye>")($rootScope);
-	// 触发所有的监视(watch)，以便在作用域中计算表达式{{1 + 1}}
+	// 触发所有的监听(watch)，以便在作用域中计算表达式{{1 + 1}}
         $rootScope.$digest();
 	// 检查编译后的元素中包含了模板中的内容
         expect(element.html()).toContain("lidless, wreathed in flame, 2 times");
