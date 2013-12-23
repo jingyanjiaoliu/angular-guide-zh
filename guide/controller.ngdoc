@@ -222,10 +222,9 @@ Translated by [@GrahamLe](https://github.com/grahamle)
 
 ## 控制器测试
 
-Although there are many ways to test a Controller, one of the best conventions, shown below,
-involves injecting the {@link api/ng.$rootScope $rootScope} and {@link api/ng.$controller $controller}:
+虽然我们有很多方法可以对控制器进行测试，但在这里，我们仅展示最常见的一种，包括注入 {@link api/ng.$rootScope $rootScope} 以及 {@link api/ng.$controller $controller} ：
 
-**Controller Definition:**
+**控制器定义**：
 <pre>
     var myApp = angular.module('myApp',[]);
 
@@ -237,7 +236,7 @@ involves injecting the {@link api/ng.$rootScope $rootScope} and {@link api/ng.$c
     });
 </pre>
 
-**Controller Test:**
+**控制器测试**：
 <pre>
 describe('myController function', function() {
 
@@ -263,8 +262,7 @@ describe('myController function', function() {
 </pre>
 
 
-If you need to test a nested Controller you need to create the same scope hierarchy
-in your test that exists in the DOM:
+如果有需要测试嵌套的控制器，那么在你的测试代码中，你也得创建对应于 scope 层级结构的测试代码：
 
 <pre>
 describe('state', function() {
