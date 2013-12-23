@@ -103,9 +103,7 @@ Translated by [@GrahamLe](https://github.com/grahamle)
 - 一个名为 `spice` 的数据模型对象，是一个字符串
 - 一个拥有两个方法的控制器，可以设置数据模型对象（scope 的属性）`spice` 的值
 
-The message in our template contains a binding to the `spice` model, which by default is set to the
-string "very". Depending on which button is clicked, the `spice` model is set to `chili` or
-`jalapeño`, and the message is automatically updated by data-binding.
+模版中的消息包含了一个到数据模型 `spice` 的绑定，默认被置为 `very` 值。之后，取决于哪个按钮被点击，`spice` 的值会被置为 `chili` 或是 `jalapeño` ，受益于数据绑定，模版中的这个消息会在 `spice` 变化时自动更新。
 
 <doc:example module="spicyApp1">
   <doc:source>
@@ -132,21 +130,17 @@ string "very". Depending on which button is clicked, the `spice` model is set to
   </doc:source>
 </doc:example>
 
-Things to notice in the example above:
+上面的例子中有几个值得注意的地方：
 
-- The `ng-controller` directive is used to (implicitly) create a scope for our template, and the
-scope is augmented (managed) by the `SpicyCtrl` Controller.
-- `SpicyCtrl` is just a plain JavaScript function. As an (optional) naming convention the name
-starts with capital letter and ends with "Ctrl" or "Controller".
-- Assigning a property to `$scope` creates or updates the model.
-- Controller methods can be created through direct assignment to scope (see the `chiliSpicy` method)
-- The Controller methods and properties are available in the template (for the `<div>` element and
-and its children).
+- `ng-controller` 指令用来为我们的模版创建了一个 scope ，而且声明了这个 scope 是受 `SpicyCtrl` 控制器的管理
+- `SpicyCtrl` 就是一个普通的 Js 函数，只是命名上以首字母大写，以 "Ctrl" 或 "Controller" 结尾
+- 把一个属性分配给 `$scope` 这样会创建或更新一个数据模型
+- 控制器的方法可以通过直接在 scope 中添加函数创建，如 `chiliSpicy` 方法
+- 控制器的方法和属性在模版/视图中都是可以获得的，在上例中就是 `<div>` 元素及其子节点
 
-## Spicy Arguments Example
+## 控制器示例扩展--带参数
 
-Controller methods can also take arguments, as demonstrated in the following variation of the
-previous example.
+控制器方法可以带参数，我们看一下下面这个示例（是上面例子的变种）：
 
 <doc:example module="spicyApp2">
   <doc:source>
@@ -171,10 +165,7 @@ previous example.
 </doc:source>
 </doc:example>
 
-Notice that the `SpicyCtrl` Controller now defines just one method called `spicy`, which takes one
-argument called `spice`. The template then refers to this Controller method and passes in a string
-constant `'chili'` in the binding for the first button and a model property `customSpice` (bound to an
-input box) in the second button.
+注意上面的 `SpicyCtrl` 控制器现在只定义了一个 `spicy` 方法，带一个 `spice` 参数。然后在模版中，第一个按钮调用 `spicy` 方法的时候是通过传进一个字符串常量 `'chili'` ；第二个按钮则是通过传进一个进行了双向绑定到 `<input>` 的数据模型 `customSpice` 的值给 `spicy` 方法（初始值在 scope 中设置为了 `'wasabi'`）来调用。（译者注：这样在 `<input>` 输入框输入什么，点击第二个按钮时，`<p>` 标签显示的消息就会显示 `<input>` 中的值。）
 
 ## Scope 继承示例
 
