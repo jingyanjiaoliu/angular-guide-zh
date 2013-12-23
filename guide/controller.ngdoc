@@ -74,43 +74,34 @@ Translated by [@GrahamLe](https://github.com/grahamle)
 
 # 正确使用控制器
 
-In general, a Controller shouldn't try to do too much. It should contain only the business logic
-needed for a single view.
+通常情况下，控制器不应该被赋予太多的责任和义务，也就是不应该做太多事情。控制器只需要负责一个单一的视图所需要的业务逻辑。
 
-The most common way to keep Controllers slim is by encapsulating work that doesn't belong to
-controllers into services and then using these services in Controllers via dependency injection.
-This is discussed in the {@link di Dependency Injection} {@link dev_guide.services
-Services} sections of this guide.
+最常见的保持控制器纯粹的方法是将那些不属于控制器的逻辑都封装在服务（services）中，然后在控制器中通过依赖注入调用相关服务。详见指南中的 {@link di Dependency Injection} {@link dev_guide.services Services} 这两部分。
 
-Do not use Controllers for:
+注意，下面有几个场合**千万不要用控制器**：
 
-- Any kind of DOM manipulation — Controllers should contain only business logic. DOM
-manipulation (the presentation logic of an application) is well known for being hard to test.
-Putting any presentation logic into Controllers significantly affects testability of the business
-logic. Angular offers {@link databinding databinding} for automatic DOM manipulation. If
-you have to perform your own manual DOM manipulation, encapsulate the presentation logic in
-{@link guide/directive directives}.
-- Input formatting — Use {@link forms angular form controls} instead.
-- Output filtering — Use {@link filter angular filters} instead.
-- Sharing stateless or stateful code across Controllers — Use {@link dev_guide.services angular
-services} instead.
-- Managing the life-cycle of other components (for example, to create service instances).
+- 任何形式的DOM操作：控制器只包含业务逻辑操作（注：最纯粹的情况下）。DOM操作时属于应用程序的表现层逻辑操作，向来以测试难度高闻名于业界。把任何表现层的逻辑放到控制器中会大大增加了业务逻辑的测试难度。ng 提供数据绑定 （{@link databinding databinding}） 来进行自动化的DOM操作。如果需要手动进行DOM操作，那么最好将表现层的逻辑封装在指令 {@link guide/directive directives} 中
+- 格式化输入：相反，使用 {@link forms angular form controls} 替代
+- 过滤输出：使用 ng 的 {@link filter angular filters} 替代
+- 跨控制器间共享有状态或无状态代码：使用噢乖 {@link dev_guide.services angular services} 替代（注：此处有状态及无状态代码不确定）
+- 管理其它组成部分的生命周期（如创建 service 对象实例）
 
 
 # 将控制器与 scope 对象关联
 
-You can associate Controllers with scope objects implicitly via the {@link api/ng.directive:ngController ngController
-directive} or {@link api/ngRoute.$route $route service}.
+通过两种方法可以实现控制器和 scope 对象的关联：
+
+- {@link api/ng.directive:ngController ngController directive} 这个指令就是创建了一个新的 scope
+- {@link api/ngRoute.$route $route service}
 
 
 ## 简单的控制器示例
 
-To illustrate further how Controller components work in Angular, let's create a little app with the
-following components:
+为了更深入地阐释 ng 的控制器是如何工作的，我们用如下几个组成部分来构建一个小的app：
 
-- A {@link templates template} with two buttons and a simple message
-- A model consisting of a string named `spice`
-- A Controller with two functions that set the value of `spice`
+- 一个由两个按钮和一个简单消息构成的模版 {@link templates template}
+- 一个名为 `spice` 的数据模型对象，是一个字符串
+- 一个拥有两个方法的控制器，可以设置数据模型对象（scope 的属性）`spice` 的值
 
 The message in our template contains a binding to the `spice` model, which by default is set to the
 string "very". Depending on which button is clicked, the `spice` model is set to `chili` or
