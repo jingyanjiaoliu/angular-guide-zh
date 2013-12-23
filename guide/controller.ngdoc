@@ -2,22 +2,20 @@
 @name Controllers
 @description
 
-# Understanding Controllers
+Translated by [@GrahamLe](https://github.com/grahamle)
 
-In Angular, a Controller is a JavaScript **constructor function** that is used to augment the 
-{@link scope Angular Scope}.
+# 理解控制器
 
-When a Controller is attached to the DOM via the {@link api/ng.directive:ngController ng-controller}
-directive, Angular will instantiate a new Controller object, using the specified Controller's
-**constructor function**.  A new **child scope** will be available as an injectable parameter to the
-Controller's constructor function as `$scope`.
+在 ng 中，控制器就像 Js 中的**构造函数**一般，是用来增强 {@link scope Angular Scope} 的。
 
-Use Controllers to:
+当一个控制器通过 {@link api/ng.directive:ngController ng-controller} 指令被添加到DOM中时，ng 会调用该指令所特指的控制器的**构造函数**初始化一个控制器对象，这样，一个新的**子级 scope**就被创建，在控制器的构造函数中，scope 就可以作为一个参数注入其中并被调用，注入及调用方式为 `$scope`。
 
-- Set up the initial state of the `$scope` object.
-- Add behavior to the `$scope` object.
+一般情况下，我们使用控制器做两件事：
 
-# Setting up the initial state of a `$scope` object
+- 设置 `$scope` 对象的初始状态
+- 为 `$scope` 对象添加行为（方法）
+
+# 设置 `$scope` 对象的初始状态
 
 Typically, when you create an application you need to set up the initial state for the Angular
 `$scope`. You set up the initial state of a scope by attaching properties to the `$scope` object.
@@ -60,7 +58,7 @@ of the Controller on the `$scope` service provided by Angular. See the guide on
 {@link http://docs.angularjs.org/guide/di Dependency Injection} for more information.
 
 
-# Adding Behavior to a Scope Object
+# 为 `$scope` 对象添加行为
 
 In order to react to events or execute computation in the view we must provide behavior to the
 scope. We add behavior to the scope by attaching methods to the `$scope` object.  These methods are
@@ -90,7 +88,7 @@ objects (or primitives) assigned to the scope become model properties. Any metho
 the scope are available in the template/view, and can be invoked via angular expressions
 and `ng` event handler directives (e.g. {@link api/ng.directive:ngClick ngClick}).
 
-# Using Controllers Correctly
+# 正确使用控制器
 
 In general, a Controller shouldn't try to do too much. It should contain only the business logic
 needed for a single view.
@@ -115,13 +113,13 @@ services} instead.
 - Managing the life-cycle of other components (for example, to create service instances).
 
 
-# Associating Controllers with Angular Scope Objects
+# 将控制器与 scope 对象关联
 
 You can associate Controllers with scope objects implicitly via the {@link api/ng.directive:ngController ngController
 directive} or {@link api/ngRoute.$route $route service}.
 
 
-## Simple Spicy Controller Example
+## 简单的控制器示例
 
 To illustrate further how Controller components work in Angular, let's create a little app with the
 following components:
@@ -203,7 +201,7 @@ argument called `spice`. The template then refers to this Controller method and 
 constant `'chili'` in the binding for the first button and a model property `customSpice` (bound to an
 input box) in the second button.
 
-## Scope Inheritance Example
+## Scope 继承示例
 
 It is common to attach Controllers at different levels of the DOM hierarchy.  Since the 
 {@link api/ng.directive:ngController ng-controller} directive creates a new child scope, we get a
@@ -264,7 +262,7 @@ Inheritance works with methods in the same way as it does with properties. So in
 examples, all of the properties could be replaced with methods that return string values.
 
 
-## Testing Controllers
+## 控制器测试
 
 Although there are many ways to test a Controller, one of the best conventions, shown below,
 involves injecting the {@link api/ng.$rootScope $rootScope} and {@link api/ng.$controller $controller}:
