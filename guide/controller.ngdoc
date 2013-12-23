@@ -169,12 +169,9 @@ Translated by [@GrahamLe](https://github.com/grahamle)
 
 ## Scope 继承示例
 
-It is common to attach Controllers at different levels of the DOM hierarchy.  Since the 
-{@link api/ng.directive:ngController ng-controller} directive creates a new child scope, we get a
-hierarchy of scopes that inherit from each other.  The `$scope` that each Controller receives will
-have access to properties and methods defined by Controllers higher up the hierarchy.
-See {@link https://github.com/angular/angular.js/wiki/Understanding-Scopes Understanding Scopes} for
-more information about scope inheritance.
+我们常常会在不同层级的DOM结构中去添加控制器。由于 {@link api/ng.directive:ngController ng-controller} 指令会创建新的子级 scope ，这样我们就会获得一个对应于DOM层级结构的基于继承关系的 scope 层级结构。（译者注：由于 Js 的基于原型的继承）相对底层（内层）的 `$scope` 能够访问到相对高层的控制器创建的 scope 中定义的属性和方法。具体详见 {@link https://github.com/angular/angular.js/wiki/Understanding-Scopes Understanding Scopes} 部分更多关于 scope 继承的内容。
+
+*译者注*：下面是一个拥有三层div结构，也就对应有三层 scope 继承关系的层级结构（不包括 rootScope 的话），demo中的蓝色边框很清晰的展现了 scope 的层级和DOM层级的对应关系，以及 scope 是由 `ng-controller` 这个指令创建并由其指定的相应的控制器管理它下面的 scope 的这个概念。
 
 <doc:example module="scopeInheritance">
   <doc:source>
@@ -214,19 +211,14 @@ more information about scope inheritance.
   </doc:source>
 </doc:example>
 
-Notice how we nested three `ng-controller` directives in our template. This will result in four
-scopes being created for our view:
+注意，上面例子中我们如何在HTML模版中嵌套三个 `ng-controller` 指令。这造就了我们的视图中有4个 scope：
 
-- The root scope
-- The `MainCtrl` scope, which contains `timeOfDay` and `name` properties
-- The `ChildCtrl` scope, which inherits the `timeOfDay` property but overrides (hides) the `name`
-property from the previous
-- The `GrandChildCtrl` scope, which overrides (hides) both the `timeOfDay` property defined in `MainCtrl`
-and the `name` property defined in `ChildCtrl`
+- root scope
+- `MainCtrl` 控制器管理的 scope （简称 `MainCtrl` scope），拥有 `timeOfDay` 和 `name` 两个属性
+- `ChildCtrl` 控制器管理的 scope （简称 `ChildCtrl` scope），继承了 `MainCtrl` scope 中的 `timeOfDay` 属性，但重写了它的 `name` 属性
+- `GrandChildCtrl` 控制器管理的 scope （简称 `GrandChildCtrl` scope），重写了 `MainCtrl` scope 中的 `timeOfDay` 属性和 `ChildCtrl` scope 中的 `name` 属性
 
-Inheritance works with methods in the same way as it does with properties. So in our previous
-examples, all of the properties could be replaced with methods that return string values.
-
+控制器中的方法的继承和属性的继承工作方式是一致的。所以，上面例子中的所有属性，我们都可以将它重写成能够返回字符串值的方法，同样有效。
 
 ## 控制器测试
 
