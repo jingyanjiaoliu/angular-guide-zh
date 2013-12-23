@@ -17,14 +17,9 @@ Translated by [@GrahamLe](https://github.com/grahamle)
 
 # 设置 `$scope` 对象的初始状态
 
-Typically, when you create an application you need to set up the initial state for the Angular
-`$scope`. You set up the initial state of a scope by attaching properties to the `$scope` object.
-The properties contain the **view model** (the model that will be presented by the view).  All the
-`$scope` properties will be available to the template at the point in the DOM where the Controller
-is registered.
+通常，当我们创建应用时，我们需要为 ng 的 `$scope` 对象设置初始状态，而这，都是通过往 `$scope` 对象上添加属性。被添加的属性包含着要在视图中展示的数据对象（注：原文称**view model**）。所有被添加注册到 `$scope` 对象下的属性，在控制器被注册到的DOM的模版中，均可以获得。
 
-The following example shows a very simple constructor function for a Controller, `GreetingCtrl`,
-which attaches a `greeting` property containing the string `'Hola!'` to the `$scope`:
+接下来一个示例展示了一个简单的构造函数来描述控制器，称它为 `GreetingCtrl`，我们在该控制器所创建的 scope 中添加了一个 `greeting` 属性：
 
 <pre>
     function GreetingCtrl($scope) {
@@ -32,8 +27,7 @@ which attaches a `greeting` property containing the string `'Hola!'` to the `$sc
     }
 </pre>
 
-Once the Controller has been attached to the DOM, the `greeting` property can be data-bound to the
-template:
+按上述这样，我们有了一个控制器，它初始化了一个 `$scope` 并且拥有一个属性，当我们把该控制器添加到DOM中后，这个 `greeting` 属性就可以通过下面的HTML模版的数据绑定引用获得了，然后浏览器可以解释渲染输出了：
 
 <pre>
     <div ng-controller="GreetingCtrl">
@@ -41,9 +35,7 @@ template:
     </div>
 </pre>
 
-**NOTE**: Although Angular allows you to create Controller functions in the global scope, this is
-not recommended.  In a real application you should use the `.controller` method of your
-{@link module Angular Module} for your application as follows:
+**注意**：虽然 ng 允许我们在全局作用域下创建控制器的构造函数，但是这种方式并不被推荐。在一个实际应用程序开发中，推荐使用在 {@link module Angular Module} 下通过 `.controller` 为你的应用创建控制器，如下面例子：
 
 <pre>
     var myApp = angular.module('myApp',[]);
@@ -53,18 +45,14 @@ not recommended.  In a real application you should use the `.controller` method 
     }]);
 </pre>
 
-We have used an **inline injection annotation** to explicitly specify the dependency
-of the Controller on the `$scope` service provided by Angular. See the guide on 
-{@link http://docs.angularjs.org/guide/di Dependency Injection} for more information.
+在上面例子中，我们使用了一个**行内注入依赖**的方法显性地声明了 `GreetingCtrl` 依赖于 ng 提供的 `$scope` 服务。另见 {@link http://docs.angularjs.org/guide/di Dependency Injection} 查阅更多详细信息。
 
 
 # 为 `$scope` 对象添加行为
 
-In order to react to events or execute computation in the view we must provide behavior to the
-scope. We add behavior to the scope by attaching methods to the `$scope` object.  These methods are
-then available to be called from the template/view.
+为了对事件作出响应，或是在视图中执行计算，我们需要为 scope 提供相关的行为操作的逻辑。上面一节中，我们为 scope 添加属性来让DOM模版可以获取数据模型，现在，我们为 `$scope` 添加方法来让 scope 能够进行相关的行为操作逻辑。添加完之后，这些方法就可以在**模版/视图**中被调用了。
 
-The following example uses a Controller to add a method to the scope, which doubles a number:
+下述例子展示了一个为控制器中的 scope 添加方法，这个方法用来使一个数字翻倍：
 
 <pre>
     var myApp = angular.module('myApp',[]);
@@ -74,8 +62,7 @@ The following example uses a Controller to add a method to the scope, which doub
     }]);
 </pre>
 
-Once the Controller has been attached to the DOM, the `double` method can be invoked in an Angular
-expression in the template:
+当上述控制器被添加到DOM之后，`double` 方法即可被调用，如在模版中的一个 ng 表达式中：
 
 <pre>
     <div ng-controller="DoubleCtrl">
@@ -83,10 +70,7 @@ expression in the template:
     </div>
 </pre>
 
-As discussed in the {@link concepts Concepts} section of this guide, any
-objects (or primitives) assigned to the scope become model properties. Any methods assigned to
-the scope are available in the template/view, and can be invoked via angular expressions
-and `ng` event handler directives (e.g. {@link api/ng.directive:ngClick ngClick}).
+如本指南 {@link concepts Concepts} 部分所指出的一样，任何对象（或者基础类型的变量）被添加到 scope 都将成为 scope 的属性，作为数据模型供模版/视图调用。任何方法被添加到 scope ，也能在模版/视图中通过 ng 表达式或是 ng 的事件处理器（如：{@link api/ng.directive:ngClick ngClick}）调用。
 
 # 正确使用控制器
 
