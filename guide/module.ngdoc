@@ -2,7 +2,9 @@
 @name Developer Guide: Modules
 @description
 
-# What is a Module?
+Translated by [@GrahamLe](https://github.com/grahamle)
+
+# 何为模块？
 
 Most applications have a main method which instantiates, wires, and bootstraps the application.
 Angular apps don't have a main method. Instead modules declaratively specify how an application
@@ -16,7 +18,7 @@ should be bootstrapped. There are several advantages to this approach:
   * The modules can be loaded in any/parallel order (due to delayed nature of module execution).
 
 
-# The Basics
+# 模块ABC
 
 Ok, I'm in a hurry. How do I get a Hello World module working?
 
@@ -49,7 +51,7 @@ Important things to notice:
 
 
 
-# Recommended Setup
+# 推荐配置
 
 While the example above is simple, it will not scale to large applications. Instead we recommend
 that you break your application to multiple modules like this:
@@ -113,7 +115,7 @@ The above is only a suggestion, so feel free to tailor it to your needs.
 
 
 
-# Module Loading & Dependencies
+# 模块加载及依赖
 
 A module is a collection of configuration and run blocks which get applied to the application
 during the bootstrap process. In its simplest form the module consist of collection of two kinds
@@ -142,7 +144,7 @@ angular.module('myModule', []).
   });
 </pre>
 
-## Configuration Blocks
+## 配置代码块
 
 There are some convenience methods on the module which are equivalent to the config block. For
 example:
@@ -168,7 +170,7 @@ angular.module('myModule', []).
 The configuration blocks get applied in the order in which they are registered. The only exception
 to it are constant definitions, which are placed at the beginning of all configuration blocks.
 
-## Run Blocks
+## 执行代码块
 
 Run blocks are the closest thing in Angular to the main method. A run block is the code which
 needs to run to kickstart the application. It is executed after all of the service have been
@@ -176,7 +178,7 @@ configured and the injector has been created. Run blocks typically contain code 
 to unit-test, and for this reason should be declared in isolated modules, so that they can be
 ignored in the unit-tests.
 
-## Dependencies
+## 依赖
 
 Modules can list other modules as their dependencies. Depending on a module implies that required
 module needs to be loaded before the requiring module is loaded. In other words the configuration
@@ -184,7 +186,7 @@ blocks of the required modules execute before the configuration blocks of the re
 The same is true for the run blocks. Each module can only be loaded once, even if multiple other
 modules require it.
 
-## Asynchronous Loading
+## 异步加载
 
 Modules are a way of managing $injector configuration, and have nothing to do with loading of
 scripts into a VM. There are existing projects which deal with script loading, which may be used
@@ -210,7 +212,7 @@ existing module named `myModule`. Use `angular.module('myModule')` to retrieve a
   var myModule = angular.module('myOtherModule');
 </pre>
 
-# Unit Testing
+# 单元测试
 
 In its simplest form a unit test is a way of instantiating a subset of the application in test and
 then applying a stimulus to it. It is important to realize that each module can only be loaded
