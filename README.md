@@ -14,7 +14,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 1. http://angular.wvovo.com/guide
 1. http://angular.duapp.com/
 
-* [01-Controllers（控制器）](http://angular.duapp.com/guide/controller)翻译者:@GrahamLe
+* [01-Controllers（控制器）](http://angular.duapp.com/guide/controller)翻译者:@GrahamLe 已完成翻译初稿
 * [02-Filters（过滤器）](http://angular.duapp.com/guide/filter) 翻译者:@NigelYao
 * [03-Templates（模板）](http://angular.duapp.com/guide/templates) 翻译者:@why520crazy 已完成翻译
 * 04-Introduction（介绍）翻译者:
@@ -28,10 +28,10 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * 12-Angular Services 翻译者: @FrankyYang
 * [13-Data Binding](http://angular.duapp.com/guide/databinding) 翻译者：@NigelYao
 * 14-Working With CSS in Angular @ckken
-* 15-Dependency Injection
+* [15-Dependency Injection](http://angular.duapp.com/guide/di) 翻译者: @GrahamLe
 * 16-Providers （Providers）翻译者: @lightma
-* 17-Modules 翻译者: @GrahamLe
-* [18-Scopes](http://angular.duapp.com/guide/scope) 翻译者: @GrahamLe
+* [17-Modules（模块）](http://angular.duapp.com/guide/module) 翻译者: @GrahamLe 已完成翻译初稿
+* [18-Scopes（控制范围）](http://angular.duapp.com/guide/scope) 翻译者: @GrahamLe 已完成翻译初稿
 * 19-Expressions 翻译者:@NigelYao
 * 20-Bootstrap
 * 21-Directives 翻译者: @lrrluo
