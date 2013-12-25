@@ -2,31 +2,24 @@
 @name Controllers
 @description
 
-# Understanding Controllers
+Translated by [@GrahamLe](https://github.com/grahamle)
 
-In Angular, a Controller is a JavaScript **constructor function** that is used to augment the 
-{@link scope Angular Scope}.
+# 理解控制器
 
-When a Controller is attached to the DOM via the {@link api/ng.directive:ngController ng-controller}
-directive, Angular will instantiate a new Controller object, using the specified Controller's
-**constructor function**.  A new **child scope** will be available as an injectable parameter to the
-Controller's constructor function as `$scope`.
+在 ng 中，控制器就像 Js 中的**构造函数**一般，是用来增强 {@link scope Angular Scope} 的。
 
-Use Controllers to:
+当一个控制器通过 {@link api/ng.directive:ngController ng-controller} 指令被添加到DOM中时，ng 会调用该指令所特指的控制器的**构造函数**初始化一个控制器对象，这样，一个新的**子级 scope**就被创建，在控制器的构造函数中，scope 就可以作为一个参数注入其中并被调用，注入及调用方式为 `$scope`。
 
-- Set up the initial state of the `$scope` object.
-- Add behavior to the `$scope` object.
+一般情况下，我们使用控制器做两件事：
 
-# Setting up the initial state of a `$scope` object
+- 设置 `$scope` 对象的初始状态
+- 为 `$scope` 对象添加行为（方法）
 
-Typically, when you create an application you need to set up the initial state for the Angular
-`$scope`. You set up the initial state of a scope by attaching properties to the `$scope` object.
-The properties contain the **view model** (the model that will be presented by the view).  All the
-`$scope` properties will be available to the template at the point in the DOM where the Controller
-is registered.
+# 设置 `$scope` 对象的初始状态
 
-The following example shows a very simple constructor function for a Controller, `GreetingCtrl`,
-which attaches a `greeting` property containing the string `'Hola!'` to the `$scope`:
+通常，当我们创建应用时，我们需要为 ng 的 `$scope` 对象设置初始状态，而这，都是通过往 `$scope` 对象上添加属性。被添加的属性包含着要在视图中展示的数据对象（注：原文称**view model**）。所有被添加注册到 `$scope` 对象下的属性，在控制器被注册到的DOM的模版中，均可以获得。
+
+接下来一个示例展示了一个简单的构造函数来描述控制器，称它为 `GreetingCtrl`，我们在该控制器所创建的 scope 中添加了一个 `greeting` 属性：
 
 <pre>
     function GreetingCtrl($scope) {
@@ -34,8 +27,7 @@ which attaches a `greeting` property containing the string `'Hola!'` to the `$sc
     }
 </pre>
 
-Once the Controller has been attached to the DOM, the `greeting` property can be data-bound to the
-template:
+按上述这样，我们有了一个控制器，它初始化了一个 `$scope` 并且拥有一个属性，当我们把该控制器添加到DOM中后，这个 `greeting` 属性就可以通过下面的HTML模版的数据绑定引用获得了，然后浏览器可以解释渲染输出了：
 
 <pre>
     <div ng-controller="GreetingCtrl">
@@ -43,9 +35,7 @@ template:
     </div>
 </pre>
 
-**NOTE**: Although Angular allows you to create Controller functions in the global scope, this is
-not recommended.  In a real application you should use the `.controller` method of your
-{@link module Angular Module} for your application as follows:
+**注意**：虽然 ng 允许我们在全局作用域下创建控制器的构造函数，但是这种方式并不被推荐。在一个实际应用程序开发中，推荐使用在 {@link module Angular Module} 下通过 `.controller` 为你的应用创建控制器，如下面例子：
 
 <pre>
     var myApp = angular.module('myApp',[]);
@@ -55,18 +45,14 @@ not recommended.  In a real application you should use the `.controller` method 
     }]);
 </pre>
 
-We have used an **inline injection annotation** to explicitly specify the dependency
-of the Controller on the `$scope` service provided by Angular. See the guide on 
-{@link http://docs.angularjs.org/guide/di Dependency Injection} for more information.
+在上面例子中，我们使用了一个**行内注入依赖**的方法显性地声明了 `GreetingCtrl` 依赖于 ng 提供的 `$scope` 服务。另见 {@link http://docs.angularjs.org/guide/di Dependency Injection} 查阅更多详细信息。
 
 
-# Adding Behavior to a Scope Object
+# 为 `$scope` 对象添加行为
 
-In order to react to events or execute computation in the view we must provide behavior to the
-scope. We add behavior to the scope by attaching methods to the `$scope` object.  These methods are
-then available to be called from the template/view.
+为了对事件作出响应，或是在视图中执行计算，我们需要为 scope 提供相关的行为操作的逻辑。上面一节中，我们为 scope 添加属性来让DOM模版可以获取数据模型，现在，我们为 `$scope` 添加方法来让 scope 能够进行相关的行为操作逻辑。添加完之后，这些方法就可以在**模版/视图**中被调用了。
 
-The following example uses a Controller to add a method to the scope, which doubles a number:
+下述例子展示了一个为控制器中的 scope 添加方法，这个方法用来使一个数字翻倍：
 
 <pre>
     var myApp = angular.module('myApp',[]);
@@ -76,8 +62,7 @@ The following example uses a Controller to add a method to the scope, which doub
     }]);
 </pre>
 
-Once the Controller has been attached to the DOM, the `double` method can be invoked in an Angular
-expression in the template:
+当上述控制器被添加到DOM之后，`double` 方法即可被调用，如在模版中的一个 ng 表达式中：
 
 <pre>
     <div ng-controller="DoubleCtrl">
@@ -85,54 +70,40 @@ expression in the template:
     </div>
 </pre>
 
-As discussed in the {@link concepts Concepts} section of this guide, any
-objects (or primitives) assigned to the scope become model properties. Any methods assigned to
-the scope are available in the template/view, and can be invoked via angular expressions
-and `ng` event handler directives (e.g. {@link api/ng.directive:ngClick ngClick}).
+如本指南 {@link concepts Concepts} 部分所指出的一样，任何对象（或者基础类型的变量）被添加到 scope 都将成为 scope 的属性，作为数据模型供模版/视图调用。任何方法被添加到 scope ，也能在模版/视图中通过 ng 表达式或是 ng 的事件处理器（如：{@link api/ng.directive:ngClick ngClick}）调用。
 
-# Using Controllers Correctly
+# 正确使用控制器
 
-In general, a Controller shouldn't try to do too much. It should contain only the business logic
-needed for a single view.
+通常情况下，控制器不应该被赋予太多的责任和义务，也就是不应该做太多事情。控制器只需要负责一个单一的视图所需要的业务逻辑。
 
-The most common way to keep Controllers slim is by encapsulating work that doesn't belong to
-controllers into services and then using these services in Controllers via dependency injection.
-This is discussed in the {@link di Dependency Injection} {@link dev_guide.services
-Services} sections of this guide.
+最常见的保持控制器纯粹的方法是将那些不属于控制器的逻辑都封装在服务（services）中，然后在控制器中通过依赖注入调用相关服务。详见指南中的 {@link di Dependency Injection} {@link dev_guide.services Services} 这两部分。
 
-Do not use Controllers for:
+注意，下面有几个场合**千万不要用控制器**：
 
-- Any kind of DOM manipulation — Controllers should contain only business logic. DOM
-manipulation (the presentation logic of an application) is well known for being hard to test.
-Putting any presentation logic into Controllers significantly affects testability of the business
-logic. Angular offers {@link databinding databinding} for automatic DOM manipulation. If
-you have to perform your own manual DOM manipulation, encapsulate the presentation logic in
-{@link guide/directive directives}.
-- Input formatting — Use {@link forms angular form controls} instead.
-- Output filtering — Use {@link filter angular filters} instead.
-- Sharing stateless or stateful code across Controllers — Use {@link dev_guide.services angular
-services} instead.
-- Managing the life-cycle of other components (for example, to create service instances).
+- 任何形式的DOM操作：控制器只包含业务逻辑操作（注：最纯粹的情况下）。DOM操作时属于应用程序的表现层逻辑操作，向来以测试难度高闻名于业界。把任何表现层的逻辑放到控制器中会大大增加了业务逻辑的测试难度。ng 提供数据绑定 （{@link databinding databinding}） 来进行自动化的DOM操作。如果需要手动进行DOM操作，那么最好将表现层的逻辑封装在指令 {@link guide/directive directives} 中
+- 格式化输入：相反，使用 {@link forms angular form controls} 替代
+- 过滤输出：使用 ng 的 {@link filter angular filters} 替代
+- 跨控制器间共享有状态或无状态代码：使用噢乖 {@link dev_guide.services angular services} 替代（注：此处有状态及无状态代码不确定）
+- 管理其它组成部分的生命周期（如创建 service 对象实例）
 
 
-# Associating Controllers with Angular Scope Objects
+# 将控制器与 scope 对象关联
 
-You can associate Controllers with scope objects implicitly via the {@link api/ng.directive:ngController ngController
-directive} or {@link api/ngRoute.$route $route service}.
+通过两种方法可以实现控制器和 scope 对象的关联：
+
+- {@link api/ng.directive:ngController ngController directive} 这个指令就是创建了一个新的 scope
+- {@link api/ngRoute.$route $route service}
 
 
-## Simple Spicy Controller Example
+## 简单的控制器示例
 
-To illustrate further how Controller components work in Angular, let's create a little app with the
-following components:
+为了更深入地阐释 ng 的控制器是如何工作的，我们用如下几个组成部分来构建一个小的app：
 
-- A {@link templates template} with two buttons and a simple message
-- A model consisting of a string named `spice`
-- A Controller with two functions that set the value of `spice`
+- 一个由两个按钮和一个简单消息构成的模版 {@link templates template}
+- 一个名为 `spice` 的数据模型对象，是一个字符串
+- 一个拥有两个方法的控制器，可以设置数据模型对象（scope 的属性）`spice` 的值
 
-The message in our template contains a binding to the `spice` model, which by default is set to the
-string "very". Depending on which button is clicked, the `spice` model is set to `chili` or
-`jalapeño`, and the message is automatically updated by data-binding.
+模版中的消息包含了一个到数据模型 `spice` 的绑定，默认被置为 `very` 值。之后，取决于哪个按钮被点击，`spice` 的值会被置为 `chili` 或是 `jalapeño` ，受益于数据绑定，模版中的这个消息会在 `spice` 变化时自动更新。
 
 <doc:example module="spicyApp1">
   <doc:source>
@@ -159,21 +130,17 @@ string "very". Depending on which button is clicked, the `spice` model is set to
   </doc:source>
 </doc:example>
 
-Things to notice in the example above:
+上面的例子中有几个值得注意的地方：
 
-- The `ng-controller` directive is used to (implicitly) create a scope for our template, and the
-scope is augmented (managed) by the `SpicyCtrl` Controller.
-- `SpicyCtrl` is just a plain JavaScript function. As an (optional) naming convention the name
-starts with capital letter and ends with "Ctrl" or "Controller".
-- Assigning a property to `$scope` creates or updates the model.
-- Controller methods can be created through direct assignment to scope (see the `chiliSpicy` method)
-- The Controller methods and properties are available in the template (for the `<div>` element and
-and its children).
+- `ng-controller` 指令用来为我们的模版创建了一个 scope ，而且声明了这个 scope 是受 `SpicyCtrl` 控制器的管理
+- `SpicyCtrl` 就是一个普通的 Js 函数，只是命名上以首字母大写，以 "Ctrl" 或 "Controller" 结尾
+- 把一个属性分配给 `$scope` 这样会创建或更新一个数据模型
+- 控制器的方法可以通过直接在 scope 中添加函数创建，如 `chiliSpicy` 方法
+- 控制器的方法和属性在模版/视图中都是可以获得的，在上例中就是 `<div>` 元素及其子节点
 
-## Spicy Arguments Example
+## 控制器示例扩展--带参数
 
-Controller methods can also take arguments, as demonstrated in the following variation of the
-previous example.
+控制器方法可以带参数，我们看一下下面这个示例（是上面例子的变种）：
 
 <doc:example module="spicyApp2">
   <doc:source>
@@ -198,19 +165,13 @@ previous example.
 </doc:source>
 </doc:example>
 
-Notice that the `SpicyCtrl` Controller now defines just one method called `spicy`, which takes one
-argument called `spice`. The template then refers to this Controller method and passes in a string
-constant `'chili'` in the binding for the first button and a model property `customSpice` (bound to an
-input box) in the second button.
+注意上面的 `SpicyCtrl` 控制器现在只定义了一个 `spicy` 方法，带一个 `spice` 参数。然后在模版中，第一个按钮调用 `spicy` 方法的时候是通过传进一个字符串常量 `'chili'` ；第二个按钮则是通过传进一个进行了双向绑定到 `<input>` 的数据模型 `customSpice` 的值给 `spicy` 方法（初始值在 scope 中设置为了 `'wasabi'`）来调用。（译者注：这样在 `<input>` 输入框输入什么，点击第二个按钮时，`<p>` 标签显示的消息就会显示 `<input>` 中的值。）
 
-## Scope Inheritance Example
+## Scope 继承示例
 
-It is common to attach Controllers at different levels of the DOM hierarchy.  Since the 
-{@link api/ng.directive:ngController ng-controller} directive creates a new child scope, we get a
-hierarchy of scopes that inherit from each other.  The `$scope` that each Controller receives will
-have access to properties and methods defined by Controllers higher up the hierarchy.
-See {@link https://github.com/angular/angular.js/wiki/Understanding-Scopes Understanding Scopes} for
-more information about scope inheritance.
+我们常常会在不同层级的DOM结构中去添加控制器。由于 {@link api/ng.directive:ngController ng-controller} 指令会创建新的子级 scope ，这样我们就会获得一个对应于DOM层级结构的基于继承关系的 scope 层级结构。（译者注：由于 Js 的基于原型的继承）相对底层（内层）的 `$scope` 能够访问到相对高层的控制器创建的 scope 中定义的属性和方法。具体详见 {@link https://github.com/angular/angular.js/wiki/Understanding-Scopes Understanding Scopes} 部分更多关于 scope 继承的内容。
+
+*译者注*：下面是一个拥有三层div结构，也就对应有三层 scope 继承关系的层级结构（不包括 rootScope 的话），demo中的蓝色边框很清晰的展现了 scope 的层级和DOM层级的对应关系，以及 scope 是由 `ng-controller` 这个指令创建并由其指定的相应的控制器管理它下面的 scope 的这个概念。
 
 <doc:example module="scopeInheritance">
   <doc:source>
@@ -250,26 +211,20 @@ more information about scope inheritance.
   </doc:source>
 </doc:example>
 
-Notice how we nested three `ng-controller` directives in our template. This will result in four
-scopes being created for our view:
+注意，上面例子中我们如何在HTML模版中嵌套三个 `ng-controller` 指令。这造就了我们的视图中有4个 scope：
 
-- The root scope
-- The `MainCtrl` scope, which contains `timeOfDay` and `name` properties
-- The `ChildCtrl` scope, which inherits the `timeOfDay` property but overrides (hides) the `name`
-property from the previous
-- The `GrandChildCtrl` scope, which overrides (hides) both the `timeOfDay` property defined in `MainCtrl`
-and the `name` property defined in `ChildCtrl`
+- root scope
+- `MainCtrl` 控制器管理的 scope （简称 `MainCtrl` scope），拥有 `timeOfDay` 和 `name` 两个属性
+- `ChildCtrl` 控制器管理的 scope （简称 `ChildCtrl` scope），继承了 `MainCtrl` scope 中的 `timeOfDay` 属性，但重写了它的 `name` 属性
+- `GrandChildCtrl` 控制器管理的 scope （简称 `GrandChildCtrl` scope），重写了 `MainCtrl` scope 中的 `timeOfDay` 属性和 `ChildCtrl` scope 中的 `name` 属性
 
-Inheritance works with methods in the same way as it does with properties. So in our previous
-examples, all of the properties could be replaced with methods that return string values.
+控制器中的方法的继承和属性的继承工作方式是一致的。所以，上面例子中的所有属性，我们都可以将它重写成能够返回字符串值的方法，同样有效。
 
+## 控制器测试
 
-## Testing Controllers
+虽然我们有很多方法可以对控制器进行测试，但在这里，我们仅展示最常见的一种，包括注入 {@link api/ng.$rootScope $rootScope} 以及 {@link api/ng.$controller $controller} ：
 
-Although there are many ways to test a Controller, one of the best conventions, shown below,
-involves injecting the {@link api/ng.$rootScope $rootScope} and {@link api/ng.$controller $controller}:
-
-**Controller Definition:**
+**控制器定义**：
 <pre>
     var myApp = angular.module('myApp',[]);
 
@@ -281,7 +236,7 @@ involves injecting the {@link api/ng.$rootScope $rootScope} and {@link api/ng.$c
     });
 </pre>
 
-**Controller Test:**
+**控制器测试**：
 <pre>
 describe('myController function', function() {
 
@@ -307,8 +262,7 @@ describe('myController function', function() {
 </pre>
 
 
-If you need to test a nested Controller you need to create the same scope hierarchy
-in your test that exists in the DOM:
+如果有需要测试嵌套的控制器，那么在你的测试代码中，你也得创建对应于 scope 层级结构的测试代码：
 
 <pre>
 describe('state', function() {

@@ -703,7 +703,7 @@ docsApp.controller.DocsController = function($scope, $location, $window, $cookie
 
   var SECTION_NAME = {
     api: 'API Reference',
-    guide: 'Developer Guide',
+    guide: '开发人员指南',
     misc: 'Miscellaneous',
     tutorial: 'Tutorial',
     cookbook: 'Examples',

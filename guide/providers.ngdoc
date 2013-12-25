@@ -1,64 +1,42 @@
 @ngdoc overview
 @name Developer Guide: Providers
 @description
+翻译者:[@lightma](https://github.com/lightma)
 
 # Providers
+你所构建的每个web应用都是由互相协作以达成特定目标的对象构成。为了让应用得以运行，这些对象还需要被实例化并连接在一起。在基于Angular框架的应用里，这些对象大都是通过{@link api/AUTO.$injector 注入服务}自动地实例化并连接在一起。
 
-Each web application you build is composed of objects that collaborate to get stuff done. These
-objects need to be instantiated and wired together for the app to work. In Angular apps most of
-these objects are instantiated and wired together automatically by the {@link api/AUTO.$injector
-injector service}.
+注入器创建两类对象，**服务**和**特定对象**。
 
-The injector creates two types of objects, **services** and **specialized objects**.
+服务是对象，而这些对象的API是由编写服务的开发人员所决定的。
 
-Services are objects whose API is defined by the developer writing the service.
+特定对象遵循Angular框架特定的API。这些对象包括**控制器**，**指令**，**过滤器**或**动画**。
 
-Specialized objects conform to a specific Angular framework API. These objects are one of
-controllers, directives, filters or animations.
+注入器需要知道如何去创建这些对象。你应该通过注册一种"配方"来告诉Angular如何创建你的对象。这里共有5种配方。
 
-The injector needs to know how to create these objects. You tell it by registering a "recipe" for
-creating your object with the injector. There are five recipe types.
+最冗长同时又最复杂的配方就是Provider配方，其余4种分别是——Value，Factory，Service和Constant，这4种都只是基于Provider之上的语法糖。
 
-The most verbose, but also the most comprehensive one is a Provider recipe. The remaining four
-recipe types — Value, Factory, Service and Constant — are just syntactic sugar on top of a provider
-recipe.
+现在让我们看看通过不同配方来创建和使用服务的场景。首先我们从最简单的例子开始——在你代码的很多个地方都要使用一个相同的字符串，这个场景下，我们通过Value配方来完成服务的创建。
 
-Let's take a look at the different scenarios for creating and using services via various recipe
-types. We'll start with the simplest case possible where various places in your code need a shared
-string and we'll accomplish this via Value recipe.
+## 注意：关于模块。
 
+为了使注入器知道如何创建这些对象，并让它们能连接在一起协同工作，我们需要一张关于"配方"的注册表。每个配方都有对象的标识以及如何创建该对象的说明。
 
-## Note:  A Word on Modules
+每个配方都属于一个{@link api/angular.Module Angular模块}。一个Angular模块就像是装着一个或多个配方的袋子。通过人工跟踪记录模块依赖关系的事情不好玩，并且一个模块里也可能包含该模块同时依赖于其他模块的信息。
 
-In order for the injector to know how to create and wire together all of these objects, it needs
-a registry of "recipes". Each recipe has an identifier of the object and the description of how to
-create this object.
+当基于Angular的应用从一个指定的应用模块启动时，Angular会创建一个注入器的实例，接着该实例就会创建一张关于“配方”的注册表，这张注册表是核心的"ng"模块，应用模块以及模块依赖的集合。当注入器需要为你的应用创建一个对象时，注入器就会查询这张注册表。
 
-Each recipe belongs to an {@link api/angular.Module Angular module}. An Angular module is a bag
-that holds one or more recipes. And since manually keeping track of module dependencies is no fun,
-a module can contain information about dependencies on other modules as well.
+## Value 配方
 
-When an Angular application starts with a given application module, Angular creates a new instance
-of injector, which in turn creates a registry of recipes as a union of all recipes defined in the
-core "ng" module, application module and its dependencies. The injector then consults the recipe
-registry when it needs to create an object for your application.
-
-
-## Value Recipe
-
-Let's say that we want to have a very simple service called "clientId" that provides a string
-representing an authentication id used for some remote API. You would define it like this:
+假设我们要实现一个非常简单的服务叫做"clientId"，该服务提供一个代表远程API调用时会用到的鉴权id的字符串。
 
 ```javascript
 var myApp = angular.module('myApp', []);
 myApp.value('clientId', 'a12345654321x');
 ```
+请注意我们是如何创建一个叫做"myApp"的Angular模块，并指定该模块定义包含构建`clientId`服务的配方的，在这个例子中`clientId`服务只是一个简单的字符串。
 
-Notice how we created an Angular module called `myApp`, and specified that this module definition
-contains a "recipe" for constructing the `clientId` service, which is a simple string in this case.
-
-And this is how you would display it via Angular's data-binding:
-
+下面我们通过Angular的数据绑定来显示clientId：
 
 ```javascript
 myApp.controller('DemoController', ['clientId', function DemoController(clientId) {
@@ -73,33 +51,26 @@ myApp.controller('DemoController', ['clientId', function DemoController(clientId
   </body>
 </html>
 ```
+在上面的例子中，当`DemoController`要求id为"clientId"的服务时，我们通过Value配方定义了需要传递的值。
 
-In this example, we've used the Value recipe to define the value to provide when `DemoController`
-asks for the service with id "clientId".
+好了，接下来，让我们来学习更复杂的例子！
 
-On to more complex examples!
+## Factory 配方
 
+虽然Value配方很容易编码，但缺少很多我们在创建服务时需要的重要特性。让我们看看与Value配方相比更为强大的兄弟——Factory。
 
-## Factory Recipe
+Factory配方增加了以下能力：
+* 使用其他服务的能力(即可以有依赖)
+* 服务初始化
+* 延迟/惰性初始化
 
-The Value recipe is very simple to write, but lacks some important features we often need when
-creating services.  Let's now look at the Value recipe's more powerful sibling, the Factory.The
-Factory recipe adds the following abilities:
+Factory配方通过一个拥有0～n个参数(参数表示该服务对其他服务的依赖)的函数来创建服务，而函数返回值就是Factory配方创建的服务实例。
 
-* ability to use other services (have dependencies)
-* service initialization
-* delayed/lazy initialization
+注意：Angular框架里所有的服务都是单实例对象。这意味着注入器仅使用一次配方来创建服务实例，然后注入器就会缓存这些服务实例的引用，以备将来使用。
 
-The Factory recipe constructs a new service using a function with zero or more arguments (these
-are dependencies on other services). The return value of this function is the service instance
-created by this recipe.
+既然我们说Factory是功能更强大的Value配方，那么你当然可以通过Factory配方来创建相同的服务。
+针对我们前面举的`clientId`的Value配方例子，我们可以用Factory配方做如下重新实现：
 
-Note: All services in Angular are singletons. That means that the injector uses each recipe at most
-once to create the object. The injector then caches the reference for all future needs.
-
-Since Factory is more powerful version of Value recipe, you can construct the same service with it.
-Using our previous `clientId` Value recipe example, we can rewrite it as a Factory recipe like
-this:
 
 ```javascript
 myApp.factory('clientId', function clientIdFactory() {
@@ -107,12 +78,10 @@ myApp.factory('clientId', function clientIdFactory() {
 });
 ```
 
-But given that the token is just a string literal, sticking with the Value recipe is still more
-appropriate as it makes the code easier to follow.
+但是既然token只是一个字符串常量，我们还是坚持使用Value配方吧，这样使得代码更简洁明了。
 
-Let's say, however, that we would also like to create a service that computes a token used for
-authentication against a remote API. This token will be called 'apiToken' and will be computed
-based on the `clientId` value and a secret stored in browser's local storage:
+但是，假如我们想创建一个在调用远程API时，用来计算并生成鉴权token的服务。这个token叫做'apiToken'，并且基于`clientId`的值和一个存储在浏览器本地存储的密码相计算的结果：
+
 
 ```javascript
 myApp.factory('apiToken', ['clientId', function apiTokenFactory(clientId) {
@@ -128,23 +97,15 @@ myApp.factory('apiToken', ['clientId', function apiTokenFactory(clientId) {
 }]);
 ```
 
-In the code above, we see how the `apiToken` service is defined via the Factory recipe that depends
-on `clientId` service. The factory service then uses NSA-proof encryption to produce an authentication
-token.
+在上面的代码里，我们能看到`apiToken`服务是如何通过Factory配方定义的，并且该服务还依赖于`clientId`服务。这个工厂服务使用NSA-proof加密来生成鉴权token。
 
-Note: It is a best practice to name the factory functions as "<serviceId>Factory"
-(e.g. apiTokenFactory). While this names are not required, they help when navigating the code base
-or looking at stack traces in the debugger.
+注意：将工厂方法命名为"<serviceId>Factory"是最佳实践（比如，apiTokenFactory）。虽然这种命名方式不是强制性的，但是它有助于浏览代码仓库或者在调试器里跟踪调用堆栈。
 
-Just like with Value recipe, Factory recipe can create a service of any type, whether it be a
-primitive, object literal, function, or even an instance of a custom type.
+就像Value配方一样，Factory配方能创建任何类型的服务，不管是原生类型，对象常量，函数，甚至自定义类型的实例。
 
+## Service 配方
 
-## Service Recipe
-
-JavaScript developers often use custom types to write object-oriented code. Let's explore how we
-could launch a unicorn into the space via our `unicornLauncher` service that is an instance of
-custom type:
+Javascript开发人员经常使用自定义类型来编写面相对象的代码。现在，让我们一起探讨如何通过自定义类型——`unicornLauncher`服务，将独角兽发射到太空中去：
 
 ```javascript
 function UnicornLauncher(apiToken) {
@@ -158,8 +119,7 @@ function UnicornLauncher(apiToken) {
 }
 ```
 
-We are now ready to launch unicorns, but notice that UnicornLauncher depends on our `apiToken`.
-We can satisfy this dependency on `apiToken` using the Factory recipe:
+现在我们准备发射独角兽，但我们注意到`UnicornLauncher`依赖于我们的`apiToken`.我们可以通过Factory配方来满足对`apiToken`的依赖：
 
 ```javascript
 myApp.factory('unicornLauncher', ["apiToken", function(apiToken) {
@@ -167,28 +127,21 @@ myApp.factory('unicornLauncher', ["apiToken", function(apiToken) {
 }]);
 ```
 
+然而，这个用例使用Service配方最合适。
 
-This is, however, exactly the use-case that Service recipe is the most suitable for.
+Service配方实例化服务时，和Value和Factory配方类似，只是它通过*使用 `new` 操作符调用构造函数*来实现。构造函数可以接受0～n个参数，这些参数代表着该服务实例的依赖。
 
-The Service recipe produces a service just like the Value or Factory recipes, but it does so by
-*invoking a constructor with the `new` operator*. The constructor can take zero or more arguments,
-which represent dependencies needed by the instance of this type.
+注意：Service配方遵循 {@link http://www.martinfowler.com/articles/injection.html#ConstructorInjectionWithPicocontainer "构造注入"} 的设计模式。
 
-Note: Service recipes follow a design pattern called [constructor
-injection](http://www.martinfowler.com/articles/injection.html#ConstructorInjectionWithPicocontainer).
-
-Since we already have a constructor for our UnicornLauncher type, we can replace the Factory recipe
-above with a Service recipe like this:
+既然我们已经拥有了`UnicornLauncher`类型的构造函数，我们可以像下面代码那样使用Service配方来替代以上的Factory配方：
 
 ```javascript
 myApp.service('unicornLauncher', ["apiToken", UnicornLauncher]);
 ```
 
-Much simpler!
+是不是更简单了！
 
-Note: Yes, we have called one of our service recipes 'Service'. We regret this and know that we'll
-be somehow punished for our mis-deed. It's like we named one of our offspring 'Children'. Boy,
-that would mess with the teachers.
+注意：是的，我们将一种服务配方命名为'Service'，我们对此感到后悔，并且知道我们将会以某种方式得到惩罚。就像我们把我们的后代之一命名为'Children'一样。孩子，这会惹恼老师的。（这段不知道是不是美式幽默:-D）
 
 
 ## Provider Recipe

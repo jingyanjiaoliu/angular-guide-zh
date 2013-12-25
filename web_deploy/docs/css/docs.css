@@ -12,7 +12,9 @@
 
 /* end: Logo */
 
-
+.main{
+    width: 90%;
+}
 /* this is here to avoid the display=block shuffling of ngShow */
 .breadcrumb li > * {
   float:left;
@@ -538,4 +540,14 @@ td.success {
 
 td.error {
   background-color: #f2dede;
+}
+
+body{
+    font-family: "Microsoft YaHei","微软雅黑",Helvetica,Tahoma,Arial,STXihei,"华文细黑",SimSun,"宋体",Heiti,"黑体",sans-serif;
+    font-size: 14px;
+}
+
+p{
+    font-family: "Microsoft YaHei","微软雅黑",Helvetica,Tahoma,Arial,STXihei,"华文细黑",SimSun,"宋体",Heiti,"黑体",sans-serif;
+    font-size: 14px;
 }

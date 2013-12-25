@@ -9,36 +9,40 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 1. http://docs.angularjs.org/guide
 1. https://github.com/angular/angular.js/tree/master/docs/content/guide
 
+翻译后的文档：
 
-* 01-Controllers（控制器）翻译者:
-* 02-Filters（过滤器）翻译者:@NigelYao
-* 03-Templates（模板）翻译者:@why520crazy
+1. http://angular.wvovo.com/guide
+1. http://angular.duapp.com/
+
+* [01-Controllers（控制器）](http://angular.duapp.com/guide/controller)翻译者:@GrahamLe
+* [02-Filters（过滤器）](http://angular.duapp.com/guide/filter) 翻译者:@NigelYao
+* [03-Templates（模板）](http://angular.duapp.com/guide/templates) 翻译者:@why520crazy 已完成翻译
 * 04-Introduction（介绍）翻译者:
-* 05-Conceptual Overview（概述）翻译者: @asnowwolf
-* [06-Understanding Angular Services（理解ng的服务）](https://github.com/jingyanjiaoliu/angular-guide-zh/blob/master/06-Understanding%20Angular%20Services\(%E7%90%86%E8%A7%A3%E6%9C%8D%E5%8A%A1\).md)翻译者: @lightma 已完成翻译
+* [05-Conceptual Overview（概念总览）](http://angular.duapp.com/guide/concepts) 翻译者: @asnowwolf 已完成翻译
+* [06-Understanding Angular Services（理解ng的服务）](http://angular.duapp.com/guide/dev_guide.services.understanding_services)翻译者: @lightma 已完成翻译
 * 07-Managing Service Dependencies @joe
 * 08-Creating Services 翻译者: @FrankyYang
 * 09-Injecting Services Into Controllers 翻译者: @FrankyYang
 * 10-Testing Angular Services 翻译者: @FrankyYang
 * 11-Using $location
 * 12-Angular Services 翻译者: @FrankyYang
-* 13-Data Binding @NigelYao
+* [13-Data Binding](http://angular.duapp.com/guide/databinding) 翻译者：@NigelYao
 * 14-Working With CSS in Angular @ckken
 * 15-Dependency Injection
 * 16-Providers （Providers）翻译者: @lightma
-* 17-Modules
-* 18-Scopes 翻译者: @GrahamLe
-* 19-Expressions
+* 17-Modules 翻译者: @GrahamLe
+* [18-Scopes](http://angular.duapp.com/guide/scope) 翻译者: @GrahamLe
+* 19-Expressions 翻译者:@NigelYao
 * 20-Bootstrap
 * 21-Directives 翻译者: @lrrluo
 * 22-HTML Compiler
 * 23-Forms
 * 24-Animations
 * 25-E2E Testing
-* 26-Unit Testing
+* 26-Unit Testing 翻译者: @asnowwolf 已完成翻译
 * 27-i18n and l10n
 * 28-Internet Explorer Compatibility
-* 29-Migrating from 1.0 to 1.2
+* 29-[Migrating from 1.0 to 1.2 - 迁移指南](http://angular.duapp.com/guide/migration) 翻译者: @asnowwolf 已完成翻译
 
 目前加入者：
 
@@ -60,5 +64,4 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 
 @why520crazy， QQ:why520crazy(601213834)...
 
-
----heather(2751502325)
+heather(2751502325)
