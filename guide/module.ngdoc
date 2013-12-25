@@ -84,7 +84,7 @@ Translated by [@GrahamLe](https://github.com/grahamle)
 
       angular.module('xmpl', ['xmpl.service', 'xmpl.directive', 'xmpl.filter']).
         run(function(greeter, user) {
-          // This is effectively part of the main method initialization code
+          // 这相当于 main 函数
           greeter.localize({
             salutation: 'Bonjour'
           });
@@ -92,7 +92,7 @@ Translated by [@GrahamLe](https://github.com/grahamle)
         })
 
 
-      // A Controller for your app
+      // 应用所需的一个控制器
       var XmplController = function($scope, greeter, user) {
         $scope.greeting = greeter.greet(user.name);
       }
@@ -107,16 +107,12 @@ Translated by [@GrahamLe](https://github.com/grahamle)
 
 # 模块加载及依赖
 
-A module is a collection of configuration and run blocks which get applied to the application
-during the bootstrap process. In its simplest form the module consist of collection of two kinds
-of blocks:
+模块是配置代码块和运行代码块的集合，在启动阶段被执行。最简单的模块中包含下面两种代码块：
 
-  1. **Configuration blocks** - get executed during the provider registrations and configuration
-    phase. Only providers and constants can be injected into configuration blocks. This is to
-    prevent accidental instantiation of services before they have been fully configured.
-  2. **Run blocks** - get executed after the injector is created and are used to kickstart the
-    application. Only instances and constants can be injected into run blocks. This is to prevent
-    further system configuration during application run time.
+  1. **配置代码块** - 在 `provider` 注册和配置阶段执行（注：provider 是 ng 服务的一种）。只有 `provider` 和 `constant` 可以被注入配置代码块。这是为了防止服务在完全配置好之前被意外地初始化。
+  2. **执行代码块** - 在 `injector` 被创建后执行，被用来启动整个应用。只有服务的实例对象以及 `constant` 可以被注入到执行代码块。这是为了防止在应用执行期间系统的更进一步的配置。
+
+*译者注*：代码中的注释就不翻译了，应该是能看懂的。
 
 <pre>
 angular.module('myModule', []).
@@ -136,8 +132,7 @@ angular.module('myModule', []).
 
 ## 配置代码块
 
-There are some convenience methods on the module which are equivalent to the config block. For
-example:
+有一些快捷方法可供模块调用，效果等同于配置代码块，比如：
 
 <pre>
 angular.module('myModule', []).
@@ -146,7 +141,7 @@ angular.module('myModule', []).
   directive('directiveName', ...).
   filter('filterName', ...);
 
-// is same as
+// 等同于
 
 angular.module('myModule', []).
   config(function($provide, $compileProvider, $filterProvider) {
@@ -157,8 +152,7 @@ angular.module('myModule', []).
   });
 </pre>
 
-The configuration blocks get applied in the order in which they are registered. The only exception
-to it are constant definitions, which are placed at the beginning of all configuration blocks.
+配置代码库被应用的顺序是根据它们被注册的顺序而定的。唯一的例外是 `constant` 的定义，它是被放在所有的配置代码块的最前面。
 
 ## 执行代码块
 
