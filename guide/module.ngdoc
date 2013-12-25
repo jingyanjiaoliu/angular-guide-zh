@@ -6,36 +6,31 @@ Translated by [@GrahamLe](https://github.com/grahamle)
 
 # 何为模块？
 
-Most applications have a main method which instantiates, wires, and bootstraps the application.
-Angular apps don't have a main method. Instead modules declaratively specify how an application
-should be bootstrapped. There are several advantages to this approach:
+大多数应用程序都有个 `main` 函数来初始化、连接以及启动整个应用。ng 中虽然没有 `main` 函数，它用模块来指定应用需要如何启动。这种策略有如下几种优势：
 
-  * The process is more declarative which is easier to understand
-  * In unit-testing there is no need to load all modules, which may aid in writing unit-tests.
-  * Additional modules can be loaded in scenario tests, which can override some of the
-    configuration and help end-to-end test the application
-  * Third party code can be packaged as reusable modules.
-  * The modules can be loaded in any/parallel order (due to delayed nature of module execution).
-
+  * 整个过程是声明式的，更容易理解
+  * 在单元测试中，没有必要加载所有模块，这样有利于单元测试的代码书写
+  * 在场景测试中，额外的模块可以被加载进来进而重写一些配置，这样有助于应用的端到端的测试
+  * 第三方代码可以很容易被打包作为可重用的模块
+  * 模块可以以任何或是并行的顺序被加载（得益于模块执行的延迟性）
 
 # 模块ABC
 
-Ok, I'm in a hurry. How do I get a Hello World module working?
+你会说，别废话一箩筐了，说个 Hello World 的模块示例吧，让它跑起来才是王道呀。
 
-Important things to notice:
+可以，在此之前，有几件重要的事情必须记住：
 
   * {@link api/angular.Module Module} API
-  * Notice the reference to the `myApp` module in the `<html ng-app="myApp">`, it is what
-    bootstraps the app using your module.
+  * 在 `<html ng-app="myApp">` ，注意对于 `myApp` 模块的引用，这是用模块的方法启动应用的触发点
 
 <doc:example module='myApp'>
   <doc:source>
     <script>
-      // declare a module
+      // 声明一个模块
       var myAppModule = angular.module('myApp', []);
 
-      // configure the module.
-      // in this example we will create a greeting filter
+      // 模块配置
+      // 在这个例子中，我们创建一个过滤器
       myAppModule.filter('greet', function() {
        return function(name) {
           return 'Hello, ' + name + '!';
@@ -53,21 +48,16 @@ Important things to notice:
 
 # 推荐配置
 
-While the example above is simple, it will not scale to large applications. Instead we recommend
-that you break your application to multiple modules like this:
+上面的例子太过简单了，对于大型应用显然不适用。对于大型app，我们推荐将应用像如下分为多个模块：
 
-  * A service module, for service declaration
-  * A directive module, for directive declaration
-  * A filter module, for filter declaration
-  * And an application level module which depends on the above modules, and which has
-    initialization code.
+  * 服务模块
+  * 指令模块
+  * 过滤器模块
+  * 一个应用级的模块，依赖于上述的三个模块，而且包含应用的初始化及启动代码
 
-The reason for this breakup is that in your tests, it is often necessary to ignore the
-initialization code, which tends to be difficult to test. By putting it into a separate module it
-can be easily ignored in tests. The tests can also be more focused by only loading the modules
-that are relevant to tests.
+这样划分模块的原因主要是在你的测试中，经常需要忽略难以测试的初始化的代码，而且这样测试时可以单个加载模块进行相关的测试。
 
-The above is only a suggestion, so feel free to tailor it to your needs.
+上述模块划分仅仅是一种建议性的方案，你可以根据自己app的需要去调整。下面的代码显示了上面所述的模块划分：
 
 <doc:example module='xmpl'>
   <doc:source>
