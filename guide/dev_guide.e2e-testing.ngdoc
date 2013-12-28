@@ -219,15 +219,19 @@ Returns the current value of an input field with the corresponding ng-model `nam
 Returns the number of rows in the repeater matching the given jQuery `selector`. The `label` is
 used for test output.
 
-返回`selector`选定的repeater（通常是由ng-repeat生成的）的行数。`label`参数没有实际意义，只用做测试输出。
+返回`selector`选定的ng-repeat的行数。`label`参数没有实际意义，只用做测试输出。
 
 ## repeater(selector, label).row(index)
 Returns an array with the bindings in the row at the given `index` in the repeater matching the
 given jQuery `selector`. The `label` is used for test output.
 
+返回`selector`选定的ng-repeat中，所有绑定到`index`所指定行的所有对象构成的数组。`label`参数没有实际意义，只用做测试输出。
+
 ## repeater(selector, label).column(binding)
 Returns an array with the values in the column with the given `binding` in the repeater matching
 the given jQuery `selector`. The `label` is used for test output.
+
+返回`selector`选定的ng-repeat中，所有绑定到`binding`对象的列内容构成的数组。`label`参数没有实际意义，只用做测试输出。
 
 ## select(name).option(value)
 Picks the option with the given `value` on the select with the given ng-model `name`.
