@@ -2,38 +2,35 @@
 @name Developer Guide: Modules
 @description
 
-# What is a Module?
+Translated by [@GrahamLe](https://github.com/grahamle)
 
-Most applications have a main method which instantiates, wires, and bootstraps the application.
-Angular apps don't have a main method. Instead modules declaratively specify how an application
-should be bootstrapped. There are several advantages to this approach:
+# 何为模块？
 
-  * The process is more declarative which is easier to understand
-  * In unit-testing there is no need to load all modules, which may aid in writing unit-tests.
-  * Additional modules can be loaded in scenario tests, which can override some of the
-    configuration and help end-to-end test the application
-  * Third party code can be packaged as reusable modules.
-  * The modules can be loaded in any/parallel order (due to delayed nature of module execution).
+大多数应用程序都有个 `main` 函数来初始化、连接以及启动整个应用。ng 中虽然没有 `main` 函数，它用模块来指定应用需要如何启动。这种策略有如下几种优势：
 
+  * 整个过程是声明式的，更容易理解
+  * 在单元测试中，没有必要加载所有模块，这样有利于单元测试的代码书写
+  * 在场景测试中，额外的模块可以被加载进来进而重写一些配置，这样有助于应用的端到端的测试
+  * 第三方代码可以很容易被打包作为可重用的模块
+  * 模块可以以任何或是并行的顺序被加载（得益于模块执行的延迟性）
 
-# The Basics
+# 模块ABC
 
-Ok, I'm in a hurry. How do I get a Hello World module working?
+你会说，别废话一箩筐了，说个 Hello World 的模块示例吧，让它跑起来才是王道呀。
 
-Important things to notice:
+可以，在此之前，有几件重要的事情必须记住：
 
   * {@link api/angular.Module Module} API
-  * Notice the reference to the `myApp` module in the `<html ng-app="myApp">`, it is what
-    bootstraps the app using your module.
+  * 在 `<html ng-app="myApp">` ，注意对于 `myApp` 模块的引用，这是用模块的方法启动应用的触发点
 
 <doc:example module='myApp'>
   <doc:source>
     <script>
-      // declare a module
+      // 声明一个模块
       var myAppModule = angular.module('myApp', []);
 
-      // configure the module.
-      // in this example we will create a greeting filter
+      // 模块配置
+      // 在这个例子中，我们创建一个过滤器
       myAppModule.filter('greet', function() {
        return function(name) {
           return 'Hello, ' + name + '!';
@@ -49,23 +46,18 @@ Important things to notice:
 
 
 
-# Recommended Setup
+# 推荐配置
 
-While the example above is simple, it will not scale to large applications. Instead we recommend
-that you break your application to multiple modules like this:
+上面的例子太过简单了，对于大型应用显然不适用。对于大型app，我们推荐将应用像如下分为多个模块：
 
-  * A service module, for service declaration
-  * A directive module, for directive declaration
-  * A filter module, for filter declaration
-  * And an application level module which depends on the above modules, and which has
-    initialization code.
+  * 服务模块
+  * 指令模块
+  * 过滤器模块
+  * 一个应用级的模块，依赖于上述的三个模块，而且包含应用的初始化及启动代码
 
-The reason for this breakup is that in your tests, it is often necessary to ignore the
-initialization code, which tends to be difficult to test. By putting it into a separate module it
-can be easily ignored in tests. The tests can also be more focused by only loading the modules
-that are relevant to tests.
+这样划分模块的原因主要是在你的测试中，经常需要忽略难以测试的初始化的代码，而且这样测试时可以单个加载模块进行相关的测试。
 
-The above is only a suggestion, so feel free to tailor it to your needs.
+上述模块划分仅仅是一种建议性的方案，你可以根据自己app的需要去调整。下面的代码显示了上面所述的模块划分：
 
 <doc:example module='xmpl'>
   <doc:source>
@@ -92,7 +84,7 @@ The above is only a suggestion, so feel free to tailor it to your needs.
 
       angular.module('xmpl', ['xmpl.service', 'xmpl.directive', 'xmpl.filter']).
         run(function(greeter, user) {
-          // This is effectively part of the main method initialization code
+          // 这相当于 main 函数
           greeter.localize({
             salutation: 'Bonjour'
           });
@@ -100,7 +92,7 @@ The above is only a suggestion, so feel free to tailor it to your needs.
         })
 
 
-      // A Controller for your app
+      // 应用所需的一个控制器
       var XmplController = function($scope, greeter, user) {
         $scope.greeting = greeter.greet(user.name);
       }
@@ -113,18 +105,14 @@ The above is only a suggestion, so feel free to tailor it to your needs.
 
 
 
-# Module Loading & Dependencies
+# 模块加载及依赖
 
-A module is a collection of configuration and run blocks which get applied to the application
-during the bootstrap process. In its simplest form the module consist of collection of two kinds
-of blocks:
+模块是配置代码块和运行代码块的集合，在启动阶段被执行。最简单的模块中包含下面两种代码块：
 
-  1. **Configuration blocks** - get executed during the provider registrations and configuration
-    phase. Only providers and constants can be injected into configuration blocks. This is to
-    prevent accidental instantiation of services before they have been fully configured.
-  2. **Run blocks** - get executed after the injector is created and are used to kickstart the
-    application. Only instances and constants can be injected into run blocks. This is to prevent
-    further system configuration during application run time.
+  1. **配置代码块** - 在 `provider` 注册和配置阶段执行（注：provider 是 ng 服务的一种）。只有 `provider` 和 `constant` 可以被注入配置代码块。这是为了防止服务在完全配置好之前被意外地初始化。
+  2. **执行代码块** - 在 `injector` 被创建后执行，被用来启动整个应用。只有服务的实例对象以及 `constant` 可以被注入到执行代码块。这是为了防止在应用执行期间系统的更进一步的配置。
+
+*译者注*：代码中的注释就不翻译了，应该是能看懂的。
 
 <pre>
 angular.module('myModule', []).
@@ -142,10 +130,9 @@ angular.module('myModule', []).
   });
 </pre>
 
-## Configuration Blocks
+## 配置代码块
 
-There are some convenience methods on the module which are equivalent to the config block. For
-example:
+有一些快捷方法可供模块调用，效果等同于配置代码块，比如：
 
 <pre>
 angular.module('myModule', []).
@@ -154,7 +141,7 @@ angular.module('myModule', []).
   directive('directiveName', ...).
   filter('filterName', ...);
 
-// is same as
+// 等同于
 
 angular.module('myModule', []).
   config(function($provide, $compileProvider, $filterProvider) {
@@ -165,36 +152,23 @@ angular.module('myModule', []).
   });
 </pre>
 
-The configuration blocks get applied in the order in which they are registered. The only exception
-to it are constant definitions, which are placed at the beginning of all configuration blocks.
+配置代码库被应用的顺序是根据它们被注册的顺序而定的。唯一的例外是 `constant` 的定义，它是被放在所有的配置代码块的最前面。
 
-## Run Blocks
+## 执行代码块
 
-Run blocks are the closest thing in Angular to the main method. A run block is the code which
-needs to run to kickstart the application. It is executed after all of the service have been
-configured and the injector has been created. Run blocks typically contain code which is hard
-to unit-test, and for this reason should be declared in isolated modules, so that they can be
-ignored in the unit-tests.
+执行代码块是 ng 中最接近 `main` 函数的一个东西。执行代码块是应用启动需要运行的代码。它在所有的服务被配置好以及 `injector` 被创建好之后执行。通常，执行代码块包含的代码都很难进行单元测试，正因为如此，它通常被丢在单独的一个模块中，这样好让我们可以在单元测试时忽略它。
 
-## Dependencies
+## 模块依赖
 
-Modules can list other modules as their dependencies. Depending on a module implies that required
-module needs to be loaded before the requiring module is loaded. In other words the configuration
-blocks of the required modules execute before the configuration blocks of the requiring module.
-The same is true for the run blocks. Each module can only be loaded once, even if multiple other
-modules require it.
+模块声明时可以列出它所需要依赖的别的模块。依赖一个模块意味着被依赖的模块需要在其本身被加载之前加载完毕。更具体些，假设模块A依赖于模块B，那么模块A的配置代码块的执行，发生在模块B的配置代码块之后；模块A的执行代码块亦同理，发生在模块B的执行代码块之后被执行。每个模块只能被加载一次，纵使有多个别的模块依赖于它。
 
-## Asynchronous Loading
+## 异步加载
 
-Modules are a way of managing $injector configuration, and have nothing to do with loading of
-scripts into a VM. There are existing projects which deal with script loading, which may be used
-with Angular. Because modules do nothing at load time they can be loaded into the VM in any order
-and thus script loaders can take advantage of this property and parallelize the loading process.
+模块式一种管理 `$injector` 配置的方式，它和将脚本载入到 VM 没有半毛钱关系。现在已经有很多项目用来在 ng 中处理脚步的加载。由于模块在加载期什么都不做，所以它们可以以任何顺序被载入到 VM 中，这样脚本加载器也可以充分利用这一特性来讲并行地加载模块和脚本。（译者注：这一段中的VM个人没有理解过来）
 
-## Creation versus Retrieval
+## 创建模块 vs 获取模块
 
-Beware that using `angular.module('myModule', [])` will create the module `myModule` and overwrite any
-existing module named `myModule`. Use `angular.module('myModule')` to retrieve an existing module.
+注意，使用 `angular.module('myModule', [])` 将创建名为 `myModule` 的模块并重写已有的同名模块。而使用 `angular.module('myModule')` 则可以获取已有的模块。
 
 <pre>
   var myModule = angular.module('myModule', []);
@@ -210,15 +184,12 @@ existing module named `myModule`. Use `angular.module('myModule')` to retrieve a
   var myModule = angular.module('myOtherModule');
 </pre>
 
-# Unit Testing
+# 单元测试
 
-In its simplest form a unit test is a way of instantiating a subset of the application in test and
-then applying a stimulus to it. It is important to realize that each module can only be loaded
-once per injector. Typically an app has only one injector. But in tests, each test has its own
-injector, which means that the modules are loaded multiple times per VM. Properly structured
-modules can help with unit testing, as in this example:
+单元测试最简单的形式是在测试中初始化应用的一小部分然后进行模拟（译者注：这句话个人翻译的不好，感觉不对）。意识到每个模块在每个 `injector` 创建时只能被加载一次是非常重要的。通常每个app只有一个 `injector` （译者注：ng 中的 `injector` 到底为何物？），但是在测试中，每个测试拥有自己的 `injector` ，这意味着对于每次 VM ，模块都会被多次加载。正确组织的模块有助于我们进行单元测试，如下面例子所示：
 
-In all of these examples we are going to assume this module definition:
+以下例子中，我们都会用到的模块定义如下：
+
 <pre>
   angular.module('greetMod', []).
 
@@ -237,7 +208,8 @@ In all of these examples we are going to assume this module definition:
     });
 </pre>
 
-Let's write some tests:
+让我们写一些测试代码：
+
 <pre>
 describe('myApp', function() {
   // load the relevant application modules then load a special

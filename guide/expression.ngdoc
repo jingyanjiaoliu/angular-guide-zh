@@ -1,42 +1,18 @@
 @ngdoc overview
 @name 表达式
 @description
-
-Expressions are JavaScript-like code snippets that are usually placed in bindings such as `{{
-expression }}`. Expressions are processed by the {@link api/ng.$parse $parse}
-service. Expressions are often post processed using {@link filter filters} to create a more user-friendly format.
+翻译者:[@NigelYao](https://github.com/NigelYao)
 
 "表达式"是一种类JavaScript的代码片段，通常在'{{ 表达式 }}'的视图绑定中使用。表达式是由{@link api/ng.$parse $parse}服务解析。表达式解析之后经常会使用{@link filter 过滤器}来格式化成一种更加用户友好的形式。
-
-For example, these are all valid expressions in angular:
-
-  * `1+2`
-  * `user.name`
 
 例如，下面这些都是Angular中合法的表达式：
   
   * `1+2`
   * `user.name`
 
-## Angular Expressions vs. JS Expressions
-
-## Angular表达式与JS表达式
-
-It might be tempting to think of Angular view expressions as JavaScript expressions, but that is
-not entirely correct, since Angular does not use a JavaScript `eval()` to evaluate expressions.
-You can think of Angular expressions as JavaScript expressions with following differences:
+## Angular表达式与JS表达式 
 
 可能会有人认为Angular视图表达式就是JavaScript表达式，但这不完全正确，因为Angular并没有使用JavaScript中的'eval()'来解析表达式。你可以认为Angular表达式与JavaScript表达式有如下的区别：
-
-  * **Attribute Evaluation:** evaluation of all properties are against the scope, doing the
-    evaluation, unlike in JavaScript where the expressions are evaluated against the global
-    `window`.
-
-  * **Forgiving:** expression evaluation is forgiving to `undefined` and `null`, unlike in JavaScript,
-    where trying to evaluate undefined properties can generate `ReferenceError` or `TypeError`.
-
-  * **No Control Flow Statements:** you cannot do any of the following in angular expression:
-    conditionals, loops, or throw.
 
   * **属性解析：** 所有的属性的解析都是相对于作用域(scope)的，而不像JavaScript中的表达式解析式相对于全局的'window'对象。
 
@@ -44,11 +20,7 @@ You can think of Angular expressions as JavaScript expressions with following di
 
   * **禁止控制流语句：** 表达式中不允许包括下列语句：条件判断，循环，抛出异常。
 
-If, on the other hand, you do want to run arbitrary JavaScript code, you should make it a
-controller method and call the method. If you want to `eval()` an angular expression from
-JavaScript, use the {@link api/ng.$rootScope.Scope#methods_$eval `$eval()`} method.
-
-另一方便，如果你想执行专门的JavaScript代码，你应该实现成控制器里的一个方法，然后调用这个方法。如果你想在JavaScript中解析一个Angular表达式，使用{@link api/ng.$rootScope.Scope#methods_$eval `$eval()`}方法。
+另一方便，如果你想执行专门的JavaScript代码，你应该实现在一个控制器里的方法，然后调用这个方法。如果你想在JavaScript中解析一个Angular表达式，使用{@link api/ng.$rootScope.Scope#methods_$eval `$eval()`}方法。
 
 ## 例子
 <doc:example>
@@ -62,9 +34,7 @@ JavaScript, use the {@link api/ng.$rootScope.Scope#methods_$eval `$eval()`} meth
 </doc:scenario>
 </doc:example>
 
-You can try evaluating different expressions here:
-
-你可以在此处试一试其他的表达式：
+你可以在此处试一试解析其他的表达式：
 
 <doc:example>
 <doc:source>
@@ -106,12 +76,6 @@ You can try evaluating different expressions here:
 
 # 属性解析
 
-Evaluation of all properties takes place against a scope. Unlike JavaScript, where names default
-to global window properties, Angular expressions have to use {@link api/ng.$window
-`$window`} to refer to the global `window` object. For example, if you want to call `alert()`, which is
-defined on `window`, in an expression you must use `$window.alert()`. This is done intentionally to
-prevent accidental access to the global state (a common source of subtle bugs).
-
 属性解析发生在scope上。不像在JavaScript中，将默认的属性解析放在全局的window对象中，Angular表达式必须使用{@link api/ng.$window
 `$window`}来指向全局的'window'对象。例如，如果你想调用在'window'上定义的'alert()'方法，在表达式中，你必须使用'$window.alert()'.作者有意这样设定是为了防止对全局状态非正常的访问（一些奇怪bug的常见来源）。
 
@@ -148,37 +112,16 @@ prevent accidental access to the global state (a common source of subtle bugs).
 </doc:scenario>
 </doc:example>
 
-## Forgiving
-
 ## 容错性
-
-Expression evaluation is forgiving to undefined and null. In JavaScript, evaluating `a.b.c` throws
-an exception if `a` is not an object. While this makes sense for a general purpose language, the
-expression evaluations are primarily used for data binding, which often look like this:
-
-        {{a.b.c}}
 
 表达式的解析对undefined和null具有容错性。在JavaScript中，解析'a,b,c'时，如果'a'不是一个对象会抛出异常。在一些语言中这可能会有用，但表达式的解析在Angular中主要用在数据绑定上，我们会像下面这样使用表达式：
 
         {{a,b,c}}
 
+此时如果'a'是未定义的（也许我们正等着服务器响应数据，在不久的将来其会被定义），解析抛出异常将不再合理。如果表达式不具有容错性的话，我们的代码会变的繁杂且影响阅读，例如：`{{((a||{}).b||{}).c}}`。
 
-It makes more sense to show nothing than to throw an exception if `a` is undefined (perhaps we are
-waiting for the server response, and it will become defined soon). If expression evaluation wasn't
-forgiving we'd have to write bindings that clutter the code, for example: `{{((a||{}).b||{}).c}}`
+类似的，在undefined和null的对象上调用方法'a.b.c()'时会返回undefined。
 
-此时如果'a'是未定义的（也许我们正等着服务器响应数据，在不久的将来其会被定义），解析抛出异常将不再合理。如果表达式不具有容错性的话，我们的代码会变的繁杂且影响阅读，例如：`{{((a||{}).b||{}).c}}`
+## 禁止控制流语句
 
-Similarly, invoking a function `a.b.c()` on undefined or null simply returns undefined.
-
-类似的，在为undefined和null的对象上调用方法'a.b.c()'时会返回undefined。
-
-## No Control Flow Statements
-
-## 无控制流语句
-
-You cannot write a control flow statement in an expression. The reason behind this is core to the
-Angular philosophy that application logic should be in controllers, not in the view. If you need a
-conditional, loop, or to throw from a view expression, delegate to a JavaScript method instead.
-
-在表达式中不能写控制流语句。这背后的原因在于，Angular设计哲学的核心认为，应用逻辑应该在控制器中，而不是在视图中控制。如果你需要条件表达式，循环或者抛出异常出现在你的视图表达式中，请将其委托到JavaScript方法中执行。
+在表达式中禁止写控制流语句。这背后的原因在于，Angular设计哲学的核心认为，应用逻辑应该在控制器中，而不是在视图中控制。如果你需要条件表达式，循环或者抛出异常出现在你的视图表达式中，请将其委托到JavaScript方法中执行。
