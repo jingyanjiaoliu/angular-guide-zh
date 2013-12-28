@@ -2,70 +2,67 @@
 @name Directives
 @description
 
-# Creating Custom Directives
+# 创建自定义"指令"
 
 <div class="alert alert-warning">
-**Note:** this guide is targeted towards developers who are already familiar with AngularJS basics.
-If you're just getting started, we recommend the {@link tutorial/ tutorial} first.
-If you're looking for the **directives API**, we recently moved it to {@link api/ng.$compile `$compile`}.
+**注意:** 这篇指南是面向那些已经对AngularJs 已经有了基础并熟悉的开发者。
+如果你是刚开始接触NG，我们建议到先到这里{@link tutorial/ tutorial}
+如果你是寻找着**指令API**,我们最近将其移到这里{@link api/ng.$compile `$compile`}.
 </div>
 
 
-This document explains when you'd want to create your own directives in your AngularJS app, and
-how to implement them.
+此文解释了怎样在你的AngularJs app 里创建你自己的指令和怎样去实现它们。
 
 
-## What are Directives?
+## "指令"是什么?
 
-At a high level, directives are markers on a DOM element (such as an attribute, element
-name, or CSS class) that tell AngularJS's **HTML compiler** ({@link api/ng.$compile `$compile`}) to
-attach a specified behavior to that DOM element or even transform the DOM element and its children.
+高层次来说，指令就是一类让告诉AngularJS的**HTML compiler** ({@link api/ng.$compile `$compile`})
+去触发特殊行为去操作DOM甚至去改变DOM元素和它的children 的DOM元素（例如 属性，元素名字，或css类）
 
-Angular comes with a set of these directives built-in, like `ngBind`, `ngModel`, and `ngView`.
-Much like you create controllers and services, you can create your own directives for Angular to use.
-When Angular {@link guide/bootstrap bootstraps} your application, the
-{@link guide/compiler HTML compiler} traverses the DOM matching directives against the DOM elements.
+Angular 自身带有一整套的指令，像`ngBind`, `ngModel`, and `ngView`.
+非常像你创建控制器和服务那样，你也可以自己创建属于自己的指令给Angular 去用.
+当Angular {@link guide/bootstrap bootstraps} 引导你的应用程序时，
+{@link guide/compiler HTML compiler}就会贯穿整个DOM 去匹配DOM元素里的指令。
 
 <div class="alert alert-info">
-**What does it mean to "compile" an HTML template?**
+**对于HTML 模块来说，"编译"意味着什么?**
 
-For AngularJS, "compilation" means attaching event listeners to the HTML to make it interactive.
-The reason we use the term "compile" is that the recursive process of attaching directives
-mirrors the process of compiling source code in
-{@link http://en.wikipedia.org/wiki/Compiled_languages compiled programming languages}.
+对于 AngularJs来说，"编译"意味着绑定监听事件在HTML上使其可以交互。
+我们使用术语"编译"的原因是关联的指令的递归过程就是反映了源代码的
+{@link http://en.wikipedia.org/wiki/Compiled_languages compiled programming languages}.编译过程。
 </div>
 
 
-## Matching Directives
+## 指令的匹配
 
-Before we can write a directive, we need to know how Angular's {@link guide/compiler HTML compiler}
-determines when to use a given directive.
+在写指令这前，我们需要知道angular的{@link guide/compiler HTML compiler}
+是怎样决定什么时候调用一个指令。
 
-In the following example, we say that the `<input>` element **matches** the `ngModel` directive.
+在接下来的例子里，我们可以说元素`<input>` **匹配**了`ngModel` 的指令。
 
 ```javascript
 <input ng-model="foo">
 ```
 
-The following also **matches** `ngModel`:
+下面同样**匹配** `ngModel`:
 
 ```javascript
 <input data-ng:model="foo">
 ```
 
-Angular **normalizes** an element's tag and attribute name to determine which elements match which
-directives. We typically refer to directives by their case-sensitive
-{@link http://en.wikipedia.org/wiki/CamelCase camelCase} **normalized** name (e.g. `ngModel`). 
-However, since HTML is case-insensitive, we refer to directives in the DOM by lower-case
-forms, typically using {@link http://en.wikipedia.org/wiki/Letter_case#Computers dash-delimited}
-attributes on DOM elements (e.g. `ng-model`).
+Angular **使正规化** 一个元素的标签和属性名字来决定哪个元素匹配哪个指令。
+我们典型地通过区分大小写的**使正规化**命名方式(好像`ngModel`)来辨别指令。
+然而，因为HTML是区分大小的，我们提及的在DOM里指令通过小写的名字方式，
+典型地使用{@link http://en.wikipedia.org/wiki/Letter_case#Computers dash-delimited 破折号间隔}
+在DOM的元素上(像： `ng-model`).
 
-The **normalization** process is as follows:
+**使正规化**的过程就像下面的：
 
-1. Strip `x-` and `data-` from the front of the element/attributes.
-2. Convert the `:`, `-`, or `_`-delimited name to `camelCase`.
+1. 从元素或属性的名字前面去掉`x-` and `data-`
+2. 转分隔符`:`, `-`, 或 `_` 转换成`camelCase`.
 
-Here are some equivalent examples of elements that match `ngBind`:
+下面的例子是对于指令`ngBind`的匹配都是等价的:
+
 
 <example module="docsBindExample">
   <file name="script.js">
@@ -93,17 +90,15 @@ Here are some equivalent examples of elements that match `ngBind`:
 </example>
 
 <div class="alert alert-success">
-**Best Practice:** Prefer using the dash-delimited format (e.g. `ng-bind` for `ngBind`).
-If you want to use an HTML validating tool, you can instead use the `data`-prefixed version (e.g.
-`data-ng-bind` for `ngBind`).
-The other forms shown above are accepted for legacy reasons but we advise you to avoid them.
+**最佳实践:** 建议使用破折号分隔符的方式(像. `ng-bind` for `ngBind`).
+如果你想使用HTML的验证工具，你可以加前缀`data`.(好像：`data-ng-bind` for `ngBind`).
+其它的形式也是合法使用的，但因为历史遗留原因我们建议不要这样做。
 </div>
 
 `$compile` can match directives based on element names, attributes, class names, as well as comments.
-
-All of the Angular-provided directives match attribute name, tag name, comments, or class name.
-The following demonstrates the various ways a directive (`myDir` in this case) can be referenced
-from within a template:
+`$compile`(编译) 可以基于元素名字、属性、类名、和注释来匹配指令的。
+由Angular 内置提供的指令全部匹配 元素名字、属性、类名、和注释来匹配指令的。
+下面的例子列举了在模板里引用指令的各种方式：(在这个例子 里是`myDir` ):
 
 ```html
 <my-dir></my-dir>
@@ -113,38 +108,37 @@ from within a template:
 ```
 
 <div class="alert alert-success">
-**Best Practice:** Prefer using directives via tag name and attributes over comment and class names.
-Doing so generally makes it easier to determine what directives a given element matches.
+**最佳实践:** 最好使用标签名字和属性来命令指令而不是注释和类名。
+这样做通常是为了更容易更好地去辨别一个元素是跟哪个指令来匹配。
 </div>
 
 <div class="alert alert-success">
-**Best Practice:** Comment directives were commonly used in places where the DOM API limits the
-ability to create directives that spanned multiple elements (e.g. inside `<table>` elements).
-AngularJS 1.2 introduces {@link api/ng.directive:ngRepeat `ng-repeat-start` and `ng-repeat-end`}
-as a better solution to this problem. Developers are encouraged to use this over custom comment
-directives when possible.
+***最佳实践:** 通常注释式命名式指令使用在那里DOM　API
+限制了对创建的指令跨越了多元素(比如说是在<table>元素里面)的功能.
+AngularJs 1.2 介绍了{@link api/ng.directive:ngRepeat `ng-repeat-start` and `ng-repeat-end`}
+这种作为比较好的解决方案。鼓励开发者去使用这个方法在自定义的注释式指令上面.
 </div>
 
 
 
-### Text and attribute bindings
+### 文本 和 属性 绑定
 
-During the compilation process the {@link api/ng.$compile compiler} matches text and attributes
-using the {@link api/ng.$interpolate $interpolate} service to see if they contain embedded
-expressions. These expressions are registered as {@link api/ng.$rootScope.Scope#methods_$watch watches}
-and will update as part of normal {@link api/ng.$rootScope.Scope#methods_$digest digest} cycle. An
-example of interpolation is shown below:
+在编译的过程中{@link api/ng.$compile compiler}会使用 {@link api/ng.$interpolate $interpolate}
+服务去查看是否含有内嵌的表达式然后匹配文本和属性。
+这些表达式会作为监控的值 {@link api/ng.$rootScope.Scope#methods_$watch watches}
+来注册并作为挖掘 {@link api/ng.$rootScope.Scope#methods_$digest digest}循环的一部分来进行更新换。
+下面是绑定的展开(interpolation)的一个例子
 
 ```html
 <a ng-href="img/{{username}}.jpg">Hello {{username}}!</a>
 ```
 
 
-### `ngAttr` attribute bindings
+### `ngAttr` 属性绑定
 
-Web browsers are sometimes picky about what values they consider valid for attributes.
+web 浏览器有时候对于属性的合法性可以说是吹毛求疵。
 
-For example, considering this template:
+比如，思考一下下面的模块：
 
 ```html
 <svg>
@@ -152,18 +146,16 @@ For example, considering this template:
 </svg>
 ```
 
-We would expect Angular to be able to bind to this, but when we check the console we see
-something like `Error: Invalid value for attribute cx="{{cx}}"`. Because of the SVG DOM API's
-restrictions, you cannot simply write `cx="{{cx}}"`.
 
-With `ng-attr-cx` you can work around this problem.
+使用这样的写法时，我们会发现控制台中报错Error: Invalid value for attribute cx="{{cx}}".
+这是由于SVG DOM API的限制，你不能简单的写为cx="{{cx}}".
 
-If an attribute with a binding is prefixed with the `ngAttr` prefix (denormalized as `ng-attr-`)
-then during the binding will be applied to the corresponding unprefixed attribute. This allows
-you to bind to attributes that would otherwise be eagerly processed by browsers
-(e.g. an SVG element's `circle[cx]` attributes).
+使用ng-attr-cx 可以解决这个问题
 
-For example, we could fix the example above by instead writing:
+如果一个绑定的属性使用ngAttr前缀(或者ng-attr), 那么在绑定的时候将会被应用到相应的未前缀化的属性，
+这种方式允许你绑定到需要马上被浏览器处理的属性上面(比如SVG元素的circle[cx]属性)。
+
+所以，我们可以这样写来修复以上的问题:
 
 ```html
 <svg>
@@ -172,48 +164,40 @@ For example, we could fix the example above by instead writing:
 ```
 
 
-## Creating Directives
+## 创建指令
 
-First let's talk about the API for registering directives. Much like controllers, directives are
-registered on modules. To register a directive, you use the `module.directive` API.
-`module.directive` takes the
-{@link guide/directive#creating-custom-directives_matching-directives normalized} directive name
-followed by a **factory function.** This factory function should return an object with the different
-options to tell `$compile` how the directive should behave when matched.
+首先先谈一下注册指令API的API.非常像controllers ，指令也是注册在模块上的。
+为了注册一个指令你可以用 此 `module.directive` API
+`module.directive` 接受规范化{@link guide/directive#creating-custom-directives_matching-directives normalized}
+的指令名字和**工厂方法**.此工大方法应该返回一个带有不同配置的对象来告诉
+编译器`$compile`此指令当匹配时该作怎样表现。
 
-
-The factory function is invoked only once when the
-{@link api/ng.$compile compiler} matches the directive for the first time. You can perform any
-initialization work here. The function is invoked using
-{@link api/AUTO.$injector#methods_invoke $injector.invoke} which makes it injectable just like a
-controller.
+工厂函数仅在编译器 {@link api/ng.$compile compiler} 第一次匹配到指令的时候调用一次.
+你可以在这里进行初始化的工作。
+该函数使用$injector.invoke{@link api/AUTO.$injector#methods_invoke $injector.invoke}调用，
+所以它可以像controller一样进行依赖注入。
 
 <div class="alert alert-success">
-**Best Practice:** Prefer using the definition object over returning a function.
+**最佳实践:** 优先返回一个定义好的对象，而不是返回一个函数。
 </div>
 
 
-We'll go over a few common examples of directives, then dive deep into the different options
-and compilation process.
+接下来，我们先会了解一些常见的例子，然后再深入了解不同的配置项的原理和编译过程。
 
 <div class="alert alert-success">
-**Best Practice:** In order to avoid collisions with some future standard, it's best to prefix your own
-directive names. For instance, if you created a `<carousel>` directive, it would be problematic if HTML7
-introduced the same element. A two or three letter prefix (e.g. `btfCarousel`) works well. Similarly, do
-not prefix your own directives with `ng` or they might conflict with directives included in a future
-version of Angular.
+**最佳实践:** 为了防止与未来的标准冲突，最好是前缀化你自己的指令名字。
+比如你创建一个指令`<carousel>` ，它可能会产生冲突如果HTML7也引入相同的元素。
+推荐使用两三个单词的前缀(比如btfCarousel)，同样不能使用ng或者其他可能与angular未来版本起冲突的前缀。
 </div>
 
-For the following examples, we'll use the prefix `my` (e.g. `myCustomer`).
+下面的例子我们将会使用作为 `my` 前缀 （例如，`myCustomer`）
 
+### 模板扩展指令
 
-### Template-expanding directive
+当你有大量代表客户信息的模板。这个模板在你的代码中重复了很多次，当你改变一个地方的时候，
+你不得不在其他地方同时改动，这时候，你就要使用指令来简化你的模板。
 
-Let's say you have a chunk of your template that represents a customer's information. This template
-is repeated many times in your code. When you change it in one place, you have to change it in
-several others. This is a good opportunity to use a directive to simplify your template.
-
-Let's create a directive that simply replaces its contents with a static template:
+我们来创建一个指令，简单的时候静态模板来替换它的内容。
 
 <example module="docsSimpleDirective">
   <file name="script.js">
@@ -237,22 +221,17 @@ Let's create a directive that simply replaces its contents with a static templat
   </file>
 </example>
 
-Notice that we have bindings in this directive. After `$compile` compiles and links
-`<div my-customer></div>`, it will try to match directives on the element's children. This means you
-can compose directives of other directives. We'll see how to do that in
-{@link guide/directive#creating-custom-directives_demo_creating-directives-that-communicate an example}
-below.
+注意我们这里做了一些绑定，`$compile` 编译很链接之后，
+它将会匹配子元素的指令。这意味着你可以组合一些指令。
+接下来我们去下面的例子{@link guide/directive#creating-custom-directives_demo_creating-directives-that-communicate an example}是怎样做的
 
-In the example above we in-lined the value of the `template` option, but this will become annoying
-as the size of your template grows.
+这个例子中，我们直接在`template`配置项里写上模板，但是随着模板大小的增加，这样非常不优雅。
 
 <div class="alert alert-success">
-**Best Practice:** Unless your template is very small, it's typically better to break it apart into
-its own HTML file and load it with the `templateUrl` option.
+**最佳实践:** 除非你的模板非常小，否则更好的是分割成单独的hmtl文件，然后使用`templateUrl`选项来加载。
 </div>
 
-If you are familiar with `ngInclude`, `templateUrl` works just like it. Here's the same example
-using `templateUrl` instead:
+如果你熟悉`ngInclude`,而 `templateUrl`  的作用与之类似，下面是用`templateUrl`选项的同一个例子：
 
 <example module="docsTemplateUrlDirective">
   <file name="script.js">
@@ -279,21 +258,19 @@ using `templateUrl` instead:
   </file>
 </example>
 
-Great! But what if we wanted to have our directive match the tag name `<my-customer>` instead?
-If we simply put a `<my-customer>` element into the HMTL, it doesn't work.
+非常好，但是如果我们想让我们的指令匹配标签名呢？ 如果我们只是简单的把元素放在hmtl上面，会发现没有效果。
 
 <div class="alert alert-waring">
-**Note:** When you create a directive, it is restricted to attribute only by default. In order to
-create directives that are triggered by element name, you need to use the `restrict` option.
+**注意:** 创建指令的时候，默认仅使用属性的方式。为了创建一个能由元素名字触发的指令，你需要用到`restrict`配置。
 </div>
 
-The `restrict` option is typically set to:
+选项`restrict`可以设置成以下方式：
 
-* `'A'` - only matches attribute name
-* `'E'` - only matches element name
-* `'AE'` - matches either attribute or element name
+* `'A'` - 仅匹配属性名字
+* `'E'` - 仅匹配元素名字
+* `'AE'` - 既匹配属性又匹配元素名字
 
-Let's change our directive to use `restrict: 'E'`:
+下面把例子的例子的选项restrict配置成`restrict: 'E'`吧。
 
 <example module="docsRestrictDirective">
   <file name="script.js">
@@ -323,33 +300,28 @@ Let's change our directive to use `restrict: 'E'`:
   </file>
 </example>
 
-For more on the
-{@link api/ng.$compile#description_comprehensive-directive-api_directive-definition-object `restrict`}
-property, see the
-{@link api/ng.$compile#description_comprehensive-directive-api_directive-definition-object API docs}.
+更多的限制(restrict)属性{@link api/ng.$compile#description_comprehensive-directive-api_directive-definition-object `restrict`}
+请参考API文档{@link api/ng.$compile#description_comprehensive-directive-api_directive-definition-object API docs}.
 
 <div class="alert alert-info">
-**When should I use an attribute versus an element?**
+**应该什么情况下使用元素名或属性名？**
 
-Use an element when you are creating a component that is in control of the template. The common case
-for this is when you are creating a Domain-Specific Language for parts of your template.
+当创建一个含有自己模板的组件的时候，需要使用元素名.常见情况当你想为你的模板一部分创建一个特定域的语言
+(The common case for this is when you are creating a Domain-Specific Language for parts of your template.)
 
-Use an attribute when you are decorating an existing element with new functionality.
+如果仅仅是为已有的元素添加功能的话，使用属性名.
 </div>
 
-Using an element for the `myCustomer` directive is clearly the right choice because you're not
-decorating an element with some "customer" behavior; you're defining the core behavior of the
-element as a customer component.
+使用元素名做为myCustomer指令是非常正确的决定，因为你不是用一些'customer'行为来装饰元素，
+而是定义一个具有自己行为的元素作为customer组件
 
 
 
-### Isolating the Scope of a Directive
+### 隔离指令的作用域
 
-Our `myCustomer` directive above is great, but it has a fatal flaw. We can only use it once within a
-given scope.
+上面我们的`myCustomer`指令已经非常好了，但是它有个致命的缺陷，我们在给定的作用域内仅能使用一次。
 
-In its current implementation, we'd need to create a different controller each time In order to
-re-use such a directive:
+它现在的实现是，我们每次重用该指令的时候都要为它新创一个控制器.
 
 <example module="docsScopeProblemExample">
   <file name="script.js">
@@ -387,11 +359,10 @@ re-use such a directive:
   </file>
 </example>
 
-This is clearly not a great solution.
+这显然不是一个好的解决方案。
 
-What we want to be able to do is separate the scope inside a directive from the scope
-outside, and then map the outer scope to a directive's inner scope. We can do this by creating what
-we call an **isolate scope**. To do this, we can use a directive's `scope` option:
+我们想要做的是能够把指令的作用域与外部的作用域隔离开来，然后映射外部的作用域到指令内部的作用域。
+可以通过创建**isolate scope**来完成这个目的。这样的话，我们使用指令的`scope`配置:
 
 <example module="docsIsolateScopeDirective">
   <file name="script.js">
@@ -422,10 +393,10 @@ we call an **isolate scope**. To do this, we can use a directive's `scope` optio
   </file>
 </example>
 
-Looking at `index.html`, the first `<my-customer>` element binds the `info` attribute to `naomi`,
-which we have exposed on our controller's scope. The second binds `info` to `igor`.
+首先看`index.html`,第一个`<my-customer>` 标签绑定了`naomi`(在控制的作用域[controller's scope]上暴露出来的)值到属性`info`上,
+第二个是绑定`igor`到 `info`.
 
-Let's take a closer look at the scope option:
+现在看看scope是如何配置的:
 
 ```javascript
 //...
@@ -435,21 +406,17 @@ scope: {
 //...
 ```
 
-The **scope option** is an object that contains a property for each isolate scope binding.  In this
-case it has just one property:
+**作用域配置** 是一组为每个独立作用域绑定的属性组合.在此例子中它只有一个属性：
 
-- Its name (`customerInfo`) corresponds to the
-directive's **isolate scope** property `customerInfo`.
-- Its value (`=info`) tells `$compile` to bind to the `info` attribute.
+- 它的名字(`customerInfo`) 对应于指令里的**独立作用域**的`customerInfo`属性.
+- 它的值 (`=info`) 告诉`$compile` 这是绑定了 `info` 属性。
 
 <div class="alert alert-warning">
-**Note:** These `=attr` attributes in the `scope` option of directives are normalized just like
-directive names. To bind to the attribute in `<div bind-to-this="thing">`, you'd specify a binding
-of `=bindToThis`.
+**注意:** 指令作用域配置中的'=attr'属性名是被规范化过后的名字.
+比如要绑定`<div bind-to-this="thing">`,你就要使用'=bindToThis'的绑定。
 </div>
 
-For cases where the attribute name is the same as the value you want to bind to inside the
-directive's scope, you can use this shorthand syntax:
+对于属性名和你想要绑定的值的名字一样，你可以使用这样的快捷语法:
 
 ```javascript
 ...
@@ -460,11 +427,9 @@ scope: {
 ...
 ```
 
-Besides making it possible to bind different data to the scope inside a directive, using an isolated
-scope has another effect.
+使用isolated scope还有另外一个用处，那就是可以绑定不同的数据到指令内部的作用域。
 
-We can show this by adding another property, `vojta`, to our scope and trying to access it from
-within our directive's template:
+在我们的例子中，我们可以添加另外一个属性vojta到我们的作用域，然后在我们的指令模板中访问它。
 
 <example module="docsIsolationExample">
   <file name="script.js">
@@ -496,40 +461,34 @@ within our directive's template:
   </file>
 </example>
 
-Notice that `{{vojta.name}}` and `{{vojta.address}}` are empty, meaning they are undefined.
-Although we defined `vojta` in the controller, it's not available within the directive.
+注意到，`{{vojta.name}}`和`{{vojta.address}}` 都是空的，意味着他们是undefined,
+虽然我们在控制器中定义了`vojta` ，但是在指令内部访问不到
 
-As the name suggests, the **isolate scope** of the directive isolates everything except models that
-you've explicitly added to the `scope: {}` hash object. This is helpful when building reusable
-components because it prevents a component from changing your model state except for the models
-that you explicitly pass in.
+就像它的名字暗示的一样， 指令的**独立作用域** 隔离了除了你添加到`scope: {}` (作用域:{})
+对象中的数据模型外的一切东西。这对于你要建立一个可重复使用的组件是非常有用的，
+因为它阻止了除了你想要传入的数据模型外其他东西改变你数据模型的状态。
 
 <div class="alert alert-warning">
-**Note:** Normally, a scope prototypically inherits from its parent. An isolated scope does not.
+**注意:**正常情况下，作用域是原型继承自父作用域。但是isolate scope没有这样的继承。
 </div>
 
 <div class="alert alert-success">
-**Best Practice:** Use the `scope` option to create isolate scopes when making components that you
-want to reuse throughout your app.
+**最佳实践:**当你想要使你的组件在应用范围内可重用，那么使用`scope`配置去创建一个isolate scopes
 </div>
 
 
-### Creating a Directive that Manipulates the DOM
+### 创建一个操作DOM的指令
 
-In this example we will build a directive that displays the current time.
-Once a second, it updates the DOM to reflect the current time.
+在这个例子中，我们会创建一个显示当前时间的指令，每秒一次更新DOM以正确的显示当前的时间。
 
-Directives that want to modify the DOM typically use the `link` option.
-`link` takes a function with the following signature, `function link(scope, element, attrs) { ... }`
-where:
+指令修改DOM通常是在`link`配置中，`link`选项接受一个带有如下标签的函数`function link(scope,element,attrs) {...}`
+其中：
+* `scope` 是一个Angular的scope对象.
+* `element` 指令匹配的jqLite封装的元素(angular内部实现的类jquery的库)
+* `attrs` 是一个带有规范化后属性名字和相应值的对象.
 
-* `scope` is an Angular scope object.
-* `element` is the jqLite-wrapped element that this directive matches.
-* `attrs` is an object with the normalized attribute names and their corresponding values.
-
-In our `link` function, we want to update the displayed time once a second, or whenever a user
-changes the time formatting string that our directive binds to. We also want to remove the timeout
-if the directive is deleted so we don't introduce a memory leak.
+在我们的`link` 函数中，我们更新显示时间每秒一次，或者当用户改变指定绑定的时间格式字符串的时候。
+我们也要移除定时器，当指令被删除的时候，以避免引入内存泄露。
 
 <example module="docsTimeDirective">
   <file name="script.js">
@@ -541,7 +500,7 @@ if the directive is deleted so we don't introduce a memory leak.
 
         function link(scope, element, attrs) {
           var format,
-              timeoutId;
+              timeoId;
 
           function updateTime() {
             element.text(dateFilter(new Date(), format));
@@ -581,37 +540,34 @@ if the directive is deleted so we don't introduce a memory leak.
   </file>
 </example>
 
-There are a couple of things to note here.
-Just like the `module.controller` API, the function argument in `module.directive` is dependency
-injected. Because of this, we can use `$timeout` and `dateFilter` inside our directive's `link`
-function.
+这里有很多东西值得注意的，
+就像`module.controller` API, `module.directive` 中函数参数是依赖注入，
+因此，我们可以在`link`函数内部使用`$timeout` 和`dateFilter` 服务。
 
-We register an event `element.on('$destroy', ...)`. What fires this `$destroy` event?
+We register an event `element.on('$destroy', ...)`. What fires this  event?
+我们注册了一个事件`element.on('$destroy', ...)`, 是什么触发了这个`$destroy`事件呢？
 
-There are a few special events that AngularJS emits. When a DOM node that has been compiled
-with Angular's compiler is destroyed, it emits a `$destroy` event. Similarly, when an AngularJS
-scope is destroyed, it broadcasts a `$destroy` event to listening scopes.
+AngularJS会触发一些特定的事件，当一个被angular编译过的DOM元素被移除的时候，
+它会触发一个`$destroy` 事件，同样的，当一个angular作用域被移除的时候，
+它会向下广播`$destroy` 事件到所有监听的作用域。
 
-By listening to this event, you can remove event listeners that might cause memory leaks.
-Listeners registered to scopes and elements are automatically cleaned up when they are destroyed,
-but if you registered a listener on a service, or registered a listener on a DOM node that isn't
-being deleted, you'll have to clean it up yourself or you risk introducing a memory leak.
+通过监听事件，你可以移除可能引起内存泄露的事件监听器，
+注册在元素和作用域上的监听器在它们被移除的时候，会自动会清理掉，
+但是假如注册一个事件在服务或者没有被删除的DOM节点上，你就必须手工清理，否则会有内存泄露的风险。
 
 <div class="alert alert-success">
-**Best Practice:** Directives should clean up after themselves. You can use
-`element.on('$destroy', ...)` or `scope.$on('$destroy', ...)` to run a clean-up function when the
-directive is removed.
+**最佳实践:** 指令应该自己管理员自身的内存。当指令被移除时，
+你可以使用`element.on('$destroy', ...)` 或 `scope.$on('$destroy', ...)`来执行一个清理的工作。
 </div>
 
 
-### Creating a Directive that Wraps Other Elements
+###创建包裹其他元素的指令
 
-We've seen that you can pass in models to a directive using the isolate scope, but sometimes
-it's desirable to be able to pass in an entire template rather than a string or an object.
-Let's say that we want to create a "dialog box" component. The dialog box should be able to
-wrap any arbitrary content.
+我们现在已经实现了，使用isolate scopes传递数据模型到指令里面。
+但是有时候我们需要能够传递一整个模板而不是字符串或者对象。
+让我们通过创建'dialog box'组件来说明。这个'dialog box'组件应该能够包裹任意内容。
 
-To do this, we need to use the `transclude` option.
+实现这个，我们需要使用`transclude`选项
 
 <example module="docsTransclusionDirective">
   <file name="script.js">
@@ -638,11 +594,10 @@ To do this, we need to use the `transclude` option.
   </file>
 </example>
 
-What does this `transclude` option do, exactly? `transclude` makes the contents of a directive with
-this option have access to the scope **outside** of the directive rather than inside.
+这个`transclude`配置用来干嘛呢？`transclude`使带有这个配置的指令的内容能够访问指令**外部**的作用域。
 
-To illustrate this, see the example below. Notice that we've added a `link` function in `script.js`
-that redefines `name` as `Jeff`. What do you think the `{{name}}` binding will resolve to now?
+为了说明这个,请看下面的例子.注意到我们增加了一个`link` 函数在`script.js`，
+在这个link函数内部我们重定义了name属性的值为Jeff，那么现在这个`{{name}}`会被解析成哪个值呢？
 
 <example module="docsTransclusionExample">
   <file name="script.js">
@@ -673,27 +628,23 @@ that redefines `name` as `Jeff`. What do you think the `{{name}}` binding will r
   </file>
 </example>
 
-Ordinarily, we would expect that `{{name}}` would be `Jeff`. However, we see in this example that
-the `{{name}}` binding is still `Tobias`.
+一般，我们会认为`{{name}}`会被解析为`Jeff`，然而这里，我们看到这个例子中的`{{name}}` 还是被解析成了`Tobias`.
 
-The `transclude` option changes the way scopes are nested. It makes it so that the **contents** of a
-transcluded directive have whatever scope is outside the directive, rather than whatever scope is on
-the inside. In doing so, it gives the contents access to the outside scope.
+`transclude` 配置改变了指令相互嵌套的方式，他使指令的**内容**拥有任何指令外部的作用域，
+而不是内部的作用域。为了实现这个，它给指令内容一次访问外部作用域的机会。
 
-Note that if the directive did not create its own scope, then `scope` in `scope.name = 'Jeff';` would
-reference the outside scope and we would see `Jeff` in the output.
+需要注意的是，如果指令不创建自己的scope(就是说scope:false，或省略)，然后在在link里执行
+`scope.name = 'Jeff';` 很明显外部的`scope`scope会受影响，因为指令是继续了外部的`scope` ,在输出上会看出 `Jeff`
 
-This behavior makes sense for a directive that wraps some content, because otherwise you'd have to
-pass in each model you wanted to use separately. If you have to pass in each model that you want to
-use, then you can't really have arbitrary contents, can you?
+这样的行为对于包裹内容的指令是非常有意义的。因为如果不这样的话，
+你就必须分别传入每个你需要使用的数据模型。如果你需要传入每个要使用的数据模型，
+那么你就无法做到适应各种不同内容的情况,对吧？
 
 <div class="alert alert-success">
-**Best Practice:** only use `transclude: true` when you want to create a directive that wraps
-arbitrary content.
+**最佳实践:** 仅当你要创建一个包裹任意内容的指令的时候使用`transclude: true`。
 </div>
 
-Next, we want to add buttons to this dialog box, and allow someone using the directive to bind their
-own behavior to it.
+接下来我们增加一个按钮到'dialog box'组件里面，允许用户使用指令绑定自己定义的行为。
 
 <example module="docsIsoFnBindExample">
   <file name="script.js">
@@ -733,28 +684,25 @@ own behavior to it.
   </file>
 </example>
 
-We want to run the function we pass by invoking it from the directive's scope, but have it run
-in the context of the scope where its registered.
+我们想要通过在指令的作用域上调用，来运行我们传递进去的函数，
+但是这个函数是运行在定义时候的上下文。
 
-We saw earlier how to use `=prop` in the `scope` option, but in the above example, we're using
-`&prop` instead. `&` bindings expose a function to an isolated scope allowing the isolated scope
-to invoke it, but maintaining the original scope of the function. So when a user clicks the
-`x` in the dialog, it runs `Ctrl`'s `close` function.
+先前我们看到如何`scope` 配置使用`=prop` ，但是在上文的例子中，
+我们使用`&prop` ，`&` 绑定开放了一个函数到isolated scope，
+允许 isolated scope调用它，同时维持原来函数的作用域(这里的作用域都是指$scope)。
+所以当一个用户点击`x` 时候，就会运行`Ctrl`控制器的`close`函数。
 
 <div class="alert alert-success">
-**Best Practice:** use `&prop` in the `scope` option when you want your directive
-to expose an API for binding to behaviors.
+**最佳实践:**  当你的指令想要开放一个API去绑定特定的行为，在`scope`配置中使用`&prop`.
 </div>
 
 
-### Creating a Directive that Adds Event Listeners
+###创建一个添加事件监听器的指令
 
-Previously, we used the `link` function to create a directive that manipulated its
-DOM elements. Building upon that example, let's make a directive that reacts to events on
-its elements.
+先前，我们使用`link`函数创建一个操作DOM元素的指令，
+基于上面的例子，我们创建一个在元素上的事件上作出相应操作的指令。
 
-For instance, what if we wanted to create a directive that lets a user drag an
-element?
+比如说，假如我们想要创建一个让用户可拖拽的元素，该怎么做呢？
 
 <example module="dragModule">
   <file name="script.js">
@@ -802,14 +750,13 @@ element?
 
 
 
-### Creating Directives that Communicate
+### 创建相互通信的指令
 
-You can compose any directives by using them within templates.
+你可以通过在模板使用指令来组合任何指令
 
-Sometimes, you want a component that's built from a combination of directives.
+有时候，你想要一个由一组指令组合组成的组件。
 
-Imagine you want to have a container with tabs in which the contents of the container correspond
-to which tab is active.
+想象你想要一个带有tab的容器，容器的内容对应于激活的tab。
 
 <example module="docsTabsExample">
   <file name="script.js">
@@ -883,36 +830,29 @@ to which tab is active.
   </file>
 </example>
 
-The `myPane` directive has a `require` option with value `^myTabs`. When a directive uses this
-option, `$compile` will throw an error unless the specified controller is found. The `^` prefix
-means that this directive searches for the controller on its parents (without the `^` prefix, the
-directive would look for the controller on just its own element).
+`myPane`指令有一个`require`的配置其值为:`^myTabs`.，当指令使用这个配置，
+`$compile`服务叫myTabs的指令并获取它的控制器实例，如果没有找到，将会抛出一个错误。
+`^`前缀意味着指令在它的父元素上面搜索控制器(没有`^`前缀的话，指令默认会在自身的元素上面搜索指定的指令)。
 
-So where does this `myTabs` controller come from? Directives can specify controllers using
-the unsurprisingly named `controller` option. As you can see, the `myTabs` directive uses this
-option. Just like `ngController`, this option attaches a controller to the template of the directive.
+这里`myTabs`的控制器是来自何处呢？通过使用controller配置可以为指令指定一个控制器,
+上问例子中`myTabs` 就是使用这个配置。就像`ngController`, 这个配置为指令的模板绑定了一个控制器。
 
-Looking back at `myPane`'s definition, notice the last argument in its `link` function: `tabsCtrl`.
-When a directive requires a controller, it receives that controller as the fourth argument of its
-`link` function. Taking advantage of this, `myPane` can call the `addPane` function of `myTabs`.
+回看一下`myPane`的定义，注意到link函数的最后一个参数: `tabsCtrl`，
+当一个指令包含另一个指令(通过require方式)，它会接收该指令的控制器实例作为`link`函数的第四个参数，
+利用这个，`myPane` 可以调用`myTabs`的`addPane`函数。
 
-Savvy readers may be wondering what the difference is between `link` and `controller`.
-The basic difference is that `controller` can expose an API, and `link` functions can interact with
-controllers using `require`.
+聪明的读者可能想知道`link` 和 `controller`之间的区别，
+最基本的区别就是 `控制器`开放一个API(就是这个控制器实例可以被其他实例读取到)，
+`link` 函数可以通过`require`与控制器交互。
 
 <div class="alert alert-success">
-**Best Practice:** use `controller` when you want to expose an API to other directives.
-Otherwise use `link`.
+**最佳实践:** 当你想暴露一个API给其它的指令调用那就用`controller`,否则用`link`.
 </div>
 
-### Summary
+### 总结
 
-Here we've seen the main use cases for directives. Each of these samples acts as a good starting
-point for creating your own directives.
+至此我们已经看到了指令的主要使用案例。每一个都可以作为你创建自己指令的很好的起点。
 
-You might also be interested in an in-depth explanation of the compilation process that's
-available in the {@link guide/compiler compiler guide}.
+如果你想更深入的了解编译的处理过程，可以查看{@link guide/compiler compiler guide}.
 
-The {@link api/ng.$compile `$compile` API} page has a comprehensive list of directive options for
-reference.
-
+{@link api/ng.$compile `$compile` API} 页面有directive每个配置项的具体解释，可以参阅.
