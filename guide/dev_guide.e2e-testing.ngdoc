@@ -7,13 +7,21 @@
 using {@link https://github.com/angular/protractor Protractor}, as it is going to
 replace the current method of E2E Testing in the near future.**
 
+** 如果你正准备新建一个Angular项目，建议你使用{@link https://github.com/angular/protractor Protractor}，它将在不久之后取代现在的模块成为端到端测试的内置模块。 **
+
 As applications grow in size and complexity, it becomes unrealistic to rely on manual testing to
 verify the correctness of new features, catch bugs and notice regressions.
+
+现在的应用程序在大小和复杂度方面与日俱增，依靠人工测试来验证新特性、查找bug和进行回归测试已经变得不现实了。
 
 To solve this problem, we have built an Angular Scenario Runner which simulates user interactions
 that will help you verify the health of your Angular application.
 
+为了解决这个问题，我们创建了Angular场景测试工具（Angular Scenario Runner），它将模拟用户的交互，以帮助你为Angular应用程序进行“体检”。
+
 # Overview
+# 概览
+
 You will write scenario tests in JavaScript, which describe how your application should behave,
 given a certain interaction in a specific state. A scenario is comprised of one or more `it` blocks
 (you can think of these as the requirements of your application), which in turn are made of
@@ -24,15 +32,37 @@ fails, the runner marks the `it`  as "failed" and continues on to the next one. 
 have **beforeEach** and **afterEach** blocks, which will be run before (or after) each `it`  block,
 regardless of whether they pass or fail.
 
+你可以用JavaScript来写场景测试，它描述你的应用程序的工作方式，在各种特定的状态下定义出正确的互动结果。
+一个场景由一个活多个`it`块语句组成（可以把这些看做应用程序的“需求”），这些语句由**命令（command）**和**期望(expectation)**组成。
+命令负责告诉测试工具（runner）应用程序去做点什么（比如访问一个页面或者点击一个按钮），而期望则告诉测试工具，这个状态下哪些断言（assertion）必须成立（比如某个输入框的值或者当前页面的URL）。
+如果某些期望落空了，测试工具会把相应的`it`语句标记为“失败(failed)”，然后继续执行下一个。
+场景（scenarios）还可能包含**beforeEach**和**afterEach**语句，它们将在每个`it`语句之前（或之后）运行 —— 无论这些语句是执行成功了还是失败了。
+
 <img src="img/guide/scenario_runner.png">
 
 In addition to the above elements, scenarios may also contain helper functions to avoid duplicating
 code in the `it` blocks.
 
+除了上面这些内容之外，场景还可能包含一些辅助函数，用来消除各个`it`语句中的重复代码。
+
 Here is an example of a simple scenario:
+下面是一个简单的场景范例：
+
 <pre>
 describe('Buzz Client', function() {
 it('should filter results', function() {
+  input('user').enter('jacksparrow');
+  element(':button').click();
+  expect(repeater('ul li').count()).toEqual(10);
+  input('filterText').enter('Bees');
+  expect(repeater('ul li').count()).toEqual(1);
+});
+});
+</pre>
+
+<pre>
+describe('Buzz客户端', function() {
+it('应该过滤结果', function() {
   input('user').enter('jacksparrow');
   element(':button').click();
   expect(repeater('ul li').count()).toEqual(10);
@@ -46,61 +76,101 @@ Note that
 [`input('user')`](https://github.com/angular/angular.js/blob/master/docs/content/guide/dev_guide.e2e-testing.ngdoc#L119)
 finds the `<input>` element with `ng-model="user"` not `name="user"`.
 
+注意：[`input('user')`](https://github.com/angular/angular.js/blob/master/docs/content/guide/dev_guide.e2e-testing.ngdoc#L119)语句会查找具有`ng-model="user"`属性的`<input>`元素，而不会查找具有`name="user"`属性的！
+
 This scenario describes the requirements of a Buzz Client, specifically, that it should be able to
 filter the stream of the user. It starts by entering a value in the input field with ng-model="user", clicking
 the only button on the page, and then it verifies that there are 10 items listed. It then enters
 'Bees' in the input field with ng-model='filterText'  and verifies that the list is reduced to a single item.
 
+这个场景描述了一个Buzz客户端的需求，特别是，他应该能够根据用户的输入进行过滤。它先模拟往带有ng-model="user"属性的输入框中输入一个值，点击页面中唯一的一个按钮，然后，检查是否列出了10条结果。接下来，它在带有ng-model="filterText"属性的输入框中输入文本：'Bees'，最后验证一下这个列表是否已经被过滤得只剩下一条结果。
+
 The API section below lists the available commands and expectations for the Runner.
+
+下面列出了在测试工具(runner)的命令(command)和期望(expectation)语句中可以使用的API。
 
 # API
 Source: {@link https://github.com/angular/angular.js/blob/master/src/ngScenario/dsl.js}
+
+#API
+源码：{@link https://github.com/angular/angular.js/blob/master/src/ngScenario/dsl.js}
 
 ## pause()
 Pauses the execution of the tests until you call `resume()` in the console (or click the resume
 link in the Runner UI).
 
+## pause()
+暂停测试代码的执行，直到你在控制台中调用了`resume()`函数（或者在测试工具的UI中点击了“恢复(resume)”链接）
+
 ## sleep(seconds)
 Pauses the execution of the tests for the specified number of `seconds`.
 
+## sleep(seconds)
+让测试代码的执行暂停`seconds`秒。
+
 ## browser().navigateTo(url)
 Loads the `url` into the test frame.
+
+## browser().navigateTo(url)
+把指定的`url`加载到测试框架（译注：测试框架是指用来运行测试的浏览器环境，比如chrome浏览器或phantomjs）中。
 
 ## browser().navigateTo(url, fn)
 Loads the URL returned by `fn` into the testing frame. The given `url` is only used for the test
 output. Use this when the destination URL is dynamic (that is, the destination is unknown when you
 write the test).
 
+## browser().navigateTo(url, fn)
+把fn返回的URL加载到测试框架中。此处指定的`url`对代码没有实际影响，只用于测试输出。如果目标URL是动态生成的，这种形式会非常有用（即：目标URL在我们写测试的时候是预先无法确定的）。
+
 ## browser().reload()
 Refreshes the currently loaded page in the test frame.
+
+## browser().reload()
+刷新测试框架中的当前页。
 
 ## browser().window().href()
 Returns the window.location.href of the currently loaded page in the test frame.
 
+返回测试框架中当前页的window.location.href值。
+
 ## browser().window().path()
 Returns the window.location.pathname of the currently loaded page in the test frame.
+
+返回测试框架中当前页的window.location.pathname值。
 
 ## browser().window().search()
 Returns the window.location.search of the currently loaded page in the test frame.
 
+返回测试框架中当前页的window.location.search值。
+
 ## browser().window().hash()
 Returns the window.location.hash (without `#`) of the currently loaded page in the test frame.
+
+返回测试框架中当前页的window.location.hash值（不包括`#`）。
 
 ## browser().location().url()
 Returns the {@link api/ng.$location $location.url()} of the currently loaded page in
 the test frame.
 
+返回测试框架中当前页的{@link api/ng.$location $location.url()}值。
+
 ## browser().location().path()
 Returns the {@link api/ng.$location $location.path()} of the currently loaded page in
 the test frame.
+
+返回测试框架中当前页的{@link api/ng.$location $location.path()}值。
 
 ## browser().location().search()
 Returns the {@link api/ng.$location $location.search()} of the currently loaded page
 in the test frame.
 
+返回测试框架中当前页的{@link api/ng.$location $location.search()}值。
+
 ## browser().location().hash()
 Returns the {@link api/ng.$location $location.hash()} of the currently loaded page in
 the test frame.
+
+返回测试框架中当前页的{@link api/ng.$location $location.hash()}值。
 
 ## expect(future).{matcher}
 Asserts the value of the given `future` satisfies the `matcher`. All API statements return a
@@ -109,30 +179,47 @@ Asserts the value of the given `future` satisfies the `matcher`. All API stateme
 `expect(browser().location().href()).toEqual('http://www.google.com')`. Available matchers
 are presented further down this document.
 
+断定`future`参数的“值(value)”符合`匹配器(matcher)`的期望。所有API语句都会返回`future`对象，它被执行后会返回一个“值”。`匹配器`是通过`angular.scenario.matcher`定义的，并且通过求出这个`future`对象的“值”来验证是否符合期望。比如：`expect(browser().location().href()).toEqual('http://www.google.com')`。后面的文档中将深入讲解各种可用的匹配器。
+
 ## expect(future).not().{matcher}
 Asserts the value of the given `future` satisfies the negation of the `matcher`.
+
+断言`future`的值不满足`matcher`的要求
 
 ## using(selector, label)
 Scopes the next DSL element selection.
 
+限定接下来的语句中元素选择器的所属范围。
+（译注：这里的选择器/`selector`都是指jQuery选择器，参见[jQuery选择器](http://api.jquery.com/category/selectors/)）
+
 ## binding(name)
 Returns the value of the first binding matching the given `name`.
 
+返回匹配指定`name`的第一个绑定(binding)的值。
+
 ## input(name).enter(value)
 Enters the given `value` in the text field with the corresponding ng-model `name`.
+在ng-model值是`name`的文本框中输入指定的`value`。
 
 ## input(name).check()
 Checks/unchecks the checkbox with the corresponding ng-model `name`.
+选中或反选ng-model值是`name`的检查框。
 
 ## input(name).select(value)
 Selects the given `value` in the radio button with the corresponding ng-model `name`.
 
+在ng-model值是`name`的单选组中选中值为`value`的那个。
+
 ## input(name).val()
 Returns the current value of an input field with the corresponding ng-model `name`.
+
+返回ng-model值是`name`的输入框的当前值。
 
 ## repeater(selector, label).count()
 Returns the number of rows in the repeater matching the given jQuery `selector`. The `label` is
 used for test output.
+
+返回`selector`选定的repeater（通常是由ng-repeat生成的）的行数。`label`参数没有实际意义，只用做测试输出。
 
 ## repeater(selector, label).row(index)
 Returns an array with the bindings in the row at the given `index` in the repeater matching the
@@ -145,20 +232,31 @@ the given jQuery `selector`. The `label` is used for test output.
 ## select(name).option(value)
 Picks the option with the given `value` on the select with the given ng-model `name`.
 
+从ng-model值是`name`的select中，选择指定`value`值的option。
+
 ## select(name).options(value1, value2...)
 Picks the options with the given `values` on the multi select with the given ng-model `name`.
+
+从ng-model值是`name`的select中，选择所有存在于`values`（比如：value1, value2...）参数中的option。
+
 
 ## element(selector, label).count()
 Returns the number of elements that match the given jQuery `selector`. The `label` is used for test
 output.
 
+返回`selector`选定的元素的数量。`label`参数没有实际意义，只用做测试输出。
+
 ## element(selector, label).click()
 Clicks on the element matching the given jQuery `selector`. The `label` is used for test output.
+
+模拟点击`selector`选定的元素。`label`参数没有实际意义，只用做测试输出。
 
 ## element(selector, label).query(fn)
 Executes the function `fn(selectedElements, done)`, where selectedElements are the elements that
 match the given jQuery `selector` and `done` is a function that is called at the end of the `fn`
 function.  The `label` is used for test output.
+
+用`fn(selectedElements, done)`的形式调用fn函数，`selectedElements`是匹配指定选择器的所有元素，`done`是一个函数，供`fn`结束时调用。`label`参数没有实际意义，只用做测试输出。
 
 ## element(selector, label).{method}()
 Returns the result of calling `method` on the element matching the given jQuery `selector`, where
@@ -166,56 +264,80 @@ Returns the result of calling `method` on the element matching the given jQuery 
 `innerHeight`, `outerHeight`, `width`, `innerWidth`, `outerWidth`, `position`, `scrollLeft`,
 `scrollTop`, `offset`. The `label` is used for test output.
 
+返回在`selector`选定的元素上调用`method()`的结果。`method`可以是下列jquery方法之一：`val`, `text`, `html`, `height`,
+`innerHeight`, `outerHeight`, `width`, `innerWidth`, `outerWidth`, `position`, `scrollLeft`,
+`scrollTop`, `offset`。`label`参数没有实际意义，只用做测试输出。
+
 ## element(selector, label).{method}(value)
 Executes the `method` passing in `value` on the element matching the given jQuery `selector`, where
 `method` can be any of the following jQuery methods: `val`, `text`, `html`, `height`,
 `innerHeight`, `outerHeight`, `width`, `innerWidth`, `outerWidth`, `position`, `scrollLeft`,
 `scrollTop`, `offset`.  The `label` is used for test output.
 
+在`selector`选定的元素上执行`method(value)`函数。`method`可以是下列jquery方法之一：`val`, `text`, `html`, `height`,
+`innerHeight`, `outerHeight`, `width`, `innerWidth`, `outerWidth`, `position`, `scrollLeft`,
+`scrollTop`, `offset`。`label`参数没有实际意义，只用做测试输出。
+
 ## element(selector, label).{method}(key)
 Returns the result of calling `method` passing in `key` on the element matching the given jQuery
 `selector`, where `method` can be any of the following jQuery methods: `attr`, `prop`, `css`. The
 `label` is used for test output.
+
+在`selector`选定的元素上执行`method(key)`函数。`method`可以是下列jquery方法之一：`attr`, `prop`, `css`。`label`参数没有实际意义，只用做测试输出。
 
 ## element(selector, label).{method}(key, value)
 Executes the `method` passing in `key` and `value` on the element matching the given jQuery
 `selector`, where `method` can be any of the following jQuery methods: `attr`,  `prop`, `css`.  The
 `label` is used for test output.
 
+在`selector`选定的元素上执行`method(key, value)`函数。`method`可以是下列jquery方法之一：`attr`, `prop`, `css`。`label`参数没有实际意义，只用做测试输出。
+
 # Matchers
 
 Matchers are used in combination with the `expect(...)` function as described above and can
 be negated with `not()`. For instance: `expect(element('h1').text()).not().toEqual('Error')`.
 
+匹配器(matcher)用于和`expect(...)`函数组合起来，并且可以和`not()`连用，来表示否定。例如：`expect(element('h1').text()).not().toEqual('Error')`。
+
 Source: {@link https://github.com/angular/angular.js/blob/master/src/ngScenario/matchers.js}
+
+源码: {@link https://github.com/angular/angular.js/blob/master/src/ngScenario/matchers.js}
 
 <pre>
 // value and Object comparison following the rules of angular.equals().
+// 值和对象的比较使用和angular.equals相同的规则
 expect(value).toEqual(value)
 
 // a simpler value comparison using ===
+// 简单类型的比较使用===进行精确比较
 expect(value).toBe(value)
 
 // checks that the value is defined by checking its type.
+// 检查value当前是否具有已定义的类型
 expect(value).toBeDefined()
 
 // the following two matchers are using JavaScript's standard truthiness rules
+// 这两个匹配器使用JavaScript标准的真值规则进行判断
 expect(value).toBeTruthy()
 expect(value).toBeFalsy()
 
 // verify that the value matches the given regular expression. The regular
 // expression may be passed in form of a string or a regular expression
 // object.
+// 检查value是否符合指定的正则表达式。正则表达式既可以用字符串的形式传入，也可以用正则表达式对象的形式（如new RegExp('.*')或/.*/）传入。
 expect(value).toMatch(expectedRegExp)
 
 // a check for null using ===
+// 使用===精确检查null值
 expect(value).toBeNull()
 
 // Array.indexOf(...) is used internally to check whether the element is
 // contained within the array.
+// 内部用Array.indexOf(...)检查指定的元素是否包含在当前数组中。
 expect(value).toContain(expected)
 
 // number comparison using < and >
+// 使用<和>运算符进行数值比较。
 expect(value).toBeLessThan(expected)
 expect(value).toBeGreaterThan(expected)
 </pre>
@@ -223,7 +345,12 @@ expect(value).toBeGreaterThan(expected)
 # Example
 See the {@link https://github.com/angular/angular-seed angular-seed} project for more examples.
 
+# 范例
+参见{@link https://github.com/angular/angular-seed Angular种子项目}项目中的例子。
+
 ## Conditional actions with element(...).query(fn)
+
+## 通过element(...).query(fn)执行有条件的动作
 
 E2E testing with angular scenario is highly asynchronous and hides a lot of complexity by
 queueing actions and expectations that can handle futures. From time to time, you might need
@@ -232,11 +359,20 @@ conditional assertions or element selection. Even though you should generally tr
 `element(...).query(fn)`. The following code listing shows how this function can be used to delete
 added entries (where an entry is some domain object) using the application's web interface.
 
+Angular场景化的端到端(E2E)测试，高度支持异步特性，它通过将动作和期望存入队列来隐藏了处理异步结果(future)时的很多复杂度。
+有时候，你可能需要使用一些有条件的断言或元素选择，或许你可以需要一种通用的机制来消除重复代码（比如签收一些不稳定的测试），你可以通过`element(...).query(fn)`来添加一些有条件的行为。
+下列代码将演示这个函数如何通过应用程序的web界面来删除附加的实体（这里的实体是一些领域对象）。
+
 Imagine the application to be structured into two views:
 
  1. *Overview view* which lists all the added entries in a table and
  2. a *detail view* which shows the entries' details and contains a delete button. When clicking the
     delete button, the user is redirected back to the *overview page*.
+
+假设应用程序是由两个视图组成的：
+
+ 1. *列表视图*列出表中添加的所有实体。
+ 2. *详情视图*现实实体的细节，还有一个“删除”按钮。点击“删除”按钮的时候，用户重定向回*列表视图*。
 
 <pre>
 beforeEach(function () {
@@ -246,33 +382,40 @@ beforeEach(function () {
     // we need to select the <tbody> element as it might be the case that there
     // are no entries (and therefore no rows). When the selector does not
     // result in a match, the test would be marked as a failure.
+    // 我们需要选择<tbody>元素，他现在没有实体（即：没有行(<tr>)）。如果选择器没有匹配到结果，则本测试直接失败。
     element('table tbody').query(function (tbody, done) {
       // ngScenario gives us a jQuery lite wrapped element. We call the
       // `children()` function to retrieve the table body's rows
+      // ngScenario传给我们的是一个jQuery lite包装之后的元素。我们可以调用它的`children()`函数获取tbody的所有行。
       var children = tbody.children();
 
       if (children.length > 0) {
         // if there is at least one entry in the table, click on the link to
         // the entry's detail view
+        // 如果表格中至少有一个实体，点击链接，转到这个实体的详情页
         element('table tbody a').click();
         // and, after a route change, click the delete button
+        // 路由变化之后，点击“删除”按钮。
         element('.btn-danger').click();
       }
 
       // if there is more than one entry shown in the table, queue another
       // delete action.
+      // 如果表格中显示了不止一个实体，则把其他的删除操作排入队列。
       if (children.length > 1) {
         deleteEntry();
       }
 
       // remember to call `done()` so that ngScenario can continue
       // test execution.
+      // 别忘了调用`done()`函数，这样ngScenario才会继续执行测试，否则会出现超时错误。
       done();
     });
 
   };
 
   // start deleting entries
+  // 开始删除实体
   deleteEntry();
 });
 </pre>
@@ -282,8 +425,11 @@ immediately executed, but queued (in ngScenario terms, we would be talking about
 future actions). If we had only one entry in our table, then the following future actions
 would be queued:
 
+// 为了帮助理解它的工作原理，我们要强调一句：ngScenario的调用不是立刻执行的，而是先排入队列（按照ngScenario中的术语，我们称之为添加“未来动作(future action)”）。如果在表格中我们只有一个实体，那么下列“未来动作”将被排入队列：
+
 <pre>
 // delete entry 1
+// 删除实体1
 browser().navigateTo('/entries');
 element('table tbody').query(function (tbody, done) { ... });
 element('table tbody a');
@@ -291,9 +437,11 @@ element('.btn-danger').click();
 </pre>
 
 For two entries, ngScenario would have to work on the following queue:
+对于两个实体，ngScenario将产生下列队列：
 
 <pre>
 // delete entry 1
+// 删除实体1
 browser().navigateTo('/entries');
 element('table tbody').query(function (tbody, done) { ... });
 element('table tbody a');
@@ -301,6 +449,8 @@ element('.btn-danger').click();
 
     // delete entry 2
     // indented to represent "recursion depth"
+    // 删除实体2
+    // 这里的缩进排版用来表示递归的深度
     browser().navigateTo('/entries');
     element('table tbody').query(function (tbody, done) { ... });
     element('table tbody a');
@@ -308,5 +458,7 @@ element('.btn-danger').click();
 </pre>
 
 # Caveats
+# 警告
 
 ngScenario does not work with apps that manually bootstrap using angular.bootstrap. You must use the ng-app directive.
+ngScenario不能和通过调用angular.bootstrap来实现的手动初始化协同工作。你必须使用ng-app指令来启动应用程序。
