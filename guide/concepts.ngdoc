@@ -23,7 +23,7 @@
 |{@link concepts#databinding 数据绑定(Data Binding)}      | **自动同步**模型(Model)中的数据和视图(View)表现 |
 |{@link concepts#controller 控制器(Controller)}        | 视图(View)背后的**业务逻辑** |
 |{@link concepts#di 依赖注入(Dependency Injection)} | 负责创建和自动装载对象或函数 |
-|{@link concepts#injector 注射器(Injector)}          | 用来实现依赖注入(Injection)的容器 |
+|{@link concepts#injector 注入器(Injector)}          | 用来实现依赖注入(Injection)的容器 |
 |{@link concepts#module 模块(Module)}            | 用来配置注入器 |
 |{@link concepts#service 服务(Service)}           | 独立于视图(View)的、**可复用**的业务逻辑 |
 
@@ -238,7 +238,7 @@ Angular还为{@link api/ng.directive:input `input`}
 
 这下该<a name="di">“{@link di 依赖注入(Dependency Injection)}”</a>出场了。依赖注入(DI)是一种设计模式(Design Pattern)，它用于解决下列问题：我们创建了对象和函数，但是它们怎么得到自己所依赖的对象呢？
 Angular中的每一样东西都是用依赖注入(DI)的方式来创建和使用的，比如指令(Directive)、过滤器(Filter)、控制器(Controller)、服务(Service)。
-在Angular中，依赖注入(DI)的容器(container)叫做<a name="injector">"{@link di 注射器(injector)}"</a>。
+在Angular中，依赖注入(DI)的容器(container)叫做<a name="injector">"{@link di 注入器(injector)}"</a>。
 
 要想进行依赖注入，你必须先把这些需要协同工作的对象和函数注册(Register)到某个地方。在Angular中，这个地方叫做<a name="module">“{@link module 模块(module)}”</a>。
 
@@ -255,7 +255,7 @@ Angular中的每一样东西都是用依赖注入(DI)的方式来创建和使用
 
 回到刚才的问题：`InvoiceController`该怎样获得这个`currencyConverter`函数的引用呢？
 在Angular中，这非常简单，只要在构造函数中定义一些具有特定名字的参数就可以了。
-这时，注射器(injector)就可以按照正确的依赖关系创建这些对象，并且根据名字把它们传入那些依赖它们的对象工厂中。
+这时，注入器(injector)就可以按照正确的依赖关系创建这些对象，并且根据名字把它们传入那些依赖它们的对象工厂中。
 在我们的例子中，`InvoiceController`有一个叫做`currencyConverter`的参数。
 根据这个参数，Angular就知道`InvoiceController`依赖于`currencyConverter`，取得`currencyConverter`服务的实例，并且把它作为参数传给`InvoiceController`的构造函数。
 
