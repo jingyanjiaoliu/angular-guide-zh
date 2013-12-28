@@ -113,8 +113,8 @@ Angular **使正规化** 一个元素的标签和属性名字来决定哪个元�
 </div>
 
 <div class="alert alert-success">
-***最佳实践:** 通常注释式命名式指令使用在那里DOM　API
-限制了对创建的指令跨越了多元素(比如说是在<table>元素里面)的功能.
+**最佳实践:** 通常注释式命名式指令使用在那里DOM　API
+限制了对创建的指令跨越了多元素(比如说是在`<table>`元素里面)的功能.
 AngularJs 1.2 介绍了{@link api/ng.directive:ngRepeat `ng-repeat-start` and `ng-repeat-end`}
 这种作为比较好的解决方案。鼓励开发者去使用这个方法在自定义的注释式指令上面.
 </div>
