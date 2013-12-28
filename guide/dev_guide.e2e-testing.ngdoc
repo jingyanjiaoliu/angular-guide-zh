@@ -1,7 +1,9 @@
 @workInProgress
 @ngdoc overview
-@name Developer Guide: E2E Testing
+@name 开发指南：端到端测试(E2E Testing)
 @description
+
+翻译者：[@asnowwolf](https://github.com/asnowwolf)
 
 ** 如果你正准备新建一个Angular项目，建议你使用{@link https://github.com/angular/protractor Protractor}，它将在不久之后取代现在的模块成为端到端测试的内置模块。 **
 
