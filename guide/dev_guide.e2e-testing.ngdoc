@@ -115,10 +115,10 @@ it('应该对结果进行过滤', function() {
 返回`selector`选定的repeater（译注：可以简单的理解为ng-repeat）的行数。`label`参数对代码没有实际影响，只用做测试输出。
 
 ## repeater(selector, label).row(index)
-返回`selector`选定的repeater中，绑定到第`index`行的所有绑定对象(译注：参见binding函数，一行一般都有多个绑定表达式)构成的数组。`label`参数对代码没有实际影响，只用做测试输出。
+返回`selector`选定的repeater中，绑定到第`index`行的所有绑定对象(译注：各个绑定对象的值，参见binding函数，一行一般都有多个绑定表达式)构成的数组。`label`参数对代码没有实际影响，只用做测试输出。
 
 ## repeater(selector, label).column(binding)
-返回`selector`选定的repeater中，由所有绑定到`binding`对象（译注：可由binding函数返回）的列内容构成的数组。`label`参数对代码没有实际影响，只用做测试输出。
+返回`selector`选定的repeater中，由所有绑定到`binding`（译注：传入绑定对象的表达式，比如模板中是{{name + "a"}}，此处就应该用'name + "a"'作为参数，表达式中+前后的空格会被忽略）的列内容构成的数组。`label`参数对代码没有实际影响，只用做测试输出。
 
 ## select(name).option(value)
 从ng-model值是`name`的select元素中，选择指定`value`值的option。
