@@ -38,7 +38,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * [22-HTML Compiler](http://angular.duapp.com/guide/compiler) 翻译者: @GrahamLe
 * 23-Forms
 * 24-Animations
-* 25-E2E Testing 翻译者: @asnowwolf 已完成翻译
+* [25-E2E Testing](http://angular.duapp.com/guide/dev_guide.e2e-testing) 翻译者: @asnowwolf 已完成翻译
 * [26-Unit Testing](http://angular.duapp.com/guide/dev_guide.unit-testing) 翻译者: @asnowwolf 已完成翻译
 * 27-i18n and l10n
 * 28-Internet Explorer Compatibility
