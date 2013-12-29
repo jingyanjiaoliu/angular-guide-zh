@@ -14,9 +14,9 @@
 # 概览
 
 你可以用JavaScript来写场景测试，它描述你的应用程序的工作方式，在各种特定的状态下定义出正确的互动结果。
-一个场景由一个活多个`it`块语句组成（可以把这些看做应用程序的“需求”），这些语句由**命令（command）**和**期望(expectation)**组成。
+一个场景由一个或多个`it`块语句组成（可以把这些看做应用程序的“需求”），这些语句由**命令（command）**和**期望(expectation)**组成。
 命令负责告诉测试工具（runner）应用程序去做点什么（比如访问一个页面或者点击一个按钮），而期望则告诉测试工具，这个状态下哪些断言（assertion）必须成立（比如某个输入框的值或者当前页面的URL）。
-如果某些期望落空了，测试工具会把相应的`it`语句标记为“失败(failed)”，然后继续执行下一个。
+如果某些期望落空了，测试工具就会把相应的`it`语句标记为“失败(failed)”，然后继续执行下一个。
 场景（scenarios）还可能包含**beforeEach**和**afterEach**语句，它们将在每个`it`语句之前（或之后）运行 —— 无论这些语句是执行成功了还是失败了。
 
 <img src="img/guide/scenario_runner.png">
@@ -27,7 +27,7 @@
 
 <pre>
 describe('Buzz客户端', function() {
-it('应该过滤结果', function() {
+it('应该对结果进行过滤', function() {
   input('user').enter('jacksparrow');
   element(':button').click();
   expect(repeater('ul li').count()).toEqual(10);
@@ -39,7 +39,7 @@ it('应该过滤结果', function() {
 
 注意：[`input('user')`](https://github.com/angular/angular.js/blob/master/docs/content/guide/dev_guide.e2e-testing.ngdoc#L119)语句会查找具有`ng-model="user"`属性的`<input>`元素，而不会查找具有`name="user"`属性的！
 
-这个场景描述了一个Buzz客户端的需求，特别是，他应该能够根据用户的输入进行过滤。它先模拟往带有ng-model="user"属性的输入框中输入一个值，点击页面中唯一的一个按钮，然后，检查是否列出了10条结果。接下来，它在带有ng-model="filterText"属性的输入框中输入文本：'Bees'，最后验证一下这个列表是否已经被过滤得只剩下一条结果。
+这个场景描述了一个Buzz客户端的需求，特别是，他应该能够根据用户的输入进行过滤。它先模拟把一个值输入到带有ng-model="user"属性的输入框中，然后，点击页面中唯一的一个按钮，然后，检查是否列出了10条结果。接下来，它在带有ng-model="filterText"属性的输入框中输入文本：'Bees'，最后验证一下这个列表是否已经被过滤得只剩下一条结果。
 
 下面列出了在测试工具(runner)的命令(command)和期望(expectation)语句中可以使用的API。
 
@@ -56,7 +56,7 @@ it('应该过滤结果', function() {
 把指定的`url`加载到测试框架（译注：测试框架是指用来运行测试的浏览器环境，比如chrome浏览器或phantomjs）中。
 
 ## browser().navigateTo(url, fn)
-把fn返回的URL加载到测试框架中。此处指定的`url`对代码没有实际影响，只用于测试输出。如果目标URL是动态生成的，这种形式会非常有用（即：目标URL在我们写测试的时候是预先无法确定的）。
+把fn返回的URL加载到测试框架中。此处指定的`url`参数对代码没有实际影响，只用于测试输出。如果目标URL是动态生成的，这种形式会非常有用（即：目标URL在我们写测试的时候是预先无法确定的）。
 
 ## browser().reload()
 刷新测试框架中的当前页。
@@ -86,17 +86,18 @@ it('应该过滤结果', function() {
 返回测试框架中当前页的{@link api/ng.$location $location.hash()}值。
 
 ## expect(future).{matcher}
-断定`future`参数（译注：future就是异步执行模式中的通知对象，会在异步执行完毕时触发回调，类似于$q中的promise）的“值(value)”符合`匹配器(matcher)`的期望。所有API语句都会返回`future`对象，它被执行后会返回一个“值”。`匹配器`是通过`angular.scenario.matcher`定义的，并且通过求出这个`future`对象的“值”来验证是否符合期望。比如：`expect(browser().location().href()).toEqual('http://www.google.com')`。后面的文档中将深入讲解各种可用的匹配器。
+断言`future`参数（译注：future就是异步执行模式中的通知对象，会在异步执行完毕时触发回调，类似于$q中的promise）的“值(value)”符合`匹配器(matcher)`的期望。所有API语句都会返回`future`对象，它被执行后会返回一个“值”。`匹配器`是通过`angular.scenario.matcher`定义的，并且通过求出这个`future`对象的“值”来验证是否符合期望。比如：`expect(browser().location().href()).toEqual('http://www.google.com')`。后面的文档中将深入讲解各种可用的匹配器。
 
 ## expect(future).not().{matcher}
 断言`future`的值不满足`matcher`的要求
 
 ## using(selector, label)
 限定接下来的语句中元素选择器的所属范围。
-（译注：这里的选择器/`selector`都是指jQuery选择器，参见[jQuery选择器](http://api.jquery.com/category/selectors/)）
+（译注：这里的选择器 - `selector`都是指jQuery选择器，参见[jQuery选择器](http://api.jquery.com/category/selectors/)）
 
 ## binding(name)
-返回匹配指定`name`的第一个绑定(binding)的值。
+返回匹配指定`name`的第一个绑定对象(binding)的值。
+（译注：什么是binding？比如假设模板中有'<div id="element" ng-bind="object"></div>'，则object称为#element的“绑定对象”）
 
 ## input(name).enter(value)
 在ng-model值是`name`的文本框中输入指定的`value`。
@@ -111,59 +112,59 @@ it('应该过滤结果', function() {
 返回ng-model值是`name`的输入框的当前值。
 
 ## repeater(selector, label).count()
-返回`selector`选定的ng-repeat的行数。`label`参数没有实际意义，只用做测试输出。
+返回`selector`选定的repeater（译注：可以简单的理解为ng-repeat）的行数。`label`参数对代码没有实际影响，只用做测试输出。
 
 ## repeater(selector, label).row(index)
-返回`selector`选定的ng-repeat中，所有绑定到`index`所指定行的所有对象构成的数组。`label`参数没有实际意义，只用做测试输出。
+返回`selector`选定的repeater中，绑定到第`index`行的所有绑定对象(译注：参见binding函数，一行一般都有多个绑定表达式)构成的数组。`label`参数对代码没有实际影响，只用做测试输出。
 
 ## repeater(selector, label).column(binding)
-返回`selector`选定的ng-repeat中，所有绑定到`binding`对象的列内容构成的数组。`label`参数没有实际意义，只用做测试输出。
+返回`selector`选定的repeater中，由所有绑定到`binding`对象（译注：可由binding函数返回）的列内容构成的数组。`label`参数对代码没有实际影响，只用做测试输出。
 
 ## select(name).option(value)
-从ng-model值是`name`的select中，选择指定`value`值的option。
+从ng-model值是`name`的select元素中，选择指定`value`值的option。
 
 ## select(name).options(value1, value2...)
-从ng-model值是`name`的select中，选择所有存在于`values`（比如：value1, value2...）参数中的option。
+从ng-model值是`name`的select元素中，选择所有存在于`values`（即：value1, value2...）参数中的option。
 
 
 ## element(selector, label).count()
-返回`selector`选定的元素的数量。`label`参数没有实际意义，只用做测试输出。
+返回`selector`选定的元素的数量。`label`参数对代码没有实际影响，只用做测试输出。
 
 ## element(selector, label).click()
-模拟点击`selector`选定的元素。`label`参数没有实际意义，只用做测试输出。
+模拟点击`selector`选定的元素。`label`参数对代码没有实际影响，只用做测试输出。
 
 ## element(selector, label).query(fn)
-用`fn(selectedElements, done)`的形式调用fn函数，`selectedElements`是匹配指定选择器的所有元素，`done`是一个函数，供`fn`结束时调用。`label`参数没有实际意义，只用做测试输出。
+用`fn(selectedElements, done)`的形式调用fn函数，`selectedElements`是匹配指定选择器的所有元素，`done`是一个函数，供`fn`结束时调用。`label`参数对代码没有实际影响，只用做测试输出。
 
 ## element(selector, label).{method}()
 返回在`selector`选定的元素上调用`method()`的结果。`method`可以是下列jquery方法之一：`val`, `text`, `html`, `height`,
 `innerHeight`, `outerHeight`, `width`, `innerWidth`, `outerWidth`, `position`, `scrollLeft`,
-`scrollTop`, `offset`。`label`参数没有实际意义，只用做测试输出。
+`scrollTop`, `offset`。`label`参数对代码没有实际影响，只用做测试输出。
 
 ## element(selector, label).{method}(value)
 在`selector`选定的元素上执行`method(value)`函数。`method`可以是下列jquery方法之一：`val`, `text`, `html`, `height`,
 `innerHeight`, `outerHeight`, `width`, `innerWidth`, `outerWidth`, `position`, `scrollLeft`,
-`scrollTop`, `offset`。`label`参数没有实际意义，只用做测试输出。
+`scrollTop`, `offset`。`label`参数对代码没有实际影响，只用做测试输出。
 
 ## element(selector, label).{method}(key)
-在`selector`选定的元素上执行`method(key)`函数。`method`可以是下列jquery方法之一：`attr`, `prop`, `css`。`label`参数没有实际意义，只用做测试输出。
+在`selector`选定的元素上执行`method(key)`函数。`method`可以是下列jquery方法之一：`attr`, `prop`, `css`。`label`参数对代码没有实际影响，只用做测试输出。
 
 ## element(selector, label).{method}(key, value)
-在`selector`选定的元素上执行`method(key, value)`函数。`method`可以是下列jquery方法之一：`attr`, `prop`, `css`。`label`参数没有实际意义，只用做测试输出。
+在`selector`选定的元素上执行`method(key, value)`函数。`method`可以是下列jquery方法之一：`attr`, `prop`, `css`。`label`参数对代码没有实际影响，只用做测试输出。
 
 # Matchers
-匹配器(matcher)用于和`expect(...)`函数组合起来，并且可以和`not()`连用，来表示否定。例如：`expect(element('h1').text()).not().toEqual('Error')`。
+匹配器(matcher)用于和`expect(...)`函数组合起来构成断言，并且可以和`not()`连用来表示否定。例如：`expect(element('h1').text()).not().toEqual('Error')`。
 
 源码: {@link https://github.com/angular/angular.js/blob/master/src/ngScenario/matchers.js}
 
 <pre>
-// 值和对象的比较使用和angular.equals相同的规则
+// 值和对象的比较使用与angular.equals相同的规则
 expect(value).toEqual(value)
 
-// 简单类型的比较使用===进行精确比较
+// 简单类型的比较使用===运算符进行精确比较
 expect(value).toBe(value)
 
-// 检查value当前是否具有已定义的类型
+// 检查value当前是否具有任何已定义的类型（即value !== undefined）
 expect(value).toBeDefined()
 
 // 这两个匹配器使用JavaScript标准的真值规则进行判断
@@ -176,10 +177,10 @@ expect(value).toMatch(expectedRegExp)
 // 使用===精确检查null值
 expect(value).toBeNull()
 
-// 内部用Array.indexOf(...)检查指定的元素是否包含在当前数组中。
+// 内部用Array.indexOf(...)函数检查指定的元素是否包含在当前数组中。
 expect(value).toContain(expected)
 
-// 使用<和>运算符进行数值比较。
+// 使用`<`和`>`运算符进行数值比较。
 expect(value).toBeLessThan(expected)
 expect(value).toBeGreaterThan(expected)
 </pre>
@@ -190,7 +191,7 @@ expect(value).toBeGreaterThan(expected)
 ## 通过element(...).query(fn)执行有条件的动作
 
 Angular场景化的端到端(E2E)测试，高度支持异步特性，它通过将动作和期望存入队列来隐藏了处理异步结果(future)时的很多复杂度。
-有时候，你可能需要使用一些有条件的断言或元素选择，或许你可以需要一种通用的机制来消除重复代码（比如签收一些不稳定的测试），你可以通过`element(...).query(fn)`来添加一些有条件的行为。
+你可能需要使用一些有条件的断言或元素选取规则，或者需要某些通用的机制来消除重复代码（重复代码往往表示测试代码中有“坏味道”），这时，你可以通过`element(...).query(fn)`来添加一些有条件的行为。
 下列代码将演示这个函数如何通过应用程序的web界面来删除附加的实体（这里的实体是一些领域对象）。
 
 假设应用程序是由两个视图组成的：
@@ -203,9 +204,9 @@ beforeEach(function () {
   var deleteEntry = function () {
     browser().navigateTo('/entries');
 
-    // 我们需要选择<tbody>元素，他现在没有实体（即：没有行(<tr>)）。如果选择器没有匹配到结果，则本测试直接失败。
+    // 我们需要选择<tbody>元素，他现在没有实体（即：没有<tr>元素）。如果选择器没有匹配到结果，则本测试直接失败。
     element('table tbody').query(function (tbody, done) {
-      // ngScenario传给我们的是一个jQuery lite包装之后的元素。我们可以调用它的`children()`函数获取tbody的所有行。
+      // ngScenario传给我们的是一个jQuery lite包装之后的元素。我们可以调用它的children()函数获取tbody的所有<tr>元素。
       var children = tbody.children();
 
       if (children.length > 0) {
@@ -251,7 +252,7 @@ element('table tbody a');
 element('.btn-danger').click();
 
     // 删除实体2
-    // 这里的缩进排版用来表示递归的深度
+    // 这里的缩进排版用来表示递归调用的层数
     browser().navigateTo('/entries');
     element('table tbody').query(function (tbody, done) { ... });
     element('table tbody a');
