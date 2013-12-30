@@ -23,6 +23,7 @@
 另一方便，如果你想执行专门的JavaScript代码，你应该实现在一个控制器里的方法，然后调用这个方法。如果你想在JavaScript中解析一个Angular表达式，使用{@link api/ng.$rootScope.Scope#methods_$eval `$eval()`}方法。
 
 ## 例子
+
 <doc:example>
 <doc:source>
  1+2={{1+2}}
