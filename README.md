@@ -26,13 +26,13 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * 10-Testing Angular Services 翻译者: @FrankyYang
 * 11-Using $location
 * 12-Angular Services 翻译者: @FrankyYang
-* [13-Data Binding](http://angular.duapp.com/guide/databinding) 翻译者：@NigelYao
+* [13-Data Binding（数据绑定）](http://angular.duapp.com/guide/databinding) 翻译者：@NigelYao
 * 14-Working With CSS in Angular @ckken
 * [15-Dependency Injection](http://angular.duapp.com/guide/di) 翻译者: @GrahamLe
 * 16-Providers （Providers）翻译者: @lightma
 * [17-Modules（模块）](http://angular.duapp.com/guide/module) 翻译者: @GrahamLe 已完成翻译初稿
 * [18-Scopes（控制范围）](http://angular.duapp.com/guide/scope) 翻译者: @GrahamLe 已完成翻译初稿
-* 19-Expressions 翻译者:@NigelYao
+* [19-Expressions（表达式）](http://angular.duapp.com/guide/expression) 翻译者:@NigelYao
 * [20-Bootstrap（引导程序）](http://angular.duapp.com/guide/bootstrap) 翻译者: @GrahamLe
 * 21-Directives 翻译者: @lrrluo
 * [22-HTML Compiler](http://angular.duapp.com/guide/compiler) 翻译者: @GrahamLe
