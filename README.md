@@ -34,7 +34,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * [18-Scopes（控制范围）](http://angular.duapp.com/guide/scope) 翻译者: @GrahamLe 已完成翻译初稿
 * [19-Expressions（表达式）](http://angular.duapp.com/guide/expression) 翻译者:@NigelYao
 * [20-Bootstrap（引导程序）](http://angular.duapp.com/guide/bootstrap) 翻译者: @GrahamLe
-* 21-Directives 翻译者: @lrrluo
+* [21-Directives(指令)](http://angular.duapp.com/guide/directive)翻译者:@lrrluo 已完成翻译          
 * [22-HTML Compiler](http://angular.duapp.com/guide/compiler) 翻译者: @GrahamLe
 * 23-Forms
 * 24-Animations
