@@ -13,6 +13,9 @@
 
 ckken，grahamle，NigelYao，asnowwolf，lightma，joeylin，FrankyYang，lrrluo， why520crazy
 
+
+负责审核的成员目前有：二当家，破狼
+
 # AngularJS 文档指南
 
 你需要知道AngularJS
@@ -91,6 +94,8 @@ This is a short list of libraries with specific support and documentation for wo
 * **Javascript minification: **[Background](http://thegreenpizza.github.io/2013/05/25/building-minification-safe-angular.js-applications/), [ngmin automation tool](http://www.thinkster.io/pick/XlWneEZCqY/angularjs-ngmin)
 * **Tracking:** [Angularyitcs (Google Analytics)](http://ngmodules.org/modules/angularytics), [Logging Client-Side Errors](http://www.bennadel.com/blog/2542-Logging-Client-Side-Errors-With-AngularJS-And-Stacktrace-js.htm)
 * **SEO:** [By hand](http://www.yearofmoo.com/2012/11/angularjs-and-seo.html), [prerender.io](http://prerender.io/), [Brombone](http://www.brombone.com/), [SEO.js](http://getseojs.com/), [SEO4Ajax](http://www.seo4ajax.com/)
+
+关于prerender的中文资料，详见[破狼的博客](http://greengerong.github.io/blog/2013/12/08/prerender-seo-for-single-page-application/)
 
 ### 服务-指定
 
