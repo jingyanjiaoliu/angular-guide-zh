@@ -29,7 +29,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * [13-Data Binding（数据绑定）](http://angular.duapp.com/guide/databinding) 翻译者：@NigelYao
 * 14-Working With CSS in Angular @ckken
 * [15-Dependency Injection](http://angular.duapp.com/guide/di) 翻译者: @GrahamLe
-* 16-Providers （Providers）翻译者: @lightma
+* [16-Providers （Providers）](http://angular.duapp.com/guide/providers)翻译者: @lightma 已完成翻译
 * [17-Modules（模块）](http://angular.duapp.com/guide/module) 翻译者: @GrahamLe 已完成翻译初稿
 * [18-Scopes（控制范围）](http://angular.duapp.com/guide/scope) 翻译者: @GrahamLe 已完成翻译初稿
 * [19-Expressions（表达式）](http://angular.duapp.com/guide/expression) 翻译者:@NigelYao
