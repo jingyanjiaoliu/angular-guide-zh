@@ -41,7 +41,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * [25-E2E Testing](http://angular.duapp.com/guide/dev_guide.e2e-testing) 翻译者: @asnowwolf 已完成翻译
 * [26-Unit Testing](http://angular.duapp.com/guide/dev_guide.unit-testing) 翻译者: @asnowwolf 已完成翻译
 * 27-i18n and l10n
-* 28-Internet Explorer Compatibility 翻译者:@greengerong
+* [28-Internet Explorer Compatibility](http://angular.duapp.com/guide/dev_ie) 翻译者:@greengerong
 * 29-[Migrating from 1.0 to 1.2 - 迁移指南](http://angular.duapp.com/guide/migration) 翻译者: @asnowwolf 已完成翻译
 
 目前加入者：
@@ -65,4 +65,5 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 @why520crazy， QQ:why520crazy(601213834)...
 
 heather(2751502325)
+
 @greengerong， QQ:破狼(389075302)
