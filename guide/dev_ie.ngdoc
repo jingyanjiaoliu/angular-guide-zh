@@ -11,7 +11,7 @@ This document describes the Internet Explorer (IE) idiosyncrasies when dealing w
 attributes and tags. Read this document if you are planning on deploying your Angular application
 on IE v8.0 or earlier.
 
-这篇文档主要描述Internet Explorer (IE) 在处理自动以html attributes和tag的一些特独立特行的行为。如果你希望让你的应用程序工作在IE 8 或者更早的IE版本，那么你就需要了解本文的内容。
+这篇文档主要描述Internet Explorer (IE) 在处理自动以html attributes和tag的一些特立独行的行为。如果你希望让你的应用程序工作在IE 8 或者更早的IE版本，那么你就需要了解本文的内容。
 
 The project currently supports and will attempt to fix bugs for IE8 and above. The continuous
 integration server runs all the tests against IE8. See http://ci.angularjs.org.
@@ -38,6 +38,7 @@ To make your Angular application work on IE please make sure that:
   1. You polyfill JSON.stringify if necessary (IE7 will need this). You can use
      [JSON2](https://github.com/douglascrockford/JSON-js) or
      [JSON3](http://bestiejs.github.com/json3/) polyfills for this.
+
   1. 在IE7或者以下版本需要JSON.stringify兼容包。你可以引入[JSON2](https://github.com/douglascrockford/JSON-js)或者
      [JSON3](http://bestiejs.github.com/json3/)来解决这个问题.
 
@@ -56,7 +57,8 @@ To make your Angular application work on IE please make sure that:
      </pre>
 
   2. add `id="ng-app"` to the root element in conjunction with `ng-app` attribute
-  2. 提那家`id="ng-app"` 在根元素节点，使其能和`ng-app` attribute结合使用.
+
+  2. 添加`id="ng-app"` 在根元素节点，使其能和`ng-app` attribute结合使用.
 
      <pre>
        <!doctype html>
