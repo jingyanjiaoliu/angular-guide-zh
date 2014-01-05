@@ -103,12 +103,12 @@ IE在处理关于非标准HTML tag 的问题主要由两类，每种类型又其
 
   * 如果你希望采用CSS选择器的方式，那么你需要使用`document.createElement('my-tag')`预申明，忽略XML命名空间。
 
-## The Good News
+## 幸存的佳音
 
 
-好消息这些问题只会出现在自定义节点，attribute庆幸的还能工作。所以`<div my-tag your:tag></div>`在IE中不需要特殊的任何处理.
+庆幸的是这些问题只会出现在自定义节点上，attribute的方式还能工作。所以`<div my-tag your:tag></div>`在IE中不需要特殊的任何处理.
 
-## What happens if I fail to do this?
+## IE的DOM解析
 
 假如你拥有位置的tag `mytag`(`my:tag` 或者 `my-tag` ):
 
