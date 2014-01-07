@@ -1,109 +1,1 @@
-@workInProgress
-@ngdoc overview
-@name Introduction
-@description
-
-
-# What Is Angular?
-
-AngularJS is a structural framework for dynamic web apps. It lets you use HTML as your template
-language and lets you extend HTML's syntax to express your application's components clearly and
-succinctly. Out of the box, it eliminates much of the code you currently write through data
-binding and dependency injection. And it all happens in JavaScript within the browser, making it
-an ideal partner with any server technology.
-
-Angular is what HTML would have been had it been designed for applications. HTML is a great
-declarative language for static documents. It does not contain much in the way of creating
-applications, and as a result building web applications is an exercise in *what do I have to do
-to trick the browser into doing what I want.*
-
-The impedance mismatch between dynamic applications and static documents is often solved with:
-
-  * **a library** - a collection of functions which are useful when writing web apps. Your code is
-    in charge and it calls into the library when it sees fit. E.g., `jQuery`.
-  * **frameworks** - a particular implementation of a web application, where your code fills in
-    the details. The framework is in charge and it calls into your code when it needs something
-    app specific. E.g., `knockout`, `ember`, etc.
-
-
-Angular takes another approach. It attempts to minimize the impedance mismatch between document
-centric HTML and what an application needs by creating new HTML constructs. Angular teaches the
-browser new syntax through a construct we call directives. Examples include:
-
-  * Data binding, as in `{{}}`.
-  * DOM control structures for repeating/hiding DOM fragments.
-  * Support for forms and form validation.
-  * Attaching code-behind to DOM elements.
-  * Grouping of HTML into reusable components.
-
-
-
-## A complete client-side solution
-
-Angular is not a single piece in the overall puzzle of building the client-side of a web
-application. It handles all of the DOM and AJAX glue code you once wrote by hand and puts it in a
-well-defined structure. This makes Angular opinionated about how a CRUD application should be
-built. But while it is opinionated, it also tries to make sure that its opinion is just a
-starting point you can easily change. Angular comes with the following out-of-the-box:
-
-  * Everything you need to build a CRUD app in a cohesive set: data-binding, basic templating
-    directives, form validation, routing, deep-linking, reusable components, dependency injection.
-  * Testability story: unit-testing, end-to-end testing, mocks, test harnesses.
-  * Seed application with directory layout and test scripts as a starting point.
-
-
-## Angular Sweet Spot
-
-Angular simplifies application development by presenting a higher level of abstraction to the
-developer. Like any abstraction, it comes at a cost of flexibility. In other words not every app
-is a good fit for Angular. Angular was built with the CRUD application in mind. Luckily CRUD
-applications represent the majority of web applications. To understand what Angular is
-good at, though, it helps to understand when an app is not a good fit for Angular.
-
-Games and GUI editors are examples of applications with intensive and tricky DOM manipulation.
-These kinds of apps are different from CRUD apps, and as a result are probably not a good fit for Angular.
-In these cases it may be better to use a library with a lower level of abstraction, such as `jQuery`.
-
-# The Zen of Angular
-
-Angular is built around the belief that declarative code is better than imperative when it comes
-to building UIs and wiring software components together, while imperative code is excellent for
-expressing business logic.
-
-
-  * It is a very good idea to decouple DOM manipulation from app logic. This dramatically improves
-    the testability of the code.
-  * It is a really, _really_ good idea to regard app testing as equal in importance to app
-    writing. Testing difficulty is dramatically affected by the way the code is structured.
-  * It is an excellent idea to decouple the client side of an app from the server side. This
-    allows development work to progress in parallel, and allows for reuse of both sides.
-  * It is very helpful indeed if the framework guides developers through the entire journey of
-    building an app: from designing the UI, through writing the business logic, to testing.
-  * It is always good to make common tasks trivial and difficult tasks possible.
-
-
-
-Angular frees you from the following pains:
-
-  * **Registering callbacks:** Registering callbacks clutters your code, making it hard to see the
-    forest for the trees. Removing common boilerplate code such as callbacks is a good thing. It
-    vastly reduces the amount of JavaScript coding _you_ have to do, and it makes it easier to see
-    what your application does.
-  * **Manipulating HTML DOM programmatically:** Manipulating HTML DOM is a cornerstone of AJAX
-    applications, but it's cumbersome and error-prone. By declaratively describing how the UI
-    should change as your application state changes, you are freed from low-level DOM manipulation
-    tasks. Most applications written with Angular never have to programmatically manipulate the
-    DOM, although you can if you want to.
-  * **Marshaling data to and from the UI:** CRUD operations make up the majority of AJAX
-    applications' tasks. The flow of marshaling data from the server to an internal object to an HTML
-    form, allowing users to modify the form, validating the form, displaying validation errors,
-    returning to an internal model, and then back to the server, creates a lot of boilerplate
-    code. Angular eliminates almost all of this boilerplate, leaving code that describes the
-    overall flow of the application rather than all of the implementation details.
-  * **Writing tons of initialization code just to get started:** Typically you need to write a lot
-    of plumbing just to get a basic "Hello World" AJAX app working. With Angular you can bootstrap
-    your app easily using services, which are auto-injected into your application in a {@link
-    http://code.google.com/p/google-guice/ Guice}-like dependency-injection style. This allows you
-    to get started developing features quickly. As a bonus, you get full control over the
-    initialization process in automated tests.
-
+@workInProgress@ngdoc overview@name Introduction@description# Angular为何物AngularJS是一个动态WEB应用的的结构框架。它让你使用HTML作为模板语言并且你可以通过扩展HTML的语法来使得应用组件更加清晰和简洁。它的创新之处在于，通过数据绑定和依赖注入减少大量代码，这些都在浏览器端通过JavaScript实现，能够和任何服务器端技术完美结合。 	Angular是为了扩展HTML在构建应用时本应该具备的能力而设计的。对于静态文档，HTML是一门很好的声明式的语言；而对于构建WEB应用，它不具备太多能力。所以，构建WEB应用成了一件需要玩弄一些花招才能让浏览器做我想要的工作。	通常情况下，我们通过以下手段来解决动态应用和静态文档之间不匹配的问题：  * **类库** - 一些在开发WEB应用时非常有用的函数的集合。代码起主导作用，并且决定何时调用类库的方法。例如：`jQuery`等。    * **框架** - 一种WEB应用的特殊实现，你的代码只需要填充一些具体信息。框架起主导作用，并且决定何时调用你的代码。例如：`knockout`, `ember`等。Angular另辟蹊径，它尝试去扩展HTML的结构来降低以文档为中心的HTML与WEB应用实际的需要的HTML的不匹配。Angular通过指令（directive）扩展HTML的语法。例如：  * 通过`{{}}`进行数据绑定。  * 使用DOM控制结构来进行迭代或隐藏DOM片段。  * 支持表单和表单验证。  * 将逻辑代码关联到DOM元素上。  * 将HTML分组成为可重用的组件。## 一个完整的客户端解决方法在构建WEB应用的客户端时，Angular提供的不是一部分解决方案，而是一个完整的解决方案。它能够处理所有你曾经写的将DOM和AJAX混在一起的代码，并能够将它们组织的结构良好。这使得Angular在决定应该怎样构建一个CRUD应用时甚至显得有些“偏执（opinionated）”，但是尽管它“偏执”，它也尝试确保使用它构建的应用能够灵活变动。下面是Angular的一些出众之处：  * 构建一个CRUD应用时可能用到的所有技术：数据绑定、基本模板指令、表单验证、路由、深度链接、组件重用、依赖注入。  * 可测试性：单元测试、端到端测试、模拟（mocks）、测试工具。  * 拥有一定目录结构和测试脚本的种子应用。## Angular的可爱之处Angular通过给开发者呈现更高层次的抽象来简化应用的开发。和其他的抽象一样，它也以损失灵活性为代价。换句话说，Angular并不是适合任何应用的开发，Angular考虑的是构建CRUD应用。幸运的是，绝大多数WEB应用都是CRUD应用。为了理解Angular适用哪些场合，知道它不适合哪些场合是很有帮助的。对于像游戏和有图形界面的编辑器之类的应用，会进行频繁且复杂的DOM操作，和CRUD应用不同。因此，可能不适合用Angular来构建。在这种场景下，使用更低抽象层次的类库可能会更好，例如：`jQuery`。# Angular之禅Angular是建立在这样的信念之上的：即声明式的代码用在构建用户界面和组装软件组件时更好，而命令式的代码更擅长展现业务逻辑。  * 将应用逻辑与DOM操作解耦，会大大提高代码的可测试性。  * 平等看待应用的测试和开发，测试的难度很大程度上取决于代码的结构。  * 将客户端与服务器端解耦，这样使得客户端的开发和服务器端的开发可以齐头并进，实现两边代码的重用。  * 框架在整个应用的开发流程中指导开发者：从用户界面设计到实现业务逻辑，再到测试。  * 化繁为简，化简为零总是好的。Angular将你从下面的苦海中解脱出来：  * **使用回调：**回调会降低代码的可读性，是代码变得零散。移除像回调之类的常见代码是件好事，大幅减少因为JavaScript这门语言的设计而使你不得不写的代码，能让应用显得更加清晰。  * **以编程的方式操作HTML DOM：**操作HTML DOM是AJAX应用中很基础的一部分，但它不灵活并且容易出错。通过声明式的描述用户界面应该怎样随着应用程序状态的改变而变化，能让你从低级的DOM操作中解脱出来。绝大多数Angular的应用开发中，开发者都不需要自己去写低级的操作DOM的代码，尽管如果你想的话，你还是可以这样做。  * **在用户界面中读写数据：**AJAX应用中的绝大多数操作都是CRUD操作。一个典型的流程是从服务器端取到数据组装成内部对象，然后写到HTML的表单中，在用户对表单进行修改之后，进行表单验证，显示表单验证错误信息，然后将数据重新组装成内部对象，再发给服务器。在这个流程中有很多重复的代码要写，而Angular消除了在这个流程中几乎所有的重复代码，使得代码看起来只是在描述所有的执行流程，而不是所有的实现细节。  * **在开始前写大量的初始化代码：**一般需要写很多的基础性的代码才能完成一个基本的AJAX的Hello World应用。在Angular的应用中，你可以通过一些服务来初始化应用，这些服务都是以[Guice-like](http://code.google.com/p/google-guice/)的方式进行依赖注入的。这将会是你能够很快的进入功能开发。另外，你还能完全控制自动化测试的初始化过程。
