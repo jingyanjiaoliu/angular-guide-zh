@@ -159,7 +159,7 @@ function factory(name, factoryFn) { return provider(name, { $get: factoryFn }); 
 
 当你需要为在应用启动前就必须设置好的全局配置项提供API时，你才需要用到Provider图纸。
 
-假设我们的`unicornLauncher`服务是如此棒，以至于有好多应用都用到它。默认情况下，发射器将unicorn发射到太空中不需要任何保护屏障。但是在某些星球上，由于大气层非常厚，我们在将unicorn送上星际旅行前必须将他们包裹在锡箔纸里，不然他们在穿越大气层时就被烧毁了。在一些应用里，需要设置发射器在每次发射时都使用锡箔纸屏蔽，如果我们能按需配置这一点那就太棒了。我们可以像下面这样让它变得可配置：
+假设我们的`unicornLauncher`服务是如此棒，以至于有好多应用都用到它。默认情况下，发射器将unicorn发射到太空中不需要任何保护屏障。但是在某些星球上，由于大气层非常厚，我们在将unicorn送上星际旅行前必须将他们包裹在铝箔里，不然他们在穿越大气层时就被烧毁了。在一些应用里，需要设置发射器在每次发射时都使用铝箔屏蔽，如果我们能按需配置这一点那就太棒了。我们可以像下面这样让它变得可配置：
 
 ```javascript
 myApp.provider('unicornLauncher', function UnicornLauncherProvider() {
@@ -178,7 +178,7 @@ myApp.provider('unicornLauncher', function UnicornLauncherProvider() {
 });
 ```
 
-为了在应用里开启锡箔纸屏蔽，我们需要通过模块API来创建一个配置函数，并将UnicornLauncherProvider注入：
+为了在应用里开启铝箔屏蔽，我们需要通过模块API来创建一个配置函数，并将UnicornLauncherProvider注入：
 
 ```javascript
 myApp.config(["unicornLauncherProvider", function(unicornLauncherProvider) {
