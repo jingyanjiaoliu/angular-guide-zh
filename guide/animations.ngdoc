@@ -5,15 +5,11 @@
 
 # Animations
 
-AngularJS 1.2 provides animation hooks for common directives such as `ngRepeat`, `ngSwitch`, and `ngView`, as well as custom directives
-via the `$animate` service. These animation hooks are set in place to trigger animations during the life cycle of various directives and when
-triggered, will attempt to perform a CSS Transition, CSS Keyframe Animation or a JavaScript callback Animation (depending on if an animation is
-placed on the given directive). Animations can be placed using vanilla CSS by following the naming conventions set in place by AngularJS
-or with JavaScript code when it's defined as a factory.
+AngularJS 1.2为部分常见的指令提供了动画钩子，比如 `ngRepeat`, `ngSwitch` 和 `ngView`, 而自定义指令则可以通过`$animate`service来实现。这些动画钩子在整个指令的生命周期以及触发的时候触发动画，会尝试执行 CSS Transition, CSS Keyframe Animation 或JavaScript callback Animation（取决于指令中设定的动画)。要使用动画可以按照AngularJS约定的命名设置CSS,或定义factory。
 
-Animations are not available unless you include the {@link api/ngAnimate `ngAnimate` module} as a dependency within your application.
+动画在不依赖注入{@link api/ngAnimate `ngAnimate`模块}的情况下，是不可用的。
 
-Below is a quick example of animations being enabled for `ngShow` and `ngHide`:
+下面便是一个 `ngShow` 和 `ngHide` 使用动画的一个简单例子:
 
 <example animations="true">
   <file name="index.html">
@@ -53,16 +49,16 @@ Below is a quick example of animations being enabled for `ngShow` and `ngHide`:
   </file>
 </example>
 
-## Installation
+## 使用
 
-See the {@link api/ngAnimate API docs for `ngAnimate`} for instructions on installing the module.
+可以看看{@link api/ngAnimate `ngAnimate` API文档 }有关使用该模块的说明
 
-You may also want to setup a separate CSS file for defining CSS-based animations.
 
-## How they work
+你或许还需要设置一个单独的样式文件用于定义CSS动画。
 
-Animations in AngularJS are completely based on CSS classes. As long as you have a CSS class attached to a HTML element within
-your website, you can apply animations to it. Lets say for example that we have an HTML template with a repeater in it like so:
+## 如何工作
+
+AngularJS的动画是完全基于CSS的classes。只要在你网页中得HTML元素上加上特定的class，你就可以使用动画了。让我们看一个含有repeat的模板使用动画的例子:
 
 <pre>
 <div ng-repeat="item in items" class="repeated-item">
@@ -70,15 +66,11 @@ your website, you can apply animations to it. Lets say for example that we have 
 </div>
 </pre>
 
-As you can see, the `.repeated-item` class is present on the element that will be repeated and this class will be
-used as a reference within our application's CSS and/or JavaScript animation code to tell AngularJS to perform an animation.
+正如你可以看到,`.repeated-item`class在repeat元素的上，这个class将是我们应用程序用于或者JavaScript动画代码告诉AngularJS来执行.
 
-As ngRepeat does its thing, each time a new item is added into the list, ngRepeat will add
-a `ng-enter` class name to the element that is being added. When removed it will apply a `ng-leave` class name and when moved around
-it will apply a `ng-move` class name.
+在每次ngRepeat新增一个item时, ngRepeat会在该元素上添加一个`ng-enter`类名，当移除元素时会添加`ng-leave`的类名，在位置发生移动时会添加`ng-move`的类名。
 
-Taking a look at the following CSS code, we can see some transition and keyframe animation code set for each of those events that
-occur when ngRepeat triggers them:
+下面的CSS代码中, 我们可以看到每一个ngRepeat触发的事件,设置transition以及animation动画代码：
 
 <pre>
 &#47;&#42;
@@ -143,7 +135,7 @@ occur when ngRepeat triggers them:
 }
 </pre>
 
-The same approach to animation can be used using JavaScript code (**jQuery is used within to perform animations**):
+同样的方法使用JavaScript也可以设置动画 (**用jQuery来执行动画**):
 
 <pre>
 myModule.animation('.repeated-item', function() {
@@ -201,18 +193,14 @@ myModule.animation('.repeated-item', function() {
 });
 </pre>
 
-With these generated CSS class names present on the element at the time, AngularJS automatically
-figures out whether to perform a CSS and/or JavaScript animation. If both CSS and JavaScript animation
-code is present, and match the CSS class name on the element, then AngularJS will run both animations at the same time.
+按照这些生成的CSS类名，AngularJS自动执行CSS或JavaScript动画。 如果同时存在CSS与JavaScript的动画代码，并且匹配元素的类名，AngularJS则会同时执行。
 
+## Class 与 ngClass 动画钩子
 ## Class and ngClass animation hooks
 
-AngularJS also pays attention to CSS class changes on elements by triggering the **add** and **remove** hooks.
-This means that if a CSS class is added to or removed from an element then an animation can be executed in between
-before the CSS class addition or removal is finalized. (Keep in mind that AngularJS will only be
-able to capture class changes if an **expression** or the **ng-class** directive is used on the element.)
+AngularJS 通过设置 **添加** and **删除** 的钩子来关注类名的变化。这意味着如果从一个元素中增加或者删除CSS类名，动画会在class添加或者删除之前执行。(需要注意：如果元素上有使用**表达式**或者**ng-class**,AngularJS也只能捕获到class的变化。)
 
-The example below shows how to perform animations during class changes:
+下面的例子演示了如何在class的变化时进行动画：
 
 <example animations="true">
  <file name="index.html">
@@ -244,29 +232,27 @@ The example below shows how to perform animations during class changes:
  </file>
 </example>
 
-Although the CSS is a little different then what we saw before, the idea is the same.
+虽然CSS与我们之前看到的有一点不一样，但是想法是一样的。
 
-## Which directives support animations?
+## 那些directives支持动画呢？
 
-A handful of common AngularJS directives support and trigger animation hooks whenever any major event occurs during its life cycle.
-The table below explains in detail which animation events are triggered
+部份AngularJS指令支持在它生命周期内有重要事件发生时候触发动画钩子，下面的表格详细说明了那些动画事件会被触发。
 
-| Directive                                                                           | Supported Animations                     |
+| Directive                                                                           | 支持动画                     |
 |-------------------------------------------------------------------------------------|------------------------------------------|
-| {@link api/ng.directive:ngRepeat#usage_animations ngRepeat}                               | enter, leave, and move                   |
-| {@link api/ngRoute.directive:ngView#usage_animations ngView}                              | enter and leave                          |
-| {@link api/ng.directive:ngInclude#usage_animations ngInclude}                             | enter and leave                          |
-| {@link api/ng.directive:ngSwitch#usage_animations ngSwitch}                               | enter and leave                          |
-| {@link api/ng.directive:ngIf#usage_animations ngIf}                                       | enter and leave                          |
-| {@link api/ng.directive:ngShow#usage_animations ngClass or &#123;&#123;class&#125;&#125;} | add and remove                           |
-| {@link api/ng.directive:ngShow#usage_animations ngShow & ngHide}                          | add and remove (the ng-hide class value) |
+| {@link api/ng.directive:ngRepeat#usage_animations ngRepeat}                               | enter , leave , move                   |
+| {@link api/ngRoute.directive:ngView#usage_animations ngView}                              | enter , leave                          |
+| {@link api/ng.directive:ngInclude#usage_animations ngInclude}                             | enter ,  leave                          |
+| {@link api/ng.directive:ngSwitch#usage_animations ngSwitch}                               | enter ,  leave                          |
+| {@link api/ng.directive:ngIf#usage_animations ngIf}                                       | enter ,  leave                          |
+| {@link api/ng.directive:ngShow#usage_animations ngClass or &#123;&#123;class&#125;&#125;} | add , remove                           |
+| {@link api/ng.directive:ngShow#usage_animations ngShow & ngHide}                          | add , remove (the ng-hide class value) |
 
-For a full breakdown of the steps involved during each animation event, refer to the {@link api/ngAnimate.$animate API docs}.
+对于每个动画事件所涉及的步骤，请参考{@link api/ngAnimate.$animate API 文档}。
 
-## How do I use animations in my own directives?
+## 怎么样我们自己的directive中使用动画呢？
 
-Animations within custom directives can also be established by injecting `$animate` directly into your directive and
-making calls to it when needed.
+自定义指令中也可以通过依赖注入 `$animate` , 并在你需要它的时候调用它。
 
 <pre>
 myModule.directive('my-directive', ['$animate', function($animate) {
@@ -282,8 +268,8 @@ myModule.directive('my-directive', ['$animate', function($animate) {
 }]);
 </pre>
 
-## More about animations
+## 更多关于动画
 
-For a full breakdown of each method available on `$animate`, see the {@link api/ngAnimate.$animate API documentation}.
+关于`$animate`每个方法的详细信息, 参考{@link api/ngAnimate.$animate API 文档}.
 
-To see a complete demo, see the {@link tutorial/step_12 animation step within the AngularJS phonecat tutorial}.
+查看完整demo {@link tutorial/step_12 animation step within the AngularJS phonecat tutorial}.
