@@ -81,25 +81,16 @@ Angular 在以下两种情况下自动初始化，一个是在 `DOMContentLoaded
 
 注意，在上面的例子中，我们提供了我们应用要加载的模块名作为 {@link api/angular.bootstrap} 函数的第二个参数。需要注意的是 `angular.bootstrap` 不会凭空创建模块，在我们将模块作为参数注入之前，必须创建任一自定义的 {@link guide/module 模块}。
 
-以下是你的代码需要遵循的顺序：
+以下是你的 Angular 代码运行时遵循的顺序：
 
-  1. After the page and all of the code is loaded, find the root element of your AngularJS
-  application, which is typically the root of the document.
+  1. 在HTML页面以及所有代码加载完毕后，Angular 会去找到应用的根元素（通常是文档的根节点）
 
-  2. Call {@link api/angular.bootstrap} to {@link compiler compile} the element into an
-  executable, bi-directionally bound application.
+  2. 调用 {@link api/angular.bootstrap} 去 {@link compiler 编译} 各元素成为一个可执行的且双向绑定的应用
 
 ## 延迟启动
 
-This feature enables tools like Batarang and test runners to
-hook into angular's bootstrap process and sneak in more modules
-into the DI registry which can replace or augment DI services for
-the purpose of instrumentation or mocking out heavy dependencies.
+这个特色可以让像 Batarang 一样的测试工具横插一杠进入 Angular 的引导进程，并且溜进模块中的DI注册机制中，这样就可以替换或者增强DI提供的服务。（译注：由于后面一句不甚理解其原理，不敢贸然翻译）
 
-If `window.name` contains prefix `NG_DEFER_BOOTSTRAP!` when
-{@link api/angular.bootstrap} is called, the bootstrap process will be paused
-until `angular.resumeBootstrap()` is called.
+当 {@link api/angular.bootstrap} 被调用时，如果 `window.name` 包含 `NG_DEFER_BOOTSTRAP!` 前缀，引导进程会被暂停直到 `angular.resumeBootstrap()` 被调用。
 
-`angular.resumeBootstrap()` takes an optional array of modules that
-should be added to the original list of modules that the app was
-about to be bootstrapped with.
+`angular.resumeBootstrap()` 以一个可选的数组作为参数。这个数组是包含了应用启动时需要被注入的模块。
