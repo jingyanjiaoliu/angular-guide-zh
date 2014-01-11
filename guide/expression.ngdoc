@@ -1,9 +1,9 @@
 @ngdoc overview
-@name 表达式
+@name 开发人员指南: 表达式(Expressions)
 @description
 翻译者:[@NigelYao](https://github.com/NigelYao)
 
-"表达式"是一种类JavaScript的代码片段，通常在'{{ 表达式 }}'的视图绑定中使用。表达式是由{@link api/ng.$parse $parse}服务解析。表达式解析之后经常会使用{@link filter 过滤器}来格式化成一种更加用户友好的形式。
+"表达式"是一种类JavaScript的代码片段，通常在视图中以'{{ expression }}'的形式的绑定中使用。表达式是由{@link api/ng.$parse $parse}服务解析。表达式解析之后经常会使用{@link filter 过滤器}来格式化成一种更加用户友好的形式。
 
 例如，下面这些都是Angular中合法的表达式：
   
@@ -14,15 +14,16 @@
 
 可能会有人认为Angular视图表达式就是JavaScript表达式，但这不完全正确，因为Angular并没有使用JavaScript中的'eval()'来解析表达式。你可以认为Angular表达式与JavaScript表达式有如下的区别：
 
-  * **属性解析：** 所有的属性的解析都是相对于作用域(scope)的，而不像JavaScript中的表达式解析式相对于全局的'window'对象。
+  * **属性解析：** 所有的属性的解析都是相对于作用域(scope)的，而不是JavaScript中的表达式解析式相对于全局的'window'对象。
 
   * **容错性：** 表达式的解析对'undefined'和'null'具有容错性，这不像在JavaScript中，在试图解析未定义的属性会生成`ReferenceError`或`TypeError`的错误.
 
   * **禁止控制流语句：** 表达式中不允许包括下列语句：条件判断，循环，抛出异常。
 
-另一方便，如果你想执行专门的JavaScript代码，你应该实现在一个控制器里的方法，然后调用这个方法。如果你想在JavaScript中解析一个Angular表达式，使用{@link api/ng.$rootScope.Scope#methods_$eval `$eval()`}方法。
+另一方面，如果你想执行特定的JavaScript代码，你应该实现在一个控制器里的方法，然后调用这个方法。如果你想在JavaScript中解析一个Angular表达式，使用{@link api/ng.$rootScope.Scope#methods_$eval `$eval()`}方法。
 
 ## 例子
+
 <doc:example>
 <doc:source>
  1+2={{1+2}}
@@ -116,7 +117,7 @@
 
 表达式的解析对undefined和null具有容错性。在JavaScript中，解析'a,b,c'时，如果'a'不是一个对象会抛出异常。在一些语言中这可能会有用，但表达式的解析在Angular中主要用在数据绑定上，我们会像下面这样使用表达式：
 
-        {{a,b,c}}
+        {{a.b.c}}
 
 此时如果'a'是未定义的（也许我们正等着服务器响应数据，在不久的将来其会被定义），解析抛出异常将不再合理。如果表达式不具有容错性的话，我们的代码会变的繁杂且影响阅读，例如：`{{((a||{}).b||{}).c}}`。
 

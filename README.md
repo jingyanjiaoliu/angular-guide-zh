@@ -17,7 +17,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * [01-Controllers（控制器）](http://angular.duapp.com/guide/controller)翻译者:@GrahamLe 已完成翻译初稿
 * [02-Filters（过滤器）](http://angular.duapp.com/guide/filter) 翻译者:@NigelYao
 * [03-Templates（模板）](http://angular.duapp.com/guide/templates) 翻译者:@why520crazy 已完成翻译
-* 04-Introduction（介绍）翻译者:
+* 04-Introduction（介绍）翻译者: @pengisgood 初稿已完成
 * [05-Conceptual Overview（概念总览）](http://angular.duapp.com/guide/concepts) 翻译者: @asnowwolf 已完成翻译
 * [06-Understanding Angular Services（理解ng的服务）](http://angular.duapp.com/guide/dev_guide.services.understanding_services)翻译者: @lightma 已完成翻译
 * 07-Managing Service Dependencies @joe
@@ -26,22 +26,22 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * 10-Testing Angular Services 翻译者: @FrankyYang
 * 11-Using $location
 * 12-Angular Services 翻译者: @FrankyYang
-* [13-Data Binding](http://angular.duapp.com/guide/databinding) 翻译者：@NigelYao
+* [13-Data Binding（数据绑定）](http://angular.duapp.com/guide/databinding) 翻译者：@NigelYao
 * 14-Working With CSS in Angular @ckken
 * [15-Dependency Injection](http://angular.duapp.com/guide/di) 翻译者: @GrahamLe
-* 16-Providers （Providers）翻译者: @lightma
+* [16-Providers （Providers）](http://angular.duapp.com/guide/providers)翻译者: @lightma 已完成翻译
 * [17-Modules（模块）](http://angular.duapp.com/guide/module) 翻译者: @GrahamLe 已完成翻译初稿
 * [18-Scopes（控制范围）](http://angular.duapp.com/guide/scope) 翻译者: @GrahamLe 已完成翻译初稿
-* 19-Expressions 翻译者:@NigelYao
+* [19-Expressions（表达式）](http://angular.duapp.com/guide/expression) 翻译者:@NigelYao
 * [20-Bootstrap（引导程序）](http://angular.duapp.com/guide/bootstrap) 翻译者: @GrahamLe
-* 21-Directives 翻译者: @lrrluo
+* [21-Directives(指令)](http://angular.duapp.com/guide/directive)翻译者:@lrrluo 已完成翻译          
 * [22-HTML Compiler](http://angular.duapp.com/guide/compiler) 翻译者: @GrahamLe
 * 23-Forms
-* 24-Animations
-* 25-E2E Testing 翻译者: @asnowwolf
+* 24-Animations 翻译者: @ariesjia
+* [25-E2E Testing](http://angular.duapp.com/guide/dev_guide.e2e-testing) 翻译者: @asnowwolf 已完成翻译
 * [26-Unit Testing](http://angular.duapp.com/guide/dev_guide.unit-testing) 翻译者: @asnowwolf 已完成翻译
 * 27-i18n and l10n
-* 28-Internet Explorer Compatibility
+* [28-Internet Explorer Compatibility](http://angular.duapp.com/guide/dev_ie) 翻译者:@greengerong
 * 29-[Migrating from 1.0 to 1.2 - 迁移指南](http://angular.duapp.com/guide/migration) 翻译者: @asnowwolf 已完成翻译
 
 目前加入者：
@@ -65,3 +65,5 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 @why520crazy， QQ:why520crazy(601213834)...
 
 heather(2751502325)
+
+@greengerong， QQ:破狼(389075302)

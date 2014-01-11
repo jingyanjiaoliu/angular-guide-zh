@@ -3,26 +3,22 @@
 @description
 
 
-# Animations
+# 动画
 
-AngularJS 1.2 provides animation hooks for common directives such as `ngRepeat`, `ngSwitch`, and `ngView`, as well as custom directives
-via the `$animate` service. These animation hooks are set in place to trigger animations during the life cycle of various directives and when
-triggered, will attempt to perform a CSS Transition, CSS Keyframe Animation or a JavaScript callback Animation (depending on if an animation is
-placed on the given directive). Animations can be placed using vanilla CSS by following the naming conventions set in place by AngularJS
-or with JavaScript code when it's defined as a factory.
+AngularJS 1.2为部分常见的指令提供了动画钩子，比如 `ngRepeat`, `ngSwitch` 和 `ngView`, 而自定义指令则可以通过`$animate`服务来实现。这些动画钩子在各种指令的生命周期内触发，触发时，它会尝试执行 CSS过渡动画（Transition）, CSS关键帧动画（Keyframe Animation）或JavaScript回调动画（callback Animation）（取决于指令中的设定)。动画包括根据AngularJS内置的命名约定定义的CSS原生动画（包括过渡动画和关键帧动画），或者通过工厂(Factory)定义的JavaScript回调动画。
 
-Animations are not available unless you include the {@link api/ngAnimate `ngAnimate` module} as a dependency within your application.
+要想使用动画，必须单独引入{@link api/ngAnimate `ngAnimate`模块}，angular.js中没有内置它。
 
-Below is a quick example of animations being enabled for `ngShow` and `ngHide`:
+下面便是一个通过 `ngShow` 和 `ngHide` 指令使用动画的一个简单例子:
 
 <example animations="true">
   <file name="index.html">
     <div ng-init="checked=true">
       <label>
-        <input type="checkbox" ng-model="checked" style="float:left; margin-right:10px;"> Is Visible...
+        <input type="checkbox" ng-model="checked" style="float:left; margin-right:10px;"> 可见...
       </label>
       <div class="check-element animate-show-hide" ng-show="checked" style="clear:both;">
-        Visible...
+        可见...
       </div>
     </div>
   </file>
@@ -53,16 +49,16 @@ Below is a quick example of animations being enabled for `ngShow` and `ngHide`:
   </file>
 </example>
 
-## Installation
+## 使用
 
-See the {@link api/ngAnimate API docs for `ngAnimate`} for instructions on installing the module.
+有关该模块的详细说明，请参见{@link api/ngAnimate `ngAnimate` API文档 }
 
-You may also want to setup a separate CSS file for defining CSS-based animations.
 
-## How they work
+你或许应该把这些CSS动画定义在一个单独的CSS文件中。
 
-Animations in AngularJS are completely based on CSS classes. As long as you have a CSS class attached to a HTML element within
-your website, you can apply animations to it. Lets say for example that we have an HTML template with a repeater in it like so:
+## 如何工作
+
+AngularJS的动画完全基于CSS class来工作。只要在你网页中的HTML元素加上了特定的class，你就得到了动画效果。让我们看一个在ng-repeat中使用动画的例子:
 
 <pre>
 <div ng-repeat="item in items" class="repeated-item">
@@ -70,22 +66,15 @@ your website, you can apply animations to it. Lets say for example that we have 
 </div>
 </pre>
 
-As you can see, the `.repeated-item` class is present on the element that will be repeated and this class will be
-used as a reference within our application's CSS and/or JavaScript animation code to tell AngularJS to perform an animation.
+如上所示，ng-repeat所在的元素上有一个`.repeated-item`类，这个类名将被CSS原生动画和/或JavaScript动画代码在定义动画时所引用。
 
-As ngRepeat does its thing, each time a new item is added into the list, ngRepeat will add
-a `ng-enter` class name to the element that is being added. When removed it will apply a `ng-leave` class name and when moved around
-it will apply a `ng-move` class name.
+当每次ngRepeat中新增一个条目(item)时, ngRepeat会在该条目上自动添加一个`ng-enter`类，每次移除条目时会添加`ng-leave`类，每次条目被移动时会添加`ng-move`类。
 
-Taking a look at the following CSS code, we can see some transition and keyframe animation code set for each of those events that
-occur when ngRepeat triggers them:
+下面的CSS代码中, 我们可以看到每一个ngRepeat触发的事件,设置transition以及animation动画代码：
 
 <pre>
 &#47;&#42;
-  We're using CSS transitions for when
-  the enter and move events are triggered
-  for the element that has the .repeated-item
-  class
+  我们使用CSS过渡(transition)语句来为带有.repeated-item类的元素添加动画效果，他们将在各个条目新增和移动时触发。
 &#42;&#47;
 .repeated-item.ng-enter, .repeated-item.ng-move {
   -webkit-transition:0.5s linear all;
@@ -96,10 +85,7 @@ occur when ngRepeat triggers them:
 }
 
 &#47;&#42;
- The ng-enter-active and ng-move-active
- are where the transition destination properties
- are set so that the animation knows what to
- animate.
+ 用ng-enter-active和ng-move-active类来定义过渡效果的最终属性值，以便动画指令知道它最终该达到什么状态。
 &#42;&#47;
 .repeated-item.ng-enter.ng-enter-active,
 .repeated-item.ng-move.ng-move-active {
@@ -107,9 +93,7 @@ occur when ngRepeat triggers them:
 }
 
 &#47;&#42;
-  We're using CSS keyframe animations for when
-  the leave event is triggered for the element
-  that has the .repeated-item class
+  我们使用CSS关键帧(keyframe animation)语句来为带有.repeated-item类的元素定义移除动画(ng-leave)
 &#42;&#47;
 .repeated-item.ng-leave {
   -webkit-animation:0.5s my_animation;
@@ -124,8 +108,7 @@ occur when ngRepeat triggers them:
 }
 
 &#47;&#42;
-  Unfortunately each browser vendor requires
-  its own definition of keyframe animation code...
+  不幸的是，每个浏览器都需要用它自己的“方言”来定义关键帧动画
 &#42;&#47;
 &#64;-webkit-keyframes my_animation {
   from { opacity:1; }
@@ -143,7 +126,7 @@ occur when ngRepeat triggers them:
 }
 </pre>
 
-The same approach to animation can be used using JavaScript code (**jQuery is used within to perform animations**):
+同样的方法也可用于JavaScript动画 (**用jQuery来执行动画**):
 
 <pre>
 myModule.animation('.repeated-item', function() {
@@ -154,9 +137,7 @@ myModule.animation('.repeated-item', function() {
         opacity: 1
       }, done);
 
-      // optional onDone or onCancel callback
-      // function to handle any post-animation
-      // cleanup operations
+      // 可选的onDone或onCancel回调函数可用于定义执行完动画后的各种清理操作。
       return function(isCancelled) {
         if(isCancelled) {
           jQuery(element).stop();
@@ -169,9 +150,7 @@ myModule.animation('.repeated-item', function() {
         opacity: 0
       }, done);
 
-      // optional onDone or onCancel callback
-      // function to handle any post-animation
-      // cleanup operations
+      // 可选的onDone或onCancel回调函数可用于定义执行完动画后的各种清理操作。
       return function(isCancelled) {
         if(isCancelled) {
           jQuery(element).stop();
@@ -184,9 +163,7 @@ myModule.animation('.repeated-item', function() {
         opacity: 1
       }, done);
 
-      // optional onDone or onCancel callback
-      // function to handle any post-animation
-      // cleanup operations
+      // 可选的onDone或onCancel回调函数可用于定义执行完动画后的各种清理操作。
       return function(isCancelled) {
         if(isCancelled) {
           jQuery(element).stop();
@@ -194,33 +171,28 @@ myModule.animation('.repeated-item', function() {
       }
     },
 
-    // you can also capture these animation events
+    // 你还可以捕获下列动画事件
     addClass : function(element, className, done) {},
     removeClass : function(element, className, done) {}
   }
 });
 </pre>
 
-With these generated CSS class names present on the element at the time, AngularJS automatically
-figures out whether to perform a CSS and/or JavaScript animation. If both CSS and JavaScript animation
-code is present, and match the CSS class name on the element, then AngularJS will run both animations at the same time.
+一旦这些类名出现在元素上，AngularJS就知道该执行CSS或JavaScript动画了。 如果同时定义了CSS动画和JavaScript动画，并且匹配了这些类名，AngularJS就会同时执行它们。
 
-## Class and ngClass animation hooks
+## Class 与 ngClass 动画钩子
 
-AngularJS also pays attention to CSS class changes on elements by triggering the **add** and **remove** hooks.
-This means that if a CSS class is added to or removed from an element then an animation can be executed in between
-before the CSS class addition or removal is finalized. (Keep in mind that AngularJS will only be
-able to capture class changes if an **expression** or the **ng-class** directive is used on the element.)
+AngularJS也通过设置**add**和**remove**钩子来关注类名的变化。这意味着如果从一个元素中增加或者删除一个CSS类，动画会在这个类名被添加或者删除完毕之前就开始执行。(记住：即使元素上使用了**{{}}表达式**或者**ng-class**指令，AngularJS也只能捕获到类名的变化。)
 
-The example below shows how to perform animations during class changes:
+下面的例子演示了如何在类名变化时执行动画：
 
 <example animations="true">
  <file name="index.html">
   <p>
-    <input type="button" value="set" ng-click="myCssVar='css-class'">
-    <input type="button" value="clear" ng-click="myCssVar=''">
+    <input type="button" value="设置" ng-click="myCssVar='css-class'">
+    <input type="button" value="清除" ng-click="myCssVar=''">
     <br>
-    <span ng-class="myCssVar">CSS-Animated Text</span>
+    <span ng-class="myCssVar">CSS-动画文本</span>
   </p>
  </file>
  <file name="style.css">
@@ -244,29 +216,27 @@ The example below shows how to perform animations during class changes:
  </file>
 </example>
 
-Although the CSS is a little different then what we saw before, the idea is the same.
+虽然这里的CSS与我们之前看到的有点区别，但思想是一样的。
 
-## Which directives support animations?
+## 哪些指令支持动画呢？
 
-A handful of common AngularJS directives support and trigger animation hooks whenever any major event occurs during its life cycle.
-The table below explains in detail which animation events are triggered
+部分AngularJS指令支持在它的生命周期内发生重要事件时触发动画钩子，下面的表格详细说明了哪些动画事件会被触发。
 
-| Directive                                                                           | Supported Animations                     |
+| Directive                                                                           | 支持动画                     |
 |-------------------------------------------------------------------------------------|------------------------------------------|
-| {@link api/ng.directive:ngRepeat#usage_animations ngRepeat}                               | enter, leave, and move                   |
-| {@link api/ngRoute.directive:ngView#usage_animations ngView}                              | enter and leave                          |
-| {@link api/ng.directive:ngInclude#usage_animations ngInclude}                             | enter and leave                          |
-| {@link api/ng.directive:ngSwitch#usage_animations ngSwitch}                               | enter and leave                          |
-| {@link api/ng.directive:ngIf#usage_animations ngIf}                                       | enter and leave                          |
-| {@link api/ng.directive:ngShow#usage_animations ngClass or &#123;&#123;class&#125;&#125;} | add and remove                           |
-| {@link api/ng.directive:ngShow#usage_animations ngShow & ngHide}                          | add and remove (the ng-hide class value) |
+| {@link api/ng.directive:ngRepeat#usage_animations ngRepeat}                               | enter , leave , move                   |
+| {@link api/ngRoute.directive:ngView#usage_animations ngView}                              | enter , leave                          |
+| {@link api/ng.directive:ngInclude#usage_animations ngInclude}                             | enter ,  leave                          |
+| {@link api/ng.directive:ngSwitch#usage_animations ngSwitch}                               | enter ,  leave                          |
+| {@link api/ng.directive:ngIf#usage_animations ngIf}                                       | enter ,  leave                          |
+| {@link api/ng.directive:ngShow#usage_animations ngClass or &#123;&#123;class&#125;&#125;} | add , remove                           |
+| {@link api/ng.directive:ngShow#usage_animations ngShow & ngHide}                          | add , remove (the ng-hide class value) |
 
-For a full breakdown of the steps involved during each animation event, refer to the {@link api/ngAnimate.$animate API docs}.
+对于各个动画事件的详细触发步骤，请参考{@link api/ngAnimate.$animate API 文档}。
 
-## How do I use animations in my own directives?
+## 怎样在我们自己的指令中使用动画呢？
 
-Animations within custom directives can also be established by injecting `$animate` directly into your directive and
-making calls to it when needed.
+在自定义指令中你可以通过依赖注入获得`$animate`服务, 你可以在任何需要的时候调用它。
 
 <pre>
 myModule.directive('my-directive', ['$animate', function($animate) {
@@ -282,8 +252,8 @@ myModule.directive('my-directive', ['$animate', function($animate) {
 }]);
 </pre>
 
-## More about animations
+## 关于动画的更多知识
 
-For a full breakdown of each method available on `$animate`, see the {@link api/ngAnimate.$animate API documentation}.
+关于`$animate`各个方法的详情, 请参阅 {@link api/ngAnimate.$animate API 文档}。
 
-To see a complete demo, see the {@link tutorial/step_12 animation step within the AngularJS phonecat tutorial}.
+查看完整demo，请参见{@link tutorial/step_12 “AngularJS phonecat向导”之“动画”一节}。
