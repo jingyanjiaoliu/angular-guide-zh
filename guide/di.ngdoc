@@ -2,34 +2,27 @@
 @name Developer Guide: Dependency Injection
 @description
 
-# Dependency Injection
+Translated by [@GrahamLe](https://github.com/grahamle)
 
-Dependency Injection (DI) is a software design pattern that deals with how code gets hold of its
-dependencies.
+# 依赖注入
 
-For in-depth discussion about DI, see {@link http://en.wikipedia.org/wiki/Dependency_injection
-Dependency Injection} at Wikipedia, {@link http://martinfowler.com/articles/injection.html
-Inversion of Control} by Martin Fowler, or read about DI in your favorite software design pattern
-book.
+依赖注入（译注：以下简称DI）是一种让代码处理其依赖关系的软件设计模式。
 
-## DI in a nutshell
+期待更多详细的有关 `DI` 的讨论，请看维基百科的 {@link http://en.wikipedia.org/wiki/Dependency_injection Dependency Injection} 词条，以及 Martin Fowler 写的 {@link http://martinfowler.com/articles/injection.html Inversion of Control} ，或者是在你喜欢的任何一本设计模式的书去查看。
 
-There are only three ways an object or a function can get a hold of its dependencies:
+## DI简介
 
-  1. The dependency can be created, typically using the `new` operator.
+对象或是函数只有三种方式可以得到依赖：
 
-  2. The dependency can be looked up by referring to a global variable.
+  1. 依赖创建，通常是通过 `new` 操作符
 
-  3. The dependency can be passed in to where it is needed.
+  2. 依赖查找，通过引用一个全局变量
 
+  3. 依赖传递，依赖可以被注入到任何需要依赖的地方
 
-The first two options of creating or looking up dependencies are not optimal because they hard
-code the dependency. This makes it difficult, if not impossible, to modify the dependencies.
-This is especially problematic in tests, where it is often desirable to provide mock dependencies
-for test isolation.
+前两种选择：创建或是查找依赖都不是那么理想，因为它们都是将依赖写死在对象或函数里了。不能说完全没可能吧，但至少，想要更改上述两种方式得到的依赖是很困难的。尤其是在测试的时候，会遇到很多问题，因为测试时常常需要我们提供模拟的依赖（译注：此句涉及测试，本人不精，已跪）。
 
-The third option is the most viable, since it removes the responsibility of locating the
-dependency from the component. The dependency is simply handed to the component.
+第三种方式是最可行的，因为它去除了去组件里面定位相应的依赖这个担子，而是反过来，依赖总是能够很简单地被注入到需要它的组件中。（译注：说实话，上述三种方式，说的啥玩意呀，对于我是相当于没说一样）
 
 <pre>
   function SomeClass(greeter) {
@@ -41,29 +34,24 @@ dependency from the component. The dependency is simply handed to the component.
   }
 </pre>
 
-In the above example `SomeClass` is not concerned with locating the `greeter` dependency, it
-is simply handed the `greeter` at runtime.
+上述例子中，`SomeClass` 不必去在意 `greeter` 依赖是从哪里来的，反正就是在运行的时候，`greeter` 依赖被传进来了，我用就是了。（译注：so easy，妈妈再也不用担心我的依赖了）
 
-This is desirable, but it puts the responsibility of getting hold of the dependency on the
-code that constructs `SomeClass`.
+像这个例子中的情况是我们愿意看到的，但是它把获得依赖的大部分责任都放在了我们创建 `SomeClass` 的代码中。
 
 <img class="pull-right" style="padding-left: 3em; padding-bottom: 1em;" src="img/guide/concepts-module-injector.png">
 
-To manage the responsibility of dependency creation, each Angular application has an {@link
-api/angular.injector injector}. The injector is a service locator that is responsible for
-construction and lookup of dependencies.
+为了分配依赖创建的任务，每个 Angular 应用都有一个 {@link api/angular.injector injector}。这个 `injector` 是一个服务定位器，负责创建和查找依赖的。（译注：当你的app的某处声明需要用到某个依赖时，Angular 会调用这个依赖注入器去查找或是创建你所需要的依赖，然后返回来给你用）
 
-Here is an example of using the injector service:
+下面是一个利用 `injector` 服务例子：
 
 <pre>
   // Provide the wiring information in a module
   angular.module('myModule', []).
   
-    // Teach the injector how to build a 'greeter'
-    // Notice that greeter itself is dependent on '$window'
+    // 下面是教 injector 如何构建一个 'greeter' 依赖
+    // 注意 greeter 本身依赖于 '$window'
     factory('greeter', function($window) {
-      // This is a factory function, and is responsible for 
-      // creating the 'greet' service.
+      // 这是一个 factory 函数，负责创建 'greeter' 服务 
       return {
         greet: function(text) {
           $window.alert(text);
@@ -71,11 +59,11 @@ Here is an example of using the injector service:
       };
     });
 
-  // New injector is created from the module. 
-  // (This is usually done automatically by angular bootstrap)
+  // 从 module 创建的 injector 
+  // 这个常常是 Angular 启动时自动完成的
   var injector = angular.injector(['myModule', 'ng']);
   
-  // Request any dependency from the injector
+  // 通过 injector 请求任意的依赖
   var greeter = injector.get('greeter');
 </pre>
 
