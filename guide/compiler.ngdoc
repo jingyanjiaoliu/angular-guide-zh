@@ -5,11 +5,9 @@
 Translated by [@GrahamLe](https://github.com/grahamle)
 
 <div class="alert alert-warning">
-**Note:** this guide is targeted towards developers who are already familiar with AngularJS basics.
+**注意**：这篇文章是面向已经有一定 Angular 基础的开发者。
 
-If you're just getting started, we recommend the {@link tutorial/ tutorial} first.
-If you just want to create custom directives, we recommend the {@link guide/directive directives guide}.
-If you want a deeper look into Angular's compilation process, you're in the right place.
+如果你仅仅只是刚上路，那么我们建议你看看 {@link tutorial/ tutorial} 先。如果你只是想创建几个自定义的指令，那可以去瞅瞅 {@link guide/directive directives guide}。而如果你想要更深入地了解 Angular 的编译过程，那么你来对了，这就是你该看的。
 </div>
 
 
