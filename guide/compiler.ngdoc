@@ -11,7 +11,7 @@ Translated by [@GrahamLe](https://github.com/grahamle)
 </div>
 
 
-# Overview
+# 概述
 
 Angular's {@link api/ng.$compile HTML compiler} allows the developer to teach the
 browser new HTML syntax. The compiler allows you to attach behavior to any HTML element or attribute
@@ -36,7 +36,7 @@ All of this compilation takes place in the web browser; no server side or pre-co
 involved.
 
 
-## Compiler
+## 编译器
 
 Compiler is an Angular service which traverses the DOM looking for attributes. The compilation
 process happens in two phases.
@@ -53,7 +53,7 @@ for each item in a collection. Having a compile and link phase improves performa
 cloned template only needs to be compiled once, and then linked once for each clone instance.
 
 
-## Directive
+## 指令
 
 A directive is a behavior which should be triggered when specific HTML constructs are encountered
 during the compilation process. The directives can be placed in element names, attributes, class
@@ -121,7 +121,7 @@ The presence of the `draggable` attribute on any element gives the element new b
 We extended the vocabulary of the browser in a way which is natural to anyone who is familiar with the principles of HTML.
 
 
-## Understanding View
+## 理解视图
 
 Most other templating systems consume a static string template and
 combine it with data, resulting in a new string. The resulting text is then `innerHTML`ed into
@@ -153,7 +153,7 @@ by template data merge.
 
 
 
-## How directives are compiled
+## 编译指令
 
 It's important to note that Angular operates on DOM nodes rather than strings. Usually, you don't
 notice this restriction because when a page loads, the web browser parses HTML into the DOM automatically.
@@ -207,7 +207,7 @@ This should help give you an idea of what Angular does internally.
   parent.appendChild(element);
 </pre>
 
-### The difference between Compile and Link
+### compile 和 link 的区别
 
 At this point you may wonder why the compile process has separate compile and link phases. The
 short answer is that compile and link separation is needed any time a change in a model causes
@@ -225,7 +225,7 @@ from the scope.
 moved to the compile function for performance reasons.
 </div>
 
-#### An Example of "Compile" Versus "Link"
+#### "Compile" vs "Link" 的一个例子
 
 To understand, let's look at a real-world example with `ngRepeat`:
 
@@ -289,7 +289,7 @@ on the cloned `<li>`.
 
 
 
-### Understanding How Scopes Work with Transcluded Directives
+### 作用域与Transcluded指令是如何工作的
 
 One of the most common use cases for directives is to create reusable components.
 
