@@ -59,11 +59,9 @@ Angular 在以下两种情况下自动初始化，一个是在 `DOMContentLoaded
 
 ## 手动初始化
 
-If you need to have more control over the initialization process, you can use a manual
-bootstrapping method instead. Examples of when you'd need to do this include using script loaders
-or the need to perform an operation before Angular compiles a page.
+如果你想在初始化阶段拥有更多的控制权，你可以使用手动方法启动应用。你需要手动启动的可能会是你想要在你的应用中使用脚本加载器，或者你可能想要在 Angular 编译页面之前执行一些别的操作。
 
-Here is an example of manually initializing Angular:
+下面是一个手动初始化 Angular 的例子：
 
 <pre>
 <!doctype html>
@@ -81,11 +79,9 @@ Here is an example of manually initializing Angular:
 </html>
 </pre>
 
-Note that we have provided the name of our application module to be loaded into the injector as the second
-parameter of the {@link api/angular.bootstrap} function. Notice that `angular.bootstrap` will not create modules 
-on the fly. You must create any custom {@link guide/module modules} before you pass them as a parameter. 
+注意，在上面的例子中，我们提供了我们应用要加载的模块名作为 {@link api/angular.bootstrap} 函数的第二个参数。需要注意的是 `angular.bootstrap` 不会凭空创建模块，在我们将模块作为参数注入之前，必须创建任一自定义的 {@link guide/module 模块}。
 
-This is the sequence that your code should follow:
+以下是你的代码需要遵循的顺序：
 
   1. After the page and all of the code is loaded, find the root element of your AngularJS
   application, which is typically the root of the document.
