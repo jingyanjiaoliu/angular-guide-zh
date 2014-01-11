@@ -5,38 +5,38 @@
 # 创建自定义"指令"
 
 <div class="alert alert-warning">
-**注意:** 这篇指南是面向那些已经对AngularJs 已经有了基础并熟悉的开发者。
-如果你是刚开始接触NG，我们建议到先到这里{@link tutorial/ tutorial}
-如果你是寻找着**指令API**,我们最近将其移到这里{@link api/ng.$compile `$compile`}.
+**注意:** 这篇指南是面向那些已经对AngularJS有了基础并比较熟悉的开发者。
+如果你是刚开始接触Angular，我们建议你先看看{@link tutorial/ 入门指南}
+如果你在寻找**指令API**，请移步这里{@link api/ng.$compile `$compile`}.
 </div>
 
 
-此文解释了怎样在你的AngularJs app 里创建你自己的指令和怎样去实现它们。
+此文解释了在你的AngularJS应用里，何时该创建自定义指令以及如何去实现它们。
 
 
 ## "指令"是什么?
 
-高层次来说，指令就是一类让告诉AngularJS的**HTML compiler** ({@link api/ng.$compile `$compile`})
-去触发特殊行为去操作DOM甚至去改变DOM元素和它的children 的DOM元素（例如 属性，元素名字，或css类）
+简单点说，指令就是一些附加在HTML元素上的自定义标记（例如：属性，元素，或css类），它告诉AngularJS的**HTML编译器** ({@link api/ng.$compile `$compile`})
+在元素上附加某些指定的行为，甚至操作DOM、改变DOM元素，以及它的各级子节点。
 
-Angular 自身带有一整套的指令，像`ngBind`, `ngModel`, and `ngView`.
-非常像你创建控制器和服务那样，你也可以自己创建属于自己的指令给Angular 去用.
-当Angular {@link guide/bootstrap bootstraps} 引导你的应用程序时，
-{@link guide/compiler HTML compiler}就会贯穿整个DOM 去匹配DOM元素里的指令。
+Angular内置了一整套指令，如`ngBind`, `ngModel`, 和`ngView`。
+就像你可以创建控制器和服务那样，你也可以创建自己的指令来让Angular使用。
+当Angular {@link guide/bootstrap 启动器}引导你的应用程序时，
+{@link guide/compiler HTML编译器}就会遍历整个DOM，以匹配DOM元素里的指令。
 
 <div class="alert alert-info">
-**对于HTML 模块来说，"编译"意味着什么?**
+**对于HTML模板来说，"编译"意味着什么?**
 
-对于 AngularJs来说，"编译"意味着绑定监听事件在HTML上使其可以交互。
-我们使用术语"编译"的原因是关联的指令的递归过程就是反映了源代码的
-{@link http://en.wikipedia.org/wiki/Compiled_languages compiled programming languages}.编译过程。
+对于AngularJS来说，“编译”意味着把监听事件绑定在HTML元素上，使其可以交互。
+我们使用"编译"这个术语的原因就在于，把指令关联到DOM上的这种递归操作非常类似于
+{@link http://en.wikipedia.org/wiki/Compiled_languages 编译式语言}编译源代码的过程。
 </div>
 
 
 ## 指令的匹配
 
-在写指令这前，我们需要知道angular的{@link guide/compiler HTML compiler}
-是怎样决定什么时候调用一个指令。
+在开始写指令之前，我们需要知道angular的{@link guide/compiler HTML编译器}
+是怎样决定该在什么时候调用一个指令的。
 
 在接下来的例子里，我们可以说元素`<input>` **匹配**了`ngModel` 的指令。
 
@@ -44,25 +44,23 @@ Angular 自身带有一整套的指令，像`ngBind`, `ngModel`, and `ngView`.
 <input ng-model="foo">
 ```
 
-下面同样**匹配** `ngModel`:
+下面的语法同样**匹配** `ngModel`:
 
 ```javascript
 <input data-ng:model="foo">
 ```
 
-Angular **使正规化** 一个元素的标签和属性名字来决定哪个元素匹配哪个指令。
-我们典型地通过区分大小写的**使正规化**命名方式(好像`ngModel`)来辨别指令。
-然而，因为HTML是区分大小的，我们提及的在DOM里指令通过小写的名字方式，
-典型地使用{@link http://en.wikipedia.org/wiki/Letter_case#Computers dash-delimited 破折号间隔}
-在DOM的元素上(像： `ng-model`).
+Angular把一个元素的标签和属性名字进行**规范化**，来决定哪个元素匹配哪个指令。
+我们通常用区分大小写的**规范化**命名方式(比如`ngModel`)来识别指令。
+然而，HTML是区分大小的，所以我们在DOM中使用的指令只能用小写的方式命名，
+通常使用{@link http://en.wikipedia.org/wiki/Letter_case#Computers 破折号间隔}的形式(比如：`ng-model`).
 
-**使正规化**的过程就像下面的：
+**规范化**的过程如下所示：
 
 1. 从元素或属性的名字前面去掉`x-` and `data-`
-2. 转分隔符`:`, `-`, 或 `_` 转换成`camelCase`.
+2. 从`:`, `-`, 或 `_`分隔的形式转换成`小驼峰命名法(camelCase)`.
 
 下面的例子是对于指令`ngBind`的匹配都是等价的:
-
 
 <example module="docsBindExample">
   <file name="script.js">
@@ -90,15 +88,14 @@ Angular **使正规化** 一个元素的标签和属性名字来决定哪个元�
 </example>
 
 <div class="alert alert-success">
-**最佳实践:** 建议使用破折号分隔符的方式(像. `ng-bind` for `ngBind`).
-如果你想使用HTML的验证工具，你可以加前缀`data`.(好像：`data-ng-bind` for `ngBind`).
-其它的形式也是合法使用的，但因为历史遗留原因我们建议不要这样做。
+**最佳实践:** 建议使用破折号分隔符的方式(比如`ng-bind` for `ngBind`).
+如果你想支持HTML验证工具，你可以加前缀`data`.(比如把`ngBind`写成`data-ng-bind`).
+其它的形式虽然也是合法的，但都是因为历史遗留原因而支持的，我们建议不要那么用。
 </div>
 
-`$compile` can match directives based on element names, attributes, class names, as well as comments.
-`$compile`(编译) 可以基于元素名字、属性、类名、和注释来匹配指令的。
-由Angular 内置提供的指令全部匹配 元素名字、属性、类名、和注释来匹配指令的。
-下面的例子列举了在模板里引用指令的各种方式：(在这个例子 里是`myDir` ):
+`$compile`(编译) 可以基于元素名字、属性、类名和注释来匹配指令的。Angular提供的所有指令都支持元素名、属性、类名和注释的形式。
+
+下面的例子给出了在模板里引用指令的各种方式：(在这个例子 里是`myDir` ):
 
 ```html
 <my-dir></my-dir>
@@ -108,26 +105,24 @@ Angular **使正规化** 一个元素的标签和属性名字来决定哪个元�
 ```
 
 <div class="alert alert-success">
-**最佳实践:** 最好使用标签名字和属性来命令指令而不是注释和类名。
-这样做通常是为了更容易更好地去辨别一个元素是跟哪个指令来匹配。
+**最佳实践:** 最好通过标签名和属性来使用指令而不要通过注释和类名。这样做可以更容易地看出一个元素是跟哪个指令匹配的。
 </div>
 
 <div class="alert alert-success">
-**最佳实践:** 通常注释式命名式指令使用在那里DOM　API
-限制了对创建的指令跨越了多元素(比如说是在`<table>`元素里面)的功能.
-AngularJs 1.2 介绍了{@link api/ng.directive:ngRepeat `ng-repeat-start` and `ng-repeat-end`}
-这种作为比较好的解决方案。鼓励开发者去使用这个方法在自定义的注释式指令上面.
+**最佳实践:** 通常注释式命名式指令使用在如下情景：某些指令需要跨越多个元素，但是受DOM API的限制，无法跨越多个元素(比如`<table>`元素)。
+AngularJS 1.2 引入了{@link api/ng.directive:ngRepeat `ng-repeat-start`和`ng-repeat-end`}指令，作为更好的解决方案。
+建议开发者使用这种方式，而不要用“自定义注释”形式的指令。
 </div>
 
 
 
 ### 文本 和 属性 绑定
 
-在编译的过程中{@link api/ng.$compile compiler}会使用 {@link api/ng.$interpolate $interpolate}
-服务去查看是否含有内嵌的表达式然后匹配文本和属性。
-这些表达式会作为监控的值 {@link api/ng.$rootScope.Scope#methods_$watch watches}
-来注册并作为挖掘 {@link api/ng.$rootScope.Scope#methods_$digest digest}循环的一部分来进行更新换。
-下面是绑定的展开(interpolation)的一个例子
+在编译的过程中{@link api/ng.$compile 编译器}会使用 {@link api/ng.$interpolate $interpolate}服务去匹配文本和属性，以查看它是否含有内嵌的表达式。
+这些表达式会作为{@link api/ng.$rootScope.Scope#methods_$watch 监控}的值来注册，
+并作为{@link api/ng.$rootScope.Scope#methods_$digest 摘要}循环的一部分来进行实时更新。
+
+下面是展开(interpolation)绑定的一个例子
 
 ```html
 <a ng-href="img/{{username}}.jpg">Hello {{username}}!</a>
@@ -136,9 +131,9 @@ AngularJs 1.2 介绍了{@link api/ng.directive:ngRepeat `ng-repeat-start` and `n
 
 ### `ngAttr` 属性绑定
 
-web 浏览器有时候对于属性的合法性可以说是吹毛求疵。
+Web浏览器有时候对于属性的合法性检查简直是吹毛求疵。
 
-比如，思考一下下面的模块：
+比如，考虑下面的模块：
 
 ```html
 <svg>
@@ -152,10 +147,10 @@ web 浏览器有时候对于属性的合法性可以说是吹毛求疵。
 
 使用ng-attr-cx 可以解决这个问题
 
-如果一个绑定的属性使用ngAttr前缀(或者ng-attr), 那么在绑定的时候将会被应用到相应的未前缀化的属性，
+如果一个绑定的属性使用ngAttr前缀(或者ng-attr)进行声明, 那它在绑定的时候就会被应用到相应的未前缀化的属性上，
 这种方式允许你绑定到需要马上被浏览器处理的属性上面(比如SVG元素的circle[cx]属性)。
 
-所以，我们可以这样写来修复以上的问题:
+所以，我们可以这样写来修复这个问题:
 
 ```html
 <svg>
@@ -166,28 +161,29 @@ web 浏览器有时候对于属性的合法性可以说是吹毛求疵。
 
 ## 创建指令
 
-首先先谈一下注册指令API的API.非常像controllers ，指令也是注册在模块上的。
-为了注册一个指令你可以用 此 `module.directive` API
-`module.directive` 接受规范化{@link guide/directive#creating-custom-directives_matching-directives normalized}
-的指令名字和**工厂方法**.此工大方法应该返回一个带有不同配置的对象来告诉
-编译器`$compile`此指令当匹配时该作怎样表现。
+首先先谈一下注册指令API的API。
 
-工厂函数仅在编译器 {@link api/ng.$compile compiler} 第一次匹配到指令的时候调用一次.
+和控制器一样，指令也是注册在模块上的。
+要注册一个指令，你可以用 `module.directive` API。
+`module.directive` 接受规范化{@link guide/directive#creating-custom-directives_matching-directives normalized}
+的指令名字和**工厂方法**。此工厂方法应该返回一个带有不同选项的对象来告诉
+编译器`$compile`此指令被匹配上该做些什么。
+
+工厂函数仅在 {@link api/ng.$compile 编译器} 第一次匹配到指令的时候调用一次.
 你可以在这里进行初始化的工作。
-该函数使用$injector.invoke{@link api/AUTO.$injector#methods_invoke $injector.invoke}调用，
-所以它可以像controller一样进行依赖注入。
+该函数使用{@link api/AUTO.$injector#methods_invoke $injector.invoke}调用，所以它可以像控制器一样进行依赖注入。
 
 <div class="alert alert-success">
-**最佳实践:** 优先返回一个定义好的对象，而不是返回一个函数。
+**最佳实践:** 尽量返回一个对象，而不要只返回一个函数。
 </div>
 
 
-接下来，我们先会了解一些常见的例子，然后再深入了解不同的配置项的原理和编译过程。
+接下来，我们先会讲解一些常见的例子，然后再深入讲解不同的选项项的原理和编译过程。
 
 <div class="alert alert-success">
 **最佳实践:** 为了防止与未来的标准冲突，最好是前缀化你自己的指令名字。
-比如你创建一个指令`<carousel>` ，它可能会产生冲突如果HTML7也引入相同的元素。
-推荐使用两三个单词的前缀(比如btfCarousel)，同样不能使用ng或者其他可能与angular未来版本起冲突的前缀。
+比如你创建一个指令`<carousel>` ，如果HTML7也引入相同的元素它可能会产生冲突。
+推荐使用两三个单词的前缀(比如btfCarousel)，同样，不能使用ng或者其他可能与angular未来版本起冲突的前缀。
 </div>
 
 下面的例子我们将会使用作为 `my` 前缀 （例如，`myCustomer`）
@@ -197,7 +193,7 @@ web 浏览器有时候对于属性的合法性可以说是吹毛求疵。
 当你有大量代表客户信息的模板。这个模板在你的代码中重复了很多次，当你改变一个地方的时候，
 你不得不在其他地方同时改动，这时候，你就要使用指令来简化你的模板。
 
-我们来创建一个指令，简单的时候静态模板来替换它的内容。
+我们来创建一个指令，简单的使用静态模板来替换它的内容。
 
 <example module="docsSimpleDirective">
   <file name="script.js">
@@ -210,7 +206,7 @@ web 浏览器有时候对于属性的合法性可以说是吹毛求疵。
       })
       .directive('myCustomer', function() {
         return {
-          template: 'Name: {{customer.name}} Address: {{customer.address}}'
+          template: '姓名: {{customer.name}} 地址: {{customer.address}}'
         };
       });
   </file>
@@ -221,17 +217,16 @@ web 浏览器有时候对于属性的合法性可以说是吹毛求疵。
   </file>
 </example>
 
-注意我们这里做了一些绑定，`$compile` 编译很链接之后，
-它将会匹配子元素的指令。这意味着你可以组合一些指令。
-接下来我们去下面的例子{@link guide/directive#creating-custom-directives_demo_creating-directives-that-communicate an example}是怎样做的
+注意我们在这里做了一些绑定，`$compile` 编译完链接之后，它将会匹配子元素的指令，这意味着你可以组合一些指令。
+接下来我们看看下面的{@link guide/directive#creating-custom-directives_demo_creating-directives-that-communicate 例子}是怎样做的
 
-这个例子中，我们直接在`template`配置项里写上模板，但是随着模板大小的增加，这样非常不优雅。
+这个例子中，我们直接在`template`选项项里写上模板，但是随着模板大小的增加，这样做非常不优雅。
 
 <div class="alert alert-success">
-**最佳实践:** 除非你的模板非常小，否则更好的是分割成单独的hmtl文件，然后使用`templateUrl`选项来加载。
+**最佳实践:** 除非你的模板非常小，否则最好分割成单独的hmtl文件，然后使用`templateUrl`选项来加载。
 </div>
 
-如果你熟悉`ngInclude`,而 `templateUrl`  的作用与之类似，下面是用`templateUrl`选项的同一个例子：
+如果你熟悉`ngInclude`，那么会发现`templateUrl`的作用与之类似，下面是用`templateUrl`选项的同一个例子：
 
 <example module="docsTemplateUrlDirective">
   <file name="script.js">
@@ -261,16 +256,16 @@ web 浏览器有时候对于属性的合法性可以说是吹毛求疵。
 非常好，但是如果我们想让我们的指令匹配标签名呢？ 如果我们只是简单的把元素放在hmtl上面，会发现没有效果。
 
 <div class="alert alert-waring">
-**注意:** 创建指令的时候，默认仅使用属性的方式。为了创建一个能由元素名字触发的指令，你需要用到`restrict`配置。
+**注意:** 创建指令的时候，默认仅使用属性的方式。为了创建一个能由元素名字触发的指令，你需要用到`restrict`选项。
 </div>
 
 选项`restrict`可以设置成以下方式：
 
-* `'A'` - 仅匹配属性名字
-* `'E'` - 仅匹配元素名字
-* `'AE'` - 既匹配属性又匹配元素名字
+* `'A'` - 仅匹配属性名
+* `'E'` - 仅匹配元素名
+* `'AE'` - 既匹配属性名又匹配元素名
 
-下面把例子的例子的选项restrict配置成`restrict: 'E'`吧。
+下面把例子的restrict选项选项成`restrict: 'E'`。
 
 <example module="docsRestrictDirective">
   <file name="script.js">
@@ -300,24 +295,18 @@ web 浏览器有时候对于属性的合法性可以说是吹毛求疵。
   </file>
 </example>
 
-更多的限制(restrict)属性{@link api/ng.$compile#description_comprehensive-directive-api_directive-definition-object `restrict`}
-请参考API文档{@link api/ng.$compile#description_comprehensive-directive-api_directive-definition-object API docs}.
+restrict属性的详情参阅 {@link api/ng.$compile#description_comprehensive-directive-api_directive-definition-object `restrict`}。
+关于指令定义的API文档请参阅 {@link api/ng.$compile#description_comprehensive-directive-api_directive-definition-object API docs}.
 
 <div class="alert alert-info">
-**应该什么情况下使用元素名或属性名？**
+**什么情况下该用元素名，什么情况下该用属性名？**
 
-当创建一个含有自己模板的组件的时候，需要使用元素名.常见情况当你想为你的模板一部分创建一个特定域的语言
-(The common case for this is when you are creating a Domain-Specific Language for parts of your template.)
-
-如果仅仅是为已有的元素添加功能的话，使用属性名.
+当创建一个含有自己模板的组件的时候，建议使用元素名，常见情况是，当你想为你的模板创建一个DSL（特定领域语言）的时候。如果仅仅想为已有的元素添加功能，建议使用属性名.
 </div>
 
-使用元素名做为myCustomer指令是非常正确的决定，因为你不是用一些'customer'行为来装饰元素，
-而是定义一个具有自己行为的元素作为customer组件
+使用元素名做为myCustomer指令是非常正确的决定，因为你不是用一些'customer'行为来装饰这个元素，而是定义一个具有自定义行为的元素作为customer组件
 
-
-
-### 隔离指令的作用域
+### 给指令一个独立作用域(isolate scope)
 
 上面我们的`myCustomer`指令已经非常好了，但是它有个致命的缺陷，我们在给定的作用域内仅能使用一次。
 
@@ -362,7 +351,7 @@ web 浏览器有时候对于属性的合法性可以说是吹毛求疵。
 这显然不是一个好的解决方案。
 
 我们想要做的是能够把指令的作用域与外部的作用域隔离开来，然后映射外部的作用域到指令内部的作用域。
-可以通过创建**isolate scope**来完成这个目的。这样的话，我们使用指令的`scope`配置:
+可以通过创建**独立作用域(isolate scope)**来达到这个目的。我们可以使用指令的`scope`来选项它:
 
 <example module="docsIsolateScopeDirective">
   <file name="script.js">
@@ -396,7 +385,7 @@ web 浏览器有时候对于属性的合法性可以说是吹毛求疵。
 首先看`index.html`,第一个`<my-customer>` 标签绑定了`naomi`(在控制的作用域[controller's scope]上暴露出来的)值到属性`info`上,
 第二个是绑定`igor`到 `info`.
 
-现在看看scope是如何配置的:
+现在看看scope是如何选项的:
 
 ```javascript
 //...
@@ -406,28 +395,28 @@ scope: {
 //...
 ```
 
-**作用域配置** 是一组为每个独立作用域绑定的属性组合.在此例子中它只有一个属性：
+**作用域选项** 是一组为每个独立作用域绑定的属性组合.在此例子中它只有一个属性：
 
 - 它的名字(`customerInfo`) 对应于指令里的**独立作用域**的`customerInfo`属性.
-- 它的值 (`=info`) 告诉`$compile` 这是绑定了 `info` 属性。
+- 它的值 (`=info`) 告诉`$compile` 这是绑定了所在元素的 `info` 属性。
 
 <div class="alert alert-warning">
-**注意:** 指令作用域配置中的'=attr'属性名是被规范化过后的名字.
+**注意:** 指令作用域选项中的'=attr'属性名是被规范化过后的名字.
 比如要绑定`<div bind-to-this="thing">`,你就要使用'=bindToThis'的绑定。
 </div>
 
-对于属性名和你想要绑定的值的名字一样，你可以使用这样的快捷语法:
+如果属性名和你想要绑定的值的名字一样，你可以使用这样的快捷语法:
 
 ```javascript
 ...
 scope: {
-  // same as '=customer'
+  // 等价于'=customer'
   customer: '='
 },
 ...
 ```
 
-使用isolated scope还有另外一个用处，那就是可以绑定不同的数据到指令内部的作用域。
+使用独立作用域(isolate scope)还有另外一个用处，那就是可以绑定不同的数据到指令内部的作用域。
 
 在我们的例子中，我们可以添加另外一个属性vojta到我们的作用域，然后在我们的指令模板中访问它。
 
@@ -461,19 +450,19 @@ scope: {
   </file>
 </example>
 
-注意到，`{{vojta.name}}`和`{{vojta.address}}` 都是空的，意味着他们是undefined,
+注意，`{{vojta.name}}`和`{{vojta.address}}` 都是空的，意味着他们是undefined,
 虽然我们在控制器中定义了`vojta` ，但是在指令内部访问不到
 
-就像它的名字暗示的一样， 指令的**独立作用域** 隔离了除了你添加到`scope: {}` (作用域:{})
-对象中的数据模型外的一切东西。这对于你要建立一个可重复使用的组件是非常有用的，
-因为它阻止了除了你想要传入的数据模型外其他东西改变你数据模型的状态。
+就像它的名字暗示的一样， 指令的**独立作用域** 隔离了除你添加到`scope: {}`
+对象中的数据模型之外的一切东西。这对于你要建立一个可复用的组件来说是非常有用的，
+因为它可以阻止除你传入的数据模型之外的一切东西改变你内部数据模型的状态。
 
 <div class="alert alert-warning">
-**注意:**正常情况下，作用域是原型继承自父作用域。但是isolate scope没有这样的继承。
+**注意:**普通的作用域都使用原型方式继承自父作用域。但是独立作用域没有这样的继承关系。
 </div>
 
 <div class="alert alert-success">
-**最佳实践:**当你想要使你的组件在应用范围内可重用，那么使用`scope`配置去创建一个isolate scopes
+**最佳实践:**如果要使你的组件在应用范围内可重用，那么使用`scope`选项去创建一个独立作用域
 </div>
 
 
@@ -481,14 +470,14 @@ scope: {
 
 在这个例子中，我们会创建一个显示当前时间的指令，每秒一次更新DOM以正确的显示当前的时间。
 
-指令修改DOM通常是在`link`配置中，`link`选项接受一个带有如下标签的函数`function link(scope,element,attrs) {...}`
+指令修改DOM通常是在`link`选项中，`link`选项接受一个带有如下签名的函数`function link(scope,element,attrs) {...}`
 其中：
 * `scope` 是一个Angular的scope对象.
 * `element` 指令匹配的jqLite封装的元素(angular内部实现的类jquery的库)
 * `attrs` 是一个带有规范化后属性名字和相应值的对象.
 
-在我们的`link` 函数中，我们更新显示时间每秒一次，或者当用户改变指定绑定的时间格式字符串的时候。
-我们也要移除定时器，当指令被删除的时候，以避免引入内存泄露。
+在我们的`link` 函数中，我们每秒更新一次显示时间，当用户改变绑定的时间格式字符串的时候也会更新。
+当指令被删除的时候，我们也要移除定时器，以避免引入内存泄露。
 
 <example module="docsTimeDirective">
   <file name="script.js">
@@ -540,34 +529,33 @@ scope: {
   </file>
 </example>
 
-这里有很多东西值得注意的，
-就像`module.controller` API, `module.directive` 中函数参数是依赖注入，
+这里有很多东西值得注意：
+像`module.controller`函数中一样, `module.directive`函数的参数也是通过依赖注入获得的，
 因此，我们可以在`link`函数内部使用`$timeout` 和`dateFilter` 服务。
 
-We register an event `element.on('$destroy', ...)`. What fires this  event?
-我们注册了一个事件`element.on('$destroy', ...)`, 是什么触发了这个`$destroy`事件呢？
+我们注册了一个事件`element.on('$destroy', ...)`, 是什么触发了这个事件呢？
 
 AngularJS会触发一些特定的事件，当一个被angular编译过的DOM元素被移除的时候，
 它会触发一个`$destroy` 事件，同样的，当一个angular作用域被移除的时候，
-它会向下广播`$destroy` 事件到所有监听的作用域。
+它会向下广播`$destroy` 事件到所有下级作用域。
 
 通过监听事件，你可以移除可能引起内存泄露的事件监听器，
 注册在元素和作用域上的监听器在它们被移除的时候，会自动会清理掉，
 但是假如注册一个事件在服务或者没有被删除的DOM节点上，你就必须手工清理，否则会有内存泄露的风险。
 
 <div class="alert alert-success">
-**最佳实践:** 指令应该自己管理员自身的内存。当指令被移除时，
+**最佳实践:** 指令应该自己管理自身分配的内存。当指令被移除时，
 你可以使用`element.on('$destroy', ...)` 或 `scope.$on('$destroy', ...)`来执行一个清理的工作。
 </div>
 
 
-###创建包裹其他元素的指令
+### 创建包含其他元素的指令
 
-我们现在已经实现了，使用isolate scopes传递数据模型到指令里面。
-但是有时候我们需要能够传递一整个模板而不是字符串或者对象。
-让我们通过创建'dialog box'组件来说明。这个'dialog box'组件应该能够包裹任意内容。
+我们现在已经实现了使用独立作用域传递数据模型到指令里面。
+但是有时候我们需要能够传进去整个模板而不是字符串或者对象。
+让我们通过创建'dialog box'组件来演示它。这个'dialog box'组件应该能够包裹任意内容。
 
-实现这个，我们需要使用`transclude`选项
+要想实现这个，我们需要使用`transclude`选项。
 
 <example module="docsTransclusionDirective">
   <file name="script.js">
@@ -594,9 +582,9 @@ AngularJS会触发一些特定的事件，当一个被angular编译过的DOM元�
   </file>
 </example>
 
-这个`transclude`配置用来干嘛呢？`transclude`使带有这个配置的指令的内容能够访问指令**外部**的作用域。
+这个`transclude`选项用来干嘛呢？`transclude`使带有这个选项的指令，所包裹的内容能够访问指令**外部**的作用域。
 
-为了说明这个,请看下面的例子.注意到我们增加了一个`link` 函数在`script.js`，
+为了说明这个,请看下面的例子。注意，我们在`script.js`增加了一个`link` 函数，
 在这个link函数内部我们重定义了name属性的值为Jeff，那么现在这个`{{name}}`会被解析成哪个值呢？
 
 <example module="docsTransclusionExample">
@@ -630,13 +618,13 @@ AngularJS会触发一些特定的事件，当一个被angular编译过的DOM元�
 
 一般，我们会认为`{{name}}`会被解析为`Jeff`，然而这里，我们看到这个例子中的`{{name}}` 还是被解析成了`Tobias`.
 
-`transclude` 配置改变了指令相互嵌套的方式，他使指令的**内容**拥有任何指令外部的作用域，
-而不是内部的作用域。为了实现这个，它给指令内容一次访问外部作用域的机会。
+`transclude` 选项改变了指令相互嵌套的方式，他使指令的**内容**拥有任何指令外部的作用域，
+而不是内部的作用域。为了实现这一点，它给了指令内容访问外部作用域的机会。
 
-需要注意的是，如果指令不创建自己的scope(就是说scope:false，或省略)，然后在在link里执行
+需要注意的是，如果指令不创建自己的scope(就是说scope:false，或省略)，然后在在link函数里执行
 `scope.name = 'Jeff';` 很明显外部的`scope`scope会受影响，因为指令是继续了外部的`scope` ,在输出上会看出 `Jeff`
 
-这样的行为对于包裹内容的指令是非常有意义的。因为如果不这样的话，
+这样的行为对于包含内容的指令是非常有意义的。因为如果不这样的话，
 你就必须分别传入每个你需要使用的数据模型。如果你需要传入每个要使用的数据模型，
 那么你就无法做到适应各种不同内容的情况,对吧？
 
@@ -684,25 +672,23 @@ AngularJS会触发一些特定的事件，当一个被angular编译过的DOM元�
   </file>
 </example>
 
-我们想要通过在指令的作用域上调用，来运行我们传递进去的函数，
-但是这个函数是运行在定义时候的上下文。
+我们想要通过在指令的作用域上调用我们传进去的函数，但是这个函数本该运行在定义时候的上下文。
 
-先前我们看到如何`scope` 配置使用`=prop` ，但是在上文的例子中，
-我们使用`&prop` ，`&` 绑定开放了一个函数到isolated scope，
-允许 isolated scope调用它，同时维持原来函数的作用域(这里的作用域都是指$scope)。
-所以当一个用户点击`x` 时候，就会运行`Ctrl`控制器的`close`函数。
+先前我们看到如何在`scope`选项中使用`=prop` ，但是在上文的例子中，
+我们使用了`&prop` ，`&` 绑定了一个函数到独立作用域，
+允许独立作用域调用它，同时保留了原来函数的作用域(这里的作用域都是指$scope)。
+所以当一个用户点击`x`时候，就会运行`Ctrl`控制器的`close`函数。
 
 <div class="alert alert-success">
-**最佳实践:**  当你的指令想要开放一个API去绑定特定的行为，在`scope`配置中使用`&prop`.
+**最佳实践:**  当你的指令想要开放一个API去绑定特定的行为，在`scope`选项中使用`&prop`。
 </div>
 
 
-###创建一个添加事件监听器的指令
+###创建一个带事件监听器的指令
 
-先前，我们使用`link`函数创建一个操作DOM元素的指令，
-基于上面的例子，我们创建一个在元素上的事件上作出相应操作的指令。
+先前，我们使用`link`函数创建一个操作DOM元素的指令，基于上面的例子，我们创建一个监听元素的事件，以作出相应操作的指令。
 
-比如说，假如我们想要创建一个让用户可拖拽的元素，该怎么做呢？
+比如说，假如我们想要创建一个让用户可拖曳的元素，该怎么做呢？
 
 <example module="dragModule">
   <file name="script.js">
@@ -719,7 +705,7 @@ AngularJS会触发一些特定的事件，当一个被angular编译过的DOM元�
           });
 
           element.on('mousedown', function(event) {
-            // Prevent default dragging of selected content
+            // 组织所选对象的默认拖曳操作
             event.preventDefault();
             startX = event.pageX - x;
             startY = event.pageY - y;
@@ -752,11 +738,9 @@ AngularJS会触发一些特定的事件，当一个被angular编译过的DOM元�
 
 ### 创建相互通信的指令
 
-你可以通过在模板使用指令来组合任何指令
+你可以通过在模板中使用指令来把任意指令组合起来。有时候，你可能想要一个由一组指令组合组成的组件。
 
-有时候，你想要一个由一组指令组合组成的组件。
-
-想象你想要一个带有tab的容器，容器的内容对应于激活的tab。
+假设你想要一个带有tab的容器，容器的内容对应于当前激活的tab。
 
 <example module="docsTabsExample">
   <file name="script.js">
@@ -830,29 +814,28 @@ AngularJS会触发一些特定的事件，当一个被angular编译过的DOM元�
   </file>
 </example>
 
-`myPane`指令有一个`require`的配置其值为:`^myTabs`.，当指令使用这个配置，
-`$compile`服务叫myTabs的指令并获取它的控制器实例，如果没有找到，将会抛出一个错误。
-`^`前缀意味着指令在它的父元素上面搜索控制器(没有`^`前缀的话，指令默认会在自身的元素上面搜索指定的指令)。
+`myPane`指令有一个`require`的选项，其值为:`^myTabs`.，当指令使用这个选项，`$compile`服务会查找一个名叫myTabs的控制器，如果没有找到，就会抛出一个错误。
+`^`前缀意味着指令将会在它的父元素上面搜索控制器(如果没有`^`前缀，指令默认只在所属元素上搜索指定的控制器)。
 
-这里`myTabs`的控制器是来自何处呢？通过使用controller配置可以为指令指定一个控制器,
-上问例子中`myTabs` 就是使用这个配置。就像`ngController`, 这个配置为指令的模板绑定了一个控制器。
+这里`myTabs`的控制器是来自何处呢？简单的通过controller选项就可以为指令定义一个控制器,
+比如上面例子中`myTabs` 就使用了这个选项。如`ngController`一样, 此选项把这个控制器绑定到了指令的模板上。
 
-回看一下`myPane`的定义，注意到link函数的最后一个参数: `tabsCtrl`，
-当一个指令包含另一个指令(通过require方式)，它会接收该指令的控制器实例作为`link`函数的第四个参数，
-利用这个，`myPane` 可以调用`myTabs`的`addPane`函数。
+回顾`myPane`的定义，你会注意到link函数的最后一个参数: `tabsCtrl`，
+当一个指令需要(require)一个控制器时，它会接收该指令的控制器实例作为`link`函数的第四个参数，
+通过它，`myPane`就可以调用`myTabs`的`addPane`函数了。
 
 聪明的读者可能想知道`link` 和 `controller`之间的区别，
-最基本的区别就是 `控制器`开放一个API(就是这个控制器实例可以被其他实例读取到)，
-`link` 函数可以通过`require`与控制器交互。
+最基本的区别就是 `控制器`可以导出一个API，
+而子指令的`link`函数可以通过`require`来与这个API交互。
 
 <div class="alert alert-success">
-**最佳实践:** 当你想暴露一个API给其它的指令调用那就用`controller`,否则用`link`.
+**最佳实践:** 当你想暴露一个API给其它的指令调用那就用`controller`,否则用`link`。
 </div>
 
 ### 总结
 
 至此我们已经看到了指令的主要使用案例。每一个都可以作为你创建自己指令的很好的起点。
 
-如果你想更深入的了解编译的处理过程，可以查看{@link guide/compiler compiler guide}.
+如果你想更深入的了解编译的处理过程，可以查看{@link guide/compiler HTML编译器}。
 
-{@link api/ng.$compile `$compile` API} 页面有directive每个配置项的具体解释，可以参阅.
+{@link api/ng.$compile `$compile` API} 页面有directive每个选项项的具体解释，可参阅。
