@@ -4,12 +4,11 @@
 
 Translated by [@GrahamLe](https://github.com/grahamle)
 
-# Overview
+# 概述
 
-This page explains the Angular initialization process and how you can manually initialize Angular
-if necessary.
+这一章讲述 Angular 初始化过程以及必要的时候用户如何能够手动将 Angular 初始化。
 
-## Angular `<script>` Tag
+## Angular `<script>` 标签
 
 This example shows the recommended path for integrating Angular with what we call automatic
 initialization.
@@ -51,7 +50,7 @@ initialization.
 
 
 
-## Automatic Initialization
+## 自动初始化
 
 <img class="pull-right" style="padding-left: 3em;" src="img/guide/concepts-startup.png">
 
@@ -79,7 +78,7 @@ If the {@link api/ng.directive:ngApp `ng-app`} directive is found then Angular w
 
 
 
-## Manual Initialization
+## 手动初始化
 
 
 If you need to have more control over the initialization process, you can use a manual
@@ -116,7 +115,7 @@ This is the sequence that your code should follow:
   2. Call {@link api/angular.bootstrap} to {@link compiler compile} the element into an
   executable, bi-directionally bound application.
 
-## Deferred Bootstrap
+## 延迟启动
 
 This feature enables tools like Batarang and test runners to
 hook into angular's bootstrap process and sneak in more modules
