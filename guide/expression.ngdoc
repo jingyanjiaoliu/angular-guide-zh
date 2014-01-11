@@ -3,7 +3,7 @@
 @description
 翻译者:[@NigelYao](https://github.com/NigelYao)
 
-"表达式"是一种类JavaScript的代码片段，通常在视图中以'{{ expression }}'的形式的绑定中使用。表达式是由{@link api/ng.$parse $parse}服务解析。表达式解析之后经常会使用{@link filter 过滤器}来格式化成一种更加用户友好的形式。
+"表达式"是一种类似JavaScript的代码片段，通常在视图中以'{{ expression }}'的形式使用。表达式由{@link api/ng.$parse $parse}服务解析，而解析之后经常会使用{@link filter 过滤器}来格式化成一种更加用户友好的形式。
 
 例如，下面这些都是Angular中合法的表达式：
   
@@ -14,13 +14,13 @@
 
 可能会有人认为Angular视图表达式就是JavaScript表达式，但这不完全正确，因为Angular并没有使用JavaScript中的'eval()'来解析表达式。你可以认为Angular表达式与JavaScript表达式有如下的区别：
 
-  * **属性解析：** 所有的属性的解析都是相对于作用域(scope)的，而不是JavaScript中的表达式解析式相对于全局的'window'对象。
+  * **属性解析：** 所有的属性的解析都是相对于作用域(scope)的，而不像JavaScript中的表达式解析那样是相对于全局'window'对象的。
 
-  * **容错性：** 表达式的解析对'undefined'和'null'具有容错性，这不像在JavaScript中，在试图解析未定义的属性会生成`ReferenceError`或`TypeError`的错误.
+  * **容错性：** 表达式的解析对'undefined'和'null'具有容错性，这不像在JavaScript中，试图解析未定义的属性时会抛出`ReferenceError`或`TypeError`错误.
 
-  * **禁止控制流语句：** 表达式中不允许包括下列语句：条件判断，循环，抛出异常。
+  * **禁止控制流语句：** 表达式中不允许包括下列语句：条件判断(if)，循环(for/while)，抛出异常(throw)。
 
-另一方面，如果你想执行特定的JavaScript代码，你应该实现在一个控制器里的方法，然后调用这个方法。如果你想在JavaScript中解析一个Angular表达式，使用{@link api/ng.$rootScope.Scope#methods_$eval `$eval()`}方法。
+另一方面，如果你想执行特定的JavaScript代码，你应该在一个控制器里导出一个方法，然后在模板中调用这个方法。如果你想在JavaScript中解析一个Angular表达式，使用{@link api/ng.$rootScope.Scope#methods_$eval `$eval()`}方法。
 
 ## 例子
 
@@ -78,7 +78,7 @@
 # 属性解析
 
 属性解析发生在scope上。不像在JavaScript中，将默认的属性解析放在全局的window对象中，Angular表达式必须使用{@link api/ng.$window
-`$window`}来指向全局的'window'对象。例如，如果你想调用在'window'上定义的'alert()'方法，在表达式中，你必须使用'$window.alert()'.作者有意这样设定是为了防止对全局状态非正常的访问（一些奇怪bug的常见来源）。
+`$window`}来指向全局的'window'对象。例如，如果你想调用在'window'上定义的'alert()'方法，在表达式中，你必须使用'$window.alert()'。作者故意这样设定，就是为了防止对全局状态非正常的访问（一些奇怪bug的常见来源）。
 
 <doc:example>
 <doc:source>
