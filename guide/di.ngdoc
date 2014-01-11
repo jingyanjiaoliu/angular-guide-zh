@@ -67,10 +67,7 @@ Translated by [@GrahamLe](https://github.com/grahamle)
   var greeter = injector.get('greeter');
 </pre>
 
-Asking for dependencies solves the issue of hard coding, but it also means that the injector needs
-to be passed throughout the application. Passing the injector breaks the {@link
-http://en.wikipedia.org/wiki/Law_of_Demeter Law of Demeter}. To remedy this, we turn the
-dependency lookup responsibility to the injector by declaring the dependencies as in this example:
+函数或对象通过请求依赖解决了硬编码的问题，但同时也就意味着 injector 需要通过应用传递，而传递 injector 破坏了 {@link http://en.wikipedia.org/wiki/Law_of_Demeter Law of Demeter}。为了弥补这个，我们通过像下面例子那样声明依赖，将依赖查找的任务丢给了 injector 去做：
 
 <pre>
   <!-- Given this HTML -->
@@ -90,14 +87,11 @@ dependency lookup responsibility to the injector by declaring the dependencies a
   injector.instantiate(MyController);
 </pre>
 
-Notice that by having the `ng-controller` instantiate the class, it can satisfy all of the
-dependencies of `MyController` without the controller ever knowing about the injector. This is
-the best outcome. The application code simply asks for the dependencies it needs, without having to
-deal with the injector. This setup does not break the Law of Demeter.
+注意，通过让 `ng-controller` 在背后调用 injector 初始化控制器类满足了 `MyController` 需要依赖的需求，而且可以让控制器根本不知道 injector 的存在（译注：好一招瞒天过海）。这是最好的结果了。应用中的代码简单地提交需要它需要某依赖的请求，不需要去管 injector ，而且这样也不违反迪米特法则 。
 
-## Dependency Annotation
+## 依赖注释
 
-How does the injector know what service needs to be injected?
+那么，injector 是如何知道哪些服务需要被注入呢？
 
 The application developer needs to provide annotation information that the injector uses in order
 to resolve the dependencies. Throughout Angular, certain API functions are invoked using the
