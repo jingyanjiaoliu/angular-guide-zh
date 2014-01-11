@@ -159,14 +159,13 @@ Translated by [@GrahamLe](https://github.com/grahamle)
 
 记住，所有上面的三种依赖注释风格（译注：声明依赖的风格）是等价的，在 Angular 中任何支持依赖注入的地方都可以使用。
 
-## Where can I use DI?
+## 哪里使用DI
 
-DI is pervasive throughout Angular. It is typically used in controllers and factory methods. 
+在 Angular 中，DI 无处不在。通常在控制器和工厂方法（译注：所谓的工厂方法个人理解为 Angular 中的API）中使用较多。
 
-### DI in controllers
+### 控制器中使用DI
 
-Controllers are classes which are responsible for application behavior. The recommended way of 
-declaring controllers is using the array notation:
+控制器是负责应用操作逻辑的 JavaScript 类，推荐的在控制器中使用DI的方式是用数组标记风格，如下：
 
 <pre>
   someModule.controller('MyController', ['$scope', 'dep1', 'dep2', function($scope, dep1, dep2) {
@@ -178,14 +177,11 @@ declaring controllers is using the array notation:
   }]);
 </pre>
 
-This avoids the creation of global functions for controllers and also protects against minification.
+如上那样，避免了在全局作用域内创建控制器，同时也避免了代码压缩时引起的注入问题。
 
+### 工厂方法中使用DI
 
-### Factory methods
-
-Factory methods are responsible for creating most objects in Angular. Examples are directives,
-services, and filters. The factory methods are registered with the module, and the recommended way
-of declaring factories is:
+工厂方法负责创建 Angular 中的绝大多数对象。例如指令，服务，和过滤器等。工厂方法是注册在模块之下的，推荐的声明方式如下：
 
 <pre>
   angular.module('myModule', []).
