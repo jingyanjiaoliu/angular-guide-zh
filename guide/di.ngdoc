@@ -90,19 +90,15 @@ Translated by [@GrahamLe](https://github.com/grahamle)
 注意，通过让 `ng-controller` 在背后调用 injector 初始化控制器类满足了 `MyController` 需要依赖的需求，而且可以让控制器根本不知道 injector 的存在（译注：好一招瞒天过海）。这是最好的结果了。应用中的代码简单地提交需要它需要某依赖的请求，不需要去管 injector ，而且这样也不违反迪米特法则 。
 
 ## 依赖注释
+（译注：此处注释非代码注释，应理解为依赖声明的方法）
 
 那么，injector 是如何知道哪些服务需要被注入呢？
 
-The application developer needs to provide annotation information that the injector uses in order
-to resolve the dependencies. Throughout Angular, certain API functions are invoked using the
-injector, as per the API documentation. The injector needs to know what services to inject into
-the function. Below are three equivalent ways of annotating your code with service name
-information. These can be used interchangeably as you see fit and are equivalent.
+应用开发者需要提供 injector 需要使用的注释信息来解析依赖。Angular 之中，按照API文档说明，某些 API 方法需要通过 injector 调用。这样，injector 要知道得往这个方法中注入什么服务。下面是用服务名信息来进行注释的三种等价的方式，它们可以互用，按照你觉得适合的情况选用相应的方式。
 
-### Inferring Dependencies
+### 推断依赖
 
-The simplest way to get hold of the dependencies, is to assume that the function parameter names
-are the names of the dependencies.
+最简单的获取依赖的方法是让你的函数的参数名直接使用依赖名。
 
 <pre>
   function MyController($scope, greeter) {
@@ -110,19 +106,13 @@ are the names of the dependencies.
   }
 </pre>
 
-Given a function the injector can infer the names of the service to inject by examining the
-function declaration and extracting the parameter names. In the above example `$scope`, and
-`greeter` are two services which need to be injected into the function.
+给 injector 一个函数，它可以通过检查函数声明并抽取参数名可以推断需要注入的服务名。在上面的例子中，`$scope` 和 `greeter` 是两个需要被注入到函数中的服务。
 
-While straightforward, this method will not work with JavaScript minifiers/obfuscators as they
-rename the method parameter names. This makes this way of annotating only useful for {@link
-http://www.pretotyping.org/ pretotyping}, and demo applications.
+虽然这种方式很直观明了，但是它对于压缩的 JavaScript 代码来说是不起作用的，因为压缩过后的 JavaScript 代码重命名了函数的参数名。这就让这种注释方式只对 {@link http://www.pretotyping.org/ pretotyping} 和 demo级应用有用。
 
-### `$inject` Annotation
+### `$inject` 注释
 
-To allow the minifers to rename the function parameters and still be able to inject right services
-the function needs to be annotated with the `$inject` property. The `$inject` property is an array
-of service names to inject.
+为了让重命名了参数名的压缩版的 JavaScript 代码能够正确地注入相关的依赖服务。函数需要通过 `$inject` 属性进行标注，这个属性是一个存放需要注入的服务的数组。
 
 <pre>
   var MyController = function(renamed$scope, renamedGreeter) {
@@ -131,20 +121,15 @@ of service names to inject.
   MyController['$inject'] = ['$scope', 'greeter'];
 </pre>
 
-In this scenario the ordering of the values in the '$inject' array must match the ordering of the arguments to inject.
-Using above code snippet as an example, '$scope' will be injected into 'renamed$scope' and 'greeter' into 'renamedGreeter'.
-Care must be taken that the `$inject` annotation is kept in sync with the actual arguments in the
-function declaration.
+在这种场合下，`$inject` 数组中的服务名顺序必须和函数参数名顺序一致。以上述代码段为例，`$scope` 将会被注入到 'renamed$scope'，而 `greeter` 则是注入到 'renamedGreeter'。需要注意 `$inject` 注释是和真实的函数声明中的参数保持同步的。
 
-This method of annotation is useful for controller declarations since it assigns the annotation
-information with the function.
+这种注释方法对于控制器声明很有用处，因为它是把注释信息赋给了函数。
 
-### Inline Annotation
+### 行内注释
 
-Sometimes using the `$inject` annotation style is not convenient such as when annotating
-directives.
+有时候用 `$inject` 注释的方式不方便，比如标注指令的时候（译注：这里标注指令可以理解为告诉指令需要加载哪些服务依赖的说明）。
 
-For example:
+看下面的例子：
 
 <pre>
   someModule.factory('greeter', function($window) {
@@ -152,7 +137,7 @@ For example:
   });
 </pre>
 
-Results in code bloat due to needing a temporary variable:
+由于需要一个临时的变量导致代码膨胀：
 
 <pre>
   var greeterFactory = function(renamed$window) {
@@ -164,7 +149,7 @@ Results in code bloat due to needing a temporary variable:
   someModule.factory('greeter', greeterFactory);
 </pre>
 
-For this reason the third annotation style is provided as well.
+所以，第三种注释风格被引入，如下：
 
 <pre>
   someModule.factory('greeter', ['$window', function(renamed$window) {
@@ -172,8 +157,7 @@ For this reason the third annotation style is provided as well.
   }]);
 </pre>
 
-Keep in mind that all of the annotation styles are equivalent and can be used anywhere in Angular
-where injection is supported.
+记住，所有上面的三种依赖注释风格（译注：声明依赖的风格）是等价的，在 Angular 中任何支持依赖注入的地方都可以使用。
 
 ## Where can I use DI?
 
