@@ -35,10 +35,7 @@ Angular 预先绑定了一些常见的对构建应用极其有用的指令。同
 
 ## 指令
 
-A directive is a behavior which should be triggered when specific HTML constructs are encountered
-during the compilation process. The directives can be placed in element names, attributes, class
-names, as well as comments. Here are some equivalent examples of invoking the {@link
-api/ng.directive:ngBind `ng-bind`} directive.
+在编译过程中，遇到特定的HTML结构（也就是指令）时，指令所声明的行为操作会被触发。指令可以被放在元素名，属性，类名，甚至是注释中。下面是一些等价的调用 {@link api/ng.directive:ngBind `ng-bind`} 指令的例子：
 
 <pre>
   <span ng-bind="exp"></span>
@@ -47,12 +44,9 @@ api/ng.directive:ngBind `ng-bind`} directive.
   <!-- directive: ng-bind exp -->
 </pre>
 
-A directive is just a function which executes when the compiler encounters it in the DOM. See {@link
-api/ng.$compileProvider#methods_directive directive API} for in-depth documentation on how
-to write directives.
+指令其实就是在编译器遍历DOM时碰到就需要执行的函数。另见 {@link api/ng.$compileProvider#methods_directive 指令API} 查看更深入的如何写指令的文档。
 
-Here is a directive which makes any element draggable. Notice the `draggable` attribute on the
-`<span>` element.
+下面是一个让元素可以被拖拽的指令。注意在 `<span>` 元素中的 `draggable` 属性：
 
 <example module="drag">
   <file name="script.js">
@@ -67,7 +61,7 @@ Here is a directive which makes any element draggable. Notice the `draggable` at
            cursor: 'pointer'
           });
           element.on('mousedown', function(event) {
-            // Prevent default dragging of selected content
+            // 阻止默认的选中内容的拖拽
             event.preventDefault();
             startX = event.screenX - x;
             startY = event.screenY - y;
@@ -97,9 +91,7 @@ Here is a directive which makes any element draggable. Notice the `draggable` at
 </example>
 
 
-The presence of the `draggable` attribute on any element gives the element new behavior.
-We extended the vocabulary of the browser in a way which is natural to anyone who is familiar with the principles of HTML.
-
+`draggable` 属性出现在任何的元素中都会给其带来新的行为操作。我们以一种熟悉HTML语法规则的方式扩展了浏览器的HTML词汇及语法。
 
 ## 理解视图
 
