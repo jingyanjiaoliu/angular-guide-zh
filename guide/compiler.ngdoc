@@ -168,7 +168,7 @@ HTML 编译可以细分为三个阶段：
 
 #### "Compile" vs "Link" 的一个例子
 
-To understand, let's look at a real-world example with `ngRepeat`:
+为了理解编译和连接这两个阶段，让我们以 `ngRepeat` 为例来看一下：
 
 <pre>
 Hello {{user}}, you have these actions:
@@ -179,39 +179,24 @@ Hello {{user}}, you have these actions:
 </ul>
 </pre>
 
-When the above example is compiled, the compiler visits every node and looks for directives.
+当我们编译上述例子时，编译器遍历每个节点查找指令。
 
-`{{user}}` matches the {@link api/ng.$interpolate interpolation directive}
-and `ng-repeat` matches the {@link api/ng.directive:ngRepeat `ngRepeat` directive}.
+`{{user}}` 匹配了 {@link api/ng.$interpolate 插值指令}，而 `ng-repeat` 匹配了 {@link api/ng.directive:ngRepeat `ngRepeat` 指令}。
 
-But {@link api/ng.directive:ngRepeat ngRepeat} has a dilemma.
+但是编译 {@link api/ng.directive:ngRepeat ngRepeat} 陷入了困境。
 
-It needs to be able to clone new `<li>` elements for every `action` in `user.actions`.
-This initially seems trivial, but it becomes more complicated when you consider that `user.actions`
-might have items added to it later. This means that it needs to save a clean copy of the `<li>`
-element for cloning purposes.
+它需要为每个在 `user.actions` 中的 `action` 条目克隆一个 `<li>` 元素。这个刚看起来很平常，但是当你考虑到如果 `user.actions` 可能会有动态的新的条目添加的话，情况就变得复杂起来。因为这意味着我们需要保存一份干净的 `<li>` 元素以备后期克隆用。
 
-As new `action`s are inserted, the template `<li>` element needs to be cloned and inserted into `ul`.
-But cloning the `<li>` element is not enough. It also needs to compile the `<li>` so that its
-directives, like `{{action.description}}`, evaluate against the right {@link api/ng.$rootScope.Scope scope}.
+（译注：在数据模型中）当新的 `action` 被插入时， `<li>` 元素作为模板需要被克隆然后插入到 `ul` 中。但是仅仅克隆 `<li>` 元素是不够的。同时还要编译这个 `<li>` 元素，这样才能使得其内部的别的指令，如 `{{action.description}}` ，能够在正确的 {@link api/ng.$rootScope.Scope 作用域} 中被计算渲染出结果。
 
+一种比较天真的解决这个问题的策略无非是每次有一个新的 `action` 我就简单地插入一个 `<li>` 的拷贝然后将其编译。这种方法的问题在于对于每个我们克隆的 `<li>` 元素我们都要去编译，这无疑让我们的工作加倍了。具体来说，在每次克隆 `<li>` 之前，我们都得遍历一下它看看是否有别的指令（译注：此处可能翻译不是很到位，不理解的建议看原文）。这样无疑就让编译过程变的更慢，进而导致应用在插入新节点时变得反应迟钝。
 
-A naive approach to solving this problem would be to simply insert a copy of the `<li>` element and
-then compile it.
-The problem with this approach is that compiling on every `<li>` element that we clone would duplicate
-a lot of the work. Specifically, we'd be traversing `<li>` each time before cloning it to find the
-directives. This would cause the compilation process to be slower, in turn making applications
-less responsive when inserting new nodes.
+解决方法就是我们上面一直强调的把编译过程分成两个阶段：
 
-The solution is to break the compilation process into two phases:
-
-the **compile phase** where all of the directives are identified and sorted by priority,
-and a **linking phase** where any work which "links" a specific instance of the
-{@link api/ng.$rootScope.Scope scope} and the specific instance of an `<li>` is performed.
+**编译阶段**收集所有的指令并按照优先级排序，之后在**连接阶段**将特定的{@link api/ng.$rootScope.Scope 作用域}实例与特定的 `<li>` 实例连接。
 
 <div class="alert alert-warning">
-**Note:** *Link* means setting up listeners on the DOM and setting up `$watch` on the Scope to
-keep the two in sync.
+**注意**： *连接* 意味着在DOM上设置监听器以及在相关的作用域中设置 `$watch` 以保证二者（译注：DOM和作用域）的同步。
 </div>
 
 {@link api/ng.directive:ngRepeat `ngRepeat`} works by preventing the compilation process from
