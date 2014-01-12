@@ -199,11 +199,9 @@ Hello {{user}}, you have these actions:
 **注意**： *连接* 意味着在DOM上设置监听器以及在相关的作用域中设置 `$watch` 以保证二者（译注：DOM和作用域）的同步。
 </div>
 
-{@link api/ng.directive:ngRepeat `ngRepeat`} works by preventing the compilation process from
-descending into the `<li>` element so it can make a clone of the original and handle inserting
-and removing DOM nodes itself.
+{@link api/ng.directive:ngRepeat `ngRepeat`} 通过阻止编译阶段进入到 `<li>` 元素来解决上面的问题，这样就可以克隆原始的 `<li>` 来处理插入和一处DOM节点的问题了。
 
-Instead the {@link api/ng.directive:ngRepeat `ngRepeat`} directive compiles `<li>` separately.
+（译注：待大神翻译）Instead the {@link api/ng.directive:ngRepeat `ngRepeat`} directive compiles `<li>` separately.
 The result of the `<li>` element compilation is a linking function which contains all of the
 directives contained in the `<li>` element, ready to be attached to a specific clone of the `<li>`
 element.
@@ -217,9 +215,9 @@ on the cloned `<li>`.
 
 ### 作用域与Transcluded指令是如何工作的
 
-One of the most common use cases for directives is to create reusable components.
+指令最常见的一个应用是创建可重用构件。
 
-Below is a pseudo code showing how a simplified dialog component may work.
+下面的为代码展示了一个简单版本的对话框指令的使用。
 
 <pre>
 <div>
@@ -234,11 +232,9 @@ Below is a pseudo code showing how a simplified dialog component may work.
 </div>
 </pre>
 
-Clicking on the "show" button will open the dialog. The dialog will have a title, which is
-data bound to `username`, and it will also have a body which we would like to transclude
-into the dialog.
+点击 "show" 按钮会打开对话框。对话框会有一个和 `username` 绑定的标题，同时会有一个主体，这个主体我们是通过在对话框指令定义中的模板通过 transclude 插入的。
 
-Here is an example of what the template definition for the `dialog` widget may look like.
+下面是 `dialog` 指令中的模板属性：
 
 <pre>
 <div ng-show="visible">
@@ -251,14 +247,9 @@ Here is an example of what the template definition for the `dialog` widget may l
 </div>
 </pre>
 
-This will not render properly, unless we do some scope magic.
+上面这个指令的模板还不能适当地渲染，除非我们施上一些魔法。
 
-The first issue we have to solve is that the dialog box template expects `title` to be defined.
-But we would like the template's scope property `title` to be the result of interpolating the
-`<dialog>` element's `title` attribute (i.e. `"Hello {{username}}"`. Furthermore, the buttons expect
-the `onOk` and `onCancel` functions to be present in the scope. This limits the usefulness of the
-widget. To solve the mapping issue we use the `locals` to create local variables which the template
-expects as follows:
+第一个问题是解决对话框模板中需要的 `title` 数据。而我们希望模板中的 `title` 和指令 `<dialog>` 被使用时的 `title` 属性一致（也就是 `"Hello {{username}}"`）。而且，模板中的按钮会去调用作用域中的 `onOk` 和 `onCancel` 两个函数，而这两个函数的来源也在指令的属性中有定义，要解决的就是映射的问题了。为了解决这个映射问题，我们使用本地 scope 创建本地变量（模板中需要的数据和函数）和外部变量（指令中已有的属性）映射：
 
 <pre>
   scope: {
