@@ -260,29 +260,20 @@ on the cloned `<li>`.
   }
 </pre>
 
-Creating local properties on widget scope creates two problems:
+在指令的作用域创建本地变量会产生两个问题：
 
-  1. isolation - if the user forgets to set `title` attribute of the dialog widget the dialog
-     template will bind to parent scope property. This is unpredictable and undesirable.
+  1. 独立的作用域 - 如果用户（译注：使用对话框指令的开发者）在使用 `dialog` 指令时忘记设置 `title` 属性，那么对话框指令的模板中的 `title` 解析时则会去绑定父级作用域中的同名属性。这是完全不可预测的，也不是我们希望看到的。
 
-  2. transclusion - the transcluded DOM can see the widget locals, which may overwrite the
-     properties which the transclusion needs for data-binding. In our example the `title`
-     property of the widget clobbers the `title` property of the transclusion.
+  2. transclusion - 通过引用包含的DOM节点可以看到指令的本地变量，而这本地变量有可能会重写掉一些 transclusion （引用包含）中数据绑定的同名属性。在上述例子中，比如像指令所在的 scope 中的 `title` 属性就重写了在 transclusion （引用包含）的作用域的 `title` 属性（译注：这里 `Body goes here: {{username}} is {{title}}.` 是通过 transclusion 插入到 `dialog` 指令模版中拥有 `ng-transclude` 属性的div中，这样它里面的 title 插值就会被 `dialog` 本地的 title 值改写 ）
 
 
-To solve the issue of lack of isolation, the directive declares a new `isolated` scope. An
-isolated scope does not prototypically inherit from the parent scope, and therefore we don't have
-to worry about accidentally clobbering any properties.
+为了解决缺少隔离的问题，指令会声明一个 `isolated` 作用域。一个隔离的作用域不会通过基于原型的方式继承它的父级作用域，所以我嗯就不用担心会有属性被意外改写的情况了。
 
-However `isolated` scope creates a new problem: if a transcluded DOM is a child of the widget
-isolated scope then it will not be able to bind to anything. For this reason the transcluded scope
-is a child of the original scope, before the widget created an isolated scope for its local
-variables. This makes the transcluded and widget isolated scope siblings.
+但是，独立的作用域引来了另外一个问题：如果一个 transcluded（引用包含的） DOM节点是一个指令独立作用域的孩子节点的话，那么它不会绑定到任何数据（译注：像我们上面例子中的情况，就属于绑定不到数据）。出于此，在指令为本地变量创建出独立的作用域之前，我们需要声明 transcluded（引用包含的）作用域是原始作用域（也是独立作用域的父级）的孩子。这样，引用包含创建的作用域就和独立作用域拥有同样的父级，也就是说它们是兄弟作用域。
 
-This may seem to be unexpected complexity, but it gives the widget user and developer the least
-surprise.
+这会让一切看起来意想不到的复杂，但至少它让指令（控件）的用户和开发者不会那么难以接受。
 
-Therefore the final directive definition looks something like this:
+因此，我们上面例子中指令作用域的声明，最后开起来是这样子的：
 
 <pre>
 transclude: true,
@@ -295,4 +286,3 @@ scope: {
 restrict: 'E',
 replace: true
 </pre>
-
