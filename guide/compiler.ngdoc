@@ -156,20 +156,14 @@ HTML 编译可以细分为三个阶段：
 
 ### compile 和 link 的区别
 
-At this point you may wonder why the compile process has separate compile and link phases. The
-short answer is that compile and link separation is needed any time a change in a model causes
-a change in the **structure** of the DOM.
+这会儿，我想你该很疑惑为什么编译过程被分成了编译和连接两个阶段（译注：这里其实用英文会更好的，compile 和 link，就可以免去歧义了）。（译注：按现在知乎流行的说法，每个问题都有个短答案和长答案两种版本）简短地回答呢，那就是任何时候任一数据模型的改变引起的DOM**结构**的改变都需要这种两阶段编译的支持。
 
-It's rare for directives to have a **compile function**, since most directives are concerned with
-working with a specific DOM element instance rather than changing its overall structure.
+指令有 **compile function** 是不多见的，因为大部分指令通常只关心如何操作特定的DOM元素实例，而不是去改变它的整体结构。
 
-Directives often have a **link function**. A link function allows the directive to register
-listeners to the specific cloned DOM element instance as well as to copy content into the DOM
-from the scope.
+指令通常有 **link function**。连接函数让指令能够往特定的DOM元素实例的克隆对象上注册监听器，同时可以将作用域中的内容复制到DOM中去。
 
 <div class="alert alert-success">
-**Best Practice:** Any operation which can be shared among the instance of directives should be
-moved to the compile function for performance reasons.
+**最佳实践**：任何能够在指令实例中共享的操作，为了性能考虑，最好是都移到指令的 compile function 中去。
 </div>
 
 #### "Compile" vs "Link" 的一个例子
