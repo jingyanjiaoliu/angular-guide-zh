@@ -25,20 +25,13 @@ Angular 预先绑定了一些常见的对构建应用极其有用的指令。同
 
 ## 编译器
 
-Compiler is an Angular service which traverses the DOM looking for attributes. The compilation
-process happens in two phases.
+编译器是 Angular 提供的一项服务，用来遍历DOM节点，查找特定的属性。编译过程分为两个阶段：
 
-  1. **Compile:** traverse the DOM and collect all of the directives. The result is a linking
-  function.
+  1. **编译**：遍历DOM节点，收集所有的指令，返回一个连接函数（link func）
 
-  2. **Link:** combine the directives with a scope and produce a live view. Any changes in the
-  scope model are reflected in the view, and any user interactions with the view are reflected
-  in the scope model. This makes the scope model the single source of truth.
+  2. **连接**：将上一步收集到的每个指令与其所在的作用域（scope）连接生成一个实时视图。任何作用域中的模型改变都会实时在视图中反映出来，同时任何用户与视图的交互则会映射到作用域的模型中。这样，作用域中的数据模型就成了唯一的数据源。
 
-Some directives such as {@link api/ng.directive:ngRepeat `ng-repeat`} clone DOM elements once
-for each item in a collection. Having a compile and link phase improves performance since the
-cloned template only needs to be compiled once, and then linked once for each clone instance.
-
+一些如 {@link api/ng.directive:ngRepeat `ng-repeat`} 这样的指令，会为集合中的每个项目克隆一次DOM元素。由于克隆的模版只需要被编译一次，然后为每个克隆实例做一次连接，这样将编译分成编译和连接两个阶段就有效地提升了性能（译注：不用为每个克隆的实例都编译一次，只需对模版进行统一的一次编译，然后在连接阶段单独为每个实例进行到 scope 的连接即可）。
 
 ## 指令
 
