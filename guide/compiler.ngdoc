@@ -114,37 +114,25 @@ Angular 的这种策略生成的是稳定的DOM模版。DOM元素实例和数据
 
 ## 编译指令
 
-It's important to note that Angular operates on DOM nodes rather than strings. Usually, you don't
-notice this restriction because when a page loads, the web browser parses HTML into the DOM automatically.
+知道 Angular 的编译是在DOM节点上发生而非字符串上是很重要的。通常，你不会注意到这个约束，因为当一个页面加载时，浏览器自动将HTML解析为DOM树了。
 
-However it's important to keep this in mind when calling `$compile` yourself, because passing it a string
-will fail. Instead, use `angular.element` to convert a string to DOM before passing elements into
-Angular's `$compile` service.
+然而，如果你自己手动调用 `$compile` 时，则需要注意上面说的注意点了。因为如果你传给它一个字符串，显然是要报错的。所以，在你传值给 `$compile` 之前，用 `angular.element` 将字符串转化为DOM。
 
-HTML compilation happens in three phases:
+HTML 编译可以细分为三个阶段：
 
-  1. {@link api/ng.$compile `$compile`} traverses the DOM and matches directives.
+  1. {@link api/ng.$compile `$compile`} 遍历DOM节点，匹配指令。
 
-  If the compiler finds that an element matches a directive, then the directive is added to the list of
-  directives that match the DOM element. A single element may match multiple directives.
+  如果编译器发现某个元素匹配一个指令，那么这个指令就被添加到指令列表中（该列表与DOM元素对应）。一个元素可能匹配到多个指令（译注：也就是一个元素里面可能有多个指令）。
 
-  2. Once all directives matching a DOM element have been identified, the compiler sorts the directives
-  by their `priority`.
+  2. 当所有指令都匹配到相应的元素时，编译器按照指令的 `priority` 属性来排列指令的编译顺序。
 
-  Each directive's `compile` functions are executed. Each `compile` function has a chance to
-  modify the DOM. Each `compile` function returns a `link` function. These functions are composed into
-  a "combined" link function, which invokes each directive's returned `link` function.
+  然后依次执行每个指令的 `compile` 函数。每个 `compile` 函数有一次更改该指令所对应的DOM模版的机会。然后，每个 `compile` 函数返回一个 `link` 函数。这些函数构成一个“合并的”连接函数，它会调用每个指令返回的 `link` 函数。
 
-  3. `$compile` links the template with the scope by calling the combined linking function from the previous step.
-  This in turn will call the linking function of the individual directives, registering listeners on the elements
-  and setting up {@link api/ng.$rootScope.Scope#methods_$watch `$watch`s} with the {@link api/ng.$rootScope.Scope `scope`}
-  as each directive is configured to do.
+  3. 之后，`$compile` 调用第二步返回的连接函数，将模版和对应的作用域连接。而这又会依次调用连接函数中包含的每个指令对应的 `link` 函数，进而在各个DOM元素上注册监听器以及在相应的 {@link api/ng.$rootScope.Scope `scope`} 中设置对应的 {@link api/ng.$rootScope.Scope#methods_$watch `$watch`s}。
 
-The result of this is a live binding between the scope and the DOM. So at this point, a change in
-a model on the compiled scope will be reflected in the DOM.
+经过这三个阶段之后，结果是我们得到了一个作用域和DOM绑定的实时视图。所以在这之后，任一发生在已经经过编译的作用域上的数据模型的变化都会反映在DOM之中。
 
-Below is the corresponding code using the `$compile` service.
-This should help give you an idea of what Angular does internally.
+下面是使用 `$compile` 服务的相关代码。它应该能帮你理解 Angular 内部在做些什么：
 
 <pre>
   var $compile = ...; // injected into your code
