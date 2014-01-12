@@ -95,35 +95,22 @@ Angular 预先绑定了一些常见的对构建应用极其有用的指令。同
 
 ## 理解视图
 
-Most other templating systems consume a static string template and
-combine it with data, resulting in a new string. The resulting text is then `innerHTML`ed into
-an element.
+绝大多数模版引擎系统采用的是把字符串模版和数据拼接，然后输出一个新的字符串，在前端这个新的字符串作为元素的 `innerHTML` 属性的值。
 
 <img src="img/One_Way_Data_Binding.png">
 
-This means that any changes to the data need to be re-merged with the template and then
-`innerHTML`ed into the DOM. Some of the issues with this approach are:
+这就意味着数据中的任何改变需要重新和模版合并，然后再赋给DOM元素的 `innerHTML` 属性。这里我们可以看到这种策略的一些问题：
 
-1. reading user input and merging it with data
-2. clobbering user input by overwriting it
-3. managing the whole update process
-4. lack of behavior expressiveness
+1. 读取用户输入及将其与数据合并
+2. 重写用户输入
+3. 管理整个更新流程
+4. 缺少行为表现
 
-Angular is different. The Angular compiler consumes the DOM, not string templates.
-The result is a linking function, which when combined with a scope model results in a live view. The
-view and scope model bindings are transparent. The developer does not need to make any special calls to update
-the view. And because `innerHTML` is not used, you won't accidentally clobber user input.
-Furthermore, Angular directives can contain not just text bindings, but behavioral constructs as
-well.
+Angular 则不同。它的编译器直接使用DOM作为模版而不是用字符串模版。编译阶段的返回结果是一个连接函数（link func），在连接阶段会和特定的作用域中的数据模型连接生成一个实时的视图。视图和作用域数据模型的绑定是透明的。开发者不需要做任何特别的调用去更新视图。同时，我们不使用 `innerHTML` 属性，这样也就不会影响用户输入了。而且，Angular 指令不仅可以包含文本绑定，同时也支持行为操作的绑定（译注：此处可能翻译不甚到位）。
 
 <img src="img/Two_Way_Data_Binding.png">
 
-The Angular approach produces a stable DOM. The DOM element instance bound to a model
-item instance does not change for the lifetime of the binding. This means that the code can get
-hold of the elements and register event handlers and know that the reference will not be destroyed
-by template data merge.
-
-
+Angular 的这种策略生成的是稳定的DOM模版。DOM元素实例和数据模型实例的绑定在绑定期间是不会发生变化的（也就是说不是每次数据改变，最后产生的模版都要变化一次）。这就意味着在你的代码中可以去获取这些DOM模版元素并且注册相应的事件处理函数，而不用担心这个对DOM元素的引用会因为数据合并而产生变化。
 
 ## 编译指令
 
