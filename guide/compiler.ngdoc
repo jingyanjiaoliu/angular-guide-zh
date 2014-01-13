@@ -5,62 +5,37 @@
 Translated by [@GrahamLe](https://github.com/grahamle)
 
 <div class="alert alert-warning">
-**Note:** this guide is targeted towards developers who are already familiar with AngularJS basics.
+**注意**：这篇文章是面向已经有一定 Angular 基础的开发者。
 
-If you're just getting started, we recommend the {@link tutorial/ tutorial} first.
-If you just want to create custom directives, we recommend the {@link guide/directive directives guide}.
-If you want a deeper look into Angular's compilation process, you're in the right place.
+如果你仅仅只是刚上路，那么我们建议你看看 {@link tutorial/ tutorial} 先。如果你只是想创建几个自定义的指令，那可以去瞅瞅 {@link guide/directive directives guide}。而如果你想要更深入地了解 Angular 的编译过程，那么你来对了，这就是你该看的。
 </div>
 
 
-# Overview
+# 概述
 
-Angular's {@link api/ng.$compile HTML compiler} allows the developer to teach the
-browser new HTML syntax. The compiler allows you to attach behavior to any HTML element or attribute
-and even create new HTML elements or attributes with custom behavior. Angular calls these behavior
-extensions {@link api/ng.$compileProvider#methods_directive directives}.
+Angular 的 {@link api/ng.$compile HTML compiler} 让开发者可以教浏览器一些新的语法技能。编译器允许你往现有的HTML元素或属性添加更多的操作逻辑，甚至可以让你自己创建新的带有自定义行为操作的HTML元素或属性。Angular 把这些操作扩展称之为 {@link api/ng.$compileProvider#methods_directive 指令}。
 
-HTML has a lot of constructs for formatting the HTML for static documents in a declarative fashion.
-For example if something needs to be centered, there is no need to provide instructions to the
-browser how the window size needs to be divided in half so that the center is found, and that this
-center needs to be aligned with the text's center. Simply add an `align="center"` attribute to any
-element to achieve the desired behavior. Such is the power of declarative language.
+HTML 有一大堆概念用来将其格式化为声明性的静态文档。例如，某个元素需要居中放置，我们并没有必要提供指令让浏览器去将窗口大小分成两半来居中，要做的仅仅是给需要居中的元素加上 `align="center"` 属性，这样就可以达到想要的效果了。这就是声明式语言的力量。
 
-But the declarative language is also limited, since it does not allow you to teach the browser new
-syntax. For example there is no easy way to get the browser to align the text at 1/3 the position
-instead of 1/2. What is needed is a way to teach the browser new HTML syntax.
+但是话说回来，声明式语言也有其自己的限制，首当其冲的是它不能让开发者扩展浏览器适应新的语法。例如，相比居中文本，要让浏览器在窗口 1/3 的位置排列文本就没有那么简单了。所以这就引出了我们需要一种新的路子来教浏览器一些新技能：识别新的HTML语法。
 
-Angular comes pre-bundled with common directives which are useful for building any app. We also
-expect that you will create directives that are specific to your app. These extensions become a
-Domain Specific Language for building your application.
+Angular 预先绑定了一些常见的对构建应用极其有用的指令。同时你也可以创建一些与你应用直接相关的指令。这些扩展构成了与特定领域相关的语言来构建你的应用（译注：指令成了扩展性的特定语言）。
 
-All of this compilation takes place in the web browser; no server side or pre-compilation step is
-involved.
+所有的编译在web浏览器中进行，没有任何服务器端的预编译的介入。
 
+## 编译器
 
-## Compiler
+编译器是 Angular 提供的一项服务，用来遍历DOM节点，查找特定的属性。编译过程分为两个阶段：
 
-Compiler is an Angular service which traverses the DOM looking for attributes. The compilation
-process happens in two phases.
+  1. **编译**：遍历DOM节点，收集所有的指令，返回一个连接函数（link func）
 
-  1. **Compile:** traverse the DOM and collect all of the directives. The result is a linking
-  function.
+  2. **连接**：将上一步收集到的每个指令与其所在的作用域（scope）连接生成一个实时视图。任何作用域中的模型改变都会实时在视图中反映出来，同时任何用户与视图的交互则会映射到作用域的模型中。这样，作用域中的数据模型就成了唯一的数据源。
 
-  2. **Link:** combine the directives with a scope and produce a live view. Any changes in the
-  scope model are reflected in the view, and any user interactions with the view are reflected
-  in the scope model. This makes the scope model the single source of truth.
+一些如 {@link api/ng.directive:ngRepeat `ng-repeat`} 这样的指令，会为集合中的每个项目克隆一次DOM元素。由于克隆的模板只需要被编译一次，然后为每个克隆实例做一次连接，这样将编译分成编译和连接两个阶段就有效地提升了性能（译注：不用为每个克隆的实例都编译一次，只需对模板进行统一的一次编译，然后在连接阶段单独为每个实例进行到 scope 的连接即可）。
 
-Some directives such as {@link api/ng.directive:ngRepeat `ng-repeat`} clone DOM elements once
-for each item in a collection. Having a compile and link phase improves performance since the
-cloned template only needs to be compiled once, and then linked once for each clone instance.
+## 指令
 
-
-## Directive
-
-A directive is a behavior which should be triggered when specific HTML constructs are encountered
-during the compilation process. The directives can be placed in element names, attributes, class
-names, as well as comments. Here are some equivalent examples of invoking the {@link
-api/ng.directive:ngBind `ng-bind`} directive.
+在编译过程中，遇到特定的HTML结构（也就是指令）时，指令所声明的行为操作会被触发。指令可以被放在元素名，属性，类名，甚至是注释中。下面是一些等价的调用 {@link api/ng.directive:ngBind `ng-bind`} 指令的例子：
 
 <pre>
   <span ng-bind="exp"></span>
@@ -69,12 +44,9 @@ api/ng.directive:ngBind `ng-bind`} directive.
   <!-- directive: ng-bind exp -->
 </pre>
 
-A directive is just a function which executes when the compiler encounters it in the DOM. See {@link
-api/ng.$compileProvider#methods_directive directive API} for in-depth documentation on how
-to write directives.
+指令其实就是在编译器遍历DOM时碰到就需要执行的函数。另见 {@link api/ng.$compileProvider#methods_directive 指令API} 查看更深入的如何写指令的文档。
 
-Here is a directive which makes any element draggable. Notice the `draggable` attribute on the
-`<span>` element.
+下面是一个让元素可以被拖拽的指令。注意在 `<span>` 元素中的 `draggable` 属性：
 
 <example module="drag">
   <file name="script.js">
@@ -89,7 +61,7 @@ Here is a directive which makes any element draggable. Notice the `draggable` at
            cursor: 'pointer'
           });
           element.on('mousedown', function(event) {
-            // Prevent default dragging of selected content
+            // 阻止默认的选中内容的拖拽
             event.preventDefault();
             startX = event.screenX - x;
             startY = event.screenY - y;
@@ -119,75 +91,48 @@ Here is a directive which makes any element draggable. Notice the `draggable` at
 </example>
 
 
-The presence of the `draggable` attribute on any element gives the element new behavior.
-We extended the vocabulary of the browser in a way which is natural to anyone who is familiar with the principles of HTML.
+`draggable` 属性出现在任何的元素中都会给其带来新的行为操作。我们以一种熟悉HTML语法规则的方式扩展了浏览器的HTML词汇及语法。
 
+## 理解视图
 
-## Understanding View
-
-Most other templating systems consume a static string template and
-combine it with data, resulting in a new string. The resulting text is then `innerHTML`ed into
-an element.
+绝大多数模板引擎系统采用的是把字符串模板和数据拼接，然后输出一个新的字符串，在前端这个新的字符串作为元素的 `innerHTML` 属性的值。
 
 <img src="img/One_Way_Data_Binding.png">
 
-This means that any changes to the data need to be re-merged with the template and then
-`innerHTML`ed into the DOM. Some of the issues with this approach are:
+这就意味着数据中的任何改变需要重新和模板合并，然后再赋给DOM元素的 `innerHTML` 属性。这里我们可以看到这种策略的一些问题：
 
-1. reading user input and merging it with data
-2. clobbering user input by overwriting it
-3. managing the whole update process
-4. lack of behavior expressiveness
+1. 读取用户输入及将其与数据合并
+2. 重写用户输入
+3. 管理整个更新流程
+4. 缺少行为表现
 
-Angular is different. The Angular compiler consumes the DOM, not string templates.
-The result is a linking function, which when combined with a scope model results in a live view. The
-view and scope model bindings are transparent. The developer does not need to make any special calls to update
-the view. And because `innerHTML` is not used, you won't accidentally clobber user input.
-Furthermore, Angular directives can contain not just text bindings, but behavioral constructs as
-well.
+Angular 则不同。它的编译器直接使用DOM作为模板而不是用字符串模板。编译阶段的返回结果是一个连接函数（link func），在连接阶段会和特定的作用域中的数据模型连接生成一个实时的视图。视图和作用域数据模型的绑定是透明的。开发者不需要做任何特别的调用去更新视图。同时，我们不使用 `innerHTML` 属性，这样也就不会影响用户输入了。而且，Angular 指令不仅可以包含文本绑定，同时也支持行为操作的绑定（译注：此处可能翻译不甚到位）。
 
 <img src="img/Two_Way_Data_Binding.png">
 
-The Angular approach produces a stable DOM. The DOM element instance bound to a model
-item instance does not change for the lifetime of the binding. This means that the code can get
-hold of the elements and register event handlers and know that the reference will not be destroyed
-by template data merge.
+Angular 的这种策略生成的是稳定的DOM模板。DOM元素实例和数据模型实例的绑定在绑定期间是不会发生变化的（也就是说不是每次数据改变，最后产生的模板都要变化一次）。这就意味着在你的代码中可以去获取这些DOM模板元素并且注册相应的事件处理函数，而不用担心这个对DOM元素的引用会因为数据合并而产生变化。
 
+## 编译指令
 
+知道 Angular 的编译是在DOM节点上发生而非字符串上是很重要的。通常，你不会注意到这个约束，因为当一个页面加载时，浏览器自动将HTML解析为DOM树了。
 
-## How directives are compiled
+然而，如果你自己手动调用 `$compile` 时，则需要注意上面说的注意点了。因为如果你传给它一个字符串，显然是要报错的。所以，在你传值给 `$compile` 之前，用 `angular.element` 将字符串转化为DOM。
 
-It's important to note that Angular operates on DOM nodes rather than strings. Usually, you don't
-notice this restriction because when a page loads, the web browser parses HTML into the DOM automatically.
+HTML 编译可以细分为三个阶段：
 
-However it's important to keep this in mind when calling `$compile` yourself, because passing it a string
-will fail. Instead, use `angular.element` to convert a string to DOM before passing elements into
-Angular's `$compile` service.
+  1. {@link api/ng.$compile `$compile`} 遍历DOM节点，匹配指令。
 
-HTML compilation happens in three phases:
+  如果编译器发现某个元素匹配一个指令，那么这个指令就被添加到指令列表中（该列表与DOM元素对应）。一个元素可能匹配到多个指令（译注：也就是一个元素里面可能有多个指令）。
 
-  1. {@link api/ng.$compile `$compile`} traverses the DOM and matches directives.
+  2. 当所有指令都匹配到相应的元素时，编译器按照指令的 `priority` 属性来排列指令的编译顺序。
 
-  If the compiler finds that an element matches a directive, then the directive is added to the list of
-  directives that match the DOM element. A single element may match multiple directives.
+  然后依次执行每个指令的 `compile` 函数。每个 `compile` 函数有一次更改该指令所对应的DOM模板的机会。然后，每个 `compile` 函数返回一个 `link` 函数。这些函数构成一个“合并的”连接函数，它会调用每个指令返回的 `link` 函数。
 
-  2. Once all directives matching a DOM element have been identified, the compiler sorts the directives
-  by their `priority`.
+  3. 之后，`$compile` 调用第二步返回的连接函数，将模板和对应的作用域连接。而这又会依次调用连接函数中包含的每个指令对应的 `link` 函数，进而在各个DOM元素上注册监听器以及在相应的 {@link api/ng.$rootScope.Scope `scope`} 中设置对应的 {@link api/ng.$rootScope.Scope#methods_$watch `$watch`s}。
 
-  Each directive's `compile` functions are executed. Each `compile` function has a chance to
-  modify the DOM. Each `compile` function returns a `link` function. These functions are composed into
-  a "combined" link function, which invokes each directive's returned `link` function.
+经过这三个阶段之后，结果是我们得到了一个作用域和DOM绑定的实时视图。所以在这之后，任一发生在已经经过编译的作用域上的数据模型的变化都会反映在DOM之中。
 
-  3. `$compile` links the template with the scope by calling the combined linking function from the previous step.
-  This in turn will call the linking function of the individual directives, registering listeners on the elements
-  and setting up {@link api/ng.$rootScope.Scope#methods_$watch `$watch`s} with the {@link api/ng.$rootScope.Scope `scope`}
-  as each directive is configured to do.
-
-The result of this is a live binding between the scope and the DOM. So at this point, a change in
-a model on the compiled scope will be reflected in the DOM.
-
-Below is the corresponding code using the `$compile` service.
-This should help give you an idea of what Angular does internally.
+下面是使用 `$compile` 服务的相关代码。它应该能帮你理解 Angular 内部在做些什么（译注：下面代码中的注释就不翻译了，因为有一些如 compile 和 link 翻译效果反而不好）：
 
 <pre>
   var $compile = ...; // injected into your code
@@ -209,27 +154,21 @@ This should help give you an idea of what Angular does internally.
   parent.appendChild(element);
 </pre>
 
-### The difference between Compile and Link
+### compile 和 link 的区别
 
-At this point you may wonder why the compile process has separate compile and link phases. The
-short answer is that compile and link separation is needed any time a change in a model causes
-a change in the **structure** of the DOM.
+这会儿，我想你该很疑惑为什么编译过程被分成了编译和连接两个阶段（译注：这里其实用英文会更好的，compile 和 link，就可以免去歧义了）。（译注：按现在知乎流行的说法，每个问题都有个短答案和长答案两种版本）简短地回答呢，那就是任何时候任一数据模型的改变引起的DOM**结构**的改变都需要这种两阶段编译的支持。
 
-It's rare for directives to have a **compile function**, since most directives are concerned with
-working with a specific DOM element instance rather than changing its overall structure.
+指令有 **compile function** 是不多见的，因为大部分指令通常只关心如何操作特定的DOM元素实例，而不是去改变它的整体结构。
 
-Directives often have a **link function**. A link function allows the directive to register
-listeners to the specific cloned DOM element instance as well as to copy content into the DOM
-from the scope.
+指令通常有 **link function**。连接函数让指令能够往特定的DOM元素实例的克隆对象上注册监听器，同时可以将作用域中的内容复制到DOM中去。
 
 <div class="alert alert-success">
-**Best Practice:** Any operation which can be shared among the instance of directives should be
-moved to the compile function for performance reasons.
+**最佳实践**：任何能够在指令实例中共享的操作，为了性能考虑，最好是都移到指令的 compile function 中去。
 </div>
 
-#### An Example of "Compile" Versus "Link"
+#### "Compile" vs "Link" 的一个例子
 
-To understand, let's look at a real-world example with `ngRepeat`:
+为了理解编译和连接这两个阶段，让我们以 `ngRepeat` 为例来看一下：
 
 <pre>
 Hello {{user}}, you have these actions:
@@ -240,46 +179,29 @@ Hello {{user}}, you have these actions:
 </ul>
 </pre>
 
-When the above example is compiled, the compiler visits every node and looks for directives.
+当我们编译上述例子时，编译器遍历每个节点查找指令。
 
-`{{user}}` matches the {@link api/ng.$interpolate interpolation directive}
-and `ng-repeat` matches the {@link api/ng.directive:ngRepeat `ngRepeat` directive}.
+`{{user}}` 匹配了 {@link api/ng.$interpolate 插值指令}，而 `ng-repeat` 匹配了 {@link api/ng.directive:ngRepeat `ngRepeat` 指令}。
 
-But {@link api/ng.directive:ngRepeat ngRepeat} has a dilemma.
+但是编译 {@link api/ng.directive:ngRepeat ngRepeat} 陷入了困境。
 
-It needs to be able to clone new `<li>` elements for every `action` in `user.actions`.
-This initially seems trivial, but it becomes more complicated when you consider that `user.actions`
-might have items added to it later. This means that it needs to save a clean copy of the `<li>`
-element for cloning purposes.
+它需要为每个在 `user.actions` 中的 `action` 条目克隆一个 `<li>` 元素。这个刚看起来很平常，但是当你考虑到如果 `user.actions` 可能会有动态的新的条目添加的话，情况就变得复杂起来。因为这意味着我们需要保存一份干净的 `<li>` 元素以备后期克隆用。
 
-As new `action`s are inserted, the template `<li>` element needs to be cloned and inserted into `ul`.
-But cloning the `<li>` element is not enough. It also needs to compile the `<li>` so that its
-directives, like `{{action.description}}`, evaluate against the right {@link api/ng.$rootScope.Scope scope}.
+（译注：在数据模型中）当新的 `action` 被插入时， `<li>` 元素作为模板需要被克隆然后插入到 `ul` 中。但是仅仅克隆 `<li>` 元素是不够的。同时还要编译这个 `<li>` 元素，这样才能使得其内部的别的指令，如 `{{action.description}}` ，能够在正确的 {@link api/ng.$rootScope.Scope 作用域} 中被计算渲染出结果。
 
+一种比较天真的解决这个问题的策略无非是每次有一个新的 `action` 我就简单地插入一个 `<li>` 的拷贝然后将其编译。这种方法的问题在于对于每个我们克隆的 `<li>` 元素我们都要去编译，这无疑让我们的工作加倍了。具体来说，在每次克隆 `<li>` 之前，我们都得遍历一下它看看是否有别的指令（译注：此处可能翻译不是很到位，不理解的建议看原文）。这样无疑就让编译过程变的更慢，进而导致应用在插入新节点时变得反应迟钝。
 
-A naive approach to solving this problem would be to simply insert a copy of the `<li>` element and
-then compile it.
-The problem with this approach is that compiling on every `<li>` element that we clone would duplicate
-a lot of the work. Specifically, we'd be traversing `<li>` each time before cloning it to find the
-directives. This would cause the compilation process to be slower, in turn making applications
-less responsive when inserting new nodes.
+解决方法就是我们上面一直强调的把编译过程分成两个阶段：
 
-The solution is to break the compilation process into two phases:
-
-the **compile phase** where all of the directives are identified and sorted by priority,
-and a **linking phase** where any work which "links" a specific instance of the
-{@link api/ng.$rootScope.Scope scope} and the specific instance of an `<li>` is performed.
+**编译阶段**收集所有的指令并按照优先级排序，之后在**连接阶段**将特定的{@link api/ng.$rootScope.Scope 作用域}实例与特定的 `<li>` 实例连接。
 
 <div class="alert alert-warning">
-**Note:** *Link* means setting up listeners on the DOM and setting up `$watch` on the Scope to
-keep the two in sync.
+**注意**： *连接* 意味着在DOM上设置监听器以及在相关的作用域中设置 `$watch` 以保证二者（译注：DOM和作用域）的同步。
 </div>
 
-{@link api/ng.directive:ngRepeat `ngRepeat`} works by preventing the compilation process from
-descending into the `<li>` element so it can make a clone of the original and handle inserting
-and removing DOM nodes itself.
+{@link api/ng.directive:ngRepeat `ngRepeat`} 通过阻止编译阶段进入到 `<li>` 元素来解决上面的问题，这样就可以克隆原始的 `<li>` 来处理插入和一处DOM节点的问题了。
 
-Instead the {@link api/ng.directive:ngRepeat `ngRepeat`} directive compiles `<li>` separately.
+（译注：待大神翻译）Instead the {@link api/ng.directive:ngRepeat `ngRepeat`} directive compiles `<li>` separately.
 The result of the `<li>` element compilation is a linking function which contains all of the
 directives contained in the `<li>` element, ready to be attached to a specific clone of the `<li>`
 element.
@@ -291,11 +213,11 @@ on the cloned `<li>`.
 
 
 
-### Understanding How Scopes Work with Transcluded Directives
+### 作用域与Transcluded指令是如何工作的
 
-One of the most common use cases for directives is to create reusable components.
+指令最常见的一个应用是创建可重用构件。
 
-Below is a pseudo code showing how a simplified dialog component may work.
+下面的为代码展示了一个简单版本的对话框指令的使用。
 
 <pre>
 <div>
@@ -310,11 +232,9 @@ Below is a pseudo code showing how a simplified dialog component may work.
 </div>
 </pre>
 
-Clicking on the "show" button will open the dialog. The dialog will have a title, which is
-data bound to `username`, and it will also have a body which we would like to transclude
-into the dialog.
+点击 "show" 按钮会打开对话框。对话框会有一个和 `username` 绑定的标题，同时会有一个主体，这个主体我们是通过在对话框指令定义中的模板通过 transclude 插入的。
 
-Here is an example of what the template definition for the `dialog` widget may look like.
+下面是 `dialog` 指令中的模板属性：
 
 <pre>
 <div ng-show="visible">
@@ -327,14 +247,9 @@ Here is an example of what the template definition for the `dialog` widget may l
 </div>
 </pre>
 
-This will not render properly, unless we do some scope magic.
+上面这个指令的模板还不能适当地渲染，除非我们施上一些魔法。
 
-The first issue we have to solve is that the dialog box template expects `title` to be defined.
-But we would like the template's scope property `title` to be the result of interpolating the
-`<dialog>` element's `title` attribute (i.e. `"Hello {{username}}"`. Furthermore, the buttons expect
-the `onOk` and `onCancel` functions to be present in the scope. This limits the usefulness of the
-widget. To solve the mapping issue we use the `locals` to create local variables which the template
-expects as follows:
+第一个问题是解决对话框模板中需要的 `title` 数据。而我们希望模板中的 `title` 和指令 `<dialog>` 被使用时的 `title` 属性一致（也就是 `"Hello {{username}}"`）。而且，模板中的按钮会去调用作用域中的 `onOk` 和 `onCancel` 两个函数，而这两个函数的来源也在指令的属性中有定义，要解决的就是映射的问题了。为了解决这个映射问题，我们使用本地 scope 创建本地变量（模板中需要的数据和函数）和外部变量（指令中已有的属性）映射：
 
 <pre>
   scope: {
@@ -345,29 +260,20 @@ expects as follows:
   }
 </pre>
 
-Creating local properties on widget scope creates two problems:
+在指令的作用域创建本地变量会产生两个问题：
 
-  1. isolation - if the user forgets to set `title` attribute of the dialog widget the dialog
-     template will bind to parent scope property. This is unpredictable and undesirable.
+  1. 独立的作用域 - 如果用户（译注：使用对话框指令的开发者）在使用 `dialog` 指令时忘记设置 `title` 属性，那么对话框指令的模板中的 `title` 解析时则会去绑定父级作用域中的同名属性。这是完全不可预测的，也不是我们希望看到的。
 
-  2. transclusion - the transcluded DOM can see the widget locals, which may overwrite the
-     properties which the transclusion needs for data-binding. In our example the `title`
-     property of the widget clobbers the `title` property of the transclusion.
+  2. transclusion - 通过引用包含的DOM节点可以看到指令的本地变量，而这本地变量有可能会重写掉一些 transclusion （引用包含）中数据绑定的同名属性。在上述例子中，比如像指令所在的 scope 中的 `title` 属性就重写了在 transclusion （引用包含）的作用域的 `title` 属性（译注：这里 `Body goes here: {{username}} is {{title}}.` 是通过 transclusion 插入到 `dialog` 指令模版中拥有 `ng-transclude` 属性的div中，这样它里面的 title 插值就会被 `dialog` 本地的 title 值改写 ）
 
 
-To solve the issue of lack of isolation, the directive declares a new `isolated` scope. An
-isolated scope does not prototypically inherit from the parent scope, and therefore we don't have
-to worry about accidentally clobbering any properties.
+为了解决缺少隔离的问题，指令会声明一个 `isolated` 作用域。一个隔离的作用域不会通过基于原型的方式继承它的父级作用域，所以我嗯就不用担心会有属性被意外改写的情况了。
 
-However `isolated` scope creates a new problem: if a transcluded DOM is a child of the widget
-isolated scope then it will not be able to bind to anything. For this reason the transcluded scope
-is a child of the original scope, before the widget created an isolated scope for its local
-variables. This makes the transcluded and widget isolated scope siblings.
+但是，独立的作用域引来了另外一个问题：如果一个 transcluded（引用包含的） DOM节点是一个指令独立作用域的孩子节点的话，那么它不会绑定到任何数据（译注：像我们上面例子中的情况，就属于绑定不到数据）。出于此，在指令为本地变量创建出独立的作用域之前，我们需要声明 transcluded（引用包含的）作用域是原始作用域（也是独立作用域的父级）的孩子。这样，引用包含创建的作用域就和独立作用域拥有同样的父级，也就是说它们是兄弟作用域。
 
-This may seem to be unexpected complexity, but it gives the widget user and developer the least
-surprise.
+这会让一切看起来意想不到的复杂，但至少它让指令（控件）的用户和开发者不会那么难以接受。
 
-Therefore the final directive definition looks something like this:
+因此，我们上面例子中指令作用域的声明，最后开起来是这样子的：
 
 <pre>
 transclude: true,
@@ -380,4 +286,3 @@ scope: {
 restrict: 'E',
 replace: true
 </pre>
-

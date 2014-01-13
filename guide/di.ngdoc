@@ -2,34 +2,27 @@
 @name Developer Guide: Dependency Injection
 @description
 
-# Dependency Injection
+Translated by [@GrahamLe](https://github.com/grahamle)
 
-Dependency Injection (DI) is a software design pattern that deals with how code gets hold of its
-dependencies.
+# 依赖注入
 
-For in-depth discussion about DI, see {@link http://en.wikipedia.org/wiki/Dependency_injection
-Dependency Injection} at Wikipedia, {@link http://martinfowler.com/articles/injection.html
-Inversion of Control} by Martin Fowler, or read about DI in your favorite software design pattern
-book.
+依赖注入（译注：以下简称DI）是一种让代码处理其依赖关系的软件设计模式。
 
-## DI in a nutshell
+期待更多详细的有关 `DI` 的讨论，请看维基百科的 {@link http://en.wikipedia.org/wiki/Dependency_injection Dependency Injection} 词条，以及 Martin Fowler 写的 {@link http://martinfowler.com/articles/injection.html Inversion of Control} ，或者是在你喜欢的任何一本设计模式的书去查看。
 
-There are only three ways an object or a function can get a hold of its dependencies:
+## DI简介
 
-  1. The dependency can be created, typically using the `new` operator.
+对象或是函数只有三种方式可以得到依赖：
 
-  2. The dependency can be looked up by referring to a global variable.
+  1. 依赖创建，通常是通过 `new` 操作符
 
-  3. The dependency can be passed in to where it is needed.
+  2. 依赖查找，通过引用一个全局变量
 
+  3. 依赖传递，依赖可以被注入到任何需要依赖的地方
 
-The first two options of creating or looking up dependencies are not optimal because they hard
-code the dependency. This makes it difficult, if not impossible, to modify the dependencies.
-This is especially problematic in tests, where it is often desirable to provide mock dependencies
-for test isolation.
+前两种选择：创建或是查找依赖都不是那么理想，因为它们都是将依赖写死在对象或函数里了。不能说完全没可能吧，但至少，想要更改上述两种方式得到的依赖是很困难的。尤其是在测试的时候，会遇到很多问题，因为测试时常常需要我们提供模拟的依赖（译注：此句涉及测试，本人不精，已跪）。
 
-The third option is the most viable, since it removes the responsibility of locating the
-dependency from the component. The dependency is simply handed to the component.
+第三种方式是最可行的，因为它去除了去组件里面定位相应的依赖这个担子，而是反过来，依赖总是能够很简单地被注入到需要它的组件中。（译注：说实话，上述三种方式，说的啥玩意呀，对于我是相当于没说一样）
 
 <pre>
   function SomeClass(greeter) {
@@ -41,29 +34,24 @@ dependency from the component. The dependency is simply handed to the component.
   }
 </pre>
 
-In the above example `SomeClass` is not concerned with locating the `greeter` dependency, it
-is simply handed the `greeter` at runtime.
+上述例子中，`SomeClass` 不必去在意 `greeter` 依赖是从哪里来的，反正就是在运行的时候，`greeter` 依赖被传进来了，我用就是了。（译注：so easy，妈妈再也不用担心我的依赖了）
 
-This is desirable, but it puts the responsibility of getting hold of the dependency on the
-code that constructs `SomeClass`.
+像这个例子中的情况是我们愿意看到的，但是它把获得依赖的大部分责任都放在了我们创建 `SomeClass` 的代码中。
 
 <img class="pull-right" style="padding-left: 3em; padding-bottom: 1em;" src="img/guide/concepts-module-injector.png">
 
-To manage the responsibility of dependency creation, each Angular application has an {@link
-api/angular.injector injector}. The injector is a service locator that is responsible for
-construction and lookup of dependencies.
+为了分配依赖创建的任务，每个 Angular 应用都有一个 {@link api/angular.injector injector}。这个 `injector` 是一个服务定位器，负责创建和查找依赖的。（译注：当你的app的某处声明需要用到某个依赖时，Angular 会调用这个依赖注入器去查找或是创建你所需要的依赖，然后返回来给你用）
 
-Here is an example of using the injector service:
+下面是一个利用 `injector` 服务例子：
 
 <pre>
   // Provide the wiring information in a module
   angular.module('myModule', []).
   
-    // Teach the injector how to build a 'greeter'
-    // Notice that greeter itself is dependent on '$window'
+    // 下面是教 injector 如何构建一个 'greeter' 依赖
+    // 注意 greeter 本身依赖于 '$window'
     factory('greeter', function($window) {
-      // This is a factory function, and is responsible for 
-      // creating the 'greet' service.
+      // 这是一个 factory 函数，负责创建 'greeter' 服务 
       return {
         greet: function(text) {
           $window.alert(text);
@@ -71,18 +59,15 @@ Here is an example of using the injector service:
       };
     });
 
-  // New injector is created from the module. 
-  // (This is usually done automatically by angular bootstrap)
+  // 从 module 创建的 injector 
+  // 这个常常是 Angular 启动时自动完成的
   var injector = angular.injector(['myModule', 'ng']);
   
-  // Request any dependency from the injector
+  // 通过 injector 请求任意的依赖
   var greeter = injector.get('greeter');
 </pre>
 
-Asking for dependencies solves the issue of hard coding, but it also means that the injector needs
-to be passed throughout the application. Passing the injector breaks the {@link
-http://en.wikipedia.org/wiki/Law_of_Demeter Law of Demeter}. To remedy this, we turn the
-dependency lookup responsibility to the injector by declaring the dependencies as in this example:
+函数或对象通过请求依赖解决了硬编码的问题，但同时也就意味着 injector 需要通过应用传递，而传递 injector 破坏了 {@link http://en.wikipedia.org/wiki/Law_of_Demeter Law of Demeter}。为了弥补这个，我们通过像下面例子那样声明依赖，将依赖查找的任务丢给了 injector 去做：
 
 <pre>
   <!-- Given this HTML -->
@@ -102,25 +87,18 @@ dependency lookup responsibility to the injector by declaring the dependencies a
   injector.instantiate(MyController);
 </pre>
 
-Notice that by having the `ng-controller` instantiate the class, it can satisfy all of the
-dependencies of `MyController` without the controller ever knowing about the injector. This is
-the best outcome. The application code simply asks for the dependencies it needs, without having to
-deal with the injector. This setup does not break the Law of Demeter.
+注意，通过让 `ng-controller` 在背后调用 injector 初始化控制器类满足了 `MyController` 需要依赖的需求，而且可以让控制器根本不知道 injector 的存在（译注：好一招瞒天过海）。这是最好的结果了。应用中的代码简单地提交需要它需要某依赖的请求，不需要去管 injector ，而且这样也不违反迪米特法则 。
 
-## Dependency Annotation
+## 依赖注释
+（译注：此处注释非代码注释，应理解为依赖声明的方法）
 
-How does the injector know what service needs to be injected?
+那么，injector 是如何知道哪些服务需要被注入呢？
 
-The application developer needs to provide annotation information that the injector uses in order
-to resolve the dependencies. Throughout Angular, certain API functions are invoked using the
-injector, as per the API documentation. The injector needs to know what services to inject into
-the function. Below are three equivalent ways of annotating your code with service name
-information. These can be used interchangeably as you see fit and are equivalent.
+应用开发者需要提供 injector 需要使用的注释信息来解析依赖。Angular 之中，按照API文档说明，某些 API 方法需要通过 injector 调用。这样，injector 要知道得往这个方法中注入什么服务。下面是用服务名信息来进行注释的三种等价的方式，它们可以互用，按照你觉得适合的情况选用相应的方式。
 
-### Inferring Dependencies
+### 推断依赖
 
-The simplest way to get hold of the dependencies, is to assume that the function parameter names
-are the names of the dependencies.
+最简单的获取依赖的方法是让你的函数的参数名直接使用依赖名。
 
 <pre>
   function MyController($scope, greeter) {
@@ -128,19 +106,13 @@ are the names of the dependencies.
   }
 </pre>
 
-Given a function the injector can infer the names of the service to inject by examining the
-function declaration and extracting the parameter names. In the above example `$scope`, and
-`greeter` are two services which need to be injected into the function.
+给 injector 一个函数，它可以通过检查函数声明并抽取参数名可以推断需要注入的服务名。在上面的例子中，`$scope` 和 `greeter` 是两个需要被注入到函数中的服务。
 
-While straightforward, this method will not work with JavaScript minifiers/obfuscators as they
-rename the method parameter names. This makes this way of annotating only useful for {@link
-http://www.pretotyping.org/ pretotyping}, and demo applications.
+虽然这种方式很直观明了，但是它对于压缩的 JavaScript 代码来说是不起作用的，因为压缩过后的 JavaScript 代码重命名了函数的参数名。这就让这种注释方式只对 {@link http://www.pretotyping.org/ pretotyping} 和 demo级应用有用。
 
-### `$inject` Annotation
+### `$inject` 注释
 
-To allow the minifers to rename the function parameters and still be able to inject right services
-the function needs to be annotated with the `$inject` property. The `$inject` property is an array
-of service names to inject.
+为了让重命名了参数名的压缩版的 JavaScript 代码能够正确地注入相关的依赖服务。函数需要通过 `$inject` 属性进行标注，这个属性是一个存放需要注入的服务的数组。
 
 <pre>
   var MyController = function(renamed$scope, renamedGreeter) {
@@ -149,20 +121,15 @@ of service names to inject.
   MyController['$inject'] = ['$scope', 'greeter'];
 </pre>
 
-In this scenario the ordering of the values in the '$inject' array must match the ordering of the arguments to inject.
-Using above code snippet as an example, '$scope' will be injected into 'renamed$scope' and 'greeter' into 'renamedGreeter'.
-Care must be taken that the `$inject` annotation is kept in sync with the actual arguments in the
-function declaration.
+在这种场合下，`$inject` 数组中的服务名顺序必须和函数参数名顺序一致。以上述代码段为例，`$scope` 将会被注入到 'renamed$scope'，而 `greeter` 则是注入到 'renamedGreeter'。需要注意 `$inject` 注释是和真实的函数声明中的参数保持同步的。
 
-This method of annotation is useful for controller declarations since it assigns the annotation
-information with the function.
+这种注释方法对于控制器声明很有用处，因为它是把注释信息赋给了函数。
 
-### Inline Annotation
+### 行内注释
 
-Sometimes using the `$inject` annotation style is not convenient such as when annotating
-directives.
+有时候用 `$inject` 注释的方式不方便，比如标注指令的时候（译注：这里标注指令可以理解为告诉指令需要加载哪些服务依赖的说明）。
 
-For example:
+看下面的例子：
 
 <pre>
   someModule.factory('greeter', function($window) {
@@ -170,7 +137,7 @@ For example:
   });
 </pre>
 
-Results in code bloat due to needing a temporary variable:
+由于需要一个临时的变量导致代码膨胀：
 
 <pre>
   var greeterFactory = function(renamed$window) {
@@ -182,7 +149,7 @@ Results in code bloat due to needing a temporary variable:
   someModule.factory('greeter', greeterFactory);
 </pre>
 
-For this reason the third annotation style is provided as well.
+所以，第三种注释风格被引入，如下：
 
 <pre>
   someModule.factory('greeter', ['$window', function(renamed$window) {
@@ -190,17 +157,15 @@ For this reason the third annotation style is provided as well.
   }]);
 </pre>
 
-Keep in mind that all of the annotation styles are equivalent and can be used anywhere in Angular
-where injection is supported.
+记住，所有上面的三种依赖注释风格（译注：声明依赖的风格）是等价的，在 Angular 中任何支持依赖注入的地方都可以使用。
 
-## Where can I use DI?
+## 哪里使用DI
 
-DI is pervasive throughout Angular. It is typically used in controllers and factory methods. 
+在 Angular 中，DI 无处不在。通常在控制器和工厂方法（译注：所谓的工厂方法个人理解为 Angular 中的API）中使用较多。
 
-### DI in controllers
+### 控制器中使用DI
 
-Controllers are classes which are responsible for application behavior. The recommended way of 
-declaring controllers is using the array notation:
+控制器是负责应用操作逻辑的 JavaScript 类，推荐的在控制器中使用DI的方式是用数组标记风格，如下：
 
 <pre>
   someModule.controller('MyController', ['$scope', 'dep1', 'dep2', function($scope, dep1, dep2) {
@@ -212,14 +177,11 @@ declaring controllers is using the array notation:
   }]);
 </pre>
 
-This avoids the creation of global functions for controllers and also protects against minification.
+如上那样，避免了在全局作用域内创建控制器，同时也避免了代码压缩时引起的注入问题。
 
+### 工厂方法中使用DI
 
-### Factory methods
-
-Factory methods are responsible for creating most objects in Angular. Examples are directives,
-services, and filters. The factory methods are registered with the module, and the recommended way
-of declaring factories is:
+工厂方法负责创建 Angular 中的绝大多数对象。例如指令，服务，和过滤器等。工厂方法是注册在模块之下的，推荐的声明方式如下：
 
 <pre>
   angular.module('myModule', []).

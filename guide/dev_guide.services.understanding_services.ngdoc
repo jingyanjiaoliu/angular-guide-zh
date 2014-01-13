@@ -5,15 +5,16 @@
 
 ## 什么是服务？
 
-服务是单实例对象或者函数，用来实现web应用里常见的特定任务。
+服务是单例对象或者函数，用来实现web应用里常见的特定任务。
 Angular有很多内置的服务，比如[$http service服务](http://docs.angularjs.org/api/ng.$http)，它提供了对浏览器`XMLHttpRequest`对象的访问，用以实现向服务器发出请求。
 就像其他Angular核心的变量和标识符一样，内置的服务名都以`$`开头(比如上面提到的`$http`)。当然，你也能创建自定义的服务。
 
 ## 使用服务
 
-为了使用某个服务，你需要指定其他组件(例如控制器，其他服务，过滤器或指令)依赖于该服务，剩下的就交给Angular的依赖注入子系统吧。Angular依赖注入子系统负责服务实例化、依赖解析并按声明向组件提供依赖。
+为了使用某个服务，你需要指定其他组件(例如控制器，其他服务，过滤器或指令)依赖于该服务，剩下的就交给Angular的依赖注入子系统吧。Angular依赖注入子系统负责服务实例化、依赖解析并按声明向组件提供所依赖对象。
 
-Angular的依赖注入使用{@link http://misko.hevery.com/2009/02/19/constructor-injection-vs-setter-injection/ "构造注入"}，在这种注入方式中，依赖是被当作参数传入组件的工厂方法或构造函数里。由于JavaScript是一种动态类型语言，Angular的依赖注入子系统就不能使用静态类型来指定依赖的服务。因此一个组件必须使用{@link di 依赖注入注解}方法中的一种来声明它的依赖。
+Angular的依赖注入使用{@link http://misko.hevery.com/2009/02/19/constructor-injection-vs-setter-injection/ "构造函数注入"}，在这种注入方式中，依赖是被当作参数传入组件的工厂方法或构造函数里。由于JavaScript是一种动态类型语言，Angular的依赖注入子系统就不能使用静态类型来指定依赖的服务。因此一个组件必须使用{@link di 依赖注入注解}方法中的一种来声明它的依赖。
+
 例如，提供`$inject`属性：
 
  		var MyController = function($location) { ... };
