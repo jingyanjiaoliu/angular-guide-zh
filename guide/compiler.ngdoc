@@ -286,3 +286,5 @@ scope: {
 restrict: 'E',
 replace: true
 </pre>
+
+译注：最后关于引用包含的作用域这边是[一个例子](http://jsfiddle.net/grahamle/4ag3e/)，更好帮你理解 transclue
