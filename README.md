@@ -14,7 +14,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * [01-Controllers（控制器）](http://angular.duapp.com/guide/controller)翻译者:@GrahamLe 已完成翻译初稿
 * [02-Filters（过滤器）](http://angular.duapp.com/guide/filter) 翻译者:@NigelYao  已完成
 * [03-Templates（模板）](http://angular.duapp.com/guide/templates) 翻译者:@why520crazy 已完成翻译
-* 04-Introduction（介绍）翻译者: @pengisgood 初稿已完成
+* [04-Introduction（介绍）](http://angular.duapp.com/guide/introduction)翻译者: @pengisgood 初稿已完成
 * [05-Conceptual Overview（概念总览）](http://angular.duapp.com/guide/concepts) 翻译者: @asnowwolf 已完成翻译
 * [06-Understanding Angular Services（理解ng的服务）](http://angular.duapp.com/guide/dev_guide.services.understanding_services)翻译者: @lightma 已完成翻译
 * 07-Managing Service Dependencies @joe
@@ -39,7 +39,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * [26-Unit Testing](http://angular.duapp.com/guide/dev_guide.unit-testing) 翻译者: @asnowwolf 已完成翻译
 * 27-i18n and l10n (未认领)
 * [28-Internet Explorer Compatibility](http://angular.duapp.com/guide/dev_ie) 翻译者:@greengerong 已完成
-* 29-[Migrating from 1.0 to 1.2 - 迁移指南](http://angular.duapp.com/guide/migration) 翻译者: @asnowwolf 已完成翻译
+* [29-Migrating from 1.0 to 1.2 - 迁移指南](http://angular.duapp.com/guide/migration) 翻译者: @asnowwolf 已完成翻译
 
 目前加入者：
 
