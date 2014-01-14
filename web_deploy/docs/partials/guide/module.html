@@ -2,31 +2,28 @@
 <div><span class="hint"></span>
 </div>
 </h1>
-<div><div class="developer-guide-page developer-guide-modules-page"><h2 id="what-is-a-module">What is a Module?</h2>
-<p>Most applications have a main method which instantiates, wires, and bootstraps the application.
-Angular apps don&#39;t have a main method. Instead modules declaratively specify how an application
-should be bootstrapped. There are several advantages to this approach:</p>
+<div><div class="--page"><p>翻译：<a href="https://github.com/grahamle">@GrahamLe</a></p>
+<h2 id="何为模块？">何为模块？</h2>
+<p>大多数应用程序都有个 <code>main</code> 函数来初始化、连接以及启动整个应用。ng 中虽然没有 <code>main</code> 函数，但它用模块来描述应用将如何启动。这种策略有如下几种优势：</p>
 <ul>
-<li>The process is more declarative which is easier to understand</li>
-<li>In unit-testing there is no need to load all modules, which may aid in writing unit-tests.</li>
-<li>Additional modules can be loaded in scenario tests, which can override some of the
-configuration and help end-to-end test the application</li>
-<li>Third party code can be packaged as reusable modules.</li>
-<li>The modules can be loaded in any/parallel order (due to delayed nature of module execution).</li>
+<li>整个过程是声明式的，更容易理解</li>
+<li>在单元测试中，没有必要加载所有模块，这样有利于单元测试的代码书写</li>
+<li>在场景测试中，额外的模块可以被加载进来，进而重写一些配置，这样有助于实现应用的端到端的测试</li>
+<li>第三方代码可以很容易被打包成可重用的模块</li>
+<li>模块可以用任意顺序或并行顺序加载（得益于模块执行的延迟性）</li>
 </ul>
-<h2 id="the-basics">The Basics</h2>
-<p>Ok, I&#39;m in a hurry. How do I get a Hello World module working?</p>
-<p>Important things to notice:</p>
+<h2 id="模块abc">模块ABC</h2>
+<p>你会说，别废话一箩筐了，说个 Hello World 的模块示例吧，让它跑起来才是王道呀。</p>
+<p>可以，在此之前，有几件重要的事情必须记住：</p>
 <ul>
-<li><a href="api/angular.Module"><code>Module</code></a> API</li>
-<li>Notice the reference to the <code>myApp</code> module in the <code>&lt;html ng-app=&quot;myApp&quot;&gt;</code>, it is what
-bootstraps the app using your module.</li>
+<li><a href="api/angular.Module"><code>模块(Module)</code></a> API</li>
+<li>在 <code>&lt;html ng-app=&quot;myApp&quot;&gt;</code> ，注意对于 <code>myApp</code> 模块的引用，这是用模块的方法启动应用的触发点</li>
 </ul>
-<h3 id="the-basics_source">Source</h3>
-<div source-edit="myApp" source-edit-deps="angular.js script.js" source-edit-html="index.html-90" source-edit-css="" source-edit-js="script.js-89" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<h3 id="模块abc_source">Source</h3>
+<div source-edit="myApp" source-edit-deps="angular.js script.js" source-edit-html="index.html-271" source-edit-css="" source-edit-js="script.js-270" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-90" ng-html-wrap="myApp angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-90">
+<pre class="prettyprint linenums" ng-set-text="index.html-271" ng-html-wrap="myApp angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-271">
     
     <div>
       {{ 'World' | greet }}
@@ -34,13 +31,13 @@ bootstraps the app using your module.</li>
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-89"></pre>
-<script type="text/ng-template" id="script.js-89">
-      // declare a module
+<pre class="prettyprint linenums" ng-set-text="script.js-270"></pre>
+<script type="text/ng-template" id="script.js-270">
+      // 声明一个模块
       var myAppModule = angular.module('myApp', []);
 
-      // configure the module.
-      // in this example we will create a greeting filter
+      // 模块配置
+      // 在这个例子中，我们创建一个过滤器
       myAppModule.filter('greet', function() {
        return function(name) {
           return 'Hello, ' + name + '!';
@@ -49,28 +46,23 @@ bootstraps the app using your module.</li>
 
     </script>
 </div>
-</div><h3 id="the-basics_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="myApp" ng-set-html="index.html-90" ng-eval-javascript="script.js-89"></div>
-<h2 id="recommended-setup">Recommended Setup</h2>
-<p>While the example above is simple, it will not scale to large applications. Instead we recommend
-that you break your application to multiple modules like this:</p>
+</div><h3 id="模块abc_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="myApp" ng-set-html="index.html-271" ng-eval-javascript="script.js-270"></div>
+<h2 id="推荐配置">推荐配置</h2>
+<p>上面的例子太过简单了，对于大型应用显然不适用。对于大型应用，我们建议把它像这样分成多个模块：</p>
 <ul>
-<li>A service module, for service declaration</li>
-<li>A directive module, for directive declaration</li>
-<li>A filter module, for filter declaration</li>
-<li>And an application level module which depends on the above modules, and which has
-initialization code.</li>
+<li>服务模块</li>
+<li>指令模块</li>
+<li>过滤器模块</li>
+<li>一个应用的模块，依赖于上述的三个模块，而且包含应用的初始化及启动代码</li>
 </ul>
-<p>The reason for this breakup is that in your tests, it is often necessary to ignore the
-initialization code, which tends to be difficult to test. By putting it into a separate module it
-can be easily ignored in tests. The tests can also be more focused by only loading the modules
-that are relevant to tests.</p>
-<p>The above is only a suggestion, so feel free to tailor it to your needs.</p>
-<h3 id="recommended-setup_source">Source</h3>
-<div source-edit="xmpl" source-edit-deps="angular.js script.js" source-edit-html="index.html-92" source-edit-css="" source-edit-js="script.js-91" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<p>这样划分模块的原因主要是在你的测试中，经常需要忽略难以测试的初始化的代码，而且这样测试时可以单独加载模块进行相关的测试。</p>
+<p>上述模块划分仅仅是一种建议性的方案，你可以根据自己的应用去调整。下面的代码显示了上面所述的模块划分：</p>
+<h3 id="推荐配置_source">Source</h3>
+<div source-edit="xmpl" source-edit-deps="angular.js script.js" source-edit-html="index.html-273" source-edit-css="" source-edit-js="script.js-272" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-92" ng-html-wrap="xmpl angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-92">
+<pre class="prettyprint linenums" ng-set-text="index.html-273" ng-html-wrap="xmpl angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-273">
     
     <div ng-controller="XmplController">
       {{ greeting }}!
@@ -78,8 +70,8 @@ that are relevant to tests.</p>
   </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-91"></pre>
-<script type="text/ng-template" id="script.js-91">
+<pre class="prettyprint linenums" ng-set-text="script.js-272"></pre>
+<script type="text/ng-template" id="script.js-272">
       angular.module('xmpl.service', []).
         value('greeter', {
           salutation: 'Hello',
@@ -102,7 +94,7 @@ that are relevant to tests.</p>
 
       angular.module('xmpl', ['xmpl.service', 'xmpl.directive', 'xmpl.filter']).
         run(function(greeter, user) {
-          // This is effectively part of the main method initialization code
+          // 这相当于 main 函数
           greeter.localize({
             salutation: 'Bonjour'
           });
@@ -110,44 +102,33 @@ that are relevant to tests.</p>
         })
 
 
-      // A Controller for your app
+      // 应用所需的一个控制器
       var XmplController = function($scope, greeter, user) {
         $scope.greeting = greeter.greet(user.name);
       }
     </script>
 </div>
-</div><h3 id="recommended-setup_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="xmpl" ng-set-html="index.html-92" ng-eval-javascript="script.js-91"></div>
-<h2 id="module-loading-&amp;-dependencies">Module Loading &amp; Dependencies</h2>
-<p>A module is a collection of configuration and run blocks which get applied to the application
-during the bootstrap process. In its simplest form the module consist of collection of two kinds
-of blocks:</p>
+</div><h3 id="推荐配置_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="xmpl" ng-set-html="index.html-273" ng-eval-javascript="script.js-272"></div>
+<h2 id="模块加载及依赖">模块加载及依赖</h2>
+<p>模块是配置代码块和运行代码块的集合，在启动阶段被执行。最简单的模块中包含下面两种代码块：</p>
 <ol>
-<li><strong>Configuration blocks</strong> - get executed during the provider registrations and configuration
-phase. Only providers and constants can be injected into configuration blocks. This is to
-prevent accidental instantiation of services before they have been fully configured.</li>
-<li><strong>Run blocks</strong> - get executed after the injector is created and are used to kickstart the
-application. Only instances and constants can be injected into run blocks. This is to prevent
-further system configuration during application run time.</li>
+<li><strong>配置代码块</strong> - 在 <code>provider</code> 注册和配置阶段执行（注：provider 是 ng 服务的一种）。只有 <code>provider</code> 和 <code>constant</code> 可以被注入配置代码块。这是为了防止服务在完全配置好之前被意外地初始化。</li>
+<li><strong>执行代码块</strong> - 在 <code>injector</code> 被创建后执行，被用来启动整个应用。只有服务的实例对象以及 <code>constant</code> 可以被注入到执行代码块。这是为了防止在应用执行期间系统的更进一步的配置。</li>
 </ol>
 <pre class="prettyprint linenums">
 angular.module('myModule', []).
-  config(function(injectables) { // provider-injector
-    // This is an example of config block.
-    // You can have as many of these as you want.
-    // You can only inject Providers (not instances)
-    // into the config blocks.
+  config(function(injectables) { // provider型注入器
+    // 这是配置(config)代码块的范例，你可以有任意多个配置代码块
+    // 配置块中你只能注入Provider类（注意：不是由Provider类生成的实例）以及`constant`
   }).
-  run(function(injectables) { // instance-injector
-    // This is an example of a run block.
-    // You can have as many of these as you want.
-    // You can only inject instances (not Providers)
-    // into the run blocks
+  run(function(injectables) { // instance型注入器
+    // 这是运行(run)代码块的范例，你可以有任意个运行代码块
+    // 运行块中你只能注入Provider实例（注意：不是Provider类）
   });
 </pre>
-<h3 id="module-loading-&amp;-dependencies_configuration-blocks">Configuration Blocks</h3>
-<p>There are some convenience methods on the module which are equivalent to the config block. For
-example:</p>
+<h3 id="模块加载及依赖_配置代码块">配置代码块</h3>
+<p>有一些快捷方法可供模块调用，效果等同于配置代码块，比如：</p>
 <pre class="prettyprint linenums">
 angular.module('myModule', []).
   value('a', 123).
@@ -155,7 +136,7 @@ angular.module('myModule', []).
   directive('directiveName', ...).
   filter('filterName', ...);
 
-// is same as
+// 等同于
 
 angular.module('myModule', []).
   config(function($provide, $compileProvider, $filterProvider) {
@@ -165,48 +146,31 @@ angular.module('myModule', []).
     $filterProvider.register('filterName', ...);
   });
 </pre>
-<p>The configuration blocks get applied in the order in which they are registered. The only exception
-to it are constant definitions, which are placed at the beginning of all configuration blocks.</p>
-<h3 id="module-loading-&amp;-dependencies_run-blocks">Run Blocks</h3>
-<p>Run blocks are the closest thing in Angular to the main method. A run block is the code which
-needs to run to kickstart the application. It is executed after all of the service have been
-configured and the injector has been created. Run blocks typically contain code which is hard
-to unit-test, and for this reason should be declared in isolated modules, so that they can be
-ignored in the unit-tests.</p>
-<h3 id="module-loading-&amp;-dependencies_dependencies">Dependencies</h3>
-<p>Modules can list other modules as their dependencies. Depending on a module implies that required
-module needs to be loaded before the requiring module is loaded. In other words the configuration
-blocks of the required modules execute before the configuration blocks of the requiring module.
-The same is true for the run blocks. Each module can only be loaded once, even if multiple other
-modules require it.</p>
-<h3 id="module-loading-&amp;-dependencies_asynchronous-loading">Asynchronous Loading</h3>
-<p>Modules are a way of managing $injector configuration, and have nothing to do with loading of
-scripts into a VM. There are existing projects which deal with script loading, which may be used
-with Angular. Because modules do nothing at load time they can be loaded into the VM in any order
-and thus script loaders can take advantage of this property and parallelize the loading process.</p>
-<h3 id="module-loading-&amp;-dependencies_creation-versus-retrieval">Creation versus Retrieval</h3>
-<p>Beware that using <code>angular.module(&#39;myModule&#39;, [])</code> will create the module <code>myModule</code> and overwrite any
-existing module named <code>myModule</code>. Use <code>angular.module(&#39;myModule&#39;)</code> to retrieve an existing module.</p>
+<p>配置语句的执行顺序就是根据它们注册的顺序而定的。唯一的例外是 <code>constant</code> 的定义，它会被调整到所有配置块的最前面执行。</p>
+<h3 id="模块加载及依赖_执行代码块">执行代码块</h3>
+<p>执行代码块是 ng 中最接近 <code>main</code> 函数的一个东西。执行代码块是应用启动时运行的代码。它在所有的服务被配置好以及 <code>注入器(injector)</code> 被创建好之后执行。通常，执行代码块包含的代码都很难进行单元测试，正因为如此，它通常应该被丢在一个单独的模块中，这样我们可以在单元测试时忽略它。</p>
+<h3 id="模块加载及依赖_模块依赖">模块依赖</h3>
+<p>模块声明时可以列出它所需要依赖的其它模块。一个模块依赖某模块，意味着这个被依赖的模块需要在模块被加载之前加载完毕。更具体些，假设模块A依赖于模块B，那么模块A的配置代码块的执行，必须发生在模块B的配置代码块之后；模块A的执行代码块亦同理，也在模块B的执行代码块之后被执行。每个模块只能被加载一次，即使有多个别的模块依赖它。</p>
+<h3 id="模块加载及依赖_异步加载">异步加载</h3>
+<p>模块是一种管理 <code>$injector</code> 配置的方式，它和将脚本加载到JavaScript虚拟机（VM）没有半毛钱关系。现在已经有很多项目用来在 ng 中处理脚本的动态加载。由于模块在加载期什么都不做，所以它们可以按任何顺序载入到虚拟机中，脚本加载器也可以充分利用这一特性来并行地加载模块和脚本。</p>
+<h3 id="模块加载及依赖_创建模块-vs-获取模块">创建模块 vs 获取模块</h3>
+<p>注意，使用 <code>angular.module(&#39;myModule&#39;, [])</code> 将创建名为 <code>myModule</code> 的模块并重写已有的同名模块。而使用 <code>angular.module(&#39;myModule&#39;)</code> 则只会获取已有的模块实例。</p>
 <pre class="prettyprint linenums">
   var myModule = angular.module('myModule', []);
   
-  // add some directives and services
+  // 添加一些指令和服务
   myModule.service('myService', ...);
   myModule.directive('myDirective', ...);
 
-  // overwrites both myService and myDirective by creating a new module
+  // 创建一个新模块将覆盖掉这些指令和服务
   var myModule = angular.module('myModule', []);
 
-  // throws an error because myOtherModule has yet to be defined
+  // 由于myOtherModule模块还没有定义，所以会抛出一个异常
   var myModule = angular.module('myOtherModule');
 </pre>
-<h2 id="unit-testing">Unit Testing</h2>
-<p>In its simplest form a unit test is a way of instantiating a subset of the application in test and
-then applying a stimulus to it. It is important to realize that each module can only be loaded
-once per injector. Typically an app has only one injector. But in tests, each test has its own
-injector, which means that the modules are loaded multiple times per VM. Properly structured
-modules can help with unit testing, as in this example:</p>
-<p>In all of these examples we are going to assume this module definition:
+<h2 id="单元测试">单元测试</h2>
+<p>单元测试最简单的形式是在测试容器中初始化应用的一小部分对象然后进行模拟运行。意识到每个模块在每个 <code>injector</code> 创建时只能被加载一次是非常重要的。通常每个应用中只有一个 <code>注入器(injector)</code>（译注：即全局单例），但是在测试中，每个测试容器都有自己的独立<code>injector</code> ，这意味着对于JS虚拟机，模块都会被多次加载。用正确的形式组织模块将有助于我们进行单元测试，如下面例子所示：</p>
+<p>以下例子中，我们都会用到的模块定义如下：</p>
 <pre class="prettyprint linenums">
   angular.module('greetMod', []).
 
@@ -224,30 +188,25 @@ modules can help with unit testing, as in this example:</p>
       }
     });
 </pre>
-<p>Let&#39;s write some tests:
+<p>让我们写一些测试代码：</p>
 <pre class="prettyprint linenums">
 describe('myApp', function() {
-  // load the relevant application modules then load a special
-  // test module which overrides the $window with a mock version,
-  // so that calling window.alert() will not block the test
-  // runner with a real alert box. This is an example of overriding
-  // configuration information in tests.
+  // 加载相关的应用模块，然后加载指定的测试模块，它将把$window改写为一个mock版
+  // 所以，调用window.alert()将不会弹出一个提示框而阻塞测试的运行。这就是一个在测试容器中改写配置信息的例子。
   beforeEach(module('greetMod', function($provide) {
     $provide.value('$window', {
       alert: jasmine.createSpy('alert')
     });
   }));
 
-  // The inject() will create the injector and inject the greet and
-  // $window into the tests. The test need not concern itself with
-  // wiring of the application, only with testing it.
+  // inject()函数将创建一个注入器，并且把greet服务和$window服务注入到测试容器中。
+  // 测试代码不需要关心如何获取应用，只管测试它就行了。
   it('should alert on $window', inject(function(greet, $window) {
     greet('World');
     expect($window.alert).toHaveBeenCalledWith('Hello World!');
   }));
 
-  // this is another way of overriding configuration in the
-  // tests using an inline module and inject methods.
+  // 这是让测试容器改写配置的另一种方案：使用内嵌模块和依赖注入
   it('should alert using the alert service', function() {
     var alertSpy = jasmine.createSpy('alert');
     module(function($provide) {

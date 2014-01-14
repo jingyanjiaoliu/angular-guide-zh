@@ -2,38 +2,34 @@
 <div><span class="hint"></span>
 </div>
 </h1>
-<div><div class="developer-guide-page developer-guide-templates-working-with-css-in-angular-page"><p>Angular sets these CSS classes. It is up to your application to provide useful styling.</p>
-<h2 id="css-classes-used-by-angular">CSS classes used by angular</h2>
+<div><div class="--page ---angular-css-page"><p>Angular提供了这些CSS类，它们为你的应用提供便于使用的风格。</p>
+<h2 id="angular-使用的css类">Angular 使用的CSS类</h2>
 <ul>
-<li><p><code>ng-scope</code></p>
-<ul>
-<li><strong>Usage:</strong> angular applies this class to any element that where a new <a href="api/ng.$rootScope.Scope"><code>scope</code></a>
-is defined. (see <a href="guide/scope">scope</a> guide for more information about scopes)</li>
+<li><code>ng-scope</code></li>
+<li><ul>
+<li><strong>用法:</strong> angular把这个类附加到所有创建了新<a href="api/ng.$rootScope.Scope"><code>作用域(Scope)</code></a>的HTML元素上。(参见 <a href="guide/scope">作用域</a>)</li>
 </ul>
 </li>
 <li><p><code>ng-binding</code></p>
 <ul>
-<li><strong>Usage:</strong> angular applies this class to any element that is attached to a data binding, via <code>ng-bind</code> or
-{{}} curly braces, for example. (see <a href="guide/databinding">databinding</a> guide)</li>
+<li><strong>用法:</strong> angular把这个类附加到所有通过 <code>ng-bind</code> 或
+{{}} 绑定了任何数据的元素上。(参见 <a href="guide/databinding">数据绑定</a>)</li>
 </ul>
 </li>
 <li><p><code>ng-invalid</code>, <code>ng-valid</code></p>
 <ul>
-<li><strong>Usage:</strong> angular applies this class to an input widget element if that element&#39;s input does
-not pass validation. (see <a href="api/ng.directive:input"><code>input</code></a> directive)</li>
+<li><strong>用法:</strong> angular把这个类附加到进行了验证操作的所有input组件元素上。 (参见 <a href="api/ng.directive:input"><code>input</code></a> 指令)</li>
 </ul>
 </li>
 <li><p><code>ng-pristine</code>, <code>ng-dirty</code></p>
 <ul>
-<li><strong>Usage:</strong> angular <a href="api/ng.directive:input"><code>input</code></a> directive applies <code>ng-pristine</code> class
-to a new input widget element which did not have user interaction. Once the user interacts with
-the input widget the class is changed to <code>ng-dirty</code>.</li>
+<li><strong>用法:</strong> angular的<a href="api/ng.directive:input"><code>input</code></a>指令给所有新的、还没有与用户交互的input元素附加上<code>ng-pristine</code>类，当用户有任何输入时，则附加上 <code>ng-dirty</code>.</li>
 </ul>
 </li>
 </ul>
-<h3 id="css-classes-used-by-angular_related-topics">Related Topics</h3>
+<h3 id="angular-使用的css类_相关主题">相关主题</h3>
 <ul>
-<li><a href="guide/templates">Angular Templates</a></li>
-<li><a href="guide/forms">Angular Forms</a></li>
+<li><a href="guide/templates">Angular模板</a></li>
+<li><a href="guide/forms">Angular表单</a></li>
 </ul>
 </div></div>

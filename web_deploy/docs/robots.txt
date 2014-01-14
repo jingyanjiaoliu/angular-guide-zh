@@ -1,1 +1,1 @@
-Sitemap: http://docs.angularjs.org/sitemap.xml
+Sitemap: http://angular.duapp.com/sitemap.xml

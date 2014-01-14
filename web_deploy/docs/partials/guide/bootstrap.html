@@ -2,12 +2,11 @@
 <div><span class="hint"></span>
 </div>
 </h1>
-<div><div class="developer-guide-page developer-guide-bootstrap-page"><h2 id="overview">Overview</h2>
-<p>This page explains the Angular initialization process and how you can manually initialize Angular
-if necessary.</p>
-<h3 id="overview_angular-tag">Angular <code>&lt;script&gt;</code> Tag</h3>
-<p>This example shows the recommended path for integrating Angular with what we call automatic
-initialization.</p>
+<div><div class="developer-guide-page developer-guide-bootstrap-page"><p>Translated by <a href="https://github.com/grahamle">@GrahamLe</a></p>
+<h2 id="概述">概述</h2>
+<p>这一章讲述 Angular 初始化过程以及必要的时候用户如何能够手动将 Angular 初始化。</p>
+<h3 id="概述_angular-标签">Angular <code>&lt;script&gt;</code> 标签</h3>
+<p>下面例子展示了推荐的在应用中使用 Angular 的自动初始化的代码路径设置。</p>
 <pre class="prettyprint linenums">
 &lt;!doctype html&gt;
 &lt;html xmlns:ng="http://angularjs.org" ng-app&gt;
@@ -18,41 +17,28 @@ initialization.</p>
 &lt;/html&gt;
 </pre>
 <ul>
-<li>Place the <code>script</code> tag at the bottom of the page. Placing script tags at the end of the page
-improves app load time because the HTML loading is not blocked by loading of the <code>angular.js</code>
-script. You can get the latest bits from <a href="http://code.angularjs.org"><a href="http://code.angularjs.org">http://code.angularjs.org</a></a>. Please don&#39;t link
-your production code to this URL, as it will expose a security hole on your site. For
-experimental development linking to our site is fine.<ul>
-<li>Choose: <code>angular-[version].js</code> for a human-readable file, suitable for development and
-debugging.</li>
-<li>Choose: <code>angular-[version].min.js</code> for a compressed and obfuscated file, suitable for use in
-production.</li>
+<li>在HTML页面底部放置 <code>script</code> 标签。这样可以优化应用的加载时间，因为避免了HTML加载时被 <code>angular.js</code> 脚步的加载阻滞。你可以在在这里 <a href="http://code.angularjs.org"><a href="http://code.angularjs.org">http://code.angularjs.org</a></a> 获取 Angular 的最新版本。注意，别再你的产品代码中连接这个 URL，因为这样会在你的网站中暴露一个安全问题。当然，在开发的时候连接是没有问题的。<ul>
+<li>选择 <code>angular-[version].js</code> 这样一个可读的版本，用来作为开发和调试用</li>
+<li>选择 <code>angular-[version].min.js</code> 这样一个压缩版本，用来作为产品发布时用</li>
 </ul>
 </li>
-<li><p>Place <code>ng-app</code> to the root of your application, typically on the <code>&lt;html&gt;</code> tag if you want
-angular to auto-bootstrap your application.</p>
+<li><p>如果你想要你的应用自动启动 Angular 的话，那就把 <code>ng-app</code> 放在应用的根结点中，通常情况下是 <code>&lt;html&gt;</code> 标签中，像下面这样：</p>
 <pre><code>&lt;html ng-app&gt;</code></pre>
 </li>
-<li><p>If IE7 support is required add <code>id=&quot;ng-app&quot;</code></p>
+<li><p>如果你的应用需要支持 IE7 ，那么加上 <code>id=&quot;ng-app&quot;</code></p>
 <pre><code>&lt;html ng-app id=&quot;ng-app&quot;&gt;</code></pre>
 </li>
-<li><p>If you choose to use the old style directive syntax <code>ng:</code> then include xml-namespace in <code>html</code>
-to make IE happy. (This is here for historical reasons, and we no longer recommend use of
-<code>ng:</code>.)</p>
+<li><p>如果你要使用 <code>ng:</code> 这样的老风格的指令方式，那就在 <code>html</code> 中加入 <code>xml命名空间</code> ，这样也能让 IE 得瑟下。（译注：历史原因，你懂的，所以 <code>ng:</code> 这种方式现在已经不推荐了。</p>
 <pre><code>&lt;html xmlns:ng=&quot;http://angularjs.org&quot;&gt;</code></pre>
 </li>
 </ul>
-<h3 id="overview_automatic-initialization">Automatic Initialization</h3>
+<h3 id="概述_自动初始化">自动初始化</h3>
 <p><img class="pull-right" style="padding-left: 3em;" src="img/guide/concepts-startup.png"></p>
-<p>Angular initializes automatically upon <code>DOMContentLoaded</code> event or when the <code>angular.js</code> script is
-evaluated if at that time <code>document.readyState</code> is set to <code>&#39;complete&#39;</code>. At this point Angular looks
-for the <a href="api/ng.directive:ngApp"><code><code>ng-app</code></code></a> directive which designates your application root.
-If the <a href="api/ng.directive:ngApp"><code><code>ng-app</code></code></a> directive is found then Angular will:</p>
+<p>Angular 在以下两种情况下自动初始化，一个是在 <code>DOMContentLoaded</code> 事件触发时，或者在 <code>angular.js</code> 脚本被执行的同时如果 <code>document.readyState</code> 被置为 <code>&#39;complete&#39;</code> 的话。初始化时，Angular 会去找 <a href="api/ng.directive:ngApp"><code><code>ng-app</code></code></a> 这个指明应用开始所在的指令。如果 <a href="api/ng.directive:ngApp"><code><code>ng-app</code></code></a> 指令被找到的话，Angular 会做以下几件事：</p>
 <ul>
-<li>load the <a href="guide/module">module</a> associated with the directive.</li>
-<li>create the application <a href="api/AUTO.$injector"><code>injector</code></a></li>
-<li>compile the DOM treating the <a href="api/ng.directive:ngApp"><code><code>ng-app</code></code></a> directive as the root of the compilation. This allows you to tell it to treat only a
-portion of the DOM as an Angular application.</li>
+<li>加载 <code>ng-app</code> 指令所指定的 <a href="guide/module">模块</a></li>
+<li>创建应用所需的 <a href="api/AUTO.$injector"><code>injector</code></a></li>
+<li>以 <a href="api/ng.directive:ngApp"><code><code>ng-app</code></code></a> 所在的节点为根节点，开始遍历并编译DOM树（<code>ng-app</code> 指出了应用的哪一部份开始时 Angular 去编译的）</li>
 </ul>
 <pre class="prettyprint linenums">
 &lt;!doctype html&gt;
@@ -63,11 +49,9 @@ portion of the DOM as an Angular application.</li>
   &lt;/body&gt;
 &lt;/html&gt;
 </pre>
-<h3 id="overview_manual-initialization">Manual Initialization</h3>
-<p>If you need to have more control over the initialization process, you can use a manual
-bootstrapping method instead. Examples of when you&#39;d need to do this include using script loaders
-or the need to perform an operation before Angular compiles a page.</p>
-<p>Here is an example of manually initializing Angular:</p>
+<h3 id="概述_手动初始化">手动初始化</h3>
+<p>如果你想在初始化阶段拥有更多的控制权，你可以使用手动方法启动应用。你需要手动启动的可能会是你想要在你的应用中使用脚本加载器，或者你可能想要在 Angular 编译页面之前执行一些别的操作。</p>
+<p>下面是一个手动初始化 Angular 的例子：</p>
 <pre class="prettyprint linenums">
 &lt;!doctype html&gt;
 &lt;html xmlns:ng="http://angularjs.org"&gt;
@@ -83,27 +67,16 @@ or the need to perform an operation before Angular compiles a page.</p>
   &lt;/body&gt;
 &lt;/html&gt;
 </pre>
-<p>Note that we have provided the name of our application module to be loaded into the injector as the second
-parameter of the <a href="api/angular.bootstrap"><code>api/angular.bootstrap</code></a> function. Notice that <code>angular.bootstrap</code> will not create modules 
-on the fly. You must create any custom <a href="guide/module">modules</a> before you pass them as a parameter. </p>
-<p>This is the sequence that your code should follow:</p>
+<p>注意，在上面的例子中，我们提供了我们应用要加载的模块名作为 <a href="api/angular.bootstrap"><code>api/angular.bootstrap</code></a> 函数的第二个参数。需要注意的是 <code>angular.bootstrap</code> 不会凭空创建模块，在我们将模块作为参数注入之前，必须创建任一自定义的 <a href="guide/module">模块</a>。</p>
+<p>以下是你的 Angular 代码运行时遵循的顺序：</p>
 <ol>
-<li><p>After the page and all of the code is loaded, find the root element of your AngularJS
-application, which is typically the root of the document.</p>
+<li><p>在HTML页面以及所有代码加载完毕后，Angular 会去找到应用的根元素（通常是文档的根节点）</p>
 </li>
-<li><p>Call <a href="api/angular.bootstrap"><code>api/angular.bootstrap</code></a> to <a href="guide/compiler">compile</a> the element into an
-executable, bi-directionally bound application.</p>
+<li><p>调用 <a href="api/angular.bootstrap"><code>api/angular.bootstrap</code></a> 去 <a href="guide/compiler">编译</a> 各元素成为一个可执行的且双向绑定的应用</p>
 </li>
 </ol>
-<h3 id="overview_deferred-bootstrap">Deferred Bootstrap</h3>
-<p>This feature enables tools like Batarang and test runners to
-hook into angular&#39;s bootstrap process and sneak in more modules
-into the DI registry which can replace or augment DI services for
-the purpose of instrumentation or mocking out heavy dependencies.</p>
-<p>If <code>window.name</code> contains prefix <code>NG_DEFER_BOOTSTRAP!</code> when
-<a href="api/angular.bootstrap"><code>api/angular.bootstrap</code></a> is called, the bootstrap process will be paused
-until <code>angular.resumeBootstrap()</code> is called.</p>
-<p><code>angular.resumeBootstrap()</code> takes an optional array of modules that
-should be added to the original list of modules that the app was
-about to be bootstrapped with.</p>
+<h3 id="概述_延迟启动">延迟启动</h3>
+<p>这个特色可以让像 Batarang 一样的测试工具横插一杠进入 Angular 的引导进程，并且溜进模块中的DI注册机制中，这样就可以替换或者增强DI提供的服务。（译注：由于后面一句不甚理解其原理，不敢贸然翻译）</p>
+<p>当 <a href="api/angular.bootstrap"><code>api/angular.bootstrap</code></a> 被调用时，如果 <code>window.name</code> 包含 <code>NG_DEFER_BOOTSTRAP!</code> 前缀，引导进程会被暂停直到 <code>angular.resumeBootstrap()</code> 被调用。</p>
+<p><code>angular.resumeBootstrap()</code> 以一个可选的数组作为参数。这个数组是包含了应用启动时需要被注入的模块。</p>
 </div></div>

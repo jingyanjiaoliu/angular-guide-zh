@@ -60,7 +60,7 @@
 <td>负责创建和自动装载对象或函数</td>
 </tr>
 <tr>
-<td><a href="guide/concepts#injector">注射器(Injector)</a></td>
+<td><a href="guide/concepts#injector">注入器(Injector)</a></td>
 <td>用来实现依赖注入(Injection)的容器</td>
 </tr>
 <tr>
@@ -77,10 +77,10 @@
 <p>下面我们将编写一个表单，用来计算一个订单在不同币种下的总价。</p>
 <p>首先，我们做一个单币种表单，它有数量和单价两个输入框，并且把数量和单价相乘得出该订单的总价。</p>
 <h3 id="例子的第一步：数据绑定_source">Source</h3>
-<div source-edit="" source-edit-deps="angular.js" source-edit-html="index.html-20" source-edit-css="" source-edit-js="" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="" source-edit-deps="angular.js" source-edit-html="index.html-281" source-edit-css="" source-edit-js="" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-20" ng-html-wrap=" angular.js"></pre>
-<script type="text/ng-template" id="index.html-20">
+<pre class="prettyprint linenums" ng-set-text="index.html-281" ng-html-wrap=" angular.js"></pre>
+<script type="text/ng-template" id="index.html-281">
       <div ng-init="qty=1;cost=2">
         <b>订单:</b>
         <div>
@@ -96,12 +96,12 @@
   </script>
 </div>
 </div><h3 id="例子的第一步：数据绑定_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-20" ng-eval-javascript=""></div>
+<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-281" ng-eval-javascript=""></div>
 <p>你可以先在Demo区体验一下操作，接下来我们将通读这个例子，并且详细讲解这里所发生的事情。</p>
 <p><img class="pull-right" style="padding-left: 3em; padding-bottom: 1em;" src="img/guide/concepts-databinding1.png"></p>
 <p>这看起来很像标准的HTML，只是带了一些新的标记。在Angular中，像这样的文件叫做<a name="template">“<a href="guide/templates">模板(template)</a>”</a>。
 当Angular启动你的应用时，它通过<a name="compiler">“<a href="guide/compiler">编译器(compiler)</a>”</a>来解析并处理模板中的这些新标记。
-这些经过加载、转换、渲染而成的DOM就叫做<a name="view">“视图(view)”</a></p>
+这些经过加载、转换、渲染而成的DOM就叫做<a name="view">“<a href="guide/view">视图(view)</a>”</a></p>
 <p>第一类新标记叫做<a name="directive">“<a href="guide/directive">指令(directive)</a>”</a>。
 它们通过HTML中的属性或元素来为页面添加特定的行为。上面的例子中，我们使用了
 <a href="api/ng.directive:ngApp"><code><code>ng-app</code></code></a> 属性，与此相关的指令(directive)则负责自动初始化我们的应用程序。
@@ -119,7 +119,7 @@ Angular还为<a href="api/ng.directive:input"><code><code>input</code></code></a
 当编译器遇到这种标记时，它会把这些标记替换为这个表达式的计算结果。
 模板中的<a name="expression">&quot;<a href="guide/expression">表达式</a>&quot;</a>是一种<strong>类似于</strong>JavaScript的代码片段，它允许你读写变量。注意，表达式中所用的变量<strong>并不是</strong>全局变量。
 就像JavaScript函数定义中的变量都属于某个作用域一样，Angular也为这些能从表达式中访问的变量提供了一个<a name="scope">“<a href="guide/scope">作用域(scope)</a>”</a>。
-这些存储于Angular作用域(Scope)中的变量叫做Scope变量，这些变量所代表的数据叫做<a name="model">“模型(model)”</a>。
+这些存储于Angular作用域(Scope)中的变量叫做Scope变量，这些变量所代表的数据叫做<a name="model">“<a href="guide/model">模型(model)</a>”</a>。
 在上面的例子中，这些标记告诉Angular：“从这两个<code>input</code>元素中获取数据，并把它们乘在一起。”</p>
 <p>上面这个例子中还包含一个<a name="filter">&quot;<a href="guide/filter">过滤器(filter)</a>&quot;</a>。
 过滤器格式化表达式的值，以便呈现给用户。
@@ -130,10 +130,10 @@ Angular还为<a href="api/ng.directive:input"><code><code>input</code></code></a
 <h2 id="添加ui逻辑：控制器">添加UI逻辑：控制器</h2>
 <p>现在，我们添加一些逻辑，以便让这个例子支持不同的币种。它将允许我们使用不同的币种来输入、计算和支付这个订单。</p>
 <h3 id="添加ui逻辑：控制器_source">Source</h3>
-<div source-edit="invoice1" source-edit-deps="angular.js invoice1.js" source-edit-html="index.html-21" source-edit-css="" source-edit-js="invoice1.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="invoice1" source-edit-deps="angular.js invoice1.js" source-edit-html="index.html-282" source-edit-css="" source-edit-js="invoice1.js" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-21" ng-html-wrap="invoice1 angular.js invoice1.js"></pre>
-<script type="text/ng-template" id="index.html-21">
+<pre class="prettyprint linenums" ng-set-text="index.html-282" ng-html-wrap="invoice1 angular.js invoice1.js"></pre>
+<script type="text/ng-template" id="index.html-282">
       <div ng-controller="InvoiceController as invoice">
         <b>订单:</b>
         <div>
@@ -183,7 +183,7 @@ Angular还为<a href="api/ng.directive:input"><code><code>input</code></code></a
   </script>
 </div>
 </div><h3 id="添加ui逻辑：控制器_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="invoice1" ng-set-html="index.html-21" ng-eval-javascript="invoice1.js"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="invoice1" ng-set-html="index.html-282" ng-eval-javascript="invoice1.js"></div>
 <p>这次有什么变动？</p>
 <p>首先，出现了一个新的JavaScript文件，它包含一个被称为<a name="controller">&quot;<a href="guide/controller">控制器(controller)</a>&quot;</a>的函数。
 更确切点说：这个文件中定义了一个构造函数，它用来在将来真正需要的时候创建这个控制器函数的实例。
@@ -206,10 +206,10 @@ Angular还为<a href="api/ng.directive:input"><code><code>input</code></code></a
 以便这个应用程序的其他部分也能复用这些逻辑。</p>
 <p>接下来，就让我们重构我们的例子，并且把币种兑换的逻辑移入到一个独立的服务(service)中。</p>
 <h3 id="与视图_source">Source</h3>
-<div source-edit="invoice2" source-edit-deps="angular.js finance2.js invoice2.js" source-edit-html="index.html-22" source-edit-css="" source-edit-js="finance2.js invoice2.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="invoice2" source-edit-deps="angular.js finance2.js invoice2.js" source-edit-html="index.html-283" source-edit-css="" source-edit-js="finance2.js invoice2.js" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-22" ng-html-wrap="invoice2 angular.js finance2.js invoice2.js"></pre>
-<script type="text/ng-template" id="index.html-22">
+<pre class="prettyprint linenums" ng-set-text="index.html-283" ng-html-wrap="invoice2 angular.js finance2.js invoice2.js"></pre>
+<script type="text/ng-template" id="index.html-283">
       <div ng-controller="InvoiceController as invoice">
         <b>订单:</b>
         <div>
@@ -273,16 +273,16 @@ Angular还为<a href="api/ng.directive:input"><code><code>input</code></code></a
   </script>
 </div>
 </div><h3 id="与视图_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="invoice2" ng-set-html="index.html-22" ng-eval-javascript="finance2.js invoice2.js"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="invoice2" ng-set-html="index.html-283" ng-eval-javascript="finance2.js invoice2.js"></div>
 <p><img class="pull-right" style="padding-left: 3em; padding-bottom: 1em;" src="img/guide/concepts-module-service.png"></p>
 <p>这次有什么改动？</p>
 <p>我们把<code>convertCurrency</code>函数和所支持的币种的定义独立到一个新的文件：<code>finance.js</code>。但是控制器怎样才能找到这个独立的函数呢？</p>
 <p>这下该<a name="di">“<a href="guide/di">依赖注入(Dependency Injection)</a>”</a>出场了。依赖注入(DI)是一种设计模式(Design Pattern)，它用于解决下列问题：我们创建了对象和函数，但是它们怎么得到自己所依赖的对象呢？
 Angular中的每一样东西都是用依赖注入(DI)的方式来创建和使用的，比如指令(Directive)、过滤器(Filter)、控制器(Controller)、服务(Service)。
-在Angular中，依赖注入(DI)的容器(container)叫做<a name="injector">&quot;<a href="guide/di">注射器(injector)</a>&quot;</a>。</p>
+在Angular中，依赖注入(DI)的容器(container)叫做<a name="injector">&quot;<a href="guide/di">注入器(injector)</a>&quot;</a>。</p>
 <p>要想进行依赖注入，你必须先把这些需要协同工作的对象和函数注册(Register)到某个地方。在Angular中，这个地方叫做<a name="module">“<a href="guide/module">模块(module)</a>”</a>。</p>
 <p>在上面这个例子中：
-模板包含了一个<code>ng-app=&quot;invoice2&quot;</code>指令。这告诉Angular使用<code>invoice</code>模块作为该应用程序的主模块。
+模板包含了一个<code>ng-app=&quot;invoice2&quot;</code>指令。这告诉Angular使用<code>invoice2</code>模块作为该应用程序的主模块。
 像<code>angular.module(&#39;invoice&#39;, [&#39;finance&#39;])</code>这样的代码告诉Angular：<code>invoice</code>模块依赖于<code>finance</code>模块。
 这样一来，Angular就能同时使用<code>InvoiceController</code>这个控制器和<code>currencyConverter</code>这个服务了。</p>
 <p>刚才我们已经定义了应用程序的所有部分，现在，需要Angular来创建它们了。
@@ -292,7 +292,7 @@ Angular中的每一样东西都是用依赖注入(DI)的方式来创建和使用
 （译注：js中的“工厂(factory)”是指一个以函数作为“返回值”的函数）</p>
 <p>回到刚才的问题：<code>InvoiceController</code>该怎样获得这个<code>currencyConverter</code>函数的引用呢？
 在Angular中，这非常简单，只要在构造函数中定义一些具有特定名字的参数就可以了。
-这时，注射器(injector)就可以按照正确的依赖关系创建这些对象，并且根据名字把它们传入那些依赖它们的对象工厂中。
+这时，注入器(injector)就可以按照正确的依赖关系创建这些对象，并且根据名字把它们传入那些依赖它们的对象工厂中。
 在我们的例子中，<code>InvoiceController</code>有一个叫做<code>currencyConverter</code>的参数。
 根据这个参数，Angular就知道<code>InvoiceController</code>依赖于<code>currencyConverter</code>，取得<code>currencyConverter</code>服务的实例，并且把它作为参数传给<code>InvoiceController</code>的构造函数。</p>
 <p>这次改动中的最后一点是我们现在把一个数组作为参数传入到<code>module.controller</code>函数中，而不再是一个普通函数。
@@ -304,10 +304,10 @@ Angular可以通过这种数组语法来定义依赖，以免js代码压缩器(M
 <p>现在开始最后一个改动：通过Yahoo Finance API来获得货币之间的当前汇率。
 下面的例子将告诉你在Angular中应该怎么做。</p>
 <h3 id="访问后端_source">Source</h3>
-<div source-edit="invoice3" source-edit-deps="angular.js invoice3.js finance3.js" source-edit-html="index.html-23" source-edit-css="" source-edit-js="invoice3.js finance3.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="invoice3" source-edit-deps="angular.js invoice3.js finance3.js" source-edit-html="index.html-284" source-edit-css="" source-edit-js="invoice3.js finance3.js" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-23" ng-html-wrap="invoice3 angular.js invoice3.js finance3.js"></pre>
-<script type="text/ng-template" id="index.html-23">
+<pre class="prettyprint linenums" ng-set-text="index.html-284" ng-html-wrap="invoice3 angular.js invoice3.js finance3.js"></pre>
+<script type="text/ng-template" id="index.html-284">
       <div ng-controller="InvoiceController as invoice">
         <b>订单:</b>
         <div>
@@ -386,7 +386,7 @@ Angular可以通过这种数组语法来定义依赖，以免js代码压缩器(M
   </script>
 </div>
 </div><h3 id="访问后端_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="invoice3" ng-set-html="index.html-23" ng-eval-javascript="invoice3.js finance3.js"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="invoice3" ng-set-html="index.html-284" ng-eval-javascript="invoice3.js finance3.js"></div>
 <p>这次有什么变动？</p>
 <p>这次我们的<code>finance</code>模块中的<code>currencyConverter</code>服务使用了<a href="api/ng.$http"><code>$http</code></a>服务 —— 它是由Angular内建的用于访问后端API的服务。
 是对<a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest"><code>XMLHttpRequest</code></a>以及<a href="http://en.wikipedia.org/wiki/JSONP">JSONP</a>的封装。详情参阅$http的API文档 - <a href="api/ng.$http"><code><code>$http</code></code></a>。</p>

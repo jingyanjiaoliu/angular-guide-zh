@@ -4,13 +4,13 @@
 </h1>
 <div><div class="-angular--page"><p>翻译者:<a href="https://github.com/lightma">@lightma</a></p>
 <h3 id="什么是服务？">什么是服务？</h3>
-<p>服务是单实例对象或者函数，用来实现web应用里常见的特定任务。
+<p>服务是单例对象或者函数，用来实现web应用里常见的特定任务。
 Angular有很多内置的服务，比如<a href="http://docs.angularjs.org/api/ng.$http">$http service服务</a>，它提供了对浏览器<code>XMLHttpRequest</code>对象的访问，用以实现向服务器发出请求。
 就像其他Angular核心的变量和标识符一样，内置的服务名都以<code>$</code>开头(比如上面提到的<code>$http</code>)。当然，你也能创建自定义的服务。</p>
 <h3 id="使用服务">使用服务</h3>
-<p>为了使用某个服务，你需要指定其他组件(例如控制器，其他服务，过滤器或指令)依赖于该服务，剩下的就交给Angular的依赖注入子系统吧。Angular依赖注入子系统负责服务实例化、依赖解析并按声明向组件提供依赖。</p>
-<p>Angular的依赖注入使用<a href="http://misko.hevery.com/2009/02/19/constructor-injection-vs-setter-injection/">&quot;构造注入&quot;</a>，在这种注入方式中，依赖是被当作参数传入组件的工厂方法或构造函数里。由于JavaScript是一种动态类型语言，Angular的依赖注入子系统就不能使用静态类型来指定依赖的服务。因此一个组件必须使用<a href="guide/di">依赖注入注解</a>方法中的一种来声明它的依赖。
-例如，提供<code>$inject</code>属性：</p>
+<p>为了使用某个服务，你需要指定其他组件(例如控制器，其他服务，过滤器或指令)依赖于该服务，剩下的就交给Angular的依赖注入子系统吧。Angular依赖注入子系统负责服务实例化、依赖解析并按声明向组件提供所依赖对象。</p>
+<p>Angular的依赖注入使用<a href="http://misko.hevery.com/2009/02/19/constructor-injection-vs-setter-injection/">&quot;构造函数注入&quot;</a>，在这种注入方式中，依赖是被当作参数传入组件的工厂方法或构造函数里。由于JavaScript是一种动态类型语言，Angular的依赖注入子系统就不能使用静态类型来指定依赖的服务。因此一个组件必须使用<a href="guide/di">依赖注入注解</a>方法中的一种来声明它的依赖。</p>
+<p>例如，提供<code>$inject</code>属性：</p>
 <pre><code>     var MyController = function($location) { ... };
     MyController.$inject = [&#39;$location&#39;];
     myModule.controller(&#39;MyController&#39;, MyController);</code></pre>
