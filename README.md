@@ -18,11 +18,11 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * [05-Conceptual Overview（概念总览）](http://angular.duapp.com/guide/concepts) 翻译者: @asnowwolf 已完成翻译
 * [06-Understanding Angular Services（理解ng的服务）](http://angular.duapp.com/guide/dev_guide.services.understanding_services)翻译者: @lightma 已完成翻译
 * 07-Managing Service Dependencies @joe
-* 08-Creating Services 翻译者: @FrankyYang
-* 09-Injecting Services Into Controllers 翻译者: @FrankyYang
-* 10-Testing Angular Services 翻译者: @FrankyYang
+* 08-Creating Services 翻译者:
+* 09-Injecting Services Into Controllers 翻译者:
+* 10-Testing Angular Services 翻译者:
 * 11-Using $location  (未认领)
-* 12-Angular Services 翻译者: @FrankyYang
+* 12-Angular Services 翻译者:
 * [13-Data Binding（数据绑定）](http://angular.duapp.com/guide/databinding) 翻译者：@NigelYao 已完成
 * [14-Working With CSS in Angular](http://angular.duapp.com/guide/dev_guide.templates.css-styling) @ckken 已完成
 * [15-Dependency Injection（依赖注入）](http://angular.duapp.com/guide/di) 翻译者: @GrahamLe 已完成翻译初稿
