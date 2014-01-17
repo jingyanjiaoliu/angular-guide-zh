@@ -18,7 +18,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * [05-Conceptual Overview（概念总览）](http://angular.duapp.com/guide/concepts) 翻译者: @asnowwolf 已完成翻译
 * [06-Understanding Angular Services（理解ng的服务）](http://angular.duapp.com/guide/dev_guide.services.understanding_services)翻译者: @lightma 已完成翻译
 * 07-Managing Service Dependencies @joe
-* 08-Creating Services 翻译者:
+* 08-Creating Services 翻译者: @pengisgood 翻译中
 * 09-Injecting Services Into Controllers 翻译者:
 * 10-Testing Angular Services 翻译者:
 * 11-Using $location  (未认领)
@@ -37,7 +37,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * [24-Animations](http://angular.duapp.com/guide/animations) 翻译者: @ariesjia 已完成翻译
 * [25-E2E Testing](http://angular.duapp.com/guide/dev_guide.e2e-testing) 翻译者: @asnowwolf 已完成翻译
 * [26-Unit Testing](http://angular.duapp.com/guide/dev_guide.unit-testing) 翻译者: @asnowwolf 已完成翻译
-* 27-i18n and l10n () 翻译者:@greengerong 翻译中
+* 27-i18n and l10n 翻译者:@greengerong 翻译中
 * [28-Internet Explorer Compatibility](http://angular.duapp.com/guide/dev_ie) 翻译者:@greengerong 已完成
 * [29-Migrating from 1.0 to 1.2 - 迁移指南](http://angular.duapp.com/guide/migration) 翻译者: @asnowwolf 已完成翻译
 
