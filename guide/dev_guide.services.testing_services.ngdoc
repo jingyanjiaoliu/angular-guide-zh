@@ -1,10 +1,12 @@
 @ngdoc overview
-@name Developer Guide: Angular Services: Testing Angular Services
+@name 开发指南: Angular服务: 测试Angular服务
 @description
 
-The following is a unit test for the 'notify' service in the 'Dependencies' example in {@link
-dev_guide.services.creating_services Creating Angular Services}. The unit test example uses Jasmine
-spy (mock) instead of a real browser alert.
+翻译者：[@asnowwolf](https://github.com/asnowwolf)
+
+下面是一个关于{@link
+dev_guide.services.creating_services 创建Angular服务}那章的范例中所创建的`notify`服务的单元测试。这个单元测试用Jasmine的spy(mock)对象来代替实际浏览器，以拦截它的alert函数。
+
 
 <pre>
 var mock, notify;
@@ -21,14 +23,14 @@ beforeEach(function() {
   });
 });
 
-it('should not alert first two notifications', function() {
+it('对第一次和第二次通知，不应该有警告', function() {
   notify('one');
   notify('two');
 
   expect(mock.alert).not.toHaveBeenCalled();
 });
 
-it('should alert all after third notification', function() {
+it('对第三次及以后的通知，都要给出警告', function() {
   notify('one');
   notify('two');
   notify('three');
@@ -36,7 +38,7 @@ it('should alert all after third notification', function() {
   expect(mock.alert).toHaveBeenCalledWith("one\ntwo\nthree");
 });
 
-it('should clear messages after alert', function() {
+it('给出警告之后，要清除消息', function() {
   notify('one');
   notify('two');
   notify('third');
@@ -50,13 +52,13 @@ it('should clear messages after alert', function() {
 </pre>
 
 
-## Related Topics
+## 相关主题
 
-* {@link dev_guide.services.understanding_services Understanding Angular Services}
-* {@link dev_guide.services.creating_services Creating Angular Services}
-* {@link dev_guide.services.managing_dependencies Managing Service Dependencies}
-* {@link dev_guide.services.injecting_controllers Injecting Services Into Controllers}
+* {@link dev_guide.services.understanding_services 理解Angular服务}
+* {@link dev_guide.services.creating_services 创建Angular服务}
+* {@link dev_guide.services.managing_dependencies 管理服务依赖}
+* {@link dev_guide.services.injecting_controllers 把服务注入到控制器中}
 
-## Related API
+## 相关API
 
-* {@link api/ng Angular Service API}
+* {@link api/ng Angular服务API}

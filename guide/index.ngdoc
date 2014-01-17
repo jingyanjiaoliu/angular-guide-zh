@@ -80,7 +80,6 @@ ckken，grahamle，NigelYao，asnowwolf，lightma，joeylin，FrankyYang，lrrlu
 
 ## 补充 类库
 
-This is a short list of libraries with specific support and documentation for working with Angular.  You can find a full list of all known Angular external libraries at [ngmodules.org](http://ngmodules.org/).
 这里是部分在Angular方面提供了明确支持和文档的外部库的简短清单。你可以到[ngmodules.org](http://ngmodules.org/)上找到已知Angular外部库的完整列表。
 
 * **国际化(i18n)：** [angular-translate](http://pascalprecht.github.io/angular-translate/), [angular-gettext](http://angular-gettext.rocketeer.be/)
@@ -157,3 +156,15 @@ This is a short list of libraries with specific support and documentation for wo
 没有找到你想要的？访问[AngularJS-Learning](https://github.com/jmcunningham/AngularJS-Learning)可以找到更多的视频、教程、博客的列表。
 
 如果你认为某些优秀的AngularJS资源应该放在本页面，请在[Google+](https://plus.google.com/u/0/+AngularJS)或[Twitter](https://twitter.com/angularjs)告诉我们。
+
+
+## 中文资源
+
+[angularjs中文社区](http://angularjs.cn) 技术资料、中文文档，这个网站本身也是用angular + nodejs开发的
+
+[破狼Blog](http://greengerong.github.io) 一位用angular做过四个项目的技术达人
+
+QQ交流群1 278252889(满)
+
+QQ交流群2 305739270
+

@@ -2,6 +2,8 @@
 @name Developer Guide: Angular Services: Using $location
 @description
 
+翻译者：[@asnowwolf](https://github.com/asnowwolf)
+
 # What does it do?
 
 The `$location` service parses the URL in the browser address bar (based on the {@link

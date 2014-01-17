@@ -1,20 +1,20 @@
 @ngdoc overview
-@name Developer Guide: Angular Services
+@name 开发指南：Angular服务
 @description
 
-Services are a feature that Angular brings to client-side web apps from the server side, where
-services have been commonly used for a long time. Services in Angular apps are substitutable
-objects that are wired together using {@link di dependency injection (DI)}.
+翻译者：[@asnowwolf](https://github.com/asnowwolf)
 
+服务(service)是Angular从服务端开发领域引入过来的一个特性，“服务”已经在服务端使用了很长时间，是一项很成熟的技术。
+在Angular应用中，服务是指可以通过{@link di 依赖注入(DI)技术}装配在一起的一组可替换对象。
 
-## Related Topics
+## 相关主题
 
-* {@link dev_guide.services.understanding_services Understanding Angular Services}
-* {@link dev_guide.services.creating_services Creating Angular Services}
-* {@link dev_guide.services.managing_dependencies Managing Service Dependencies}
-* {@link dev_guide.services.injecting_controllers Injecting Services Into Controllers}
-* {@link dev_guide.services.testing_services Testing Angular Services}
+* {@link dev_guide.services.understanding_services 理解Angular服务}
+* {@link dev_guide.services.creating_services 创建Angular服务}
+* {@link dev_guide.services.managing_dependencies 管理服务依赖}
+* {@link dev_guide.services.injecting_controllers 把服务注入到控制器(controller)}
+* {@link dev_guide.services.testing_services 测试Angular服务}
 
-## Related API
+## 相关API
 
-* {@link api/ng Angular Service API}
+* {@link api/ng Angular服务API}
