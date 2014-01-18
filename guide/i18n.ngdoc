@@ -2,9 +2,11 @@
 @name Developer Guide: i18n and l10n
 @description
 
-# I18n and L10n in AngularJS
+翻译者：[@greengerong](https://github.com/greengerong)
 
-**What is i18n and l10n?**
+# AngularJS中的I18n 和 L10n 
+
+**什么是i18n 和 l10n?**
 
 Internationalization, abbreviated i18n, is the process of developing products in such a way that
 they can be localized for languages and cultures easily. Localization, abbreviated l10n, is the
@@ -14,25 +16,45 @@ all of the strings and other locale-specific bits (such as date or currency form
 application. Localizing an application means providing translations and localized formats for the
 abstracted bits.
 
+i18n是Internationalization(国际化)的缩写，处理不同地域的语言和文化差异。l10n则是Localization(本地化)的缩写，使应用应用和文本在特定语言文化背景下可用。对于应用程序而言，国际化意味着需要从应用程序中抽离所有的文本字符串信息和特殊的地域特性(如时间、货币格式)。而本地化则是提供转换和地域特性的本地化。
+
 **What level of support for i18n/l10n is currently in Angular?**
+
+**Angular当前对i18n/l10n的支持程度**
 
 Currently, Angular supports i18n/l10n for {@link
 http://docs.angularjs.org/#!/api/ng.filter:date datetime}, {@link
 http://docs.angularjs.org/#!/api/ng.filter:number number} and {@link
 http://docs.angularjs.org/#!/api/ng.filter:currency currency} filters.
 
+当前Angular为i18n/l10n提供了{@link
+http://docs.angularjs.org/#!/api/ng.filter:date datetime}, {@link
+http://docs.angularjs.org/#!/api/ng.filter:number number} 以及 {@link
+http://docs.angularjs.org/#!/api/ng.filter:currency currency} 之类的filter。
+
 Additionally, Angular supports localizable pluralization support provided by the {@link
 api/ng.directive:ngPluralize ngPluralize directive}.
 
+与此同时Angular也提供了对多元化地域的支持，@link
+api/ng.directive:ngPluralize ngPluralize directive}。
+
 All localizable Angular components depend on locale-specific rule sets managed by the {@link
 api/ng.$locale $locale service}.
+
+Angular提供的所有本地化组件都会依赖于{@link
+api/ng.$locale $locale service}的本地化特性设置。
 
 For readers who want to jump straight into examples, we have a few web pages that showcase how to
 use Angular filters with various locale rule sets. You can find these examples either on {@link
 https://github.com/angular/angular.js/tree/master/i18n/e2e Github} or in the i18n/e2e folder of
 Angular development package.
 
+我们已经有一些wbe页面展示如何利用Angular filters设置多样化的本地化规则,如果你希望直接移步示例程序的话，可以猛击{@link
+https://github.com/angular/angular.js/tree/master/i18n/e2e Github} 或者在Angular开发包的i18n/e2ei18n/e2目录下找到。
+
 **What is a locale id?**
+
+**什么是地域标示?**
 
 A locale is a specific geographical, political, or cultural region. The most commonly used locale
 ID consists of two parts: language code and country code. For example, en-US, en-AU, zh-CN are all
@@ -40,31 +62,59 @@ valid locale IDs that have both language codes and country codes. Because specif
 in locale ID is optional,  locale IDs such as en, zh,  and sk are also valid. See the {@link
 http://userguide.icu-project.org/locale ICU } website for more information about using locale IDs.
 
+一个地域标示代表一个特定的地理位置，政治体制，或是文化区域。更通用的地域标示分为两部分：语言编码和国家编码。但在地域标示中一个特定的国家编码是可选的，例如en, zh, 以及sk都是合法的。关于地域标示更多资料可从{@link
+http://userguide.icu-project.org/locale ICU }获取。
+
 **Supported locales in Angular**
+
+**Angular支持的地域**
+
+
 Angular separates number and datetime format rule sets into different files, each file for a
 particular locale. You can find a list of currently supported locales {@link
 https://github.com/angular/angular.js/tree/master/src/ngLocale here}
 # Providing locale rules to Angular
 
+
+Angular把数字、日期格式的规则按照特定的地域分离到不同的独立文件，每个文件配置了该地域的特性配置信息，
+
+
 There are two approaches to providing locale rules to Angular:
 
+Angular提供了两种本地化的方式:
+
+
 **1. Pre-bundled rule sets**
+
+**1. 预绑定(Pre-bundled)规则集**
 
 You can pre-bundle the desired locale file with Angular by concatenating the content of the
 locale-specific file to the end of `angular.js` or `angular.min.js` file.
 
+你可以把Angular提供的特殊地域目标文件通过连接在`angular.js` 或者 `angular.min.js`文件末尾。
+
+
 For example on *nix, to create an angular.js file that contains localization rules for german
 locale, you can do the following:
+
+例如*nix，创建一个包含德国本地化规则的angular.js文件:
 
 `cat angular.js i18n/angular-locale_de-de.js > angular_de-de.js`
 
 When the application containing `angular_de-de.js` script instead of the generic angular.js script
 starts, Angular is automatically pre-configured with localization rules for the german locale.
 
+当我们的应用程序引入了这用`angular_de-de.js`替换了平常 angular.js的脚本，Angular将会自动配置德国的区域规则信息。
+
 **2. Including locale js script in index.html page**
+
+**2. 在index.html页面引入locale js**
 
 You can also include the locale specific js file in the index.html page. For example, if one client
 requires German locale, you would serve index_de-de.html which will look something like this:
+
+你也可以特定的区域配置脚本直接引入到index.html页面。例如你的客户需要德国本地化规则，那么你的index_de-de.html形如下面示例:
+
 
 <pre>
 <html ng-app>
@@ -78,17 +128,23 @@ requires German locale, you would serve index_de-de.html which will look somethi
 </pre>
 
 **Comparison of the two approaches**
+**两种方式对比**
 Both approaches described above requires you to prepare different index.html pages or js files for
 each locale that your app may be localized into. You also need to configure your server to serve
 the correct file that correspond to the desired locale.
 
+上面所描述的两种方式都需要你准备不同的index.html页面或者js来提供应用程序所需要的区域规则配置。这需要你的服务器提供一个正确的的本地化规则配置。
+
 However, the second approach (Including locale js script in index.html page) is likely to be slower
 because an extra script needs to be loaded.
 
+但是第二种方式(导入locale js到index.html页面),因为需要加载外边脚本文件，所以可能会慢一些。
 
 # "Gotchas"
 
-**Currency symbol "gotcha"**
+# "坑"
+
+**货币符号的"坑"**
 
 Angular's {@link http://docs.angularjs.org/#!/api/ng.filter:currency currency filter} allows
 you to use the default currency symbol from the {@link api/ng.$locale locale service},
@@ -97,28 +153,47 @@ locale, it is fine to rely on the default currency symbol. However, if you antic
 in other locales might use your app, you should provide your own currency symbol to make sure the
 actual value is understood.
 
+Angular{@link http://docs.angularjs.org/#!/api/ng.filter:currency 货币 filter}允许我们通过{@link api/ng.$locale locale service}使用默认的货币符号，或者自定义货币符号。如果你应用程序只有出现一个区域化规则，你可以完全相信当前的默认货币符号。但是如果你期望其他地域的用户使用该应用，那么你需要提供能被理解的货币格式。
+
 For example, if you want to display account balance of 1000 dollars with the following binding
 containing currency filter: `{{ 1000 | currency }}`, and your app is currently in en-US locale.
 '$1000.00' will be shown. However, if someone in a different local (say, Japan) views your app, her
 browser will specify the locale as ja, and the balance of '¥1000.00' will be shown instead. This
-will really upset your client.
+will really upset your client.然而有个来个其他区域的用户(假设是日本) 查看你的应用程序，
+
+例如，你希望通过Angular货币filter `{{ 1000 | currency }}` 显示1000刀的账户余额,并且你当前应用程序使用的是en-US区域。那么显示结果将是'$1000.00'。她的浏览器特殊区域将是ja，余额将显示为'¥1000.00',这将会严重的误导你当前浏览用户。
 
 In this case, you need to override the default currency symbol by providing the {@link
 http://docs.angularjs.org/#!/api/ng.filter:currency currency filter} with a currency symbol as
 a parameter when you configure the filter, for example, {{ 1000 | currency:"USD$"}}. This way,
 Angular will always show a balance of 'USD$1000' and disregard any locale changes.
 
+在这个案例中，在这里示例中你需要通过{@link
+http://docs.angularjs.org/#!/api/ng.filter:currency 货币 filter}重写货币格式为货币格式作为参数信息配置，例如{{ 1000 | currency:"USD$"}}。这样Angular将会忽略任何区域改变总是显示余额为'USD$1000'。
+
 **Translation length "gotcha"**
+**转换长度的"坑"**
 
 Keep in mind that translated strings/datetime formats can vary greatly in length. For example,
 `June 3, 1977` will be translated to Spanish as `3 de junio de 1977`. There are bound to be other
 more extreme cases. Hence, when internationalizing your apps, you need to apply CSS rules
 accordingly and do thorough testing to make sure UI components do not overlap.
 
+需要铭记转换字符串/时间格式将会很大程度长度改变。例如，`June 3, 1977`转换为西班牙格式为`3 de junio de 1977`。这将会出现一些极端的案例。因为当你需要国际化你的应用程序的时候，你需要引用响应的css和测试确保UI组件不会重叠。
 
 **Timezones**
+**时区**
 
 Keep in mind that Angular datetime filter uses the time zone settings of the browser. So the same
 application will show different time information depending on the time zone settings of the
 computer that the application is running on. Neither Javascript nor Angular currently supports
 displaying the date with a timezone specified by the developer.
+
+需要铭记Angular的时间filter采用的是浏览器设置的时区。和运行应用的服务器计算机相同的应用程序将显示不同的时间信息。最后不管是JavaScript还是Angular当前都支持显示开发者指定的特定时区的时间。
+
+
+
+译者注-额外资源：
+
+1：关于国际化更友好的Angular plugin @link
+http://pascalprecht.github.io/angular-translate/ angular-translate} 
