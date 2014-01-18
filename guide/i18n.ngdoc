@@ -195,5 +195,4 @@ displaying the date with a timezone specified by the developer.
 
 译者注-额外资源：
 
-1：关于国际化更友好的Angular plugin @link
-http://pascalprecht.github.io/angular-translate/ angular-translate} 
+1：关于国际化更友好的Angular plugin {@link http://pascalprecht.github.io/angular-translate/ angular-translate} 
