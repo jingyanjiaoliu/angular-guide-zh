@@ -37,8 +37,8 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * [24-Animations](http://angular.duapp.com/guide/animations) 翻译者: @ariesjia 已完成翻译
 * [25-E2E Testing](http://angular.duapp.com/guide/dev_guide.e2e-testing) 翻译者: @asnowwolf 已完成翻译
 * [26-Unit Testing](http://angular.duapp.com/guide/dev_guide.unit-testing) 翻译者: @asnowwolf 已完成翻译
-* [27-i18n and l10n](http://angular.duapp.com/guide/i18n) 翻译者:@greengerong 翻译中
-* [28-Internet Explorer Compatibility](http://angular.duapp.com/guide/ie) 翻译者:@greengerong 已完成
+* [27-i18n and l10n](http://angular.duapp.com/guide/i18n) 翻译者:@greengerong 已完成翻译
+* [28-Internet Explorer Compatibility](http://angular.duapp.com/guide/ie) 翻译者:@greengerong 已完成翻译
 * [29-Migrating from 1.0 to 1.2 - 迁移指南](http://angular.duapp.com/guide/migration) 翻译者: @asnowwolf 已完成翻译
 
 目前加入者：
