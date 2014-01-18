@@ -42,7 +42,7 @@ ckken，grahamle，NigelYao，asnowwolf，lightma，joeylin，FrankyYang，lrrlu
 * {@link guide/directive 指令(Directive)}
 * {@link api/ngRoute.$route 视图(View)和路由(Route) (参见范例)}
 * {@link guide/filter 过滤器(Filter)}
-* {@link guide/forms 表单(Form)} and [AngularJS的表单概念](http://mrbool.com/the-concepts-of-angularjs-forms/29117)
+* {@link guide/forms 表单(Form)} 和 [AngularJS的表单概念](http://mrbool.com/the-concepts-of-angularjs-forms/29117)
 
 ### 程序结构
 
@@ -102,7 +102,7 @@ ckken，grahamle，NigelYao，asnowwolf，lightma，joeylin，FrankyYang，lrrlu
 * **Django：** [入门](http://blog.mourafiq.com/post/55034504632/end-to-end-web-app-with-django-rest-framework), [集成AngularJS与Django](http://django-angular.readthedocs.org/en/latest/integration.html)
 * **FireBase：** [AngularFire](http://angularfire.com/), [使用AngularJS和FireBase开发实时应用 (视频)](http://www.youtube.com/watch?v=C7ZI7z7qnHU)
 * **Google云平台：**[使用Cloud Endpoints](https://cloud.google.com/resources/articles/angularjs-cloud-endpoints-recipe-for-building-modern-web-applications), [使用Go](https://github.com/GoogleCloudPlatform/appengine-angular-gotodos)
-* **Hood.ie:** [Angular的帅气60分](http://www.roberthorvick.com/2013/06/30/todomvc-angularjs-hood-ie-60-minutes-to-awesome/)
+* **Hood.ie:** [Angular 60分钟强力秀](http://www.roberthorvick.com/2013/06/30/todomvc-angularjs-hood-ie-60-minutes-to-awesome/)
 * **MEAN开发栈：**[博客](http://blog.mongodb.org/post/49262866911/the-mean-stack-mongodb-expressjs-angularjs-and), [起步](http://thecodebarbarian.wordpress.com/2013/07/22/introduction-to-the-mean-stack-part-one-setting-up-your-tools/), [Google GDL视频](https://developers.google.com/live/shows/913996610) 
 * **Rails：**[入门](http://coderberry.me/blog/2013/04/22/angularjs-on-rails-4-part-1/), [集成AngularJS与Rails4](https://shellycloud.com/blog/2013/10/how-to-integrate-angularjs-with-rails-4), [angularjs-rails](https://github.com/hiravgandhi/angularjs-rails)
 * **PHP：**[构建RESTful的Web服务](http://blog.brunoscopelliti.com/building-a-restful-web-service-with-angularjs-and-php-more-power-with-resource), [Laravel 4 端到端(视频)](http://www.youtube.com/watch?v=hqAyiqUs93c)
@@ -110,12 +110,12 @@ ckken，grahamle，NigelYao，asnowwolf，lightma，joeylin，FrankyYang，lrrlu
 ## 学习资源
 
 ###书籍
-* [AngularJS](http://www.amazon.com/AngularJS-Brad-Green/dp/1449344852) by Brad Green 和 Shyam Seshadri
-* [Mastering Web App Development](http://www.amazon.com/Mastering-Web-Application-Development-AngularJS/dp/1782161821) by Pawel Kozlowski and Pete Bacon Darwin
-* [AngularJS Directives（AngularJS指令详解）](http://www.amazon.com/AngularJS-Directives-Alex-Vanston/dp/1783280336) by Alex Vanston
-* [Recipes With AngularJS（AngularJS秘诀）](http://www.amazon.co.uk/Recipes-Angular-js-Frederik-Dietz-ebook/dp/B00DK95V48) by Frederik Dietz
-* [Developing an AngularJS Edge](http://www.amazon.com/Developing-AngularJS-Edge-Christopher-Hiller-ebook/dp/B00CJLFF8K) by Christopher Hiller
-* [ng-book: The Complete Book on AngularJS（AngularJS大全）](http://ng-book.com/) by Ari Lerner
+* [AngularJS](http://www.amazon.com/AngularJS-Brad-Green/dp/1449344852) 作者：Brad Green 和 Shyam Seshadri
+* [Mastering Web App Development](http://www.amazon.com/Mastering-Web-Application-Development-AngularJS/dp/1782161821) 作者：Pawel Kozlowski 和 Pete Bacon Darwin
+* [AngularJS Directives（AngularJS指令详解）](http://www.amazon.com/AngularJS-Directives-Alex-Vanston/dp/1783280336) 作者：Alex Vanston
+* [Recipes With AngularJS（AngularJS秘诀）](http://www.amazon.co.uk/Recipes-Angular-js-Frederik-Dietz-ebook/dp/B00DK95V48) 作者：Frederik Dietz
+* [Developing an AngularJS Edge](http://www.amazon.com/Developing-AngularJS-Edge-Christopher-Hiller-ebook/dp/B00CJLFF8K) 作者：Christopher Hiller
+* [ng-book: The Complete Book on AngularJS（AngularJS大全）](http://ng-book.com/) 作者：Ari Lerner
 
 ###视频:
 * [egghead.io](http://egghead.io/)
@@ -134,7 +134,7 @@ ckken，grahamle，NigelYao，asnowwolf，lightma，joeylin，FrankyYang，lrrlu
 
 ## 帮助
 
-如果你有个Issue想得到帮助，最好在[Plunker](http://plnkr.co/), [JSFiddle](http://jsfiddle.net/), 或者类似的站点创建一个示例，并提交给下面的网站：
+如果你有个问题想得到帮助，最好在[Plunker](http://plnkr.co/), [JSFiddle](http://jsfiddle.net/), 或者类似的站点创建一个示例，并提交给下面的网站：
 
 * [Stackoverflow.com](http://stackoverflow.com/search?q=angularjs)
 * [AngularJS邮件列表](https://groups.google.com/forum/#!forum/angular)
@@ -160,9 +160,12 @@ ckken，grahamle，NigelYao，asnowwolf，lightma，joeylin，FrankyYang，lrrlu
 
 ## 中文资源
 
+[本Angular业余翻译组的“家”，欢迎加盟](https://github.com/jingyanjiaoliu/angular-guide-zh)
+
 [angularjs中文社区](http://angularjs.cn) 技术资料、中文文档，这个网站本身也是用angular + nodejs开发的
 
 [破狼Blog](http://greengerong.github.io) [破狼cnBlog](http://www.cnblogs.com/whitewolf/)  一位angular爱好者的博客
+
 [github AngularJS-Learning](https://github.com/jmcunningham/AngularJS-Learning) 包含AngularJS很多资料github repo
 
 QQ交流群1 278252889(满)

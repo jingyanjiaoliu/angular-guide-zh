@@ -4,26 +4,24 @@
 
 翻译者：[@asnowwolf](https://github.com/asnowwolf)
 
-# What does it do?
+# 这是做什么的？
 
-The `$location` service parses the URL in the browser address bar (based on the {@link
-https://developer.mozilla.org/en/window.location window.location}) and makes the URL available to
-your application. Changes to the URL in the address bar are reflected into $location service and
-changes to $location are reflected into the browser address bar.
+`$location`服务负责解析浏览器地址栏中的URL（基于{@link
+https://developer.mozilla.org/en/window.location window.location}），以便你的应用可以访问它。
+这是一个双向同步机制 —— 对地址栏URL的任何修改都会被映射到$location服务中，对$location的任何修改也同样会被映射到地址栏。
 
-**The $location service:**
+**$location服务：**
 
-- Exposes the current URL in the browser address bar, so you can
-  - Watch and observe the URL.
-  - Change the URL.
-- Maintains synchronization between itself and the browser's URL when the user
-  - Changes the address in the browser's address bar.
-  - Clicks the back or forward button in the browser (or clicks a History link).
-  - Clicks on a link in the page.
-- Represents the URL object as a set of methods (protocol, host, port, path, search, hash).
+- 导出在浏览器地址栏中的当前地址，以便你
+  - 监视与观察此地址的变更
+  - 修改URL
+- 当用户做下列操作时，维持`$location`和浏览器当前URL之间的同步
+  - 在浏览器地址栏中修改地址
+  - 在浏览器中点击前进、后退按钮，或点击“历史”中的链接
+  - 在页面上点击一个链接
+- 把URL对象表示成一组方法（protocol, host, port, path, search, hash）
 
-
-## Comparing $location to window.location
+## $location和window.location的对比
 
 <table class="table">
 <thead>
@@ -31,140 +29,126 @@ changes to $location are reflected into the browser address bar.
   <tr>
     <th class="empty-corner-lt"></th>
     <th>window.location</th>
-    <th>$location service</th>
+    <th>$location服务</th>
   </tr>
 
 </thead>
 <tbody>
 
   <tr>
-    <td class="head">purpose</td>
-    <td>allow read/write access to the current browser location</td>
-    <td>same</td>
+    <td class="head">用途</td>
+    <td>允许你访问浏览器的当前地址</td>
+    <td>相同</td>
   </tr>
 
   <tr>
     <td class="head">API</td>
-    <td>exposes "raw" object with properties that can be directly modified</td>
-    <td>exposes jQuery-style getters and setters</td>
+    <td>导出带有属性的“原始”对象，它可以被直接修改</td>
+    <td>导出jQuery风格的setter和getter方法</td>
   </tr>
 
   <tr>
-    <td class="head">integration with angular application life-cycle</td>
-    <td>none</td>
-    <td>knows about all internal life-cycle phases, integrates with $watch, ...</td>
+    <td class="head">和Angular应用的生命周期整合在一起</td>
+    <td>无</td>
+    <td>了解所有Angular生命周期中的各个阶段，与$watch集成 ...</td>
   </tr>
 
   <tr>
-    <td class="head">seamless integration with HTML5 API</td>
-    <td>no</td>
-    <td>yes (with a fallback for legacy browsers)</td>
+    <td class="head">与HTML5 API无缝整合</td>
+    <td>否</td>
+    <td>是（对老浏览器，具有退回机制，译注：新式使用Push State API，老式使用#hashbang方式）</td>
   </tr>
 
   <tr>
-    <td class="head">aware of docroot/context from which the application is loaded</td>
-    <td>no - window.location.path returns "/docroot/actual/path"</td>
-    <td>yes - $location.path() returns "/actual/path"</td>
+    <td class="head">带有应用宿主页面的上下文(context)路径</td>
+    <td>否 - window.location.path将返回"/docroot/actual/path"</td>
+    <td>是 - $location.path()返回"/actual/path"</td>
   </tr>
 
 </tbody>
 </table>
 
-## When should I use $location?
-Any time your application needs to react to a change in the current URL or if you want to change
-the current URL in the browser.
+## 我该什么时候使用$location？
 
-## What does it not do?
-It does not cause a full page reload when the browser URL is changed. To reload the page after
-changing the URL, use the lower-level API, `$window.location.href`.
+只要你的应用想更改当前地址，或者你想要修改浏览器的当前地址，就用它吧！
 
-# General overview of the API
+## 什么时候不该用它？
 
-The `$location` service can behave differently, depending on the configuration that was provided to
-it when it was instantiated. The default configuration is suitable for many applications, for
-others customizing the configuration can enable new features.
+在浏览器地址变化的时候，它不会导致全页面刷新。要想在地址变化之后重载整个页面，请使用底层API`$window.location.href`。
 
-Once the `$location` service is instantiated, you can interact with it via jQuery-style getter and
-setter methods that allow you to get or change the current URL in the browser.
+# API的通用概览
 
-## $location service configuration
+`$location`服务可能具有不同的行为，这取决于它被实例化时候你提供给它的配置。默认的配置适用于很多应用，而自定义的配置可以让你启用一些新特性。
 
-To configure the `$location` service, retrieve the
-{@link api/ng.$locationProvider $locationProvider} and set the parameters as follows:
+一旦`$location`服务被实例化了，你能通过jQuery风格的getter或setter方法与它互动，这样你就能获取或修改浏览器中的当前URL了。
 
+## $location服务配置
 
-- **html5Mode(mode)**: {boolean}<br />
-  `true` - see HTML5 mode<br />
-  `false` - see Hashbang mode<br />
-  default: `false`
+要想配置`$location`服务，应该获取{@link api/ng.$locationProvider $locationProvider}对象，然后按下面的方法设置它的参数：
 
-- **hashPrefix(prefix)**: {string}<br />
-  prefix used for Hashbang URLs (used in Hashbang mode or in legacy browser in Html5 mode)<br />
-  default: `""`
+- **html5Mode(模式)**: {boolean}<br />
+  `true` - 参见下文中的“HTML5模式”<br />
+  `false` - 参见下文中的“Hashbang模式”<br />
+  默认值: `false`
 
-### Example configuration
+- **hashPrefix(前缀)**: {string}<br />
+  Hashbang的URL前缀（用于Hashbang模式或者使用Html5模式但运行在老式浏览器中）<br />
+  默认值: `""`（空字符串）
+
+### 范例配置
 <pre>
 $locationProvider.html5Mode(true).hashPrefix('!');
 </pre>
 
-## Getter and setter methods
+## Getter和setter方法
 
-`$location` service provides getter methods for read-only parts of the URL (absUrl, protocol, host,
-port) and getter / setter methods for url, path, search, hash:
+`对于地址中的只读部分（absUrl, protocol, host,
+port），$location`服务提供getter方法，对于可变部分（url, path, search, hash），则同时提供getter和setter方法。
 <pre>
-// get the current path
+// 或的当前path
 $location.path();
 
-// change the path
+// 修改当前path
 $location.path('/newValue')
 </pre>
 
-All of the setter methods return the same `$location` object to allow chaining. For example, to
-change multiple segments in one go, chain setters like this:
+所有的setter方法都返回同一个`$location`对象，以便你进行链式调用。例如，要想一次性修改地址中的几个字段，可以用这样的语法把几个setter串起来：
 <pre>$location.path('/newValue').search({key: value});</pre>
 
-## Replace method
+## replace方法
 
-There is a special `replace` method which can be used to tell the $location service that the next
-time the $location service is synced with the browser, the last history record should be replaced
-instead of creating a new one. This is useful when you want to implement redirection, which would
-otherwise break the back button (navigating back would retrigger the redirection). To change the
-current URL without creating a new browser history record you can call:
+有一个特殊的`replace`方法，用来告诉$location服务：你下次和浏览器同步的时候，应该用新地址“替代”最后一条历史记录而不是“追加”新纪录。
+这在你实现重定向的时候很有用，否则它将“玩死”浏览器的“后退”按钮（“后退”立刻触发一次重定向，我胡汉三又回来了！）。
+要想改变当前地址却不创建新历史记录，你可以这样调用：
+
 <pre>
   $location.path('/someNewPath');
   $location.replace();
-  // or you can chain these as: $location.path('/someNewPath').replace();
+  // 你也可以像这样把它们串起来：$location.path('/someNewPath').replace();
 </pre>
 
-Note that the setters don't update `window.location` immediately. Instead, the `$location` service is
-aware of the {@link api/ng.$rootScope.Scope scope} life-cycle and coalesces multiple `$location`
-mutations into one "commit" to the `window.location` object during the scope `$digest` phase. Since
-multiple changes to the $location's state will be pushed to the browser as a single change, it's
-enough to call the `replace()` method just once to make the entire "commit" a replace operation
-rather than an addition to the browser history. Once the browser is updated, the $location service
-resets the flag set by `replace()` method and future mutations will create new history records,
-unless `replace()` is called again.
+注意，setter方法不会立刻更新`window.location`。
+反之，`$location`服务是挂在与{@link api/ng.$rootScope.Scope 作用域(scope)}的生命周期中的，
+它会在作用域的`$digest`阶段把多个`$location`调用合并到一起，然后“提交”到`window.location对象中。
+由于对$location的状态的多次修改会被合并成一次修改通知浏览器，在一个生命周期内你只要调用了一次
+`replace`操作就可以“提交”一个replace操作（“替换”而不是“追加”历史记录）。浏览器地址一旦被更新，
+$location服务器就会重置`replace()`方法设置的标识，将来的修改将会追加新的历史记录，除非再次调用`replace()`。
 
-### Setters and character encoding
-You can pass special characters to `$location` service and it will encode them according to rules
-specified in {@link http://www.ietf.org/rfc/rfc3986.txt RFC 3986}. When you access the methods:
+### setter和字符编码
 
-- All values that are passed to `$location` setter methods, `path()`, `search()`, `hash()`, are
-encoded.
-- Getters (calls to methods without parameters) return decoded values for the following methods
-`path()`, `search()`, `hash()`.
-- When you call the `absUrl()` method, the returned value is a full url with its segments encoded.
-- When you call the `url()` method, the returned value is path, search and hash, in the form
-`/path?search=a&b=c#hash`. The segments are encoded as well.
+你可以给`$location`服务传入特殊字符，它将根据{@link http://www.ietf.org/rfc/rfc3986.txt RFC 3986}中指定的规则进行编码。
+这会在执行下列方法时自动触发：
 
+- 所有通过`$location`的setter方法（`path()`, `search()`, `hash()`）传入的值都将被编码。
+- getter方法（不带任何参数调用`path()`, `search()`, `hash()`方法）返回的值将被解码。
+- 调用`absUrl()`方法的返回值是一个编码过的字符串。
+- 调用`url()`方法返回的值是path，search和hash，形如`/path?search=a&b=c#hash`，各个组成部分也都是编码过的。
 
-# Hashbang and HTML5 Modes
+# Hashbang和HTML5模式
 
-`$location` service has two configuration modes which control the format of the URL in the browser
-address bar: **Hashbang mode** (the default) and the **HTML5 mode** which is based on using the
-HTML5 {@link http://www.w3.org/TR/html5/history.html History API}. Applications use the same API in
-both modes and the `$location` service will work with appropriate URL segments and browser APIs to
-facilitate the browser URL change and history management.
+`$location`服务有两种配置模式，它将控制浏览器地址栏中的地址显示格式：**Hashbang模式**（默认）和**HTML5模式**，
+后者基于HTML5的{@link http://www.w3.org/TR/html5/history.html 历史(history)API}。无论哪种模式，应用层都使用相同的API，
+`$location`服务会自己找出合适的URL格式和浏览器API，来完成修改浏览器地址和进行历史管理的工作。
 
 <img src="img/guide/hashbang_vs_regular_url.jpg">
 
@@ -173,53 +157,53 @@ facilitate the browser URL change and history management.
 
   <tr>
     <th class="empty-corner-lt"></th>
-    <th>Hashbang mode</th>
-    <th>HTML5 mode</th>
+    <th>Hashbang模式</th>
+    <th>HTML5模式</th>
   </tr>
 
 </thead>
 <tbody>
 
   <tr>
-    <td class="head">configuration</td>
-    <td>the default</td>
+    <td class="head">配置项</td>
+    <td>默认</td>
     <td>{ html5Mode: true }</td>
   </tr>
 
   <tr>
-    <td class="head">URL format</td>
-    <td>hashbang URLs in all browsers</td>
-    <td>regular URLs in modern browser, hashbang URLs in old browser</td>
+    <td class="head">URL格式</td>
+    <td>在所有浏览器中使用hashbang格式</td>
+    <td>现代浏览器中使用标准URL格式，老式浏览器中使用hashbang格式</td>
   </tr>
 
   <tr>
-    <td class="head">&lt;a href=""&gt; link rewriting</td>
-    <td>no</td>
-    <td>yes</td>
+    <td class="head">&lt;a href=""&gt; link重写</td>
+    <td>否</td>
+    <td>是</td>
   </tr>
 
   <tr>
-    <td class="head">requires server-side configuration</td>
-    <td>no</td>
-    <td>yes</td>
+    <td class="head">需要服务端配置</td>
+    <td>否</td>
+    <td>是</td>
   </tr>
 </tbody>
 </table>
 
-## Hashbang mode (default mode)
+## Hashbang模式(缺省模式)
 
-In this mode, `$location` uses Hashbang URLs in all browsers.
+在这种模式中，`$location`在所有浏览器中都使用Hashbang地址
 
-### Example
+### 范例
 
 <pre>
-it('should show example', inject(
+it('显示范例', inject(
   function($locationProvider) {
     $locationProvider.html5Mode(false);
     $locationProvider.hashPrefix('!');
   },
   function($location) {
-    // open http://example.com/base/index.html#!/a
+    // 打开http://example.com/base/index.html#!/a
     $location.absUrl() == 'http://example.com/base/index.html#!/a'
     $location.path() == '/a'
 
@@ -236,41 +220,36 @@ it('should show example', inject(
 ));
 </pre>
 
-### Crawling your app
+### 把应用献给爬虫
 
-To allow indexing of your AJAX application, you have to add special meta tag in the head section of
-your document:
+要想让你的Ajax应用能够被搜索引擎找到，你必须在HTML文档的head部分添加一个特殊的meta标记：
 <pre><meta name="fragment" content="!" /></pre>
 
-This will cause crawler bot to request links with `_escaped_fragment_` param so that your server
-can recognize the crawler and serve a HTML snapshots. For more information about this technique,
-see {@link http://code.google.com/web/ajaxcrawling/docs/specification.html Making AJAX Applications
-Crawlable}.
+这将导致爬虫机器人使用`_escaped_fragment_`参数请求你的链接，以便你的服务器能识别出爬虫，并且给他一个HTML快照。
+更多信息，参见{@link http://code.google.com/web/ajaxcrawling/docs/specification.html 让Ajax应用也能被抓取}。
 
-## HTML5 mode
+## HTML5模式
 
-In HTML5 mode, the `$location` service getters and setters interact with the browser URL address
-through the HTML5 history API, which allows for use of regular URL path and search segments,
-instead of their hashbang equivalents. If the HTML5 History API is not supported by a browser, the
-`$location` service will fall back to using the hashbang URLs automatically. This frees you from
-having to worry about whether the browser displaying your app supports the history API  or not; the
-`$location` service transparently uses the best available option.
+在HTML5模式中，`$location`服务的getter和setter方法通过HTML5历史API与浏览器地址栏互动，
+它允许你使用标准的URL path和search格式来代替等价的hashbang模式。如果浏览器不支持HTML5历史API，
+那么`$location`服务将自动退回到使用hashbang URL。这将把你从担心用户的浏览器是否支持历史API中解放出来，
+`$location`服务将会透明的帮你选择最佳的可用形式。
 
-- Opening a regular URL in a legacy browser -> redirects to a hashbang URL
-- Opening hashbang URL in a modern browser -> rewrites to a regular URL
+- 在一个老式浏览器中使用标准url格式 -> 重定向到hashbang URL
+- 在一个现代浏览器中使用hashbang格式 -> 用标准URL形式进行重写
 
-### Example
+### 范例
 
 <pre>
-it('should show example', inject(
+it('显示范例', inject(
   function($locationProvider) {
     $locationProvider.html5Mode(true);
     $locationProvider.hashPrefix('!');
   },
   function($location) {
-    // in browser with HTML5 history support:
-    // open http://example.com/#!/a -> rewrite to http://example.com/a
-    // (replacing the http://example.com/#!/a history record)
+    // 在支持HTML5历史API的浏览器中:
+    // 打开 http://example.com/#!/a -> 将被重写为 http://example.com/a
+    // (替换 http://example.com/#!/a 的历史记录)
     $location.path() == '/a'
 
     $location.path('/foo');
@@ -284,9 +263,9 @@ it('should show example', inject(
     $location.url() == 'new?x=y'
     $location.absUrl() == 'http://example.com/new?x=y'
 
-    // in browser without html5 history support:
-    // open http://example.com/new?x=y -> redirect to http://example.com/#!/new?x=y
-    // (again replacing the http://example.com/new?x=y history item)
+    // 在不支持HTML5历史API的浏览器中:
+    // 打开 http://example.com/new?x=y -> 将被重定向到 http://example.com/#!/new?x=y
+    // (替换 http://example.com/new?x=y 的历史记录)
     $location.path() == '/new'
     $location.search() == {x: 'y'}
 
@@ -298,94 +277,78 @@ it('should show example', inject(
 ));
 </pre>
 
-### Fallback for legacy browsers
+### 退回到老式浏览器
 
-For browsers that support the HTML5 history API, `$location` uses the HTML5 history API to write
-path and search. If the history API is not supported by a browser, `$location` supplies a Hasbang
-URL. This frees you from having to worry about whether the browser viewing your app supports the
-history API  or not; the `$location` service makes this transparent to you.
+对于支持HTML5历史API的浏览器，`$location`使用HTML5历史API来修改path和search部分。
+如果浏览器不支持历史API，`$location`提供hashbang URL。这会把你从不得不担心用户的浏览器是否支持历史API中解放出来，
+`$location`服务为你透明的完成这一切。
 
-### Html link rewriting
+### HTML链接重写
 
-When you use HTML5 history API mode, you will need different links in different browsers, but all you
-have to do is specify regular URL links, such as: `<a href="/some?foo=bar">link</a>`
+如果你正在使用HTML5 历史API模式，你需要在不同的浏览器中使用不同的链接，但是你要做的只是制定一个标准URL链接形式，
+比如：`<a href="/some?foo=bar">某链接</a>`
 
-When a user clicks on this link,
+当用户点击这个链接时，
 
-- In a legacy browser, the URL changes to `/index.html#!/some?foo=bar`
-- In a modern browser, the URL changes to `/some?foo=bar`
+- 在老式浏览器中，地址变为`/index.html#!/some?foo=bar`
+- 在现代浏览器中，地址变为`/some?foo=bar`
 
+在下面的例子中，链接不会被重写，而是会在当前页面中执行一次全页面刷新。
 
-In cases like the following, links are not rewritten; instead, the browser will perform a full page
-reload to the original link.
-
-- Links that contain `target` element<br>
-  Example: `<a href="/ext/link?a=b" target="_self">link</a>`
-- Absolute links that go to a different domain<br>
-  Example: `<a href="http://angularjs.org/">link</a>`
-- Links starting with '/' that lead to a different base path when base is defined<br>
-  Example: `<a href="/not-my-base/link">link</a>`
+- 链接包含`target`属性<br>
+  例如： `<a href="/ext/link?a=b" target="_self">某链接</a>`
+- 指向其他域名的绝对链接<br>
+  例如: `<a href="http://angularjs.org/">某链接</a>`
+- 当通过base元素定义了页面基地址时，以'/'开头，但是指向其他基地址的链接<br>
+  例如: `<a href="/not-my-base/link">某链接</a>`
   
-When running Angular in the root of a domain, along side perhaps a normal application in the same
-directory, the "otherwise" route handler will try to handle all the URLs, including ones that map
-to static files.
+当在域名的根路径下运行Angular时，可能还有其他普通应用在同一个目录下，"otherwise"路由将会尝试处理所有URL，
+甚至包括映射到静态文件的那些。
 
-To prevent this, you can set your base href for the app to `<base href=".">` and then prefix links
-to URLs that should be handled with `.`. Now, links to locations, which are not to be routed by Angular,
-are not prefixed with `.` and will not be intercepted by the `otherwise` rule in your `$routeProvider`.
+要想阻止这种行为，你可以把你的base元素的href属性到`<base href=".">`，然后，给所有应该由你处理的链接加上`.`前缀。
+这样，那些没有用`.`做前缀的地址将不会再被Angular路由，也就不会再被你的`$routeProvider`中配置的`otherwise`规则拦截到了。
 
+### 服务端
 
-### Server side
+使用HTML5模式需要在服务端重写URL，通常，你要把所有链接都转给应用的入口点（比如index.html）。
 
-Using this mode requires URL rewriting on server side, basically you have to rewrite all your links
-to entry point of your application (e.g. index.html)
+### 让爬虫抓取你的应用
 
-### Crawling your app
-
-If you want your AJAX application to be indexed by web crawlers, you will need to add the following
-meta tag to the HEAD section of your document:
+如果你想你的AJAX应用被web爬虫索引到，你需要添加下列meta标签到你文档中的HEAD区：
 <pre><meta name="fragment" content="!" /></pre>
 
-This statement causes a crawler to request links with an empty `_escaped_fragment_` parameter so that
-your server can recognize the crawler and serve it HTML snapshots. For more information about this
-technique, see {@link http://code.google.com/web/ajaxcrawling/docs/specification.html Making AJAX
-Applications Crawlable}.
+这个语句会导致爬虫在请求链接时带上一个空的`_escaped_fragment_`参数，以便你的服务器可以识别出爬虫，
+并且给它提供一个HTML快照。更多信息，参见{@link http://code.google.com/web/ajaxcrawling/docs/specification.html 让AJAX应用可以被抓取}
 
-### Relative links
+### 相对链接
 
-Be sure to check all relative links, images, scripts etc. You must either specify the url base in
-the head of your main html file (`<base href="/my-base">`) or you must use absolute urls
-(starting with `/`) everywhere because relative urls will be resolved to absolute urls using the
-initial absolute url of the document, which is often different from the root of the application.
+注意检查所有相对链接、图片、脚本等。你或者要在主页面的head区通过`<base href="/my-base">`指定一个url基地址，或者到处使用绝对路径（用`/`开头的）。
+因为相对路径将根据当前页面的初始绝对地址解析为绝对路径，而这通常与此应用的根路径是不同的。
 
-Running Angular apps with the History API enabled from document root is strongly encouraged as it
-takes care of all relative link issues.
+强烈建议在根路径下运行使用HTML5历史API模式的Angular应用，它会处理好所有关于相对路径的问题。
 
-### Sending links among different browsers
+### 在不同的浏览器中使用链接
 
-Because of rewriting capability in HTML5 mode, your users will be able to open regular url links in
-legacy browsers and hashbang links in modern browser:
+因为HTML5模式下的路径重写能力，你的用户也可以在老式浏览器中打开标准url链接，或者在现代浏览器中打开hashbang链接：
 
-- Modern browser will rewrite hashbang URLs to regular URLs.
-- Older browsers will redirect regular URLs to hashbang URLs.
+- 现代浏览器将会使用标准URL形式重写hashbang地址。
+- 老式浏览器将会把标准URL重定向到hashbang URL。
 
-### Example
+### 范例
 
-Here you can see two `$location` instances, both in **Html5 mode**, but on different browsers, so
-that you can see the differences. These `$location` services are connected to a fake browsers. Each
-input represents address bar of the browser.
+接下来你将看到两个`$location`实例。全都使用**HTML5模式**但运行于不同的浏览器，你将看到它们的区别。
+这两个`$location`服务连接到虚拟浏览器中，每个input输入框表示一个浏览器的地址栏。
 
-Note that when you type hashbang url into first browser (or vice versa) it doesn't rewrite /
-redirect to regular / hashbang url, as this conversion happens only during parsing the initial URL
-= on page reload.
+注意，你在第一个浏览器中输入hashbang url的时候（标准URL也一样），它不会重写/重定向到标准或hashbang形式，
+因为这种转换只会发生在页面加载时解析初始URL的那一步。
 
-In this examples we use `<base href="/base/index.html" />`
+在这个例子中，我们使用`<base href="/base/index.html" />`
 <doc:example>
 <doc:source source="false">
 
 <div ng-non-bindable class="html5-hashbang-example">
   <div id="html5-mode" ng-controller="Html5Cntl">
-    <h3>Browser with History API</h3>
+    <h3>带有历史API的浏览器</h3>
     <div ng-address-bar browser="html5"></div><br><br>
     $location.protocol() = {{$location.protocol()}}<br>
     $location.host() = {{$location.host()}}<br>
@@ -395,11 +358,11 @@ In this examples we use `<base href="/base/index.html" />`
     $location.hash() = {{$location.hash()}}<br>
     <a href="http://www.example.com/base/first?a=b">/base/first?a=b</a> |
     <a href="http://www.example.com/base/sec/ond?flag#hash">sec/ond?flag#hash</a> |
-    <a href="/other-base/another?search">external</a>
+    <a href="/other-base/another?search">外部链接</a>
   </div>
 
   <div id="hashbang-mode" ng-controller="HashbangCntl">
-    <h3>Browser without History API</h3>
+    <h3>没有历史API的浏览器</h3>
     <div ng-address-bar browser="hashbang"></div><br><br>
     $location.protocol() = {{$location.protocol()}}<br>
     $location.host() = {{$location.host()}}<br>
@@ -409,7 +372,7 @@ In this examples we use `<base href="/base/index.html" />`
     $location.hash() = {{$location.hash()}}<br>
     <a href="http://www.example.com/base/first?a=b">/base/first?a=b</a> |
     <a href="http://www.example.com/base/sec/ond?flag#hash">sec/ond?flag#hash</a> |
-    <a href="/other-base/another?search">external</a>
+    <a href="/other-base/another?search">外部链接</a>
   </div>
 </div>
 
@@ -449,8 +412,7 @@ In this examples we use `<base href="/base/index.html" />`
 
   function initEnv(name) {
     var root = angular.element(document.getElementById(name + '-mode'));
-    // We must kill a link to the injector for this element otherwise angular will
-    // complain that it has been bootstrapped already.
+    // 我们必须移除与这个元素相关的注入器($injector)，否则angular会认为它已经启动(bootstrap)过了
     root.data('$injector', null);
     angular.bootstrap(root, [function($compileProvider, $locationProvider, $provide){
       $locationProvider.html5Mode(true).hashPrefix('!');
@@ -496,43 +458,38 @@ In this examples we use `<base href="/base/index.html" />`
 </doc:example>
 
 
-# Caveats
+# 附加说明
 
-## Page reload navigation
+## 页面重载与导航
 
-The `$location` service allows you to change only the URL; it does not allow you to reload the
-page. When you need to change the URL and reload the page or navigate to a different page, please
-use a lower level API, {@link api/ng.$window $window.location.href}.
+`$location`服务只允许你修改URL，却不会帮你重新加载页面。如果你需要修改地址并重新加载页面，或者需要导航到其他页面，
+请使用底层API：{@link api/ng.$window $window.location.href}。
 
-## Using $location outside of the scope life-cycle
+## 在作用域(scope)生命周期之外使用$location
 
-`$location` knows about Angular's {@link api/ng.$rootScope.Scope scope} life-cycle. When a URL changes in
-the browser it updates the `$location` and calls `$apply` so that all $watchers / $observers are
-notified.
-When you change the `$location` inside the `$digest` phase everything is ok; `$location` will
-propagate this change into browser and will notify all the $watchers / $observers.
-When you want to change the `$location` from outside Angular (for example, through a DOM Event or
-during testing) - you must call `$apply` to propagate the changes.
+`$location`知道Angular的{@link api/ng.$rootScope.Scope 作用域(scope)}的生命周期。当浏览器中的地址变化时，
+它会更新`$location`对象，并且调用`$apply`，以便所有的$watchers和$observers都能得到通知。
 
-## $location.path() and ! or / prefixes
+当你在`$digest`阶段中修改`$location`的时候，一切如常：`$location`会把这些修改反映给浏览器，
+并且通知所有$watchers / $observers。
+如果你想在Angular之外（比如，通过DOM事件或者在测试容器中）修改`$location`，你必须调用`$apply`来告知这项改动。
 
-A path should always begin with forward slash (`/`); the `$location.path()` setter will add the
-forward slash if it is missing.
+## $location.path()与!或/前缀
 
-Note that the `!` prefix in the hashbang mode is not part of `$location.path()`; it is actually
-hashPrefix.
+Path永远会以正斜杠（`/`）开头，`$location.path()`作为setter方法调用时，如果没有用正斜杠开头，它会给加上一个。
 
+注意，在hashbang模式中，`!`前缀并不是`$location.path()`的一部分；它只是hash“前缀”。
 
-# Testing with the $location service
+# 带有$location服务的测试
 
-When using `$location` service during testing, you are outside of the angular's {@link
-api/ng.$rootScope.Scope scope} life-cycle. This means it's your responsibility to call `scope.$apply()`.
+如果在测试期间使用`$location`服务，你将处于Angular的{@link
+api/ng.$rootScope.Scope 作用域(scope)}之外。这就意味着你有责任调用`scope.$apply()`方法。
 
 <pre>
 describe('serviceUnderTest', function() {
   beforeEach(module(function($provide) {
     $provide.factory('serviceUnderTest', function($location){
-      // whatever it does...
+      // 随便做点什么...
     });
   });
 
@@ -540,27 +497,26 @@ describe('serviceUnderTest', function() {
     $location.path('/new/path');
     $rootScope.$apply();
 
-    // test whatever the service should do...
+    // 验证这个服务应该做的事...
 
   }));
 });
 </pre>
 
 
-# Migrating from earlier AngularJS releases
+# 从AngularJS的早期版本中迁移过来
 
-In earlier releases of Angular, `$location` used `hashPath` or `hashSearch` to process path and
-search methods. With this release, the `$location` service processes path and search methods and
-then uses the information it obtains to compose hashbang URLs (such as
-`http://server.com/#!/path?search=a`), when necessary.
+在Angular的早期版本中，`$location`使用`hashPath`或`hashSearch`来处理path和search方法。
+而这个版本中，`$location`使用`path`和`search`方法，然后，在需要时，它会根据自己获得的信息来组合出
+hashbang URL（比如`http://server.com/#!/path?search=a`）
 
-## Changes to your code
+## 你代码中的改动
 
 <table class="table">
   <thead>
     <tr class="head">
-      <th>Navigation inside the app</th>
-      <th>Change to</th>
+      <th>在应用程序范围内导航</th>
+      <th>改为</th>
     </tr>
   </thead>
 
@@ -582,8 +538,8 @@ then uses the information it obtains to compose hashbang URLs (such as
     </tr>
 
     <tr class="head">
-      <td>Navigation outside the app</td>
-      <td>Use lower level API</td>
+      <td>导航到应用程序外部</td>
+      <td>使用底层API</td>
     </tr>
 
     <tr>
@@ -597,8 +553,8 @@ then uses the information it obtains to compose hashbang URLs (such as
     </tr>
 
     <tr class="head">
-      <td>Read access</td>
-      <td>Change to</td>
+      <td>读取</td>
+      <td>改为</td>
     </tr>
 
     <tr>
@@ -625,14 +581,14 @@ then uses the information it obtains to compose hashbang URLs (such as
   </tbody>
 </table>
 
-## Two-way binding to $location
+## $location的双向绑定
 
-The Angular's compiler currently does not support two-way binding for methods (see {@link
-https://github.com/angular/angular.js/issues/404 issue}).  If you should require two-way binding
-to the $location object (using {@link api/ng.directive:input.text
-ngModel} directive on an input field), you will need to specify an extra model property
-(e.g. `locationPath`) with two watchers which push $location updates in both directions. For
-example:
+Angular不再支持到“方法”的双向绑定（参见{@link
+https://github.com/angular/angular.js/issues/404 issue}）
+如果你确实需要到$location的双向绑定（在一个输入框中使用{@link api/ng.directive:input.text
+ngModel}指令），你需要制定一个额外的中介model（比如自定义一个`locationPath`属性），
+并且使用两个监视器，把$location的变动通知彼此。例如：
+
 <example>
 <file name="index.html">
 <div ng-controller="LocationController">
@@ -653,7 +609,7 @@ function LocationController($scope, $location) {
 </file>
 </example>
 
-# Related API
+# 相关API
 
 * {@link api/ng.$location $location API}
 
