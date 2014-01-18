@@ -16,7 +16,7 @@ all of the strings and other locale-specific bits (such as date or currency form
 application. Localizing an application means providing translations and localized formats for the
 abstracted bits.
 
-i18n是Internationalization(国际化)的缩写，处理不同地域的语言和文化差异。l10n则是Localization(本地化)的缩写，使应用应用和文本在特定语言文化背景下可用。对于应用程序而言，国际化意味着需要从应用程序中抽离所有的文本字符串信息和特殊的地域特性(如时间、货币格式)。而本地化则是提供转换和地域特性的本地化。
+i18n是Internationalization(国际化)的缩写，处理不同地域的语言和文化差异。l10n则是Localization(本地化)的缩写，使应用和文本在特定语言文化背景下可用。对于应用程序而言，国际化意味着需要从应用程序中抽离所有的文本字符串信息和特殊的地域特性(如时间、货币格式)。而本地化则是提供转换和地域特性的本地化。
 
 **What level of support for i18n/l10n is currently in Angular?**
 
@@ -179,7 +179,7 @@ Keep in mind that translated strings/datetime formats can vary greatly in length
 more extreme cases. Hence, when internationalizing your apps, you need to apply CSS rules
 accordingly and do thorough testing to make sure UI components do not overlap.
 
-需要铭记转换字符串/时间格式将会很大程度长度改变。例如，`June 3, 1977`转换为西班牙格式为`3 de junio de 1977`。这将会出现一些极端的案例。因为当你需要国际化你的应用程序的时候，你需要引用响应的css和测试确保UI组件不会重叠。
+需要铭记转换字符串/时间格式将会很大程度长度改变。例如，`June 3, 1977`转换为西班牙格式为`3 de junio de 1977`。这将会出现一些极端的案例。这意味着当你在需要国际化你的应用程序的时候，你也需要引用相应的css和测试确保UI组件不会重叠。
 
 **Timezones**
 **时区**
