@@ -42,7 +42,7 @@ ckken，grahamle，NigelYao，asnowwolf，lightma，joeylin，FrankyYang，lrrlu
 * {@link guide/directive 指令(Directive)}
 * {@link api/ngRoute.$route 视图(View)和路由(Route) (参见范例)}
 * {@link guide/filter 过滤器(Filter)}
-* {@link guide/forms 表单(Form)} and [AngularJS的表单概念](http://mrbool.com/the-concepts-of-angularjs-forms/29117)
+* {@link guide/forms 表单(Form)} 和 [AngularJS的表单概念](http://mrbool.com/the-concepts-of-angularjs-forms/29117)
 
 ### 程序结构
 
@@ -110,12 +110,12 @@ ckken，grahamle，NigelYao，asnowwolf，lightma，joeylin，FrankyYang，lrrlu
 ## 学习资源
 
 ###书籍
-* [AngularJS](http://www.amazon.com/AngularJS-Brad-Green/dp/1449344852) by Brad Green 和 Shyam Seshadri
-* [Mastering Web App Development](http://www.amazon.com/Mastering-Web-Application-Development-AngularJS/dp/1782161821) by Pawel Kozlowski and Pete Bacon Darwin
-* [AngularJS Directives（AngularJS指令详解）](http://www.amazon.com/AngularJS-Directives-Alex-Vanston/dp/1783280336) by Alex Vanston
-* [Recipes With AngularJS（AngularJS秘诀）](http://www.amazon.co.uk/Recipes-Angular-js-Frederik-Dietz-ebook/dp/B00DK95V48) by Frederik Dietz
-* [Developing an AngularJS Edge](http://www.amazon.com/Developing-AngularJS-Edge-Christopher-Hiller-ebook/dp/B00CJLFF8K) by Christopher Hiller
-* [ng-book: The Complete Book on AngularJS（AngularJS大全）](http://ng-book.com/) by Ari Lerner
+* [AngularJS](http://www.amazon.com/AngularJS-Brad-Green/dp/1449344852) 作者：Brad Green 和 Shyam Seshadri
+* [Mastering Web App Development](http://www.amazon.com/Mastering-Web-Application-Development-AngularJS/dp/1782161821) 作者：Pawel Kozlowski 和 Pete Bacon Darwin
+* [AngularJS Directives（AngularJS指令详解）](http://www.amazon.com/AngularJS-Directives-Alex-Vanston/dp/1783280336) 作者：Alex Vanston
+* [Recipes With AngularJS（AngularJS秘诀）](http://www.amazon.co.uk/Recipes-Angular-js-Frederik-Dietz-ebook/dp/B00DK95V48) 作者：Frederik Dietz
+* [Developing an AngularJS Edge](http://www.amazon.com/Developing-AngularJS-Edge-Christopher-Hiller-ebook/dp/B00CJLFF8K) 作者：Christopher Hiller
+* [ng-book: The Complete Book on AngularJS（AngularJS大全）](http://ng-book.com/) 作者：Ari Lerner
 
 ###视频:
 * [egghead.io](http://egghead.io/)
