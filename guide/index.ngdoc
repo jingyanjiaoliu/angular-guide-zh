@@ -11,10 +11,10 @@
 
 目前参加翻译工作的人员有9位，分别是：
 
-ckken，grahamle，NigelYao，asnowwolf，lightma，joeylin，FrankyYang，lrrluo， why520crazy
+ckken，grahamle，NigelYao，asnowwolf，lightma，joeylin，FrankyYang，lrrluo， why520crazy，破狼
 
 
-负责审核的成员目前有：二当家，破狼
+负责审核的成员目前有：二当家
 
 # AngularJS 文档指南
 
@@ -25,7 +25,7 @@ ckken，grahamle，NigelYao，asnowwolf，lightma，joeylin，FrankyYang，lrrlu
 
 ## 教程
 
-* {@link tutorial/index Official AngularJS官方教程}
+* {@link tutorial/index AngularJS官方教程}
 * [选择Angular的十个理由](http://www.sitepoint.com/10-reasons-use-angularjs/)
 * [AngularJS的设计原则(视频)](https://www.youtube.com/watch?v=HCR7i5F5L8c)
 * [60分钟入门教程(视频)](http://www.youtube.com/watch?v=i9MHigUZKEM)
