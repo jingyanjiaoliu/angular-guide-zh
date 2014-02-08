@@ -1,16 +1,12 @@
 @ngdoc overview
-@name Developer Guide: Angular Services: Managing Service Dependencies
+@name 开发指南：Angular服务： 管理服务依赖
 @description
 
-Angular allows services to declare other services as dependencies needed for construction of their
-instances.
+angular允许服务根据自己构建实例的需要声明其他的实例作为自己的依赖.
 
-To declare dependencies, you specify them in the factory function signature and annotate the
-function with the inject annotations either using by setting the `$inject` property, as an array of
-string identifiers or using the array notation. Optionally the `$inject` property declaration can be
-dropped (see "Inferring `$inject`" but note that that is currently an experimental feature).
+要声明依赖，你首先要在factory函数签名中指定依赖，然后用依赖注入的注释来注释这个函数，它或者可以通过设置$inject属性为字符串标示符的数组(就是元素为字符串的数组)，或者可以通过数组标记.可选地，$inject属性声明可以被丢弃(查阅‘inferring $inject’章节，注意它当前只是个试验的特性).
 
-Using the array notation:
+使用数组标记:
 
 <pre>
 function myModuleCfgFn($provide) {
@@ -19,7 +15,7 @@ function myModuleCfgFn($provide) {
 </pre>
 
 
-Using the $inject property:
+使用$inject属性:
 
 <pre>
 function myModuleCfgFn($provide) {
@@ -30,7 +26,7 @@ function myModuleCfgFn($provide) {
 </pre>
 
 
-Using DI inference (incompatible with minifiers):
+直接使用依赖注入(这种方法不支持代码压缩):
 
 <pre>
 function myModuleCfgFn($provide) {
@@ -39,8 +35,7 @@ function myModuleCfgFn($provide) {
 </pre>
 
 
-Here is an example of two services, one of which depends on the other and both
-of which depend on other services that are provided by the Angular framework:
+这里有两种服务例子，其中一个服务依赖另一个服务，这两个服务都依赖angular框架本身提供的服务:
 
 <pre>
 /**
@@ -86,21 +81,15 @@ of which depend on other services that are provided by the Angular framework:
   angular.injector([batchLogModule]).get('routeTemplateMonitor');
 </pre>
 
-Things to notice in this example:
+例子中需要引起注意的部分:
 
-* The `batchLog` service depends on the built-in {@link api/ng.$timeout $timeout} and
-{@link api/ng.$log $log} services, and allows messages to be logged into the
-`console.log` in batches.
-* The `routeTemplateMonitor` service depends on the built-in {@link api/ngRoute.$route
-$route} service as well as our custom `batchLog` service.
-* Both of our services use the factory function signature and array notation for inject annotations
-to declare their dependencies. It is important that the order of the string identifiers in the array
-is the same as the order of argument names in the signature of the factory function. Unless the
-dependencies are inferred from the function signature, it is this array with IDs and their order
-that the injector uses to determine which services and in which order to inject.
+* batchLog服务依赖内建的{@link api/ng.$timeout $timeout}和{@link api/ng.$log $log}服务，作用是让调试信息批量的输出到控制台.
+* routeTemplateMonitor服务依赖内建的 {@link api/ngRoute.$route
+$route}服务和我们自定义的batchLog服务.
+* 我们自定义的服务都使用factory函数签名和数组标示作为依赖注入的注释，来声明依赖的。其中很重要的是，数组中字符串元素的顺序和factory函数签名的参数顺序要保持一致，除非依赖是从函数签名推断出来的，否则带有依赖的数组和数组字符串元素的顺序决定了哪一个服务，以什么样的顺序进行诸如.
 
 
-## Related Topics
+## 相关的主题
 
 * {@link dev_guide.services.understanding_services Understanding Angular Services}
 * {@link dev_guide.services.creating_services Creating Angular Services}
@@ -108,7 +97,7 @@ that the injector uses to determine which services and in which order to inject.
 * {@link dev_guide.services.testing_services Testing Angular Services}
 
 
-## Related API
+## 相关的API
 
 * {@link api/ng Angular Service API}
 * {@link api/angular.injector Angular Injector API}
