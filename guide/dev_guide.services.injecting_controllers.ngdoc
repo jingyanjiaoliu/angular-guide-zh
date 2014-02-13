@@ -6,14 +6,6 @@
 
 把服务作为依赖注入到控制器中，和把服务作为依赖注入到其他服务中的方式非常相似。
 
-Since JavaScript is a dynamic language, DI can't figure out which services to inject by static
-types (like in static typed languages). Therefore, you can specify the service name by using the
-`$inject` property, which is an array containing strings with names of services to be injected.
-The name must match the corresponding service ID registered with angular. The order of the service
-IDs matters: the order of the services in the array will be used when calling the factory function
-with injected parameters. The names of parameters in factory function don't matter, but by
-convention they match the service IDs, which has added benefits discussed below.
-
 由于JavaScript是一门动态语言，DI不能像静态类型语言一样根据类型判断该注入哪个服务，而只能根据名字。
 所以，你可以通过`$inject`属性来实现注入，这个属性是一个数组，包含了一组准备注入的服务名称。
 这些名称必须是已经注册到angular中的服务ID。在`$inject`数组中，这些服务ID的顺序是很重要的：
