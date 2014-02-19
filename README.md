@@ -17,11 +17,11 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 * [04-Introduction（介绍）](http://angular.duapp.com/guide/introduction)翻译者:@pengisgood 已完成翻译
 * [05-Conceptual Overview（概念总览）](http://angular.duapp.com/guide/concepts) 翻译者: @asnowwolf 已完成翻译
 * [06-Understanding Angular Services（理解ng的服务）](http://angular.duapp.com/guide/dev_guide.services.understanding_services)翻译者: @lightma 已完成翻译
-* 07-Managing Service Dependencies @joe
+* [07-Managing Service Dependencies](http://angular.duapp.com/guide/dev_guide.services.managing_dependencies) 翻译者：@joe 已完成翻译
 * [08-Creating Services](http://angular.duapp.com/guide/dev_guide.services.creating_services)  翻译者:@pengisgood 已完成初稿
 * [09-Injecting Services Into Controllers](http://angular.duapp.com/guide/dev_guide.services.injecting_controllers) 翻译者: @asnowwolf 已完成翻译
 * [10-Testing Angular Services](http://angular.duapp.com/guide/dev_guide.services.testing_services) 翻译者: @asnowwolf 已完成翻译
-* 11-Using $location  翻译者 @asnowwolf
+* [11-Using $location](http://angular.duapp.com/guide/dev_guide.services.$location) 翻译者：@asnowwolf 已完成翻译
 * [12-Angular Services](http://angular.duapp.com/guide/dev_guide.services) 翻译者: @asnowwolf 已完成翻译
 * [13-Data Binding（数据绑定）](http://angular.duapp.com/guide/databinding) 翻译者：@NigelYao 已完成
 * [14-Working With CSS in Angular](http://angular.duapp.com/guide/dev_guide.templates.css-styling) @ckken 已完成
