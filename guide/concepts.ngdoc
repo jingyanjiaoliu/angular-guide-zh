@@ -56,7 +56,7 @@
 
 这看起来很像标准的HTML，只是带了一些新的标记。在Angular中，像这样的文件叫做<a name="template">“{@link templates 模板(template)}”</a>。
 当Angular启动你的应用时，它通过<a name="compiler">“{@link compiler 编译器(compiler)}”</a>来解析并处理模板中的这些新标记。
-这些经过加载、转换、渲染而成的DOM就叫做<a name="view">“{@link view 视图(view)}”</a>
+这些经过加载、转换、渲染而成的DOM就叫做<a name="view">“视图(view)”</a>
 
 第一类新标记叫做<a name="directive">“{@link directive 指令(directive)}”</a>。
 它们通过HTML中的属性或元素来为页面添加特定的行为。上面的例子中，我们使用了
@@ -76,7 +76,7 @@ Angular还为{@link api/ng.directive:input `input`}
 当编译器遇到这种标记时，它会把这些标记替换为这个表达式的计算结果。
 模板中的<a name="expression">"{@link expression 表达式}"</a>是一种**类似于**JavaScript的代码片段，它允许你读写变量。注意，表达式中所用的变量**并不是**全局变量。
 就像JavaScript函数定义中的变量都属于某个作用域一样，Angular也为这些能从表达式中访问的变量提供了一个<a name="scope">“{@link scope 作用域(scope)}”</a>。
-这些存储于Angular作用域(Scope)中的变量叫做Scope变量，这些变量所代表的数据叫做<a name="model">“{@link model 模型(model)}”</a>。
+这些存储于Angular作用域(Scope)中的变量叫做Scope变量，这些变量所代表的数据叫做<a name="model">“模型(model)”</a>。
 在上面的例子中，这些标记告诉Angular：“从这两个`input`元素中获取数据，并把它们乘在一起。”
 
 上面这个例子中还包含一个<a name="filter">"{@link filter 过滤器(filter)}"</a>。

@@ -2,7 +2,7 @@
 @name Directives
 @description
 
-# 创建自定义"指令"
+# 创建自定义指令
 
 <div class="alert alert-warning">
 **注意:** 这篇指南是面向那些已经对AngularJS有了基础并比较熟悉的开发者。
@@ -165,7 +165,7 @@ Web浏览器有时候对于属性的合法性检查简直是吹毛求疵。
 
 和控制器一样，指令也是注册在模块上的。
 要注册一个指令，你可以用 `module.directive` API。
-`module.directive` 接受规范化{@link guide/directive#creating-custom-directives_matching-directives normalized}
+`module.directive` 接受规范化{@link guide/directive#创建自定义指令_指令的匹配 normalized}
 的指令名字和**工厂方法**。此工厂方法应该返回一个带有不同选项的对象来告诉
 编译器`$compile`此指令被匹配上该做些什么。
 
@@ -218,7 +218,7 @@ Web浏览器有时候对于属性的合法性检查简直是吹毛求疵。
 </example>
 
 注意我们在这里做了一些绑定，`$compile` 编译完链接之后，它将会匹配子元素的指令，这意味着你可以组合一些指令。
-接下来我们看看下面的{@link guide/directive#creating-custom-directives_demo_creating-directives-that-communicate 例子}是怎样做的
+接下来我们看看下面的{@link guide/directive#创建自定义指令_demo_创建相互通信的指令 例子}是怎样做的
 
 这个例子中，我们直接在`template`选项项里写上模板，但是随着模板大小的增加，这样做非常不优雅。
 
