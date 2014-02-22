@@ -292,11 +292,11 @@ describe('state', function() {
 
 译者注：
 
-  1. controller命名建议使用首字母大写的驼峰命名，并以Ctrl或者Controller结束.
-  2. 在1.2版本过后对于controller有新的controller as的语法，具体可以参见博客(Angular Controller as Syntax vs Scope)[http://greengerong.github.io/blog/2013/12/24/angular-controller-as-syntax-vs-scope/]
-  3. scope最为一个视图和模型的胶合层,最好保持scope的干净,所有出现在scope上的属性/方法尽量将是会被视图模板所使用.还有格式化和过滤器，建议使用angular的filter做格式化，对输入的限制过滤使用ngModelController.[Angular Ng-model类型格式转化](http://greengerong.github.io/blog/2013/12/15/angular-model--format/)和[Angularjs组件之input Mask](http://greengerong.github.io/blog/2013/12/15/jqueryinputmarsk4angular/)。
-  4. 如上所述对于controller的scope会根据DOM结构有继承关系，所以最好在scope上加入vm保持对象的引用([Learning Javascript with Object Graphs](http://howtonode.org/object-graphs))
-  5. 对于scope分为独立scope，原型继承scope，以及部分继承scope(出现在指令中)，这需要更好的理解。一般我们推荐独立scope为最好，部分次之.
-  6. 对于多个controller必备数据，为了控制异步操作，在route情况下，建议使用resolve解决。
-  7. 对于controller之间通信，如果是强耦合建议使用factory实现([Angular.js为什么如此火呢？-福利节](http://www.cnblogs.com/whitewolf/p/angularjs-start.html))，弱引用建议使用事件机制见[Angularjs Controller 间通信机制](http://greengerong.github.io/blog/2013/04/16/Angularjs-Controller-jian-tong-xin-ji-zhi/)
+    1. controller命名建议使用首字母大写的驼峰命名，并以Ctrl或者Controller结束.
+    2. 在1.2版本过后对于controller有新的controller as的语法，具体可以参见博客(Angular Controller as Syntax vs Scope)[http://greengerong.github.io/blog/2013/12/24/angular-controller-as-syntax-vs-scope/]
+    3. scope最为一个视图和模型的胶合层,最好保持scope的干净,所有出现在scope上的属性/方法尽量将是会被视图模板所使用.还有格式化和过滤器，建议使用angular的filter做格式化，对输入的限制过滤使用ngModelController.[Angular Ng-model类型格式转化](http://greengerong.github.io/blog/2013/12/15/angular-model--format/)和[Angularjs组件之input Mask](http://greengerong.github.io/blog/2013/12/15/jqueryinputmarsk4angular/)。
+    4. 如上所述对于controller的scope会根据DOM结构有继承关系，所以最好在scope上加入vm保持对象的引用([Learning Javascript with Object Graphs](http://howtonode.org/object-graphs))
+    5. 对于scope分为独立scope，原型继承scope，以及部分继承scope(出现在指令中)，这需要更好的理解。一般我们推荐独立scope为最好，部分次之.
+    6. 对于多个controller必备数据，为了控制异步操作，在route情况下，建议使用resolve解决。
+    7. 对于controller之间通信，如果是强耦合建议使用factory实现([Angular.js为什么如此火呢？-福利节](http://www.cnblogs.com/whitewolf/p/angularjs-start.html))，弱引用建议使用事件机制见[Angularjs Controller 间通信机制](http://greengerong.github.io/blog/2013/04/16/Angularjs-Controller-jian-tong-xin-ji-zhi/)
 
