@@ -54,3 +54,10 @@ Angular将把你从下面的苦海中解脱出来：
   * **以编程的方式操作HTML DOM：**操作HTML DOM是AJAX应用中很基础的一部分，但它不灵活并且容易出错。通过声明式的语句，描述UI该怎样随着状态的改变而变化，能让你从低级的DOM操作中解脱出来。绝大多数Angular的应用开发中，开发者都不需要自己去写低级的操作DOM的代码，尽管如果你非要这样的话，也是可以的。
   * **在用户界面中读写数据：**AJAX应用中的绝大多数操作都是CRUD操作。一个典型的流程是从服务器端取到数据组装成内部对象，然后写到HTML的表单中，在用户对表单进行修改之后，进行表单验证，显示表单验证错误信息，然后将数据重新组装成内部对象，再发给服务器。在这个流程中有很多重复的代码要写，而Angular消除了在这个流程中几乎所有的重复代码，使得代码看起来只是在描述所有的执行流程，而不是所有的实现细节。
   * **在开始前写大量的初始化代码：**一般需要写很多的基础性的代码才能完成一个基本的AJAX的Hello World应用。在Angular的应用中，你可以通过一些服务来初始化应用，这些服务都是以类似于[Guice](http://code.google.com/p/google-guice/)的方式进行依赖注入的。这会让你很快进入功能开发。另外，你还能完全控制自动化测试的初始化过程。
+
+  译者注:
+
+    1. Angular是一个以易测试为目的的框架，所以我们更倾向于与TDD开发。
+    2. Angular是个MDW/MDV框架，作为jQuery使用者如何学习Angular:[How do I “think in AngularJS” if I have a jQuery background?](http://stackoverflow.com/questions/14994391/how-do-i-think-in-angularjs-if-i-have-a-jquery-background)
+    3. Angular和Ember区别:[Client-side MVC: Is Angular.js or Ember.js the better choice for Javascript frameworks?](http://www.quora.com/Client-side-MVC/Is-Angular-js-or-Ember-js-the-better-choice-for-Javascript-frameworks)
+    4. 了解前段技术的发展史:[前端开发技术的发展](http://www.ituring.com.cn/article/25069)
