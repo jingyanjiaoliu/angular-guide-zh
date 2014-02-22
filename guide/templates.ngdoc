@@ -44,3 +44,8 @@ Angular的模板是一个声明式的视图，它指定信息从模型、控制�
 ## 相关的 API
 
 * {@link api/index API参考手册}
+
+译者注:
+
+  1. 关于模板一定要闭合，着往往是IE上bug的问题所在.
+  2. 模板关于IE的兼容性，请参考[ie 兼容性](http://angular.duapp.com/guide/ie)
