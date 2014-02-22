@@ -6,7 +6,7 @@ Translated by [@GrahamLe](https://github.com/grahamle)
 
 # 理解控制器
 
-在Angular中，控制器就像 Js 中的**构造函数**一般，是用来增强 {@link scope Angular作用域(scope)} 的。
+在Angular中，控制器就像 JavaScript 中的**构造函数**一般，是用来增强 {@link scope Angular作用域(scope)} 的。
 
 当一个控制器通过 {@link api/ng.directive:ngController ng-controller} 指令被添加到DOM中时，ng 会调用该控制器的**构造函数**来生成一个控制器对象，这样，就创建了一个新的**子级 作用域(scope)**。在这个构造函数中，作用域(scope)会作为`$scope`参数注入其中，并允许用户代码访问它。
 
@@ -133,7 +133,7 @@ Translated by [@GrahamLe](https://github.com/grahamle)
 上面的例子中有几个值得注意的地方：
 
 - `ng-controller` 指令用来为我们的模板创建一个 scope ，而且它受到 `SpicyCtrl` 控制器的管理
-- `SpicyCtrl` 就是一个普通的 Js 函数，只是命名上以首字母大写，以 "Ctrl" 或 "Controller" 结尾
+- `SpicyCtrl` 就是一个普通的 JavaScript 函数，只是命名上以首字母大写，以 "Ctrl" 或 "Controller" 结尾
 - 把一个属性指定给 `$scope` 这样会创建或更新一个数据模型
 - 控制器的方法可以通过在 scope 中添加函数来创建，如 `chiliSpicy` 方法
 - 控制器的方法和属性在模板/视图中都是可以获得的，在上例中的 `<div>` 元素及其子节点
@@ -290,5 +290,13 @@ describe('state', function() {
 });
 </pre>
 
+译者注：
 
+  1. controller命名建议使用首字母大写的驼峰命名，并以Ctrl或者Controller结束.
+  2. 在1.2版本过后对于controller有新的controller as的语法，具体可以参见博客(Angular Controller as Syntax vs Scope)[http://greengerong.github.io/blog/2013/12/24/angular-controller-as-syntax-vs-scope/]
+  3. scope最为一个视图和模型的胶合层,最好保持scope的干净,所有出现在scope上的属性/方法尽量将是会被视图模板所使用
+  4. 如上所述对于controller的scope会根据DOM结构有继承关系，所以最好在scope上加入vm保持对象的引用([Learning Javascript with Object Graphs](http://howtonode.org/object-graphs))
+  5. 对于scope分为独立scope，原型继承scope，以及部分继承scope(出现在指令中)，这需要更好的理解。一般我们推荐独立scope为最好，部分次之.
+  6. 对于多个controller必备数据，为了控制异步操作，在route情况下，建议使用resolve解决。
+  7. 对于controller之间通信，如果是强耦合建议使用factory实现([Angular.js为什么如此火呢？-福利节](http://www.cnblogs.com/whitewolf/p/angularjs-start.html))，弱引用建议使用事件机制见[Angularjs Controller 间通信机制](http://greengerong.github.io/blog/2013/04/16/Angularjs-Controller-jian-tong-xin-ji-zhi/)
 
