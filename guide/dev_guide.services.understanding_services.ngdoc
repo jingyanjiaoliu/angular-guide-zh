@@ -48,3 +48,9 @@ Angular工厂方法是延迟执行的，也就是说，仅当需要满足依赖�
 
 * {@link api/ng Angular服务API}
 * {@link api/angular.injector 注入器API}
+
+译者注：
+
+  1. angular中所有的service都将是单例的
+  2. 更多的了解angular的service以及区别:[Angular.js Services](http://www.cnblogs.com/whitewolf/p/angular-services.html)
+  

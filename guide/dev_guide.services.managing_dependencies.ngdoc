@@ -91,13 +91,20 @@ $route}服务和我们自定义的batchLog服务.
 
 ## 相关的主题
 
-* {@link dev_guide.services.understanding_services Understanding Angular Services}
-* {@link dev_guide.services.creating_services Creating Angular Services}
-* {@link dev_guide.services.injecting_controllers Injecting Services Into Controllers }
-* {@link dev_guide.services.testing_services Testing Angular Services}
+* {@link dev_guide.services.understanding_services 理解 Angular Services}
+* {@link dev_guide.services.creating_services 创建 Angular Services}
+* {@link dev_guide.services.injecting_controllers  将Angular Services注入到Controllers }
+* {@link dev_guide.services.testing_services Angular Services测试}
 
 
 ## 相关的API
 
 * {@link api/ng Angular Service API}
 * {@link api/angular.injector Angular Injector API}
+
+译者注：
+
+  1. 理解angular注入方式: [再谈angularjs DI(Dependency Injection)](http://www.cnblogs.com/whitewolf/archive/2012/09/11/2680659.html)
+  2. 理解angular注入机制: [Angularjs的IOC Inject分析](http://www.cnblogs.com/whitewolf/archive/2013/03/27/2983806.html)
+  3. angular注入方式有三种，但是最简单的莫过于按名注入，但是这不利于生产环境的压缩混淆.推荐用数组内联注入方式.
+  4. 如果对于已经有按名/推断注入的项目，可以采用ngmin插件修正项目.
