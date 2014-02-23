@@ -13,8 +13,8 @@
 # 简单的表单
 
 理解双向绑定的关键指令是{@link api/ng.directive:ngModel ngModel}.
-指令`ngModel`通过保持数据与视图的同步，和视图与数据的同步实现了双向绑定。
-额外的，它提供了{@link api/ng.directive:ngModel.NgModelController API}来让其他指令扩展其行为。
+指令`ngModel`通过维护“数据到视图”的同步以及“视图到数据”的同步实现了双向绑定。
+另外，它还提供了{@link api/ng.directive:ngModel.NgModelController API}来让其他指令扩展其行为。
 
 <doc:example>
 <doc:source>
@@ -49,7 +49,7 @@
 </doc:source>
 </doc:example>
 
-其中 `novalidate` 是用来禁用浏览器中自带的验证功能。
+其中 `novalidate` 属性用于禁用浏览器自带的表单验证功能。
 
 
 # 使用 CSS 类
@@ -60,9 +60,9 @@
 - `ng-pristine`
 - `ng-dirty`
 
-接下来的例子使用了CSS来展示每一个表单控件是否有效。
-在例子中，`user.name` 和 `user.email` 两者都是必须的，但是仅仅只在它们成为脏数据(dirty)时才会显示红色背景。
-这保证了用户在没有与控件进行交互，而恰好控件当前的状态不符合验证条件的时候，出现不恰当的错误提示。
+接下来的例子中使用这些CSS类来表明每一个表单控件是否有效。
+在例子中，`user.name` 和 `user.email` 都是必需的（required），它们仅在成为脏数据(dirty)时才会显示红色背景，但不会在初始状态下（也为空）显示。
+这样就防止了用户在尚未与该控件进行交互，而该控件的当前状态恰好不符合验证条件的时候，出现不恰当的错误提示。
 
 <doc:example>
 <doc:source>
@@ -70,11 +70,11 @@
   <form novalidate class="css-form">
     Name:
       <input type="text" ng-model="user.name" required /><br />
-    E-mail: <input type="email" ng-model="user.email" required /><br />
-    Gender: <input type="radio" ng-model="user.gender" value="male" />male
-    <input type="radio" ng-model="user.gender" value="female" />female<br />
-    <button ng-click="reset()">RESET</button>
-    <button ng-click="update(user)">SAVE</button>
+    邮箱: <input type="email" ng-model="user.email" required /><br />
+    性别: <label><input type="radio" ng-model="user.gender" value="male" />男</label>
+    <label><input type="radio" ng-model="user.gender" value="female" />女</label><br />
+    <button ng-click="reset()">重置</button>
+    <button ng-click="update(user)">保存</button>
   </form>
 </div>
 
@@ -109,18 +109,18 @@
 
 # 与表单绑定和控制状态
 
-一个表单是一个 {@link api/ng.directive:form.FormController FormController} 实例。
+一个表单是一个 {@link api/ng.directive:form.FormController FormController} 的实例。
 这个表单实例可以通过 'name' 属性装载到scope中去。
 
 类似的，一个拥有 {@link api/ng.directive:ngModel} 指令的输入控件，包含一个{@link api/ng.directive:ngModel.NgModelController NgModelController}实例。
 这样一个控件的实例可以使用 'name' 属性装载到表单实例中去，作为表单实例的一个字段。name属性指定了其在表单实例中的字段名。
 
-这意味着，视图中使用基本的数据绑定形式可以访问到表单和控件中的内部状态。
+这意味着，在视图中使用基本的数据绑定形式就可以访问到表单和控件中的内部状态。
 
 这让我们可以为上面的例子扩展以下功能：
 
-- RESET按钮 只在表单有改变的时候才可用
-- SAVE按钮 只在表单有改变且数据有效的时候才可用
+- 重置按钮 只在表单有改变的时候才可用
+- 保存按钮 只在表单有改变且数据有效的时候才可用
 - 为 `user.email` 和 `user.agree` 自定义错误提示信息
 
 <doc:example>
@@ -177,16 +177,16 @@
 
 Angular提供了一些常用的html5输入控件的验证实现：({@link api/ng.directive:input.text text}, {@link api/ng.directive:input.number number}, {@link api/ng.directive:input.url url}, {@link api/ng.directive:input.email email}, {@link api/ng.directive:input.radio radio}, {@link api/ng.directive:input.checkbox checkbox}), 以及一些用于验证的指令 (`required`, `pattern`, `minlength`, `maxlength`, `min`, `max`).
 
-定义你自己的验证器可以首先定义一个指令，这个指令要为 'ngModel' {@link api/ng.directive:ngModel.NgModelController controller}. 添加自定义验证方法。
+定义你自己的验证器可以首先定义一个指令，这个指令为 'ngModel' {@link api/ng.directive:ngModel.NgModelController 控制器}添加自定义验证方法。
 我们通过指定一个依赖来获得对这个控制器的引用，从下面的例子中可以看出。
 
-我们的验证在两个地方触发：
+我们的验证在两个时机触发：
 
   * **数据到视图的更新** -
-    任何时候，受约束的模型改变时，所有在{@link api/ng.directive:ngModel.NgModelController#properties_$formatters NgModelController#$formatters}数组中的方法会被管式调用（一个接一个的调用方法），这样一来，所有的方法都有机会对值来进行格式化并改变表单和控件的有效性状态，通过{@link api/ng.directive:ngModel.NgModelController#methods_$setValidity NgModelController#$setValidity}来实现。
+    任何时候，受约束的模型改变时，所有在{@link api/ng.directive:ngModel.NgModelController#properties_$formatters NgModelController#$formatters}数组中的方法会被管道式调用（即：一个接一个的调用方法），这样一来，所有的方法都有机会对值来进行格式化并改变表单和控件的有效性状态，这将通过调用{@link api/ng.directive:ngModel.NgModelController#methods_$setValidity NgModelController#$setValidity}来实现。
 
   * **视图到数据的更新** -
-    相似的，当用户与一个控件交互时，调用{@link api/ng.directive:ngModel.NgModelController#methods_$setViewValue NgModelController#$setViewValue}.
+    类似的，当用户与一个控件交互时，调用{@link api/ng.directive:ngModel.NgModelController#methods_$setViewValue NgModelController#$setViewValue}.
     这又反过来管式调用了所有在{@link api/ng.directive:ngModel.NgModelController#properties_$parsers NgModelController#$parsers}数组中的方法，这样一来，所有的方法都有机会对值来进行转换并改变表单和控件的有效性状态，通过{@link api/ng.directive:ngModel.NgModelController#methods_$setValidity NgModelController#$setValidity}来实现。
 
 
@@ -194,31 +194,31 @@ Angular提供了一些常用的html5输入控件的验证实现：({@link api/ng
 
   * 第一个指令是 'integer' 整形数字，它验证了输入是否是一个合法的整形数字。
     例如，'1.23'是一个非法值，因为它包含小数部分。
-    记住我们并没有对数组进行压栈操作，而是插入数组的开头。
+    注意，我们并没有对数组进行压栈操作，而是插入数组的开头。
     这是因为我们希望指令能成为第一个解析和处理被控制的值，而不希望在我们执行验证前，值已经在其他环节被转换成了数字。
-  * 第二个指令时 'smart-float' 智能浮点数。
+  * 第二个指令是 'smart-float' 智能浮点数。
     它能解析 '1.2' 和 '1,2' 并将其转换成合法的浮点数 '1.2'.
-    记住我们此时不能在HTML5的浏览器中使用 'number' 类型，因为在这种情况下，浏览器不会允许用户输入像 '1,2' 这种被认为是不合法的数字。
+    注意，我们此时不能在HTML5的浏览器中使用 'number' 类型，因为在这种情况下，浏览器不会允许用户输入像 '1,2' 这种被认为是不合法的数字。
 
 <doc:example module="form-example1">
 <doc:source>
 <div ng-controller="Controller">
   <form name="form" class="css-form" novalidate>
     <div>
-      Size (integer 0 - 10):
+      大小 (整数 0 - 10):
       <input type="number" ng-model="size" name="size"
              min="0" max="10" integer />{{size}}<br />
-      <span ng-show="form.size.$error.integer">This is not valid integer!</span>
+      <span ng-show="form.size.$error.integer">这是无效的数字!</span>
       <span ng-show="form.size.$error.min || form.size.$error.max">
-        The value must be in range 0 to 10!</span>
+        值必需在0到10之间!</span>
     </div>
 
     <div>
-      Length (float):
+      长度 (浮点):
       <input type="text" ng-model="length" name="length" smart-float />
       {{length}}<br />
       <span ng-show="form.length.$error.float">
-        This is not a valid float number!</span>
+        这是无效的浮点数!</span>
     </div>
   </form>
 </div>
@@ -269,14 +269,14 @@ Angular提供了一些常用的html5输入控件的验证实现：({@link api/ng
 
 
 # 实现自定义form控件(使用 'ngModel')
-Angular实现了所有基本的HTML表单控件(({@link api/ng.directive:input input}, {@link api/ng.directive:select select}, {@link api/ng.directive:textarea textarea}),在绝大多数情况下能够很高效。
+Angular实现了所有基本的HTML表单控件(({@link api/ng.directive:input input}, {@link api/ng.directive:select select}, {@link api/ng.directive:textarea textarea})，它们在大多数情况下都很有效。
 然而，如果你需要更多的灵活性，你可以使用指令来实现你的自定义表单控件。
 
 
 为了能让自定义控件能够与'ngModel'正常工作，达到双向绑定的效果，它需要：
 
-  - 实现 '$render' 方法，它是负责在数据传递给方法{@link   api/ng.directive:ngModel.NgModelController#properties_$formatters NgModelController#$formatters}执行之后渲染数据。
-  - 调用 '$setViewValue' 方法，在任何用户与控件交互后，模型需要更新的时候。这通常在一个DOM事件监听器里完成。
+  - 实现 '$render' 方法，它负责在数据传递给方法{@link   api/ng.directive:ngModel.NgModelController#properties_$formatters NgModelController#$formatters}之后渲染数据。
+  - 调用 '$setViewValue' 方法，在任何用户与控件交互后，模型需要更新的时候调用。这通常在一个DOM事件监听器里完成。
 
 查看 {@link guide/directive $compileProvider.directive} 获得更多的信息。
 
