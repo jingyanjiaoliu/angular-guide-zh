@@ -23,3 +23,9 @@ Angular模板的工作方式则不同，如图表中所示。差别体现在：�
 
 * {@link scope Angular Scopes 作用域}
 * {@link templates Angular Templates 模板}
+
+译者注:
+
+  1. 关于angular的双向绑定需要理解angular的dirty check.
+  2. 双向绑定则引入angular的$watch,一个angular页面理想状况为200左右的$watch，一般大家默认2000$watch为上限(IE),这是为了页面更好的体验效果，而并不意味着一定是angular dirty check上限。
+  3. 过多的$watch，我们需要考虑页面的性能，对于表格推荐采用服务端分页,按屏加载[ngInfiniteScroll](http://binarymuse.github.io/ngInfiniteScroll/demo_async.html),以及移除$watch:[angularjs移除不必要的$watch](http://www.cnblogs.com/whitewolf/p/angularjs-remove-unused-watch.html).
