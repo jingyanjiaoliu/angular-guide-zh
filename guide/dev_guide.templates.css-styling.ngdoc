@@ -26,3 +26,7 @@ Angular提供了这些CSS类，它们为你的应用提供便于使用的风格�
 
 * {@link templates Angular模板}
 * {@link forms Angular表单}
+
+译者注：
+
+  1. 对于解析快速的浏览器，angular会出现闪烁现象,推荐阅读[ngCloak 实现 Angular 初始化闪烁最佳实践](http://greengerong.github.io/blog/2013/12/27/angular-ngcloak/)。
