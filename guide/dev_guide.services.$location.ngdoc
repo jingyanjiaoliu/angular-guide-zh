@@ -4,7 +4,7 @@
 
 翻译者：[@asnowwolf](https://github.com/asnowwolf)
 
-# 这是做什么的？
+# $location是做什么的？
 
 `$location`服务负责解析浏览器地址栏中的URL（基于{@link
 https://developer.mozilla.org/en/window.location window.location}），以便你的应用可以访问它。
