@@ -117,9 +117,7 @@ $location.path('/newValue')
 
 ## replace方法
 
-有一个特殊的`replace`方法，用来告诉$location服务：你下次和浏览器同步的时候，应该用新地址“替代”最后一条历史记录而不是“追加”新纪录。
-这在你实现重定向的时候很有用，否则它将“玩死”浏览器的“后退”按钮（“后退”立刻触发一次重定向，我胡汉三又回来了！）。
-要想改变当前地址却不创建新历史记录，你可以这样调用：
+有一个特殊的`replace`方法，用来告诉$location服务：你下次和浏览器同步的时候，应该用新地址“替代”最后一条历史记录而不是“追加”新纪录。这在你实现重定向的时候很有用，否则它将“玩死”浏览器的“后退”按钮（“后退”立刻触发一次重定向，我胡汉三又回来了！）。要想改变当前地址却不创建新历史记录，你可以这样调用：
 
 <pre>
   $location.path('/someNewPath');
@@ -127,12 +125,7 @@ $location.path('/newValue')
   // 你也可以像这样把它们串起来：$location.path('/someNewPath').replace();
 </pre>
 
-注意，setter方法不会立刻更新`window.location`。
-反之，`$location`服务是挂在与{@link api/ng.$rootScope.Scope 作用域(scope)}的生命周期中的，
-它会在作用域的`$digest`阶段把多个`$location`调用合并到一起，然后“提交”到`window.location对象中。
-由于对$location的状态的多次修改会被合并成一次修改通知浏览器，在一个生命周期内你只要调用了一次
-`replace`操作就可以“提交”一个replace操作（“替换”而不是“追加”历史记录）。浏览器地址一旦被更新，
-$location服务器就会重置`replace()`方法设置的标识，将来的修改将会追加新的历史记录，除非再次调用`replace()`。
+注意，setter方法不会立刻更新`window.location`。反之，`$location`服务是挂在与{@link api/ng.$rootScope.Scope 作用域(scope)}的生命周期中的，它会在作用域的`$digest`阶段把多个`$location`调用合并到一起，然后“提交”到`window.location对象中。由于对$location的状态的多次修改会被合并成一次修改通知浏览器，在一个生命周期内你只要调用了一次`replace`操作就可以“提交”一个replace操作(“替换”而不是“追加”历史记录)。浏览器地址一旦被更新，$location服务器就会重置`replace()`方法设置的标识，将来的修改将会追加新的历史记录，除非再次调用`replace()`。
 
 ### setter和字符编码
 
@@ -230,9 +223,9 @@ it('显示范例', inject(
 
 ## HTML5模式
 
-在HTML5模式中，`$location`服务的getter和setter方法通过HTML5历史API与浏览器地址栏互动，
-它允许你使用标准的URL path和search格式来代替等价的hashbang模式。如果浏览器不支持HTML5历史API，
-那么`$location`服务将自动退回到使用hashbang URL。这将把你从担心用户的浏览器是否支持历史API中解放出来，
+在HTML5模式中，`$location`服务的getter和setter方法通过HTML5 history API与浏览器地址栏互动，
+它允许你使用标准的URL path和search格式来代替等价的hashbang模式。如果浏览器不支持HTML5 history API，
+那么`$location`服务将自动退回到使用hashbang URL。这将把你从担心用户的浏览器是否支持history API中解放出来，
 `$location`服务将会透明的帮你选择最佳的可用形式。
 
 - 在一个老式浏览器中使用标准url格式 -> 重定向到hashbang URL
@@ -279,13 +272,13 @@ it('显示范例', inject(
 
 ### 退回到老式浏览器
 
-对于支持HTML5历史API的浏览器，`$location`使用HTML5历史API来修改path和search部分。
-如果浏览器不支持历史API，`$location`提供hashbang URL。这会把你从不得不担心用户的浏览器是否支持历史API中解放出来，
+对于支持HTML5 history API的浏览器，`$location`使用HTML5 history API来修改path和search部分。
+如果浏览器不支持history API，`$location`提供hashbang URL。这会把你从不得不担心用户的浏览器是否支持history API中解放出来，
 `$location`服务为你透明的完成这一切。
 
 ### HTML链接重写
 
-如果你正在使用HTML5 历史API模式，你需要在不同的浏览器中使用不同的链接，但是你要做的只是制定一个标准URL链接形式，
+如果你正在使用HTML5 history API模式，你需要在不同的浏览器中使用不同的链接，但是你要做的只是制定一个标准URL链接形式，
 比如：`<a href="/some?foo=bar">某链接</a>`
 
 当用户点击这个链接时，
@@ -336,10 +329,10 @@ it('显示范例', inject(
 
 ### 范例
 
-接下来你将看到两个`$location`实例。全都使用**HTML5模式**但运行于不同的浏览器，你将看到它们的区别。
-这两个`$location`服务连接到虚拟浏览器中，每个input输入框表示一个浏览器的地址栏。
+接下来你将看到两个`$location`实例。全都使用**HTML5模式**但运行于不同的浏览器,你将看到它们的区别。
+这两个`$location`服务连接到虚拟浏览器中,每个input输入框表示一个浏览器的地址栏。
 
-注意，你在第一个浏览器中输入hashbang url的时候（标准URL也一样），它不会重写/重定向到标准或hashbang形式，
+注意，你在第一个浏览器中输入hashbang url的时候（标准URL也一样）,它不会重写/重定向到标准或hashbang形式，
 因为这种转换只会发生在页面加载时解析初始URL的那一步。
 
 在这个例子中，我们使用`<base href="/base/index.html" />`
