@@ -8,9 +8,9 @@
 
 由于JavaScript是一门动态语言，DI不能像静态类型语言一样根据类型判断该注入哪个服务，而只能根据名字。
 所以，你可以通过`$inject`属性来实现注入，这个属性是一个数组，包含了一组准备注入的服务名称。
-这些名称必须是已经注册到angular中的服务ID。在`$inject`数组中，这些服务ID的顺序是很重要的：
+这些名称必须是已经注册到angular中的服务标示。在`$inject`数组中， **这些服务标示的顺序是很重要的**：
 它们在数组中的顺序将被同样用作往工厂函数中注入参数的顺序。在工厂函数中，这些参数的名字并不重要，
-但是按照惯例，它们应该和服务ID保持一致，下面将详细论述这项惯例的优点所在。
+但是按照惯例，它们应该和服务标示保持一致，下面将详细论述这项惯例的优点所在。
 
 <pre>
 function myController($loc, $log) {
@@ -60,7 +60,7 @@ myController.$inject = ['$scope','notify'];
 </div>
 </doc:source>
 <doc:scenario>
-  it('测试服务', function() {
+  it('should test service', function() {
     expect(element(':input[ng\\:model="message"]').val()).toEqual('test');
   });
 </doc:scenario>
@@ -106,10 +106,10 @@ function myController($scope, notify) {
 
 ## 相关主题
 
-{@link dev_guide.services.understanding_services 理解Angular服务}
-{@link dev_guide.services.creating_services 创建Angular服务}
-{@link dev_guide.services.managing_dependencies 管理服务依赖}
-{@link dev_guide.services.testing_services 测试Angular服务}
+* {@link dev_guide.services.understanding_services 理解Angular服务}
+* {@link dev_guide.services.creating_services 创建Angular服务}
+* {@link dev_guide.services.managing_dependencies 管理服务依赖}
+* {@link dev_guide.services.testing_services 测试Angular服务}
 
 ## 相关APIAPI
 
