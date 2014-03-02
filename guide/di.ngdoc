@@ -6,23 +6,23 @@ Translated by [@GrahamLe](https://github.com/grahamle)
 
 # 依赖注入
 
-依赖注入（译注：以下简称DI）是一种让代码处理其依赖关系的软件设计模式。
+依赖注入（DI）是一种让代码管理其依赖关系的设计模式。
 
-期待更多详细的有关 `DI` 的讨论，请看维基百科的 {@link http://en.wikipedia.org/wiki/Dependency_injection Dependency Injection} 词条，以及 Martin Fowler 写的 {@link http://martinfowler.com/articles/injection.html Inversion of Control} ，或者是在你喜欢的任何一本设计模式的书去查看。
+关于 `DI` 的更多讨论，请参见维基百科的 {@link http://en.wikipedia.org/wiki/Dependency_injection Dependency Injection} 词条，以及 Martin Fowler 写的 {@link http://martinfowler.com/articles/injection.html Inversion of Control} ，或查阅那些有关设计模式的书。
 
 ## DI简介
 
-对象或是函数只有三种方式可以得到依赖：
+对象或函数可以通过三种方式获得所依赖的对象（简称依赖）：
 
-  1. 依赖创建，通常是通过 `new` 操作符
+  1. 创建依赖，通常是通过 `new` 操作符
 
-  2. 依赖查找，通过引用一个全局变量
+  2. 查找依赖，在一个全局的注册表中查阅它
 
-  3. 依赖传递，依赖可以被注入到任何需要依赖的地方
+  3. 传入依赖，需要此依赖的地方等待被依赖对象注入进来
 
-前两种选择：创建或是查找依赖都不是那么理想，因为它们都是将依赖写死在对象或函数里了。不能说完全没可能吧，但至少，想要更改上述两种方式得到的依赖是很困难的。尤其是在测试的时候，会遇到很多问题，因为测试时常常需要我们提供模拟的依赖（译注：此句涉及测试，本人不精，已跪）。
+前两种方式：创建或是查找依赖都不是那么理想，因为它们都将依赖写死在对象或函数里了。问题在于，想要修改这两种方式获得依赖对象的逻辑是很困难的。尤其是在测试的时候，会遇到很多问题，因为测试时常常需要我们提供所依赖对象的替身(MOCK)。
 
-第三种方式是最可行的，因为它去除了去组件里面定位相应的依赖这个担子，而是反过来，依赖总是能够很简单地被注入到需要它的组件中。（译注：说实话，上述三种方式，说的啥玩意呀，对于我是相当于没说一样）
+第三种方式是最理想的，因为它免除了客户代码里定位相应的依赖这个负担，反过来，依赖总是能够很简单地被注入到需要它的组件中。
 
 <pre>
   function SomeClass(greeter) {
@@ -34,13 +34,13 @@ Translated by [@GrahamLe](https://github.com/grahamle)
   }
 </pre>
 
-上述例子中，`SomeClass` 不必去在意 `greeter` 依赖是从哪里来的，反正就是在运行的时候，`greeter` 依赖被传进来了，我用就是了。（译注：so easy，妈妈再也不用担心我的依赖了）
+上述例子中，`SomeClass` 不必在意它所依赖的`greeter`对象是从哪里来的，只要知道一点：在运行的时候，`greeter` 依赖已经被传进来了，直接用就是了。
 
-像这个例子中的情况是我们愿意看到的，但是它把获得依赖的大部分责任都放在了我们创建 `SomeClass` 的代码中。
+这个例子中的代码虽然理想，但是它却把获得所依赖对象的大部分责任都放在了我们创建 `SomeClass` 的客户代码中。
 
 <img class="pull-right" style="padding-left: 3em; padding-bottom: 1em;" src="img/guide/concepts-module-injector.png">
 
-为了分配依赖创建的任务，每个 Angular 应用都有一个 {@link api/angular.injector injector}。这个 `injector` 是一个服务定位器，负责创建和查找依赖的。（译注：当你的app的某处声明需要用到某个依赖时，Angular 会调用这个依赖注入器去查找或是创建你所需要的依赖，然后返回来给你用）
+为了分离“创建依赖”的职责，每个 Angular 应用都有一个 {@link api/angular.injector injector}对象。这个 `injector` 是一个服务定位器，负责创建和查找依赖。（译注：当你的app的某处声明需要用到某个依赖时，Angular 会调用这个依赖注入器去查找或是创建你所需要的依赖，然后返回来给你用）
 
 下面是一个利用 `injector` 服务例子：
 
