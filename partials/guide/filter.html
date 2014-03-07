@@ -1,0 +1,104 @@
+<a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/filter.ngdoc" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="--page"><p>翻译者:<a href="https://github.com/NigelYao">@NigelYao</a></p>
+<p>过滤器用来格式化表达式中的值。它可以用在视图模板(templates)、控制器(controllers)或者服务(services)中。我们很容易就能自定义过滤器。</p>
+<p>过滤器的API可以在<a href="api/ng.$filterProvider"><code>filterProvider</code></a>中找到。</p>
+<h3 id="在模板中使用过滤器">在模板中使用过滤器</h3>
+<p>过滤器可以应用在视图模板中的表达式中，按如下的格式：</p>
+<pre><code>    {{ 表达式 | 过滤器名 }}</code></pre>
+<p>例如，在&quot;{{ 12 | currency }}&quot;标记中格式化了数字12作为一种货币的形式来显示，它使用了<a href="api/ng.filter:currency"><code><code>currency</code></code></a>过滤器。格式化之后的结果是&quot;$12.00&quot;。</p>
+<p>过滤器可以应用在另外一个过滤器的结果之上。这叫做“链式”使用，按如下格式：</p>
+<pre><code>    {{ 表达式 | 过滤器1 | 过滤器2 | ... }}</code></pre>
+<p>过滤器可以拥有（多个）参数，按如下格式：</p>
+<pre><code>    {{ 表达式 | 过滤器:参数1:参数2:... }}</code></pre>
+<p>例如，在“{{ 1234 | number:2 }}”的标记中格式化显示了数字1234为小数点后两位，使用了<a href="api/ng.filter:number"><code><code>number</code></code></a>过滤器。显示的结果为&quot;1,234.00&quot;。</p>
+<h3 id="在控制器和服务中使用过滤器">在控制器和服务中使用过滤器</h3>
+<p>你同样可以在控制器和服务中使用过滤器。在这种情况下，在你的控制器或者服务中添加以“&lt;过滤器名&gt;Filter”为名的依赖。例如，使用&quot;numberFilter&quot;为依赖时，会相应的注入number过滤器。</p>
+<p>下面的例子展示了一个名为filter的过滤器。
+这个过滤器根据不同的参数将一个数组拆分成多个子数组。这个过滤器可以在模板中以{{ctrl.array | filter:&#39;a&#39;}}`的方式来使用，这会以&#39;a&#39;作为查询字符串来进行过滤。但是，在视图模板中使用过滤器会在每次的更新中重新调用过滤器，当数组很大的时候，开销会很大。</p>
+<p>紧接着下面的例子在控制器中直接调用了这个过滤器。
+使用这种方式，控制器可以在需要的时候手动调用（例如在从后台获取数据或者过滤器中的表达式有改变的时候）。</p>
+<h3 id="source">Source</h3>
+<div source-edit="FilterInControllerModule" source-edit-deps="angular.js script.js" source-edit-html="index.html-261" source-edit-css="" source-edit-js="script.js-260" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-261" ng-html-wrap="FilterInControllerModule angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-261">
+
+
+<div ng-controller="FilterController as ctrl">
+  <div>
+    All entries:
+    <span ng-repeat="entry in ctrl.array">{{entry.name}} </span>
+  </div>
+  <div>
+    Entries that contain an "a":
+    <span ng-repeat="entry in ctrl.filteredArray">{{entry.name}} </span>
+  </div>
+</div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-260"></pre>
+<script type="text/ng-template" id="script.js-260">
+  angular.module('FilterInControllerModule', []).
+    controller('FilterController', ['filterFilter', function(filterFilter) {
+      this.array = [
+        {name: 'asnowwolf'},
+        {name: 'why520crazy'},
+        {name: 'joe'},
+        {name: 'ckken'},
+        {name: 'lightma'},
+        {name: 'FrankyYang'}
+      ];
+      this.filteredArray = filterFilter(this.array, 'a');
+    }]);
+</script>
+</div>
+</div><h3 id="demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="FilterInControllerModule" ng-set-html="index.html-261" ng-eval-javascript="script.js-260"></div>
+<h3 id="创建自定义过滤器">创建自定义过滤器</h3>
+<p>创建自定义过滤器的过程很简单:仅仅需要在模块中注册一个新的过滤器工厂方法。其中使用了<a href="api/ng.$filterProvider"><code><code>filterProvider</code></code></a>。这个工厂方法应该返回一个以输入值为第一个参数的新过滤方法，过滤器中的参数都会作为附加参数传递给它。</p>
+<p>下面的示例过滤器反转显示一个字符串。另外，它可以根据参数把字母全部大写。</p>
+<h3 id="source">Source</h3>
+<div source-edit="MyReverseModule" source-edit-deps="angular.js script.js" source-edit-html="index.html-263" source-edit-css="" source-edit-js="script.js-262" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-263" ng-html-wrap="MyReverseModule angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-263">
+
+
+<div ng-controller="Ctrl">
+  <input ng-model="greeting" type="greeting"><br>
+  未添加过滤器: {{greeting}}<br>
+  逆置: {{greeting|reverse}}<br>
+  逆置 + 大写: {{greeting|reverse:true}}<br>
+</div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-262"></pre>
+<script type="text/ng-template" id="script.js-262">
+  angular.module('MyReverseModule', []).
+    filter('reverse', function() {
+      return function(input, uppercase) {
+        var out = "";
+        for (var i = 0; i < input.length; i++) {
+          out = input.charAt(i) + out;
+        }
+        // 取决于可选参数
+        if (uppercase) {
+          out = out.toUpperCase();
+        }
+        return out;
+      }
+    });
+
+  function Ctrl($scope) {
+    $scope.greeting = 'hello';
+  }
+</script>
+</div>
+</div><h3 id="demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="MyReverseModule" ng-set-html="index.html-263" ng-eval-javascript="script.js-262"></div>
+</div></div>

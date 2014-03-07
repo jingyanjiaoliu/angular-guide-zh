@@ -1,0 +1,19 @@
+<a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/databinding.ngdoc" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="--page"><p>翻译者:<a href="https://github.com/NigelYao">@NigelYao</a></p>
+<p>在Angular网页应用中，数据绑定是数据模型(model)与视图(view)组件的自动同步。Angular的实现方式允许你把应用中的模型看成单一数据源。而视图始终是数据模型的一种展现形式。当模型改变时，视图就能反映这种改变，反之亦然。</p>
+<h3 id="典型模板系统中的数据绑定">典型模板系统中的数据绑定</h3>
+<p><img class="right" src="img/One_Way_Data_Binding.png"/></p>
+<p>大多数模板系统中只有单向绑定：它们将模板和数据合并起来加入到视图中去，如图表中所示。合并完成之后，任何对数据模型或者相关内容的改变都不会自动反映到视图中去。更糟的是，用户对视图的任何改变也不会自动同步到数据模型中来。这意味着，开发者需要编写代码来保持视图与模板、模板与视图的同步。</p>
+<h3 id="angular模板中的数据绑定">Angular模板中的数据绑定</h3>
+<p><img class="right" src="img/Two_Way_Data_Binding.png"/></p>
+<p>Angular模板的工作方式则不同，如图表中所示。差别体现在：其一，模板（指未经编译的附加了标记和指令的HTML）是在浏览器中编译的。其二，编译阶段生成了动态(live)视图。保持视图动态的原因是，任何视图中的改变都会立刻反映到数据模型中去，任何数据模型的改变都会传播到视图中去。这使得数据模型始终是应用的单一数据源。大幅度简化了开发者的编程核心，你可以将视图简单的理解为数据模型的实时映射。</p>
+<p>因此，将视图作为数据模型的一种映射，使得控制器完全与视图分离，而不必关心视图的展现。这使测试变得小菜一碟，你可以在没有视图和有关DOM/浏览器的依赖情况下轻松测试你的应用。</p>
+<h3 id="相关主题">相关主题</h3>
+<ul>
+<li><a href="guide/scope">Angular Scopes 作用域</a></li>
+<li><a href="guide/templates">Angular Templates 模板</a></li>
+</ul>
+</div></div>

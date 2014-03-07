@@ -1,0 +1,157 @@
+<a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/di.ngdoc" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="developer-guide-page developer-guide-dependency-injection-page"><p>Translated by <a href="https://github.com/grahamle">@GrahamLe</a></p>
+<h2 id="依赖注入">依赖注入</h2>
+<p>依赖注入（译注：以下简称DI）是一种让代码处理其依赖关系的软件设计模式。</p>
+<p>期待更多详细的有关 <code>DI</code> 的讨论，请看维基百科的 <a href="http://en.wikipedia.org/wiki/Dependency_injection">Dependency Injection</a> 词条，以及 Martin Fowler 写的 <a href="http://martinfowler.com/articles/injection.html">Inversion of Control</a> ，或者是在你喜欢的任何一本设计模式的书去查看。</p>
+<h3 id="依赖注入_di简介">DI简介</h3>
+<p>对象或是函数只有三种方式可以得到依赖：</p>
+<ol>
+<li><p>依赖创建，通常是通过 <code>new</code> 操作符</p>
+</li>
+<li><p>依赖查找，通过引用一个全局变量</p>
+</li>
+<li><p>依赖传递，依赖可以被注入到任何需要依赖的地方</p>
+</li>
+</ol>
+<p>前两种选择：创建或是查找依赖都不是那么理想，因为它们都是将依赖写死在对象或函数里了。不能说完全没可能吧，但至少，想要更改上述两种方式得到的依赖是很困难的。尤其是在测试的时候，会遇到很多问题，因为测试时常常需要我们提供模拟的依赖（译注：此句涉及测试，本人不精，已跪）。</p>
+<p>第三种方式是最可行的，因为它去除了去组件里面定位相应的依赖这个担子，而是反过来，依赖总是能够很简单地被注入到需要它的组件中。（译注：说实话，上述三种方式，说的啥玩意呀，对于我是相当于没说一样）</p>
+<pre class="prettyprint linenums">
+  function SomeClass(greeter) {
+    this.greeter = greeter;
+  }
+  
+  SomeClass.prototype.doSomething = function(name) {
+    this.greeter.greet(name);
+  }
+</pre>
+<p>上述例子中，<code>SomeClass</code> 不必去在意 <code>greeter</code> 依赖是从哪里来的，反正就是在运行的时候，<code>greeter</code> 依赖被传进来了，我用就是了。（译注：so easy，妈妈再也不用担心我的依赖了）</p>
+<p>像这个例子中的情况是我们愿意看到的，但是它把获得依赖的大部分责任都放在了我们创建 <code>SomeClass</code> 的代码中。</p>
+<p><img class="pull-right" style="padding-left: 3em; padding-bottom: 1em;" src="img/guide/concepts-module-injector.png"></p>
+<p>为了分配依赖创建的任务，每个 Angular 应用都有一个 <a href="api/angular.injector"><code>injector</code></a>。这个 <code>injector</code> 是一个服务定位器，负责创建和查找依赖的。（译注：当你的app的某处声明需要用到某个依赖时，Angular 会调用这个依赖注入器去查找或是创建你所需要的依赖，然后返回来给你用）</p>
+<p>下面是一个利用 <code>injector</code> 服务例子：</p>
+<pre class="prettyprint linenums">
+  // Provide the wiring information in a module
+  angular.module('myModule', []).
+  
+    // 下面是教 injector 如何构建一个 'greeter' 依赖
+    // 注意 greeter 本身依赖于 '$window'
+    factory('greeter', function($window) {
+      // 这是一个 factory 函数，负责创建 'greeter' 服务 
+      return {
+        greet: function(text) {
+          $window.alert(text);
+        }
+      };
+    });
+
+  // 从 module 创建的 injector 
+  // 这个常常是 Angular 启动时自动完成的
+  var injector = angular.injector(['myModule', 'ng']);
+  
+  // 通过 injector 请求任意的依赖
+  var greeter = injector.get('greeter');
+</pre>
+<p>函数或对象通过请求依赖解决了硬编码的问题，但同时也就意味着 injector 需要通过应用传递，而传递 injector 破坏了 <a href="http://en.wikipedia.org/wiki/Law_of_Demeter">Law of Demeter</a>。为了弥补这个，我们通过像下面例子那样声明依赖，将依赖查找的任务丢给了 injector 去做：</p>
+<pre class="prettyprint linenums">
+  &lt;!-- Given this HTML --&gt;
+  &lt;div ng-controller="MyController"&gt;
+    &lt;button ng-click="sayHello()"&gt;Hello&lt;/button&gt;
+  &lt;/div&gt;
+</pre><br><pre class="prettyprint linenums">
+  // And this controller definition
+  function MyController($scope, greeter) {
+    $scope.sayHello = function() {
+      greeter.greet('Hello World');
+    };
+  }
+  
+  // The 'ng-controller' directive does this behind the scenes
+  injector.instantiate(MyController);
+</pre>
+<p>注意，通过让 <code>ng-controller</code> 在背后调用 injector 初始化控制器类满足了 <code>MyController</code> 需要依赖的需求，而且可以让控制器根本不知道 injector 的存在（译注：好一招瞒天过海）。这是最好的结果了。应用中的代码简单地提交需要它需要某依赖的请求，不需要去管 injector ，而且这样也不违反迪米特法则 。</p>
+<h3 id="依赖注入_依赖注释">依赖注释</h3>
+<p>（译注：此处注释非代码注释，应理解为依赖声明的方法）</p>
+<p>那么，injector 是如何知道哪些服务需要被注入呢？</p>
+<p>应用开发者需要提供 injector 需要使用的注释信息来解析依赖。Angular 之中，按照API文档说明，某些 API 方法需要通过 injector 调用。这样，injector 要知道得往这个方法中注入什么服务。下面是用服务名信息来进行注释的三种等价的方式，它们可以互用，按照你觉得适合的情况选用相应的方式。</p>
+<h4 id="依赖注入_依赖注释_推断依赖">推断依赖</h4>
+<p>最简单的获取依赖的方法是让你的函数的参数名直接使用依赖名。</p>
+<pre class="prettyprint linenums">
+  function MyController($scope, greeter) {
+    ...
+  }
+</pre>
+<p>给 injector 一个函数，它可以通过检查函数声明并抽取参数名可以推断需要注入的服务名。在上面的例子中，<code>$scope</code> 和 <code>greeter</code> 是两个需要被注入到函数中的服务。</p>
+<p>虽然这种方式很直观明了，但是它对于压缩的 JavaScript 代码来说是不起作用的，因为压缩过后的 JavaScript 代码重命名了函数的参数名。这就让这种注释方式只对 <a href="http://www.pretotyping.org/">pretotyping</a> 和 demo级应用有用。</p>
+<h4 id="依赖注入_依赖注释_-注释"><code>$inject</code> 注释</h4>
+<p>为了让重命名了参数名的压缩版的 JavaScript 代码能够正确地注入相关的依赖服务。函数需要通过 <code>$inject</code> 属性进行标注，这个属性是一个存放需要注入的服务的数组。</p>
+<pre class="prettyprint linenums">
+  var MyController = function(renamed$scope, renamedGreeter) {
+    ...
+  }
+  MyController['$inject'] = ['$scope', 'greeter'];
+</pre>
+<p>在这种场合下，<code>$inject</code> 数组中的服务名顺序必须和函数参数名顺序一致。以上述代码段为例，<code>$scope</code> 将会被注入到 &#39;renamed$scope&#39;，而 <code>greeter</code> 则是注入到 &#39;renamedGreeter&#39;。需要注意 <code>$inject</code> 注释是和真实的函数声明中的参数保持同步的。</p>
+<p>这种注释方法对于控制器声明很有用处，因为它是把注释信息赋给了函数。</p>
+<h4 id="依赖注入_依赖注释_行内注释">行内注释</h4>
+<p>有时候用 <code>$inject</code> 注释的方式不方便，比如标注指令的时候（译注：这里标注指令可以理解为告诉指令需要加载哪些服务依赖的说明）。</p>
+<p>看下面的例子：</p>
+<pre class="prettyprint linenums">
+  someModule.factory('greeter', function($window) {
+    ...
+  });
+</pre>
+<p>由于需要一个临时的变量导致代码膨胀：</p>
+<pre class="prettyprint linenums">
+  var greeterFactory = function(renamed$window) {
+    ...
+  };
+  
+  greeterFactory.$inject = ['$window'];
+  
+  someModule.factory('greeter', greeterFactory);
+</pre>
+<p>所以，第三种注释风格被引入，如下：</p>
+<pre class="prettyprint linenums">
+  someModule.factory('greeter', ['$window', function(renamed$window) {
+    ...
+  }]);
+</pre>
+<p>记住，所有上面的三种依赖注释风格（译注：声明依赖的风格）是等价的，在 Angular 中任何支持依赖注入的地方都可以使用。</p>
+<h3 id="依赖注入_哪里使用di">哪里使用DI</h3>
+<p>在 Angular 中，DI 无处不在。通常在控制器和工厂方法（译注：所谓的工厂方法个人理解为 Angular 中的API）中使用较多。</p>
+<h4 id="依赖注入_哪里使用di_控制器中使用di">控制器中使用DI</h4>
+<p>控制器是负责应用操作逻辑的 JavaScript 类，推荐的在控制器中使用DI的方式是用数组标记风格，如下：</p>
+<pre class="prettyprint linenums">
+  someModule.controller('MyController', ['$scope', 'dep1', 'dep2', function($scope, dep1, dep2) {
+    ...
+    $scope.aMethod = function() {
+      ...
+    }
+    ...
+  }]);
+</pre>
+<p>如上那样，避免了在全局作用域内创建控制器，同时也避免了代码压缩时引起的注入问题。</p>
+<h4 id="依赖注入_哪里使用di_工厂方法中使用di">工厂方法中使用DI</h4>
+<p>工厂方法负责创建 Angular 中的绝大多数对象。例如指令，服务，和过滤器等。工厂方法是注册在模块之下的，推荐的声明方式如下：</p>
+<pre class="prettyprint linenums">
+  angular.module('myModule', []).
+    config(['depProvider', function(depProvider){
+      ...
+    }]).
+    factory('serviceId', ['depService', function(depService) {
+      ...
+    }]).
+    directive('directiveName', ['depService', function(depService) {
+      ...
+    }]).
+    filter('filterName', ['depService', function(depService) {
+      ...
+    }]).
+    run(['depService', function(depService) {
+      ...
+    }]);
+</pre>
+</div></div>

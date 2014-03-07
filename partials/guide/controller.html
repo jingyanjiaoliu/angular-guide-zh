@@ -1,0 +1,278 @@
+<a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/controller.ngdoc" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="controllers-page"><p>Translated by <a href="https://github.com/grahamle">@GrahamLe</a></p>
+<h2 id="理解控制器">理解控制器</h2>
+<p>在Angular中，控制器就像 Js 中的<strong>构造函数</strong>一般，是用来增强 <a href="guide/scope">Angular作用域(scope)</a> 的。</p>
+<p>当一个控制器通过 <a href="api/ng.directive:ngController"><code>ng-controller</code></a> 指令被添加到DOM中时，ng 会调用该控制器的<strong>构造函数</strong>来生成一个控制器对象，这样，就创建了一个新的<strong>子级 作用域(scope)</strong>。在这个构造函数中，作用域(scope)会作为<code>$scope</code>参数注入其中，并允许用户代码访问它。</p>
+<p>一般情况下，我们使用控制器做两件事：</p>
+<ul>
+<li>初始化 <code>$scope</code> 对象</li>
+<li>为 <code>$scope</code> 对象添加行为（方法）</li>
+</ul>
+<h2 id="初始化-对象">初始化 <code>$scope</code> 对象</h2>
+<p>当我们创建应用程序时，我们通常要为Angular的 <code>$scope</code> 对象设置初始状态，这是通过在 <code>$scope</code> 对象上添加属性实现的。这些属性就是供在视图中展示用的<strong>视图模型</strong>（<strong>view model</strong>），它们在与此控制器相关的模板中均可以访问到。</p>
+<p>下面的例子中定义了一个非常简单的控制器构造函数：<code>GreetingCtrl</code>，我们在该控制器所创建的 scope 中添加一个 <code>greeting</code> 属性：</p>
+<pre class="prettyprint linenums">
+    function GreetingCtrl($scope) {
+        $scope.greeting = 'Hola!';
+    }
+</pre>
+<p>如上所示，我们有了一个控制器，它初始化了一个 <code>$scope</code>对象，并且有一个<code>greeting</code>属性。当我们把该控制器关联到DOM节点上，模板就可以通过数据绑定来读取它：</p>
+<pre class="prettyprint linenums">
+    &lt;div ng-controller="GreetingCtrl"&gt;
+      {{ greeting }}
+    &lt;/div&gt;
+</pre>
+<p><strong>注意</strong>：虽然Angular允许我们在全局作用域下(window)定义控制器函数，但<strong>建议不要</strong>用这种方式。在一个实际的应用程序中，推荐在 <a href="guide/module">Angular模块</a> 下通过 <code>.controller</code> 为你的应用创建控制器，如下所示：</p>
+<pre class="prettyprint linenums">
+    var myApp = angular.module('myApp',[]);
+
+    myApp.controller('GreetingCtrl', ['$scope', function($scope) {
+        $scope.greeting = 'Hola!';
+    }]);
+</pre>
+<p>在上面例子中，我们使用<strong>内联注入</strong>的方式声明 <code>GreetingCtrl</code> 依赖于Angular提供的 <code>$scope</code> 服务。更多详情，参阅 <a href="guide/di">依赖注入</a> 。</p>
+<h2 id="为-对象添加行为">为 <code>$scope</code> 对象添加行为</h2>
+<p>为了对事件作出响应，或是在视图中执行计算，我们需要为 scope 提供相关的行为操作的逻辑。上面一节中，我们为 scope 添加属性来让模板可以访问数据模型，现在，我们为 <code>$scope</code> 添加方法来让它提供相关的交互逻辑。添加完之后，这些方法就可以在<strong>模板/视图</strong>中被调用了。</p>
+<p>下面的例子将演示为控制器的 scope 添加方法，它用来使一个数字翻倍：</p>
+<pre class="prettyprint linenums">
+    var myApp = angular.module('myApp',[]);
+
+    myApp.controller('DoubleCtrl', ['$scope', function($scope) {
+        $scope.double = function(value) { return value * 2; };
+    }]);
+</pre>
+<p>当上述控制器被添加到DOM之后，<code>double</code> 方法即可被调用，如在模板中的一个Angular表达式中：</p>
+<pre class="prettyprint linenums">
+    &lt;div ng-controller="DoubleCtrl"&gt;
+      &lt;input ng-model="num"&gt; 翻倍后等于 {{ double(num) }}
+    &lt;/div&gt;
+</pre>
+<p>如 <a href="guide/concepts">概述</a> 部分所指出的一样，任何对象（或者原生类型的变量）被添加到 scope 后都将成为 scope 的属性，作为数据模型供模板/视图调用。任何方法被添加到 scope 后，也能在模板/视图中通过Angular表达式或是Angular的事件处理器（如：<a href="api/ng.directive:ngClick"><code>ngClick</code></a>）调用。</p>
+<h2 id="正确使用控制器">正确使用控制器</h2>
+<p>通常情况下，控制器不应被赋予太多的责任和义务，它只需要负责一个单一视图所需的业务逻辑。</p>
+<p>最常见的保持控制器“纯度”的方法是将那些不属于控制器的逻辑都封装到服务（services）中，然后在控制器中通过依赖注入调用相关服务。详见指南中的 <a href="guide/di">依赖注入</a> <a href="guide/dev_guide.services">服务</a> 这两部分。</p>
+<p>注意，下面的场合<strong>千万不要用控制器</strong>：</p>
+<ul>
+<li>任何形式的DOM操作：控制器只应该包含业务逻辑。DOM操作则属于应用程序的表现层逻辑操作，向来以测试难度之高闻名于业界。把任何表现层的逻辑放到控制器中将会大大增加业务逻辑的测试难度。ng 提供数据绑定 （<a href="guide/databinding">数据绑定</a>） 来实现自动化的DOM操作。如果需要手动进行DOM操作，那么最好将表现层的逻辑封装在 <a href="guide/directive">指令</a> 中</li>
+<li>格式化输入：使用 <a href="guide/forms">angular表单控件</a> 代替</li>
+<li>过滤输出：使用 <a href="guide/filter">angular过滤器</a> 代替</li>
+<li>在控制器间复用有状态或无状态的代码：使用<a href="guide/dev_guide.services">angular服务</a> 代替</li>
+<li>管理其它部件的生命周期（如手动创建 service 实例）</li>
+</ul>
+<h2 id="将控制器与-scope-对象关联">将控制器与 scope 对象关联</h2>
+<p>通过两种方法可以实现控制器和 scope 对象的关联：</p>
+<ul>
+<li><a href="api/ng.directive:ngController"><code>ngController指令</code></a> 这个指令就会创建一个新的 scope</li>
+<li><a href="api/ngRoute.$route">$route路由服务</a></li>
+</ul>
+<h3 id="将控制器与-scope-对象关联_简单的控制器范例">简单的控制器范例</h3>
+<p>为了更深入地阐释Angular的控制器是如何工作的，我们用以下几个部件来构建一个小型应用：</p>
+<ul>
+<li>一个由两个按钮和一条简单反馈构成的<a href="guide/templates">模板</a></li>
+<li>一个名为 <code>spice</code> 的数据模型对象，是一个字符串</li>
+<li>一个拥有两个方法的控制器，可以设置<code>spice</code> 的值</li>
+</ul>
+<p>模板中的消息包含了一个到数据模型 <code>spice</code> 的绑定，默认值为 <code>very</code>。之后，取决于哪个按钮被点击，<code>spice</code> 的值会被置为 <code>chili</code> 或是 <code>jalapeño</code> ，受益于数据绑定，模板中的这个消息会在 <code>spice</code> 变化时自动更新。</p>
+<h3 id="将控制器与-scope-对象关联_source">Source</h3>
+<div source-edit="spicyApp1" source-edit-deps="angular.js script.js" source-edit-html="index.html-210" source-edit-css="" source-edit-js="script.js-209" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-210" ng-html-wrap="spicyApp1 angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-210">
+    <div ng-app="spicyApp1" ng-controller="SpicyCtrl">
+     <button ng-click="chiliSpicy()">Chili</button>
+     <button ng-click="jalapenoSpicy()">Jalapeño</button>
+     <p>The food is {{spice}} spicy!</p>
+    </div>
+    
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-209"></pre>
+<script type="text/ng-template" id="script.js-209">
+      var myApp = angular.module('spicyApp1', []);
+
+      myApp.controller('SpicyCtrl', ['$scope', function($scope){
+          $scope.spice = 'very';
+          
+          $scope.chiliSpicy = function() {
+              $scope.spice = 'chili';
+          };
+          
+          $scope.jalapenoSpicy = function() {
+              $scope.spice = 'jalapeño';
+          };
+      }]);
+    </script>
+</div>
+</div><h3 id="将控制器与-scope-对象关联_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="spicyApp1" ng-set-html="index.html-210" ng-eval-javascript="script.js-209"></div>
+<p>上面的例子中有几个值得注意的地方：</p>
+<ul>
+<li><code>ng-controller</code> 指令用来为我们的模板创建一个 scope ，而且它受到 <code>SpicyCtrl</code> 控制器的管理</li>
+<li><code>SpicyCtrl</code> 就是一个普通的 Js 函数，只是命名上以首字母大写，以 &quot;Ctrl&quot; 或 &quot;Controller&quot; 结尾</li>
+<li>把一个属性指定给 <code>$scope</code> 这样会创建或更新一个数据模型</li>
+<li>控制器的方法可以通过在 scope 中添加函数来创建，如 <code>chiliSpicy</code> 方法</li>
+<li>控制器的方法和属性在模板/视图中都是可以获得的，在上例中的 <code>&lt;div&gt;</code> 元素及其子节点</li>
+</ul>
+<h3 id="将控制器与-scope-对象关联_控制器范例扩展--带参数">控制器范例扩展--带参数</h3>
+<p>控制器方法可以带参数，我们看一下如下范例（是上面例子的变种）：</p>
+<h3 id="将控制器与-scope-对象关联_source">Source</h3>
+<div source-edit="spicyApp2" source-edit-deps="angular.js script.js" source-edit-html="index.html-212" source-edit-css="" source-edit-js="script.js-211" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-212" ng-html-wrap="spicyApp2 angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-212">
+  <div ng-app="spicyApp2" ng-controller="SpicyCtrl">
+   <input ng-model="customSpice">
+   <button ng-click="spicy('chili')">Chili</button>
+   <button ng-click="spicy(customSpice)">Custom spice</button>
+   <p>The food is {{spice}} spicy!</p>
+  </div>
+  
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-211"></pre>
+<script type="text/ng-template" id="script.js-211">
+    var myApp = angular.module('spicyApp2', []);
+
+    myApp.controller('SpicyCtrl', ['$scope', function($scope){
+        $scope.customSpice = "wasabi";
+        $scope.spice = 'very';
+        
+        $scope.spicy = function(spice){
+            $scope.spice = spice;
+        };
+    }]);
+  </script>
+</div>
+</div><h3 id="将控制器与-scope-对象关联_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="spicyApp2" ng-set-html="index.html-212" ng-eval-javascript="script.js-211"></div>
+<p>注意上面的 <code>SpicyCtrl</code> 控制器现在只定义了一个 <code>spicy</code> 方法，带一个 <code>spice</code> 参数。然后在模板中，第一个按钮调用 <code>spicy</code> 方法的时候传进一个字符串常量 <code>&#39;chili&#39;</code> ；第二个按钮则传进一个与<code>&lt;input&gt;</code>进行了双向绑定的数据模型 <code>customSpice</code>（初始值在 scope 中设置为了 <code>&#39;wasabi&#39;</code>）。（译者注：这样在 <code>&lt;input&gt;</code> 输入框输入什么，点击第二个按钮时，<code>&lt;p&gt;</code> 标签就会显示 <code>&lt;input&gt;</code> 中的当前值。）</p>
+<h3 id="将控制器与-scope-对象关联_scope-继承范例">Scope 继承范例</h3>
+<p>我们常常会在不同层级的DOM结构中添加控制器。由于 <a href="api/ng.directive:ngController"><code>ng-controller</code></a> 指令会创建新的子级 scope ，这样我们就会获得一个与DOM层级结构相对应的的基于继承关系的 scope 层级结构。（译者注：由于 Js 是基于原型的继承，所以）底层（内层）控制器的 <code>$scope</code> 能够访问在高层控制器的 scope 中定义的属性和方法。详情参见 <a href="https://github.com/angular/angular.js/wiki/Understanding-Scopes">理解“作用域”</a> 。</p>
+<p><em>译者注</em>：下面是一个拥有三层div结构，也就对应有三层 scope 继承关系的层级结构（不包括 rootScope 的话），demo中的蓝色边框很清晰的展现了 scope 的层级和DOM层级的对应关系。它还展示了“scope 是由 <code>ng-controller</code> 指令创建并由其对应的控制器所管理”这个概念。</p>
+<h3 id="将控制器与-scope-对象关联_source">Source</h3>
+<div source-edit="scopeInheritance" source-edit-deps="angular.js script.js" source-edit-html="index.html-215" source-edit-css="style.css-214" source-edit-js="script.js-213" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-215" ng-html-wrap="scopeInheritance angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-215">
+    <div ng-app="scopeInheritance" class="spicy">
+      <div ng-controller="MainCtrl">
+        <p>Good {{timeOfDay}}, {{name}}!</p>
+
+        <div ng-controller="ChildCtrl">
+          <p>Good {{timeOfDay}}, {{name}}!</p>
+
+          <div ng-controller="GrandChildCtrl">
+            <p>Good {{timeOfDay}}, {{name}}!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+  </script>
+</div>
+<div class="tab-pane" title="style.css">
+<pre class="prettyprint linenums" ng-set-text="style.css-214"></pre>
+<style type="text/css" id="style.css-214">
+      div.spicy div {
+        padding: 10px;
+        border: solid 2px blue;
+      }
+    </style>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-213"></pre>
+<script type="text/ng-template" id="script.js-213">
+      var myApp = angular.module('scopeInheritance', []);
+      myApp.controller('MainCtrl', ['$scope', function($scope){
+        $scope.timeOfDay = 'morning';
+        $scope.name = 'Nikki';
+      }]);
+      myApp.controller('ChildCtrl', ['$scope', function($scope){
+        $scope.name = 'Mattie';
+      }]);
+      myApp.controller('GrandChildCtrl', ['$scope', function($scope){
+        $scope.timeOfDay = 'evening';
+        $scope.name = 'Gingerbreak Baby';
+      }]);
+    </script>
+</div>
+</div><h3 id="将控制器与-scope-对象关联_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="scopeInheritance" ng-set-html="index.html-215" ng-eval-javascript="script.js-213"></div>
+<p>注意，上面例子中我们在HTML模板中嵌套了三个 <code>ng-controller</code> 指令，这导致我们的视图中有4个 scope：</p>
+<ul>
+<li>root scope，所有作用域的“根”</li>
+<li><code>MainCtrl</code> 控制器管理的 scope （简称 <code>MainCtrl</code> scope），拥有 <code>timeOfDay</code> 和 <code>name</code> 两个属性</li>
+<li><code>ChildCtrl</code> 控制器管理的 scope （简称 <code>ChildCtrl</code> scope），继承了 <code>MainCtrl</code> scope 中的 <code>timeOfDay</code> 属性，但重写了它的 <code>name</code> 属性</li>
+<li><code>GrandChildCtrl</code> 控制器管理的 scope （简称 <code>GrandChildCtrl</code> scope），重写了 <code>MainCtrl</code> scope 中的 <code>timeOfDay</code> 属性和 <code>ChildCtrl</code> scope 中的 <code>name</code> 属性</li>
+</ul>
+<p>控制器中，方法继承和属性继承的工作方式是一样的，所以，上面例子中的所有属性，我们也可以改写成能够返回字符串值的方法，同样有效。</p>
+<h3 id="将控制器与-scope-对象关联_控制器的单元测试">控制器的单元测试</h3>
+<p>虽然我们有很多方法可以对控制器进行测试，但在这里，我们仅展示最常见的一种，包括注入 <a href="api/ng.$rootScope"><code>$rootScope</code></a> 以及 <a href="api/ng.$controller"><code>$controller</code></a> ：</p>
+<p><strong>控制器定义</strong>：
+<pre class="prettyprint linenums">
+    var myApp = angular.module('myApp',[]);
+
+    myApp.controller('MyController', function($scope) {
+      $scope.spices = [{"name":"pasilla", "spiciness":"mild"},
+                       {"name":"jalapeno", "spiceiness":"hot hot hot!"},
+                       {"name":"habanero", "spiceness":"LAVA HOT!!"}];
+      $scope.spice = "habanero";
+    });
+</pre>
+<p><strong>控制器测试</strong>：
+<pre class="prettyprint linenums">
+describe('myController function', function() {
+
+  describe('myController', function() {
+    var $scope;
+
+    beforeEach(module('myApp'));
+
+    beforeEach(inject(function($rootScope, $controller) {
+      $scope = $rootScope.$new();
+      $controller('MyController', {$scope: $scope});
+    }));
+
+    it('should create "spices" model with 3 spices', function() {
+      expect($scope.spices.length).toBe(3);
+    });
+
+    it('should set the default value of spice', function() {
+      expect($scope.spice).toBe('habanero');
+    });
+  });
+});
+</pre>
+<p>如果有需要测试嵌套关系的控制器，那么在你的测试代码中，你也得创建对应于 scope 层级结构的测试代码：</p>
+<pre class="prettyprint linenums">
+describe('state', function() {
+    var mainScope, childScope, grandChildScope;
+
+    beforeEach(module('myApp'));
+
+    beforeEach(inject(function($rootScope, $controller) {
+        mainScope = $rootScope.$new();
+        $controller('MainCtrl', {$scope: mainScope});
+        childScope = mainScope.$new();
+        $controller('ChildCtrl', {$scope: childScope});
+        grandChildScope = childScope.$new();
+        $controller('GrandChildCtrl', {$scope: grandChildScope});
+    }));
+
+    it('should have over and selected', function() {
+        expect(mainScope.timeOfDay).toBe('morning');
+        expect(mainScope.name).toBe('Nikki');
+        expect(childScope.timeOfDay).toBe('morning');
+        expect(childScope.name).toBe('Mattie');
+        expect(grandChildScope.timeOfDay).toBe('evening');
+        expect(grandChildScope.name).toBe('Gingerbreak Baby');
+    });
+});
+</pre>
+</div></div>

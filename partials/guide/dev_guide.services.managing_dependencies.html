@@ -1,0 +1,89 @@
+<a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/dev_guide.services.managing_dependencies.ngdoc" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="-angular--page"><p>angular允许服务根据自己构建实例的需要声明其他的实例作为自己的依赖.</p>
+<p>要声明依赖，你首先要在factory函数签名中指定依赖，然后用依赖注入的注释来注释这个函数，它或者可以通过设置$inject属性为字符串标示符的数组(就是元素为字符串的数组)，或者可以通过数组标记.可选地，$inject属性声明可以被丢弃(查阅‘inferring $inject’章节，注意它当前只是个试验的特性).</p>
+<p>使用数组标记:</p>
+<pre class="prettyprint linenums">
+function myModuleCfgFn($provide) {
+  $provide.factory('myService', ['dep1', 'dep2', function(dep1, dep2) {}]);
+}
+</pre>
+<p>使用$inject属性:</p>
+<pre class="prettyprint linenums">
+function myModuleCfgFn($provide) {
+  var myServiceFactory = function(dep1, dep2) {};
+  myServiceFactory.$inject = ['dep1', 'dep2'];
+  $provide.factory('myService', myServiceFactory);
+}
+</pre>
+<p>直接使用依赖注入(这种方法不支持代码压缩):</p>
+<pre class="prettyprint linenums">
+function myModuleCfgFn($provide) {
+  $provide.factory('myService', function(dep1, dep2) {});
+}
+</pre>
+<p>这里有两种服务例子，其中一个服务依赖另一个服务，这两个服务都依赖angular框架本身提供的服务:</p>
+<pre class="prettyprint linenums">
+/**
+ * batchLog service allows for messages to be queued in memory and flushed
+ * to the console.log every 50 seconds.
+ *
+ * @param {*} message Message to be logged.
+ */
+  function batchLogModule($provide){
+    $provide.factory('batchLog', ['$timeout', '$log', function($timeout, $log) {
+      var messageQueue = [];
+
+      function log() {
+        if (messageQueue.length) {
+          $log('batchLog messages: ', messageQueue);
+          messageQueue = [];
+        }
+        $timeout(log, 50000);
+      }
+
+      // start periodic checking
+      log();
+
+      return function(message) {
+        messageQueue.push(message);
+      }
+    }]);
+
+    /**
+     * routeTemplateMonitor monitors each $route change and logs the current
+     * template via the batchLog service.
+     */
+    $provide.factory('routeTemplateMonitor',
+                ['$route', 'batchLog', '$rootScope',
+         function($route,   batchLog,   $rootScope) {
+      $rootScope.$on('$routeChangeSuccess', function() {
+        batchLog($route.current ? $route.current.template : null);
+      });
+    }]);
+  }
+
+  // get the main service to kick of the application
+  angular.injector([batchLogModule]).get('routeTemplateMonitor');
+</pre>
+<p>例子中需要引起注意的部分:</p>
+<ul>
+<li>batchLog服务依赖内建的<a href="api/ng.$timeout"><code>$timeout</code></a>和<a href="api/ng.$log"><code>$log</code></a>服务，作用是让调试信息批量的输出到控制台.</li>
+<li>routeTemplateMonitor服务依赖内建的 <a href="api/ngRoute.$route">$route</a>服务和我们自定义的batchLog服务.</li>
+<li>我们自定义的服务都使用factory函数签名和数组标示作为依赖注入的注释，来声明依赖的。其中很重要的是，数组中字符串元素的顺序和factory函数签名的参数顺序要保持一致，除非依赖是从函数签名推断出来的，否则带有依赖的数组和数组字符串元素的顺序决定了哪一个服务，以什么样的顺序进行诸如.</li>
+</ul>
+<h3 id="相关的主题">相关的主题</h3>
+<ul>
+<li><a href="guide/dev_guide.services.understanding_services">Understanding Angular Services</a></li>
+<li><a href="guide/dev_guide.services.creating_services">Creating Angular Services</a></li>
+<li><a href="guide/dev_guide.services.injecting_controllers">Injecting Services Into Controllers</a></li>
+<li><a href="guide/dev_guide.services.testing_services">Testing Angular Services</a></li>
+</ul>
+<h3 id="相关的api">相关的API</h3>
+<ul>
+<li><a href="api/ng">Angular Service API</a></li>
+<li><a href="api/angular.injector"><code>Angular Injector API</code></a></li>
+</ul>
+</div></div>

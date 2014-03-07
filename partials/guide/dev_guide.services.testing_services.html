@@ -1,0 +1,60 @@
+<a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/dev_guide.services.testing_services.ngdoc" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="--page --angular-angular--page"><p>翻译者：<a href="https://github.com/asnowwolf">@asnowwolf</a></p>
+<p>下面是一个关于<a href="guide/dev_guide.services.creating_services">创建Angular服务</a>那章的范例中所创建的<code>notify</code>服务的单元测试。这个单元测试用Jasmine的spy(mock)对象来代替实际浏览器，以拦截它的alert函数。</p>
+<pre class="prettyprint linenums">
+var mock, notify;
+
+beforeEach(function() {
+  mock = {alert: jasmine.createSpy()};
+
+  module(function($provide) {
+    $provide.value('$window', mock);
+  });
+
+  inject(function($injector) {
+    notify = $injector.get('notify');
+  });
+});
+
+it('对第一次和第二次通知，不应该有警告', function() {
+  notify('one');
+  notify('two');
+
+  expect(mock.alert).not.toHaveBeenCalled();
+});
+
+it('对第三次及以后的通知，都要给出警告', function() {
+  notify('one');
+  notify('two');
+  notify('three');
+
+  expect(mock.alert).toHaveBeenCalledWith("one\ntwo\nthree");
+});
+
+it('给出警告之后，要清除消息', function() {
+  notify('one');
+  notify('two');
+  notify('third');
+  notify('more');
+  notify('two');
+  notify('third');
+
+  expect(mock.alert.callCount).toEqual(2);
+  expect(mock.alert.mostRecentCall.args).toEqual(["more\ntwo\nthird"]);
+});
+</pre>
+<h3 id="相关主题">相关主题</h3>
+<ul>
+<li><a href="guide/dev_guide.services.understanding_services">理解Angular服务</a></li>
+<li><a href="guide/dev_guide.services.creating_services">创建Angular服务</a></li>
+<li><a href="guide/dev_guide.services.managing_dependencies">管理服务依赖</a></li>
+<li><a href="guide/dev_guide.services.injecting_controllers">把服务注入到控制器中</a></li>
+</ul>
+<h3 id="相关api">相关API</h3>
+<ul>
+<li><a href="api/ng">Angular服务API</a></li>
+</ul>
+</div></div>

@@ -1,0 +1,205 @@
+<a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/dev_guide.e2e-testing.ngdoc" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="-e2e-testing--page"><p>翻译者：<a href="https://github.com/asnowwolf">@asnowwolf</a></p>
+<p><strong> 如果你正准备新建一个Angular项目，建议你使用<a href="https://github.com/angular/protractor">Protractor</a>，它将在不久之后取代现在的模块成为端到端测试的内置模块。 </strong></p>
+<p>现在的应用程序在大小和复杂度方面与日俱增，依靠人工测试来验证新特性、查找bug和进行回归测试已经变得不现实了。</p>
+<p>为了解决这个问题，我们创建了Angular场景测试工具（Angular Scenario Runner），它将模拟用户的交互，以帮助你为Angular应用程序进行“体检”。</p>
+<h2 id="概览">概览</h2>
+<p>你可以用JavaScript来写场景测试，它描述你的应用程序的工作方式，在各种特定的状态下定义出正确的互动结果。
+一个场景由一个或多个<code>it</code>块语句组成（可以把这些看做应用程序的“需求”），这些语句由<strong>命令（command）</strong>和<strong>期望(expectation)</strong>组成。
+命令负责告诉测试工具（runner）应用程序去做点什么（比如访问一个页面或者点击一个按钮），而期望则告诉测试工具，这个状态下哪些断言（assertion）必须成立（比如某个输入框的值或者当前页面的URL）。
+如果某些期望落空了，测试工具就会把相应的<code>it</code>语句标记为“失败(failed)”，然后继续执行下一个。
+场景（scenarios）还可能包含<strong>beforeEach</strong>和<strong>afterEach</strong>语句，它们将在每个<code>it</code>语句之前（或之后）运行 —— 无论这些语句是执行成功了还是失败了。</p>
+<p><img src="img/guide/scenario_runner.png"></p>
+<p>除了上面这些内容之外，场景还可能包含一些辅助函数，用来消除各个<code>it</code>语句中的重复代码。</p>
+<p>下面是一个简单的场景范例：</p>
+<pre class="prettyprint linenums">
+describe('Buzz客户端', function() {
+it('应该对结果进行过滤', function() {
+  input('user').enter('jacksparrow');
+  element(':button').click();
+  expect(repeater('ul li').count()).toEqual(10);
+  input('filterText').enter('Bees');
+  expect(repeater('ul li').count()).toEqual(1);
+});
+});
+</pre>
+<p>注意：<a href="https://github.com/angular/angular.js/blob/master/docs/content/guide/dev_guide.e2e-testing.ngdoc#L119"><code>input(&#39;user&#39;)</code></a>语句会查找具有<code>ng-model=&quot;user&quot;</code>属性的<code>&lt;input&gt;</code>元素，而不会查找具有<code>name=&quot;user&quot;</code>属性的！</p>
+<p>这个场景描述了一个Buzz客户端的需求，特别是，他应该能够根据用户的输入进行过滤。它先模拟把一个值输入到带有ng-model=&quot;user&quot;属性的输入框中，然后，点击页面中唯一的一个按钮，然后，检查是否列出了10条结果。接下来，它在带有ng-model=&quot;filterText&quot;属性的输入框中输入文本：&#39;Bees&#39;，最后验证一下这个列表是否已经被过滤得只剩下一条结果。</p>
+<p>下面列出了在测试工具(runner)的命令(command)和期望(expectation)语句中可以使用的API。</p>
+<h2 id="api">API</h2>
+<p>源码：<a href="https://github.com/angular/angular.js/blob/master/src/ngScenario/dsl.js"><a href="https://github.com/angular/angular.js/blob/master/src/ngScenario/dsl.js">https://github.com/angular/angular.js/blob/master/src/ngScenario/dsl.js</a></a></p>
+<h3 id="api_pause">pause()</h3>
+<p>暂停测试代码的执行，直到你在控制台中调用了<code>resume()</code>函数（或者在测试工具的UI中点击了“恢复(resume)”链接）</p>
+<h3 id="api_sleep">sleep(seconds)</h3>
+<p>让测试代码的执行暂停<code>seconds</code>秒。</p>
+<h3 id="api_browser">browser().navigateTo(url)</h3>
+<p>把指定的<code>url</code>加载到测试框架（译注：测试框架是指用来运行测试的浏览器环境，比如chrome浏览器或phantomjs）中。</p>
+<h3 id="api_browser">browser().navigateTo(url, fn)</h3>
+<p>把fn返回的URL加载到测试框架中。此处指定的<code>url</code>参数对代码没有实际影响，只用于测试输出。如果目标URL是动态生成的，这种形式会非常有用（即：目标URL在我们写测试的时候是预先无法确定的）。</p>
+<h3 id="api_browser">browser().reload()</h3>
+<p>刷新测试框架中的当前页。</p>
+<h3 id="api_browser">browser().window().href()</h3>
+<p>返回测试框架中当前页的window.location.href值。</p>
+<h3 id="api_browser">browser().window().path()</h3>
+<p>返回测试框架中当前页的window.location.pathname值。</p>
+<h3 id="api_browser">browser().window().search()</h3>
+<p>返回测试框架中当前页的window.location.search值。</p>
+<h3 id="api_browser">browser().window().hash()</h3>
+<p>返回测试框架中当前页的window.location.hash值（不包括<code>#</code>）。</p>
+<h3 id="api_browser">browser().location().url()</h3>
+<p>返回测试框架中当前页的<a href="api/ng.$location"><code>$location.url()</code></a>值。</p>
+<h3 id="api_browser">browser().location().path()</h3>
+<p>返回测试框架中当前页的<a href="api/ng.$location"><code>$location.path()</code></a>值。</p>
+<h3 id="api_browser">browser().location().search()</h3>
+<p>返回测试框架中当前页的<a href="api/ng.$location"><code>$location.search()</code></a>值。</p>
+<h3 id="api_browser">browser().location().hash()</h3>
+<p>返回测试框架中当前页的<a href="api/ng.$location"><code>$location.hash()</code></a>值。</p>
+<h3 id="api_expect{matcher}">expect(future).{matcher}</h3>
+<p>断言<code>future</code>参数（译注：future就是异步执行模式中的通知对象，会在异步执行完毕时触发回调，类似于$q中的promise）的“值(value)”符合<code>匹配器(matcher)</code>的期望。所有API语句都会返回<code>future</code>对象，它被执行后会返回一个“值”。<code>匹配器</code>是通过<code>angular.scenario.matcher</code>定义的，并且通过求出这个<code>future</code>对象的“值”来验证是否符合期望。比如：<code>expect(browser().location().href()).toEqual(&#39;http://www.google.com&#39;)</code>。后面的文档中将深入讲解各种可用的匹配器。</p>
+<h3 id="api_expect{matcher}">expect(future).not().{matcher}</h3>
+<p>断言<code>future</code>的值不满足<code>matcher</code>的要求</p>
+<h3 id="api_using">using(selector, label)</h3>
+<p>限定接下来的语句中元素选择器的所属范围。
+（译注：这里的选择器 - <code>selector</code>都是指jQuery选择器，参见<a href="http://api.jquery.com/category/selectors/">jQuery选择器</a>）</p>
+<h3 id="api_binding">binding(name)</h3>
+<p>返回匹配指定<code>name</code>的第一个绑定对象(binding)的值。
+（译注：什么是binding？比如假设模板中有&#39;<div id="element" ng-bind="object">
+</div>&#39;，则object称为#element的“绑定对象”）</p>
+<h3 id="api_input">input(name).enter(value)</h3>
+<p>在ng-model值是<code>name</code>的文本框中输入指定的<code>value</code>。</p>
+<h3 id="api_input">input(name).check()</h3>
+<p>选中或反选ng-model值是<code>name</code>的检查框。</p>
+<h3 id="api_input">input(name).select(value)</h3>
+<p>在ng-model值是<code>name</code>的单选组中选中值为<code>value</code>的那个。</p>
+<h3 id="api_input">input(name).val()</h3>
+<p>返回ng-model值是<code>name</code>的输入框的当前值。</p>
+<h3 id="api_repeater">repeater(selector, label).count()</h3>
+<p>返回<code>selector</code>选定的repeater（译注：可以简单的理解为ng-repeat）的行数。<code>label</code>参数对代码没有实际影响，只用做测试输出。</p>
+<h3 id="api_repeater">repeater(selector, label).row(index)</h3>
+<p>返回<code>selector</code>选定的repeater中，绑定到第<code>index</code>行的所有绑定对象(译注：各个绑定对象的值，参见binding函数，一行一般都有多个绑定表达式)构成的数组。<code>label</code>参数对代码没有实际影响，只用做测试输出。</p>
+<h3 id="api_repeater">repeater(selector, label).column(binding)</h3>
+<p>返回<code>selector</code>选定的repeater中，由所有绑定到<code>binding</code>（译注：传入绑定对象的表达式，比如模板中是{{name + &quot;a&quot;}}，此处就应该用&#39;name + &quot;a&quot;&#39;作为参数，表达式中+前后的空格会被忽略）的列内容构成的数组。<code>label</code>参数对代码没有实际影响，只用做测试输出。</p>
+<h3 id="api_select">select(name).option(value)</h3>
+<p>从ng-model值是<code>name</code>的select元素中，选择指定<code>value</code>值的option。</p>
+<h3 id="api_select">select(name).options(value1, value2...)</h3>
+<p>从ng-model值是<code>name</code>的select元素中，选择所有存在于<code>values</code>（即：value1, value2...）参数中的option。</p>
+<h3 id="api_element">element(selector, label).count()</h3>
+<p>返回<code>selector</code>选定的元素的数量。<code>label</code>参数对代码没有实际影响，只用做测试输出。</p>
+<h3 id="api_element">element(selector, label).click()</h3>
+<p>模拟点击<code>selector</code>选定的元素。<code>label</code>参数对代码没有实际影响，只用做测试输出。</p>
+<h3 id="api_element">element(selector, label).query(fn)</h3>
+<p>用<code>fn(selectedElements, done)</code>的形式调用fn函数，<code>selectedElements</code>是匹配指定选择器的所有元素，<code>done</code>是一个函数，供<code>fn</code>结束时调用。<code>label</code>参数对代码没有实际影响，只用做测试输出。</p>
+<h3 id="api_element">element(selector, label).{method}()</h3>
+<p>返回在<code>selector</code>选定的元素上调用<code>method()</code>的结果。<code>method</code>可以是下列jquery方法之一：<code>val</code>, <code>text</code>, <code>html</code>, <code>height</code>,
+<code>innerHeight</code>, <code>outerHeight</code>, <code>width</code>, <code>innerWidth</code>, <code>outerWidth</code>, <code>position</code>, <code>scrollLeft</code>,
+<code>scrollTop</code>, <code>offset</code>。<code>label</code>参数对代码没有实际影响，只用做测试输出。</p>
+<h3 id="api_element">element(selector, label).{method}(value)</h3>
+<p>在<code>selector</code>选定的元素上执行<code>method(value)</code>函数。<code>method</code>可以是下列jquery方法之一：<code>val</code>, <code>text</code>, <code>html</code>, <code>height</code>,
+<code>innerHeight</code>, <code>outerHeight</code>, <code>width</code>, <code>innerWidth</code>, <code>outerWidth</code>, <code>position</code>, <code>scrollLeft</code>,
+<code>scrollTop</code>, <code>offset</code>。<code>label</code>参数对代码没有实际影响，只用做测试输出。</p>
+<h3 id="api_element">element(selector, label).{method}(key)</h3>
+<p>在<code>selector</code>选定的元素上执行<code>method(key)</code>函数。<code>method</code>可以是下列jquery方法之一：<code>attr</code>, <code>prop</code>, <code>css</code>。<code>label</code>参数对代码没有实际影响，只用做测试输出。</p>
+<h3 id="api_element">element(selector, label).{method}(key, value)</h3>
+<p>在<code>selector</code>选定的元素上执行<code>method(key, value)</code>函数。<code>method</code>可以是下列jquery方法之一：<code>attr</code>, <code>prop</code>, <code>css</code>。<code>label</code>参数对代码没有实际影响，只用做测试输出。</p>
+<h2 id="matchers">Matchers</h2>
+<p>匹配器(matcher)用于和<code>expect(...)</code>函数组合起来构成断言，并且可以和<code>not()</code>连用来表示否定。例如：<code>expect(element(&#39;h1&#39;).text()).not().toEqual(&#39;Error&#39;)</code>。</p>
+<p>源码: <a href="https://github.com/angular/angular.js/blob/master/src/ngScenario/matchers.js"><a href="https://github.com/angular/angular.js/blob/master/src/ngScenario/matchers.js">https://github.com/angular/angular.js/blob/master/src/ngScenario/matchers.js</a></a></p>
+<pre class="prettyprint linenums">
+// 值和对象的比较使用与angular.equals相同的规则
+expect(value).toEqual(value)
+
+// 简单类型的比较使用===运算符进行精确比较
+expect(value).toBe(value)
+
+// 检查value当前是否具有任何已定义的类型（即value !== undefined）
+expect(value).toBeDefined()
+
+// 这两个匹配器使用JavaScript标准的真值规则进行判断
+expect(value).toBeTruthy()
+expect(value).toBeFalsy()
+
+// 检查value是否符合指定的正则表达式。正则表达式既可以用字符串的形式传入，也可以用正则表达式对象的形式（如new RegExp('.*')或/.*/）传入。
+expect(value).toMatch(expectedRegExp)
+
+// 使用===精确检查null值
+expect(value).toBeNull()
+
+// 内部用Array.indexOf(...)函数检查指定的元素是否包含在当前数组中。
+expect(value).toContain(expected)
+
+// 使用`&lt;`和`&gt;`运算符进行数值比较。
+expect(value).toBeLessThan(expected)
+expect(value).toBeGreaterThan(expected)
+</pre>
+<h2 id="范例">范例</h2>
+<p>参见<a href="https://github.com/angular/angular-seed">Angular种子项目</a>项目中的例子。</p>
+<h3 id="范例_通过element执行有条件的动作">通过element(...).query(fn)执行有条件的动作</h3>
+<p>Angular场景化的端到端(E2E)测试，高度支持异步特性，它通过将动作和期望存入队列来隐藏了处理异步结果(future)时的很多复杂度。
+你可能需要使用一些有条件的断言或元素选取规则，或者需要某些通用的机制来消除重复代码（重复代码往往表示测试代码中有“坏味道”），这时，你可以通过<code>element(...).query(fn)</code>来添加一些有条件的行为。
+下列代码将演示这个函数如何通过应用程序的web界面来删除附加的实体（这里的实体是一些领域对象）。</p>
+<p>假设应用程序是由两个视图组成的：</p>
+<ol>
+<li><em>列表视图</em>列出表中添加的所有实体。</li>
+<li><em>详情视图</em>现实实体的细节，还有一个“删除”按钮。点击“删除”按钮的时候，用户重定向回<em>列表视图</em>。</li>
+</ol>
+<pre class="prettyprint linenums">
+beforeEach(function () {
+  var deleteEntry = function () {
+    browser().navigateTo('/entries');
+
+    // 我们需要选择&lt;tbody&gt;元素，他现在没有实体（即：没有&lt;tr&gt;元素）。如果选择器没有匹配到结果，则本测试直接失败。
+    element('table tbody').query(function (tbody, done) {
+      // ngScenario传给我们的是一个jQuery lite包装之后的元素。我们可以调用它的children()函数获取tbody的所有&lt;tr&gt;元素。
+      var children = tbody.children();
+
+      if (children.length &gt; 0) {
+        // 如果表格中至少有一个实体，点击链接，转到这个实体的详情页
+        element('table tbody a').click();
+        // 路由变化之后，点击“删除”按钮。
+        element('.btn-danger').click();
+      }
+
+      // 如果表格中显示了不止一个实体，则把其他的删除操作排入队列。
+      if (children.length &gt; 1) {
+        deleteEntry();
+      }
+
+      // 别忘了调用`done()`函数，这样ngScenario才会继续执行测试，否则会出现超时错误。
+      done();
+    });
+
+  };
+
+  // 开始删除实体
+  deleteEntry();
+});
+</pre>
+<p>// 为了帮助理解它的工作原理，我们要强调一句：ngScenario的调用不是立刻执行的，而是先排入队列（按照ngScenario中的术语，我们称之为添加“未来动作(future action)”）。如果在表格中我们只有一个实体，那么下列“未来动作”将被排入队列：</p>
+<pre class="prettyprint linenums">
+// 删除实体1
+browser().navigateTo('/entries');
+element('table tbody').query(function (tbody, done) { ... });
+element('table tbody a');
+element('.btn-danger').click();
+</pre>
+<p>对于两个实体，ngScenario将产生下列队列：</p>
+<pre class="prettyprint linenums">
+// 删除实体1
+browser().navigateTo('/entries');
+element('table tbody').query(function (tbody, done) { ... });
+element('table tbody a');
+element('.btn-danger').click();
+
+    // 删除实体2
+    // 这里的缩进排版用来表示递归调用的层数
+    browser().navigateTo('/entries');
+    element('table tbody').query(function (tbody, done) { ... });
+    element('table tbody a');
+    element('.btn-danger').click();
+</pre>
+<h2 id="警告">警告</h2>
+<p>ngScenario不能和通过调用angular.bootstrap来实现的手动初始化协同工作。你必须使用ng-app指令来启动应用程序。</p>
+</div></div>

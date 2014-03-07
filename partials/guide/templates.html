@@ -1,0 +1,41 @@
+<a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/templates.ngdoc" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="templates-page"><p>翻译者:<a href="https://github.com/why520crazy">@why520crazy</a></p>
+<p>Angular的模板是一个声明式的视图，它指定信息从模型、控制器变成用户在浏览器上可以看见的视图。
+它把一个静态的DOM —— 只包含HTML，CSS以及Angular添加的标记和属性，然后引导Angular为其加上一些行为和格式转换器，最终变成一个动态的DOM。</p>
+<p>在Angular中有以下元素属性可以直接在模板中使用:</p>
+<ul>
+<li><a href="guide/directive">指令(Directive)</a> — 一个可扩展已有DOM元素或者代表可重复使用的DOM组件，用扩展属性(或者元素)标记。</li>
+<li><a href="api/ng.$interpolate"><code>标记(Expression)</code></a> — 用双括号 <code>{{ }}</code> 给元素绑定表达式。</li>
+<li><a href="guide/filter">过滤器(Filter)</a> — 格式化数据显示在界面上。</li>
+<li><a href="guide/forms">表单控件(Form Control)</a> — 验证用户输入。</li>
+</ul>
+<p>注: 除了在模板中声明元素外, 你也可以在JavaScript代码中访问这些元素。</p>
+<p>下面的代码片段展示了一个简单的Angular模板，主要由带有(<a href="guide/directive">指令</a>)的HTML标准标签和<code>{{}}</code><a href="guide/expression">表达式</a>）组成:</p>
+<pre class="prettyprint linenums">
+&lt;html ng-app&gt;
+ &lt;!-- Body标记带有ngController参数  --&gt;
+ &lt;body ng-controller="MyController"&gt;
+   &lt;input ng-model="foo" value="bar"&gt;
+   &lt;!-- Button标记带有ng-click指令，字符串表达式'buttonText'被包裹在"{{ }}"中 --&gt;
+   &lt;button ng-click="changeFoo()"&gt;{{buttonText}}&lt;/button&gt;
+   &lt;script src="angular.js"&gt;
+ &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>在一个简单的单页程序中，模板包含HTML，CSS和Angular指令，通常只是一个HTML文件(如 <code>index.html</code>)，
+在一个更复杂的程序中，你可以在一个主要的页面用&quot;零件(partials)&quot;展示多个视图，这些 &quot;零件(partials)&quot;都是独立的HTML文件，在主页面可以包含(include)
+这些&quot;零件(partials)&quot;页面，通过路由 <a href="api/ngRoute.$route">$route</a> 和 <a href="api/ngRoute.directive:ngView">ngView</a>指令结合，
+相关的示例代码参考 <a href="tutorial/index">angular入门教程</a> 中的第七，八步骤。</p>
+<h3 id="相关主题">相关主题</h3>
+<ul>
+<li><a href="guide/filter">Angular过滤器</a></li>
+<li><a href="guide/forms">Angular表单</a></li>
+</ul>
+<h3 id="相关的-api">相关的 API</h3>
+<ul>
+<li><a href="api/index">API参考手册</a></li>
+</ul>
+</div></div>

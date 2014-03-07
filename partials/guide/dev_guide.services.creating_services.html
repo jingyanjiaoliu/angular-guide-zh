@@ -1,0 +1,63 @@
+<a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/dev_guide.services.creating_services.ngdoc" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="developer-guide-page developer-guide-angular-services-creating-services-page"><p>翻译者:<a href="https://github.com/pengisgood">@make dream</a></p>
+<h2 id="创建服务">创建服务</h2>
+<p>虽然Angular提供了一些有用的服务，但是对于一些重要的应用你会发现自定义一些服务也很有必要。要想自定义服务，首先，你要么通过 <a href="http://angular.duapp.com/api/angular.module">Module#factory api</a>，要么直接通过module config函数内部的 <a href="http://angular.duapp.com/api/AUTO.$provide">$provide api</a>，在module中注册一个服务工厂函数。</p>
+<p>所有Angular的服务的 <a href="http://angular.duapp.com/guide/di">dependency injection (DI)</a> 都是通过 Angular DI 系统（injector）按名注入的，并且需要给被注册的服务的工厂函数提供声明的服务的名称。在测试中，能够使用 mocks/stubs/dummies 使得服务具有很高的可测试性。</p>
+<h2 id="注册服务">注册服务</h2>
+<p>要注册一个服务，首先，你要有一个包含该服务的 module。然后，你可以通过 <a href="http://angular.duapp.com/api/angular.Module">Module api</a>，或者通过 module 中配置函数的 <a href="http://angular.duapp.com/api/AUTO.$provide">$provide</a> 注册服务。下面的两段伪代码展示了这两种方法：</p>
+<p>通过angular.Module api:
+<pre class="prettyprint linenums">
+var myModule = angular.module('myModule', []);
+myModule.factory('serviceId', function() {
+  var shinyNewServiceInstance;
+  //工厂函数的函数体创建了shinyNewServiceInstance
+  return shinyNewServiceInstance;
+});
+</pre>
+<p>通过$provide service:
+<pre class="prettyprint linenums">
+angular.module('myModule', [], function($provide) {
+  $provide.factory('serviceId', function() {
+    var shinyNewServiceInstance;
+    //工厂函数的函数体创建了shinyNewServiceInstance
+    return shinyNewServiceInstance;
+  });
+});
+</pre>
+<p>注意：你不应该注册服务实例，而是注册一个在创建服务实例时被调用的工厂函数。</p>
+<h2 id="依赖">依赖</h2>
+<p>服务不仅可以被依赖，它们也可以有自己的依赖。依赖可以被当做工厂函数的参数，<a href="http://angular.duapp.com/guide/di">参阅更多</a>关于 Angular 的依赖注入（DI）和使用数组表示法以及 <code>$inject</code> 属性使得依赖表示更加精简。</p>
+<p>下面是一个简单服务的示例。该服务依赖于 <code>$window</code> 服务（<code>$window</code> 将作为参数传递到工厂函数中），它仅仅只是个函数而已。该服务只是简单的存储所有的通知，在存储完第三个后，它会通过 window alert 展现所有的通知。</p>
+<pre class="prettyprint linenums">
+angular.module('myModule', [], function($provide) {
+  $provide.factory('notify', ['$window', function(win) {
+    var msgs = [];
+    return function(msg) {
+      msgs.push(msg);
+      if (msgs.length == 3) {
+        win.alert(msgs.join("\n"));
+        msgs = [];
+      }
+    };
+  }]);
+});
+</pre>
+<h2 id="实例化angular服务">实例化Angular服务</h2>
+<p>所有的 Angular 服务都是延迟实例化的。这意味着，所有服务只有在需要实例化或者被其他的应用组件依赖时才会实例化。换句话说，Angular 不会实例化服务,除非它们被应用直接或间接用到。</p>
+<h2 id="作为单例的服务">作为单例的服务</h2>
+<p>最后，意识到 Angular 的所有服务都是单例是非常重要的，这意味着每个 injector 都只提供一个实例。因此，Angular 非常厌恶全局的状态。当然也可以创建多个 injector，每个 injector 都有自己服务的实例，但是这种情况极少，除了在测试中这种特性才特别重要。</p>
+<h3 id="作为单例的服务_相关话题">相关话题</h3>
+<ul>
+<li><a href="http://angular.duapp.com/guide/dev_guide.services.understanding_services">理解 Angular 服务</a></li>
+<li><a href="http://angular.duapp.com/guide/dev_guide.services.managing_dependencies">管理服务依赖</a></li>
+<li><a href="http://angular.duapp.com/guide/dev_guide.services.injecting_controllers">向控制器注入服务</a></li>
+<li><a href="http://angular.duapp.com/guide/dev_guide.services.testing_services">Angular 服务测试</a></li>
+</ul>
+<h3 id="作为单例的服务_相关api">相关API</h3>
+<ul>
+<li><a href="http://angular.duapp.com/api/ng">Angular 服务 API</a></li>
+</ul>
+</div></div>

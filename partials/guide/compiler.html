@@ -1,0 +1,235 @@
+<a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/compiler.ngdoc" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="developer-guide-page developer-guide-html-compiler-page"><p>Translated by <a href="https://github.com/grahamle">@GrahamLe</a></p>
+<div class="alert alert-warning">
+<strong>注意</strong>：这篇文章是面向已经有一定 Angular 基础的开发者。
+
+如果你仅仅只是刚上路，那么我们建议你看看 <a href="tutorial/index">tutorial</a> 先。如果你只是想创建几个自定义的指令，那可以去瞅瞅 <a href="guide/directive">directives guide</a>。而如果你想要更深入地了解 Angular 的编译过程，那么你来对了，这就是你该看的。
+</div>
+
+
+<h2 id="概述">概述</h2>
+<p>Angular 的 <a href="api/ng.$compile"><code>HTML compiler</code></a> 让开发者可以教浏览器一些新的语法技能。编译器允许你往现有的HTML元素或属性添加更多的操作逻辑，甚至可以让你自己创建新的带有自定义行为操作的HTML元素或属性。Angular 把这些操作扩展称之为 <a href="api/ng.$compileProvider#methods_directive"><code>指令</code></a>。</p>
+<p>HTML 有一大堆概念用来将其格式化为声明性的静态文档。例如，某个元素需要居中放置，我们并没有必要提供指令让浏览器去将窗口大小分成两半来居中，要做的仅仅是给需要居中的元素加上 <code>align=&quot;center&quot;</code> 属性，这样就可以达到想要的效果了。这就是声明式语言的力量。</p>
+<p>但是话说回来，声明式语言也有其自己的限制，首当其冲的是它不能让开发者扩展浏览器适应新的语法。例如，相比居中文本，要让浏览器在窗口 1/3 的位置排列文本就没有那么简单了。所以这就引出了我们需要一种新的路子来教浏览器一些新技能：识别新的HTML语法。</p>
+<p>Angular 预先绑定了一些常见的对构建应用极其有用的指令。同时你也可以创建一些与你应用直接相关的指令。这些扩展构成了与特定领域相关的语言来构建你的应用（译注：指令成了扩展性的特定语言）。</p>
+<p>所有的编译在web浏览器中进行，没有任何服务器端的预编译的介入。</p>
+<h3 id="概述_编译器">编译器</h3>
+<p>编译器是 Angular 提供的一项服务，用来遍历DOM节点，查找特定的属性。编译过程分为两个阶段：</p>
+<ol>
+<li><p><strong>编译</strong>：遍历DOM节点，收集所有的指令，返回一个连接函数（link func）</p>
+</li>
+<li><p><strong>连接</strong>：将上一步收集到的每个指令与其所在的作用域（scope）连接生成一个实时视图。任何作用域中的模型改变都会实时在视图中反映出来，同时任何用户与视图的交互则会映射到作用域的模型中。这样，作用域中的数据模型就成了唯一的数据源。</p>
+</li>
+</ol>
+<p>一些如 <a href="api/ng.directive:ngRepeat"><code><code>ng-repeat</code></code></a> 这样的指令，会为集合中的每个项目克隆一次DOM元素。由于克隆的模板只需要被编译一次，然后为每个克隆实例做一次连接，这样将编译分成编译和连接两个阶段就有效地提升了性能（译注：不用为每个克隆的实例都编译一次，只需对模板进行统一的一次编译，然后在连接阶段单独为每个实例进行到 scope 的连接即可）。</p>
+<h3 id="概述_指令">指令</h3>
+<p>在编译过程中，遇到特定的HTML结构（也就是指令）时，指令所声明的行为操作会被触发。指令可以被放在元素名，属性，类名，甚至是注释中。下面是一些等价的调用 <a href="api/ng.directive:ngBind"><code><code>ng-bind</code></code></a> 指令的例子：</p>
+<pre class="prettyprint linenums">
+  &lt;span ng-bind="exp"&gt;&lt;/span&gt;
+  &lt;span class="ng-bind: exp;"&gt;&lt;/span&gt;
+  &lt;ng-bind&gt;&lt;/ng-bind&gt;
+  &lt;!-- directive: ng-bind exp --&gt;
+</pre>
+<p>指令其实就是在编译器遍历DOM时碰到就需要执行的函数。另见 <a href="api/ng.$compileProvider#methods_directive"><code>指令API</code></a> 查看更深入的如何写指令的文档。</p>
+<p>下面是一个让元素可以被拖拽的指令。注意在 <code>&lt;span&gt;</code> 元素中的 <code>draggable</code> 属性：</p>
+<h3 id="概述_source">Source</h3>
+<div source-edit="drag" source-edit-deps="angular.js script.js" source-edit-html="index.html-204" source-edit-css="" source-edit-js="script.js-203" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-204" ng-html-wrap="drag angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-204">
+    <span draggable>Drag ME</span>
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-203"></pre>
+<script type="text/ng-template" id="script.js-203">
+    angular.module('drag', []).
+      directive('draggable', function($document) {
+        return function(scope, element, attr) {
+          var startX = 0, startY = 0, x = 0, y = 0;
+          element.css({
+           position: 'relative',
+           border: '1px solid red',
+           backgroundColor: 'lightgrey',
+           cursor: 'pointer'
+          });
+          element.on('mousedown', function(event) {
+            // 阻止默认的选中内容的拖拽
+            event.preventDefault();
+            startX = event.screenX - x;
+            startY = event.screenY - y;
+            $document.on('mousemove', mousemove);
+            $document.on('mouseup', mouseup);
+          });
+
+          function mousemove(event) {
+            y = event.screenY - startY;
+            x = event.screenX - startX;
+            element.css({
+              top: y + 'px',
+              left:  x + 'px'
+            });
+          }
+
+          function mouseup() {
+            $document.unbind('mousemove', mousemove);
+            $document.unbind('mouseup', mouseup);
+          }
+        }
+      });
+  </script>
+</div>
+</div><h3 id="概述_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="drag" ng-set-html="index.html-204" ng-eval-javascript="script.js-203"></div>
+<p><code>draggable</code> 属性出现在任何的元素中都会给其带来新的行为操作。我们以一种熟悉HTML语法规则的方式扩展了浏览器的HTML词汇及语法。</p>
+<h3 id="概述_理解视图">理解视图</h3>
+<p>绝大多数模板引擎系统采用的是把字符串模板和数据拼接，然后输出一个新的字符串，在前端这个新的字符串作为元素的 <code>innerHTML</code> 属性的值。</p>
+<p><img src="img/One_Way_Data_Binding.png"></p>
+<p>这就意味着数据中的任何改变需要重新和模板合并，然后再赋给DOM元素的 <code>innerHTML</code> 属性。这里我们可以看到这种策略的一些问题：</p>
+<ol>
+<li>读取用户输入及将其与数据合并</li>
+<li>重写用户输入</li>
+<li>管理整个更新流程</li>
+<li>缺少行为表现</li>
+</ol>
+<p>Angular 则不同。它的编译器直接使用DOM作为模板而不是用字符串模板。编译阶段的返回结果是一个连接函数（link func），在连接阶段会和特定的作用域中的数据模型连接生成一个实时的视图。视图和作用域数据模型的绑定是透明的。开发者不需要做任何特别的调用去更新视图。同时，我们不使用 <code>innerHTML</code> 属性，这样也就不会影响用户输入了。而且，Angular 指令不仅可以包含文本绑定，同时也支持行为操作的绑定（译注：此处可能翻译不甚到位）。</p>
+<p><img src="img/Two_Way_Data_Binding.png"></p>
+<p>Angular 的这种策略生成的是稳定的DOM模板。DOM元素实例和数据模型实例的绑定在绑定期间是不会发生变化的（也就是说不是每次数据改变，最后产生的模板都要变化一次）。这就意味着在你的代码中可以去获取这些DOM模板元素并且注册相应的事件处理函数，而不用担心这个对DOM元素的引用会因为数据合并而产生变化。</p>
+<h3 id="概述_编译指令">编译指令</h3>
+<p>知道 Angular 的编译是在DOM节点上发生而非字符串上是很重要的。通常，你不会注意到这个约束，因为当一个页面加载时，浏览器自动将HTML解析为DOM树了。</p>
+<p>然而，如果你自己手动调用 <code>$compile</code> 时，则需要注意上面说的注意点了。因为如果你传给它一个字符串，显然是要报错的。所以，在你传值给 <code>$compile</code> 之前，用 <code>angular.element</code> 将字符串转化为DOM。</p>
+<p>HTML 编译可以细分为三个阶段：</p>
+<ol>
+<li><p><a href="api/ng.$compile"><code><code>$compile</code></code></a> 遍历DOM节点，匹配指令。</p>
+<p>如果编译器发现某个元素匹配一个指令，那么这个指令就被添加到指令列表中（该列表与DOM元素对应）。一个元素可能匹配到多个指令（译注：也就是一个元素里面可能有多个指令）。</p>
+</li>
+<li><p>当所有指令都匹配到相应的元素时，编译器按照指令的 <code>priority</code> 属性来排列指令的编译顺序。</p>
+<p>然后依次执行每个指令的 <code>compile</code> 函数。每个 <code>compile</code> 函数有一次更改该指令所对应的DOM模板的机会。然后，每个 <code>compile</code> 函数返回一个 <code>link</code> 函数。这些函数构成一个“合并的”连接函数，它会调用每个指令返回的 <code>link</code> 函数。</p>
+</li>
+<li><p>之后，<code>$compile</code> 调用第二步返回的连接函数，将模板和对应的作用域连接。而这又会依次调用连接函数中包含的每个指令对应的 <code>link</code> 函数，进而在各个DOM元素上注册监听器以及在相应的 <a href="api/ng.$rootScope.Scope"><code><code>scope</code></code></a> 中设置对应的 <a href="api/ng.$rootScope.Scope#methods_$watch"><code><code>$watch</code>s</code></a>。</p>
+</li>
+</ol>
+<p>经过这三个阶段之后，结果是我们得到了一个作用域和DOM绑定的实时视图。所以在这之后，任一发生在已经经过编译的作用域上的数据模型的变化都会反映在DOM之中。</p>
+<p>下面是使用 <code>$compile</code> 服务的相关代码。它应该能帮你理解 Angular 内部在做些什么（译注：下面代码中的注释就不翻译了，因为有一些如 compile 和 link 翻译效果反而不好）：</p>
+<pre class="prettyprint linenums">
+  var $compile = ...; // injected into your code
+  var scope = ...;
+  var parent = ...; // DOM element where the compiled template can be appended
+
+  var html = '&lt;div ng-bind="exp"&gt;&lt;/div&gt;';
+
+  // Step 1: parse HTML into DOM element
+  var template = angular.element(html);
+
+  // Step 2: compile the template
+  var linkFn = $compile(template);
+
+  // Step 3: link the compiled template with the scope.
+  var element = linkFn(scope);
+  
+  // Step 4: Append to DOM (optional)
+  parent.appendChild(element);
+</pre>
+<h4 id="概述_编译指令_compile-和-link-的区别">compile 和 link 的区别</h4>
+<p>这会儿，我想你该很疑惑为什么编译过程被分成了编译和连接两个阶段（译注：这里其实用英文会更好的，compile 和 link，就可以免去歧义了）。（译注：按现在知乎流行的说法，每个问题都有个短答案和长答案两种版本）简短地回答呢，那就是任何时候任一数据模型的改变引起的DOM<strong>结构</strong>的改变都需要这种两阶段编译的支持。</p>
+<p>指令有 <strong>compile function</strong> 是不多见的，因为大部分指令通常只关心如何操作特定的DOM元素实例，而不是去改变它的整体结构。</p>
+<p>指令通常有 <strong>link function</strong>。连接函数让指令能够往特定的DOM元素实例的克隆对象上注册监听器，同时可以将作用域中的内容复制到DOM中去。</p>
+<div class="alert alert-success">
+<strong>最佳实践</strong>：任何能够在指令实例中共享的操作，为了性能考虑，最好是都移到指令的 compile function 中去。
+</div>
+
+<h5 id="概述_编译指令_compile-和-link-的区别_&quot;compile&quot;-vs-&quot;link&quot;-的一个例子">&quot;Compile&quot; vs &quot;Link&quot; 的一个例子</h5>
+<p>为了理解编译和连接这两个阶段，让我们以 <code>ngRepeat</code> 为例来看一下：</p>
+<pre class="prettyprint linenums">
+Hello {{user}}, you have these actions:
+&lt;ul&gt;
+  &lt;li ng-repeat="action in user.actions"&gt;
+    {{action.description}}
+  &lt;/li&gt;
+&lt;/ul&gt;
+</pre>
+<p>当我们编译上述例子时，编译器遍历每个节点查找指令。</p>
+<p><code>{{user}}</code> 匹配了 <a href="api/ng.$interpolate"><code>插值指令</code></a>，而 <code>ng-repeat</code> 匹配了 <a href="api/ng.directive:ngRepeat"><code><code>ngRepeat</code> 指令</code></a>。</p>
+<p>但是编译 <a href="api/ng.directive:ngRepeat"><code>ngRepeat</code></a> 陷入了困境。</p>
+<p>它需要为每个在 <code>user.actions</code> 中的 <code>action</code> 条目克隆一个 <code>&lt;li&gt;</code> 元素。这个刚看起来很平常，但是当你考虑到如果 <code>user.actions</code> 可能会有动态的新的条目添加的话，情况就变得复杂起来。因为这意味着我们需要保存一份干净的 <code>&lt;li&gt;</code> 元素以备后期克隆用。</p>
+<p>（译注：在数据模型中）当新的 <code>action</code> 被插入时， <code>&lt;li&gt;</code> 元素作为模板需要被克隆然后插入到 <code>ul</code> 中。但是仅仅克隆 <code>&lt;li&gt;</code> 元素是不够的。同时还要编译这个 <code>&lt;li&gt;</code> 元素，这样才能使得其内部的别的指令，如 <code>{{action.description}}</code> ，能够在正确的 <a href="api/ng.$rootScope.Scope"><code>作用域</code></a> 中被计算渲染出结果。</p>
+<p>一种比较天真的解决这个问题的策略无非是每次有一个新的 <code>action</code> 我就简单地插入一个 <code>&lt;li&gt;</code> 的拷贝然后将其编译。这种方法的问题在于对于每个我们克隆的 <code>&lt;li&gt;</code> 元素我们都要去编译，这无疑让我们的工作加倍了。具体来说，在每次克隆 <code>&lt;li&gt;</code> 之前，我们都得遍历一下它看看是否有别的指令（译注：此处可能翻译不是很到位，不理解的建议看原文）。这样无疑就让编译过程变的更慢，进而导致应用在插入新节点时变得反应迟钝。</p>
+<p>解决方法就是我们上面一直强调的把编译过程分成两个阶段：</p>
+<p><strong>编译阶段</strong>收集所有的指令并按照优先级排序，之后在<strong>连接阶段</strong>将特定的<a href="api/ng.$rootScope.Scope"><code>作用域</code></a>实例与特定的 <code>&lt;li&gt;</code> 实例连接。</p>
+<div class="alert alert-warning">
+<strong>注意</strong>： <em>连接</em> 意味着在DOM上设置监听器以及在相关的作用域中设置 <code>$watch</code> 以保证二者（译注：DOM和作用域）的同步。
+</div>
+
+<p><a href="api/ng.directive:ngRepeat"><code><code>ngRepeat</code></code></a> 通过阻止编译阶段进入到 <code>&lt;li&gt;</code> 元素来解决上面的问题，这样就可以克隆原始的 <code>&lt;li&gt;</code> 来处理插入和一处DOM节点的问题了。</p>
+<p>（译注：待大神翻译）Instead the <a href="api/ng.directive:ngRepeat"><code><code>ngRepeat</code></code></a> directive compiles <code>&lt;li&gt;</code> separately.
+The result of the <code>&lt;li&gt;</code> element compilation is a linking function which contains all of the
+directives contained in the <code>&lt;li&gt;</code> element, ready to be attached to a specific clone of the <code>&lt;li&gt;</code>
+element.</p>
+<p>At runtime the <a href="api/ng.directive:ngRepeat"><code><code>ngRepeat</code></code></a> watches the expression and as items
+are added to the array it clones the <code>&lt;li&gt;</code> element, creates a new
+<a href="api/ng.$rootScope.Scope"><code>scope</code></a> for the cloned <code>&lt;li&gt;</code> element and calls the link function
+on the cloned <code>&lt;li&gt;</code>.</p>
+<h4 id="概述_编译指令_作用域与transcluded指令是如何工作的">作用域与Transcluded指令是如何工作的</h4>
+<p>指令最常见的一个应用是创建可重用构件。</p>
+<p>下面的为代码展示了一个简单版本的对话框指令的使用。</p>
+<pre class="prettyprint linenums">
+&lt;div&gt;
+  &lt;button ng-click="show=true"&gt;show&lt;/button&gt;
+
+  &lt;dialog title="Hello {{username}}."
+          visible="show"
+          on-cancel="show = false"
+          on-ok="show = false; doSomething()"&gt;
+     Body goes here: {{username}} is {{title}}.
+  &lt;/dialog&gt;
+&lt;/div&gt;
+</pre>
+<p>点击 &quot;show&quot; 按钮会打开对话框。对话框会有一个和 <code>username</code> 绑定的标题，同时会有一个主体，这个主体我们是通过在对话框指令定义中的模板通过 transclude 插入的。</p>
+<p>下面是 <code>dialog</code> 指令中的模板属性：</p>
+<pre class="prettyprint linenums">
+&lt;div ng-show="visible"&gt;
+  &lt;h3&gt;{{title}}&lt;/h3&gt;
+  &lt;div class="body" ng-transclude&gt;&lt;/div&gt;
+  &lt;div class="footer"&gt;
+    &lt;button ng-click="onOk()"&gt;Save changes&lt;/button&gt;
+    &lt;button ng-click="onCancel()"&gt;Close&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+<p>上面这个指令的模板还不能适当地渲染，除非我们施上一些魔法。</p>
+<p>第一个问题是解决对话框模板中需要的 <code>title</code> 数据。而我们希望模板中的 <code>title</code> 和指令 <code>&lt;dialog&gt;</code> 被使用时的 <code>title</code> 属性一致（也就是 <code>&quot;Hello {{username}}&quot;</code>）。而且，模板中的按钮会去调用作用域中的 <code>onOk</code> 和 <code>onCancel</code> 两个函数，而这两个函数的来源也在指令的属性中有定义，要解决的就是映射的问题了。为了解决这个映射问题，我们使用本地 scope 创建本地变量（模板中需要的数据和函数）和外部变量（指令中已有的属性）映射：</p>
+<pre class="prettyprint linenums">
+  scope: {
+    title: '@',             // the title uses the data-binding from the parent scope
+    onOk: '&',              // create a delegate onOk function
+    onCancel: '&',          // create a delegate onCancel function
+    visible: '='            // set up visible to accept data-binding
+  }
+</pre>
+<p>在指令的作用域创建本地变量会产生两个问题：</p>
+<ol>
+<li><p>独立的作用域 - 如果用户（译注：使用对话框指令的开发者）在使用 <code>dialog</code> 指令时忘记设置 <code>title</code> 属性，那么对话框指令的模板中的 <code>title</code> 解析时则会去绑定父级作用域中的同名属性。这是完全不可预测的，也不是我们希望看到的。</p>
+</li>
+<li><p>transclusion - 通过引用包含的DOM节点可以看到指令的本地变量，而这本地变量有可能会重写掉一些 transclusion （引用包含）中数据绑定的同名属性。在上述例子中，比如像指令所在的 scope 中的 <code>title</code> 属性就重写了在 transclusion （引用包含）的作用域的 <code>title</code> 属性（译注：这里 <code>Body goes here: {{username}} is {{title}}.</code> 是通过 transclusion 插入到 <code>dialog</code> 指令模版中拥有 <code>ng-transclude</code> 属性的div中，这样它里面的 title 插值就会被 <code>dialog</code> 本地的 title 值改写 ）</p>
+</li>
+</ol>
+<p>为了解决缺少隔离的问题，指令会声明一个 <code>isolated</code> 作用域。一个隔离的作用域不会通过基于原型的方式继承它的父级作用域，所以我嗯就不用担心会有属性被意外改写的情况了。</p>
+<p>但是，独立的作用域引来了另外一个问题：如果一个 transcluded（引用包含的） DOM节点是一个指令独立作用域的孩子节点的话，那么它不会绑定到任何数据（译注：像我们上面例子中的情况，就属于绑定不到数据）。出于此，在指令为本地变量创建出独立的作用域之前，我们需要声明 transcluded（引用包含的）作用域是原始作用域（也是独立作用域的父级）的孩子。这样，引用包含创建的作用域就和独立作用域拥有同样的父级，也就是说它们是兄弟作用域。</p>
+<p>这会让一切看起来意想不到的复杂，但至少它让指令（控件）的用户和开发者不会那么难以接受。</p>
+<p>因此，我们上面例子中指令作用域的声明，最后开起来是这样子的：</p>
+<pre class="prettyprint linenums">
+transclude: true,
+scope: {
+    title: '@',             // the title uses the data-binding from the parent scope
+    onOk: '&',              // create a delegate onOk function
+    onCancel: '&',          // create a delegate onCancel function
+    visible: '='            // set up visible to accept data-binding
+},
+restrict: 'E',
+replace: true
+</pre>
+<p>译注：最后关于引用包含的作用域这边是<a href="http://jsfiddle.net/grahamle/4ag3e/">一个例子</a>，更好帮你理解 transclue</p>
+</div></div>

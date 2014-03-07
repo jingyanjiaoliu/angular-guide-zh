@@ -1,0 +1,133 @@
+<a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/dev_guide.services.injecting_controllers.ngdoc" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="--page --angular--page"><p>翻译者：<a href="https://github.com/asnowwolf">@asnowwolf</a></p>
+<p>把服务作为依赖注入到控制器中，和把服务作为依赖注入到其他服务中的方式非常相似。</p>
+<p>Since JavaScript is a dynamic language, DI can&#39;t figure out which services to inject by static
+types (like in static typed languages). Therefore, you can specify the service name by using the
+<code>$inject</code> property, which is an array containing strings with names of services to be injected.
+The name must match the corresponding service ID registered with angular. The order of the service
+IDs matters: the order of the services in the array will be used when calling the factory function
+with injected parameters. The names of parameters in factory function don&#39;t matter, but by
+convention they match the service IDs, which has added benefits discussed below.</p>
+<p>由于JavaScript是一门动态语言，DI不能像静态类型语言一样根据类型判断该注入哪个服务，而只能根据名字。
+所以，你可以通过<code>$inject</code>属性来实现注入，这个属性是一个数组，包含了一组准备注入的服务名称。
+这些名称必须是已经注册到angular中的服务ID。在<code>$inject</code>数组中，这些服务ID的顺序是很重要的：
+它们在数组中的顺序将被同样用作往工厂函数中注入参数的顺序。在工厂函数中，这些参数的名字并不重要，
+但是按照惯例，它们应该和服务ID保持一致，下面将详细论述这项惯例的优点所在。</p>
+<pre class="prettyprint linenums">
+function myController($loc, $log) {
+  this.firstMethod = function() {
+    // 使用$location服务
+    $loc.setHash();
+  };
+  this.secondMethod = function() {
+    // 使用$log服务
+    $log.info('...');
+  };
+}
+// 这里指定哪些服务将被注入
+myController.$inject = ['$location', '$log'];
+</pre>
+<h3 id="source">Source</h3>
+<div source-edit="MyServiceModule" source-edit-deps="angular.js script.js" source-edit-html="index.html-221" source-edit-css="" source-edit-js="script.js-220" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-222" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-221" ng-html-wrap="MyServiceModule angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-221">
+
+
+<div ng-controller="myController">
+  <p>让我们简单的试验一下这个注入到控制器中的notify服务</p>
+  <input ng-init="message='test'" ng-model="message" >
+  <button ng-click="callNotify(message);">NOTIFY</button>
+  <p>(你必须点三次才能看到一个alert对话框)</p>
+</div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-220"></pre>
+<script type="text/ng-template" id="script.js-220">
+angular.
+ module('MyServiceModule', []).
+ factory('notify', ['$window', function(win) {
+    var msgs = [];
+    return function(msg) {
+      msgs.push(msg);
+      if (msgs.length == 3) {
+        win.alert(msgs.join("\n"));
+        msgs = [];
+      }
+    };
+  }]);
+
+function myController(scope, notifyService) {
+  scope.callNotify = function(msg) {
+    notifyService(msg);
+  };
+}
+
+myController.$inject = ['$scope','notify'];
+</script>
+</div>
+<div class="tab-pane" title="ngScenario e2e test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-222"></pre>
+<script type="text/ng-template" id="scenario.js-222">
+  it('测试服务', function() {
+    expect(element(':input[ng\\:model="message"]').val()).toEqual('test');
+  });
+</script>
+</div>
+</div><h3 id="demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="MyServiceModule" ng-set-html="index.html-221" ng-eval-javascript="script.js-220"></div>
+<h3 id="隐式依赖注入">隐式依赖注入</h3>
+<p>Angular依赖注入(DI)的一项新特性是从参数名中查找依赖。我们重写上面的范例，来看看如何用隐式注入的方式注入<code>$window</code>，<code>$scope</code>，和我们自己的<code>notify</code>服务</p>
+<h3 id="source">Source</h3>
+<div source-edit="MyServiceModuleDI" source-edit-deps="angular.js script.js" source-edit-html="index.html-224" source-edit-css="" source-edit-js="script.js-223" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-224" ng-html-wrap="MyServiceModuleDI angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-224">
+
+<div ng-controller="myController">
+  <p>我们来试试notify服务，它被隐式的注入到本控制器中</p>
+  <input ng-init="message='test'" ng-model="message">
+  <button ng-click="callNotify(message);">NOTIFY</button>
+  <p>(你必须点击三次才能看到一个alert对话框)</p>
+</div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-223"></pre>
+<script type="text/ng-template" id="script.js-223">
+angular.
+ module('MyServiceModuleDI', []).
+ factory('notify', function($window) {
+    var msgs = [];
+    return function(msg) {
+      msgs.push(msg);
+      if (msgs.length == 3) {
+        $window.alert(msgs.join("\n"));
+        msgs = [];
+      }
+    };
+  });
+
+function myController($scope, notify) {
+  $scope.callNotify = function(msg) {
+    notify(msg);
+  };
+}
+</script>
+</div>
+</div><h3 id="demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="MyServiceModuleDI" ng-set-html="index.html-224" ng-eval-javascript="script.js-223"></div>
+<p>然而，如果你打算<a href="http://en.wikipedia.org/wiki/Minification_(programming)">最小化(minify)</a>你的代码，
+你的变量名（包括参数名）将被改成尽可能短的形式，这种情况下，你仍然需要使用<code>$inject</code>属性来显式的指定这些服务的名字。</p>
+<h3 id="相关主题">相关主题</h3>
+<p><a href="guide/dev_guide.services.understanding_services">理解Angular服务</a>
+<a href="guide/dev_guide.services.creating_services">创建Angular服务</a>
+<a href="guide/dev_guide.services.managing_dependencies">管理服务依赖</a>
+<a href="guide/dev_guide.services.testing_services">测试Angular服务</a></p>
+<h3 id="相关apiapi">相关APIAPI</h3>
+<p><a href="api/ng">Angular服务API</a></p>
+</div></div>

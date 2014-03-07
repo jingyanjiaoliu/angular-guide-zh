@@ -1,0 +1,52 @@
+<a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/i18n.ngdoc" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="developer-guide-page developer-guide-i18n-and-l10n-page"><p>翻译者：<a href="https://github.com/greengerong">@greengerong</a></p>
+<h2 id="angularjs中的i18n-和-l10n">AngularJS中的I18n 和 L10n</h2>
+<p><strong>什么是i18n 和 l10n?</strong></p>
+<p>i18n是Internationalization(国际化)的缩写，是使开发的产品能很容易适应不同的语言和地区间的变化的过程。l10n则是Localization(本地化)的缩写，是为了使应用软件能够在某一特定语言环境或地区使用而加入本地特殊化部件和翻译后文本的过程。对于应用程序开发者而言，国际化意味着需要从应用程序中抽离所有的文本字符串信息和特殊的地域特性(如时间、货币格式)。而本地化意味着提供翻译后的文本和具有地域特性的格式。</p>
+<p><strong>Angular当前对i18n/l10n的支持程度</strong></p>
+<p>当前Angular为i18n/l10n提供了<a href="http://docs.angularjs.org/#!/api/ng.filter:date">datetime</a>, <a href="http://docs.angularjs.org/#!/api/ng.filter:number">number</a> 以及 <a href="http://docs.angularjs.org/#!/api/ng.filter:currency">currency</a> 之类的filter。</p>
+<p>另外Angular也通过<a href="api/ng.directive:ngPluralize"><code>ngPluralize directive</code></a> 提供了对多元化地域的支持。</p>
+<p>Angular提供的所有本地化组件都会依赖于<a href="api/ng.$locale"><code>$locale service</code></a>的本地化特性设置。</p>
+<p>对于希望直接跳到示例读者，我们已经有一些wbe页面展示如何利用Angular filters设置多样化的本地化规则，可以猛击<a href="https://github.com/angular/angular.js/tree/master/i18n/e2e">Github</a> 或者在Angular开发包的i18n/e2ei18n/e2目录下找到。</p>
+<p><strong>什么是地域标识?</strong></p>
+<p>一个地域标识代表一个特定的地理位置，政治体制，或是文化区域。最常用的地域标识分为两部分：语言编码和国家编码，例如en-US, en-AU, zh-CN，这些都是包含语言编码和国家编码的合法地域标识。因为在地域标识中一个指定国家编码是可选的，例如en, zh, 以及sk也都是合法的。关于地域标识更多资料可从<a href="http://userguide.icu-project.org/locale">ICU</a>获取。</p>
+<p><strong>Angular支持的地域</strong></p>
+<p>Angular把数字、日期格式的规则按照特定的地域分离到不同的独立文件，每个文件配置了该地域的特性配置信息。你可以从<a href="https://github.com/angular/angular.js/tree/master/src/ngLocale">这里</a>获取当前支持的地域。</p>
+<h2 id="给angular提供地域规则">给Angular提供地域规则</h2>
+<p>有两种给Angular提供地域规则的方式:</p>
+<p><strong>1. 预绑定(Pre-bundled)规则集</strong></p>
+<p>你可以把给Angular提供的特殊地域目标文件通过连接在<code>angular.js</code> 或者 <code>angular.min.js</code>文件末尾。</p>
+<p>例如在*nix系统中，你可以通过以下方式创建一个包含德国本地化规则的angular.js文件:</p>
+<p><code>cat angular.js i18n/angular-locale_de-de.js &gt; angular_de-de.js</code></p>
+<p>当我们的应用程序引入了<code>angular_de-de.js</code>而不是平常 angular.js的脚本，Angular将会自动配置德国的区域规则信息。</p>
+<p><strong>2. 在index.html页面引入locale js</strong></p>
+<p>你也可以将特定的区域配置脚本直接引入到index.html页面。例如你的客户需要德国本地化规则，那么你提供的index_de-de.html如下:</p>
+<pre class="prettyprint linenums">
+&lt;html ng-app&gt;
+ &lt;head&gt;
+….
+   &lt;script src="angular.js"&gt;&lt;/script&gt;
+   &lt;script src="i18n/angular-locale_de-de.js"&gt;&lt;/script&gt;
+….
+ &lt;/head&gt;
+&lt;/html&gt;
+</pre>
+<p><strong>两种方式的对比</strong></p>
+<p>上面所描述的两种方式都需要你准备不同的index。html页面或者js来提供应用程序所需要的区域规则配置。你还需要配置服务器来提供正确的和本地化规则相匹配的文件。</p>
+<p>然而，第二种方式(导入locale js到index.html页面)因为需要加载外边脚本文件，所以可能会慢一些。</p>
+<h2 id="&quot;坑&quot;">&quot;坑&quot;</h2>
+<p><strong>货币符号的&quot;坑&quot;</strong></p>
+<p>Angular的<a href="http://docs.angularjs.org/#!/api/ng.filter:currency">货币 filter</a>允许我们通过<a href="api/ng.$locale"><code>locale service</code></a>使用默认的货币符号，或者自定义货币符号。如果你应用程序只会在一个地域使用，你可以完全依赖当前的默认货币符号。但是如果你期望其他地域的用户使用该应用，那么你需要提供能被当地人们理解的货币符号。</p>
+<p>例如，你希望通过Angular货币filter <code>{{ 1000 | currency }}</code> 显示1000刀的账户余额，并且你的应用程序在en-US区域中使用，那么显示结果将是&#39;$1000.00&#39;。然而，如果用户在其他的区域使用该应用（如，日本），他的浏览器指定的区域将是ja，余额将显示为&#39;¥1000.00&#39;,这将会让你的用户感到不爽。</p>
+<p>在这种情况下，你需要通过<a href="http://docs.angularjs.org/#!/api/ng.filter:currency">货币 filter</a>将默认的货币符号重写成作为参数传进来的货币符号，例如{{ 1000 | currency:&quot;USD$&quot;}}。这样Angular将会忽略任何区域改变总是显示余额为&#39;USD$1000&#39;。</p>
+<p><strong>转换长度的&quot;坑&quot;</strong></p>
+<p>需要铭记的是，转换字符串/时间格式后将会很大程度的引起长度改变。例如，<code>June 3, 1977</code>转换为西班牙格式为<code>3 de junio de 1977</code>。这将会出现一些极端的案例。因为当你需要国际化你的应用程序的时候，你需要引用响应的css和测试确保UI组件不会重叠。</p>
+<p><strong>时区</strong></p>
+<p>需要铭记的是，Angular的时间filter采用的是浏览器设置的时区。所以，同一个应用在设置不同时区的电脑上，将会显示不同的时间信息。最后，不管是JavaScript还是Angular当前都不支持显示开发者指定的特定时区的时间。</p>
+<p>译者注-额外资源：</p>
+<p>1：关于国际化更友好的Angular plugin @link
+<a href="http://pascalprecht.github.io/angular-translate/">http://pascalprecht.github.io/angular-translate/</a> angular-translate} </p>
+</div></div>

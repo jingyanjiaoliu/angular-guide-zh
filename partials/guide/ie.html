@@ -1,0 +1,177 @@
+<a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/ie.ngdoc" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="developer-guide-page developer-guide-internet-explorer--page"><p>翻译者：<a href="https://github.com/greengerong">@greengerong</a></p>
+<h2 id="概述">概述</h2>
+<p>这篇文档主要描述Internet Explorer (IE) 在处理自动以html attributes和tag的一些特立独行的行为。如果你希望让
+你的应用程序工作在IE 8 或者更早的IE版本，那么你就需要了解本文的内容。</p>
+<p>Angular项目当前致力于支持和修复一些IE 8 及以上版本的bug(译者注：angular 1.3已经不再支持IE 8 <a href="http://blog.angularjs.org/2013/12/angularjs-13-new-release-approaches.html"><a href="http://blog.angularjs.org/2013/12/angularjs-13-new-release-approaches.html">http://blog.angularjs.org/2013/12/angularjs-13-new-release-approaches.html</a></a>)。项目的持续集成服务器会在IE 8下运行所有的测试,可以参见<a href="http://ci.angularjs.org"><a href="http://ci.angularjs.org">http://ci.angularjs.org</a></a></p>
+<p>测试不会运行在IE7 及以下版本,并且我们不会保证Angular将会工作在这些版本上。AngularJS的部分功能子集仍然可以工作，
+你可以针对你的项目应用自由选择。</p>
+<p>针对IE7 或者更早版本的issues core team也不会给予更多的时间去处理这些问题.<a href="https://github.com/angular/angular.js/issues/4974">GitHub</a></p>
+<h2 id="简化版本">简化版本</h2>
+<p>让你的Angular程序能在IE上很好的工作，首先需要确保:</p>
+<ol>
+<li><p>在IE7或者以下版本需要JSON.stringify兼容包。你可以引入<a href="https://github.com/douglascrockford/JSON-js">JSON2</a>或者
+<a href="http://bestiejs.github.com/json3/">JSON3</a>来解决这个问题.</p>
+<pre class="prettyprint linenums">
+       &lt;!doctype html&gt;
+       &lt;html xmlns:ng="http://angularjs.org"&gt;
+         &lt;head&gt;
+           &lt;!--[if lte IE 8]&gt;
+             &lt;script src="/path/to/json2.js"&gt;&lt;/script&gt;
+           &lt;![endif]--&gt;
+         &lt;/head&gt;
+         &lt;body&gt;
+           ...
+         &lt;/body&gt;
+       &lt;/html&gt;
+     </pre>
+</li>
+<li><p>添加<code>id=&quot;ng-app&quot;</code> 在根元素节点，使其能和<code>ng-app</code> attribute结合使用.</p>
+<pre class="prettyprint linenums">
+       &lt;!doctype html&gt;
+       &lt;html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="optionalModuleName"&gt;
+         ...
+       &lt;/html&gt;
+     </pre>
+</li>
+<li><p>尽量不要使用自定义节点例如<code>&lt;ng:view&gt;</code>（用属性Attribute方式代替）</p>
+</li>
+<li><p>如果你由于语义或者第三方的Angular组件需要使用tag的方式的话,那么你必须按照如下步骤 make IE happy(译者注:或者<a href="https://github.com/angular-ui/ui-utils/tree/master/modules/ie-shiv">ie-shv</a>):</p>
+<pre class="prettyprint linenums">
+       &lt;!doctype html&gt;
+       &lt;html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="optionalModuleName"&gt;
+         &lt;head&gt;
+           &lt;!--[if lte IE 8]&gt;
+             &lt;script&gt;
+               document.createElement('ng-include');
+               document.createElement('ng-pluralize');
+               document.createElement('ng-view');
+     
+               // Optionally these for CSS
+               document.createElement('ng:include');
+               document.createElement('ng:pluralize');
+               document.createElement('ng:view');
+             &lt;/script&gt;
+           &lt;![endif]--&gt;
+         &lt;/head&gt;
+         &lt;body&gt;
+           ...
+         &lt;/body&gt;
+       &lt;/html&gt;
+     </pre>
+</li>
+</ol>
+<p>重要的部分:</p>
+<ul>
+<li><p><code>xmlns:ng</code>- <em>命名空间</em> - 你需要为每一个将使用的自定义tag注册一个命名空间(译者注:IE作为严格xml模式解析).</p>
+</li>
+<li><p><code>document.createElement(yourTagName)</code> - <em>自定义节点创建</em> - 由于这只是老版本的IE issues，所以你需要按条件加载这些脚本(IE低版本特有的条件注释)。对于每一个需要使用的没有注册命名空间以及非HTML定义的tag你需要利用它来预申明来make IE happy。</p>
+</li>
+</ul>
+<h2 id="详尽版本">详尽版本</h2>
+<p>IE在处理关于非标准HTML tag 的问题主要由两类，每种类型又其自己的修复方式.</p>
+<ul>
+<li><p>If the tag name starts with <code>my:</code> prefix then it is considered an XML namespace and must
+have corresponding namespace declaration on <code>&lt;html xmlns:my=&quot;ignored&quot;&gt;</code></p>
+</li>
+<li><p>以<code>my:</code>为前缀的tag 考虑到严格的XML命名空间，你必须有相应的命名空间申明,如<code>&lt;html xmlns:my=&quot;ignored&quot;&gt;</code>。</p>
+</li>
+<li><p>If the tag has no <code>:</code> but it is not a standard HTML tag, then it must be pre-created using
+<code>document.createElement(&#39;my-tag&#39;)</code></p>
+</li>
+<li><p>没有<code>:</code>的非标准HTML tag, 你需要使用<code>document.createElement(&#39;my-tag&#39;)</code>来预申明改节点(译者注:ie-shv)。</p>
+</li>
+<li><p>If you are planning on styling the custom tag with CSS selectors, then it must be
+pre-created using <code>document.createElement(&#39;my-tag&#39;)</code> regardless of XML namespace.</p>
+</li>
+<li><p>如果你希望采用CSS选择器的方式，那么你需要使用<code>document.createElement(&#39;my-tag&#39;)</code>预申明，忽略XML命名空间。</p>
+</li>
+</ul>
+<h3 id="详尽版本_幸存的佳音">幸存的佳音</h3>
+<p>庆幸的是这些问题只会出现在自定义节点上，attribute的方式还能工作。所以<code>&lt;div my-tag your:tag&gt;
+&lt;/div&gt;</code>在IE中不需要特殊的任何处理.</p>
+<h3 id="详尽版本_ie的dom解析">IE的DOM解析</h3>
+<p>假如你拥有位置的tag <code>mytag</code>(<code>my:tag</code> 或者 <code>my-tag</code> ):</p>
+<pre class="prettyprint linenums">
+  &lt;html&gt;
+    &lt;body&gt;
+      &lt;mytag&gt;some text&lt;/mytag&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+</pre>
+<p>正确的DOM解析为：</p>
+<pre class="prettyprint linenums">
+#document
+  +- HTML
+     +- BODY
+        +- mytag
+           +- #text: some text
+</pre>
+<p>期望的结果是在<code>BODY</code>节点下有一个<code>mytag</code>的子节点，并且在其下有一个<code>some text</code>的文本节点。</p>
+<p>但是IE却不是这样工作的(假设并未做任何上面的修复方法):</p>
+<pre class="prettyprint linenums">
+#document
+  +- HTML
+     +- BODY
+        +- mytag
+        +- #text: some text
+        +- /mytag
+</pre>
+<p>在IE中解析结果是在<code>BODY</code>下有两个子节点：</p>
+<ol>
+<li>一个是自关闭的<code>mytag</code>。形如自关闭的<br/> tag。对于‘/’是可选的。但是<code>&lt;br&gt;</code> 不允许包含任何的子节点，浏览器会把<code>&lt;br&gt;some
+text&lt;/br&gt;</code>解析为3个节点而不是两个<code>&lt;br&gt;</code>和<code>some text</code>子节点。</li>
+</ol>
+<ol>
+<li>一个是<code>some text</code>的文本节点.正确的解析应该是<code>mytag</code>的子节点而不是兄弟节点。</li>
+</ol>
+<ol>
+<li>一个不合法的自关闭的<code>/mytag</code>。因为在DOM节点名称不允许使用<code>/</code>字符。而且正确的解析结果这不该出现在DOM中，
+是因为它只是描述DOM的结构。</li>
+</ol>
+<h3 id="详尽版本_css-styling-of-自定义节点">CSS Styling of 自定义节点</h3>
+<p>使得自定义节点能工作在CSS选择器上，自定义节点必须使用<code>document.createElement(&#39;my-tag&#39;)</code>预创建申明忽略XML命名空间.</p>
+<pre class="prettyprint linenums">
+  &lt;html xmlns:ng="needed for ng: namespace"&gt;
+    &lt;head&gt;
+      &lt;!--[if lte IE 8]&gt;
+        &lt;script&gt;
+          // needed to make ng-include parse properly
+          document.createElement('ng-include');
+
+          // needed to enable CSS reference
+          document.createElement('ng:view');
+        &lt;/script&gt;
+      &lt;![endif]--&gt;
+      &lt;style&gt;
+        ng\:view {
+          display: block;
+          border: 1px solid red;
+        }
+
+        ng-include {
+          display: block;
+          border: 1px solid blue;
+        }
+      &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;ng:view&gt;&lt;/ng:view&gt;
+      &lt;ng-include&gt;&lt;/ng-include&gt;
+      ...
+    &lt;/body&gt;
+  &lt;/html&gt;
+</pre>
+<p>译者注：</p>
+<ol>
+<li><p>以上的IE兼容性只是针对IE 中关于DOM解析的issues。在Angular开发中大多数情况你还需要引入JavaScript的兼容包，如[es5-shim]（<a href="https://github.com/es-shims/es5-shim）来处理String.trim、Array等一些JavaScriptAPI。">https://github.com/es-shims/es5-shim）来处理String.trim、Array等一些JavaScriptAPI。</a></p>
+</li>
+<li><p>如果你希望在IE6中工作建议使用angular.bootstrap方法来手动启动Angular app。</p>
+</li>
+<li><p>部分兼容问题参见<a href="http://www.cnblogs.com/whitewolf/archive/2013/03/24/2979344.html">Angularjs开发一些经验总结</a></p>
+</li>
+</ol>
+</div></div>

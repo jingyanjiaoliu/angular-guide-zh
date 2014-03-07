@@ -1,0 +1,850 @@
+<a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/directive.ngdoc" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="directives-page"><h2 id="创建自定义&quot;指令&quot;">创建自定义&quot;指令&quot;</h2>
+<div class="alert alert-warning">
+<strong>注意:</strong> 这篇指南是面向那些已经对AngularJS有了基础并比较熟悉的开发者。
+如果你是刚开始接触Angular，我们建议你先看看<a href="tutorial/index">入门指南</a>
+如果你在寻找<strong>指令API</strong>，请移步这里<a href="api/ng.$compile"><code><code>$compile</code></code></a>.
+</div>
+
+
+<p>此文解释了在你的AngularJS应用里，何时该创建自定义指令以及如何去实现它们。</p>
+<h3 id="创建自定义&quot;指令&quot;_&quot;指令&quot;是什么">&quot;指令&quot;是什么?</h3>
+<p>简单点说，指令就是一些附加在HTML元素上的自定义标记（例如：属性，元素，或css类），它告诉AngularJS的<strong>HTML编译器</strong> (<a href="api/ng.$compile"><code><code>$compile</code></code></a>)
+在元素上附加某些指定的行为，甚至操作DOM、改变DOM元素，以及它的各级子节点。</p>
+<p>Angular内置了一整套指令，如<code>ngBind</code>, <code>ngModel</code>, 和<code>ngView</code>。
+就像你可以创建控制器和服务那样，你也可以创建自己的指令来让Angular使用。
+当Angular <a href="guide/bootstrap">启动器</a>引导你的应用程序时，
+<a href="guide/compiler">HTML编译器</a>就会遍历整个DOM，以匹配DOM元素里的指令。</p>
+<div class="alert alert-info">
+<strong>对于HTML模板来说，&quot;编译&quot;意味着什么?</strong>
+
+对于AngularJS来说，“编译”意味着把监听事件绑定在HTML元素上，使其可以交互。
+我们使用&quot;编译&quot;这个术语的原因就在于，把指令关联到DOM上的这种递归操作非常类似于
+<a href="http://en.wikipedia.org/wiki/Compiled_languages">编译式语言</a>编译源代码的过程。
+</div>
+
+
+<h3 id="创建自定义&quot;指令&quot;_指令的匹配">指令的匹配</h3>
+<p>在开始写指令之前，我们需要知道angular的<a href="guide/compiler">HTML编译器</a>
+是怎样决定该在什么时候调用一个指令的。</p>
+<p>在接下来的例子里，我们可以说元素<code>&lt;input&gt;</code> <strong>匹配</strong>了<code>ngModel</code> 的指令。</p>
+<pre><code class="lang-javascript">&lt;input ng-model=&quot;foo&quot;&gt;</code></pre>
+<p>下面的语法同样<strong>匹配</strong> <code>ngModel</code>:</p>
+<pre><code class="lang-javascript">&lt;input data-ng:model=&quot;foo&quot;&gt;</code></pre>
+<p>Angular把一个元素的标签和属性名字进行<strong>规范化</strong>，来决定哪个元素匹配哪个指令。
+我们通常用区分大小写的<strong>规范化</strong>命名方式(比如<code>ngModel</code>)来识别指令。
+然而，HTML是区分大小的，所以我们在DOM中使用的指令只能用小写的方式命名，
+通常使用<a href="http://en.wikipedia.org/wiki/Letter_case#Computers">破折号间隔</a>的形式(比如：<code>ng-model</code>).</p>
+<p><strong>规范化</strong>的过程如下所示：</p>
+<ol>
+<li>从元素或属性的名字前面去掉<code>x-</code> and <code>data-</code></li>
+<li>从<code>:</code>, <code>-</code>, 或 <code>_</code>分隔的形式转换成<code>小驼峰命名法(camelCase)</code>.</li>
+</ol>
+<p>下面的例子是对于指令<code>ngBind</code>的匹配都是等价的:</p>
+<h3 id="创建自定义&quot;指令&quot;_source">Source</h3>
+<div source-edit="docsBindExample" source-edit-deps="angular.js script.js" source-edit-html="index.html-226" source-edit-css="" source-edit-js="script.js-225" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-227" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-226" ng-html-wrap="docsBindExample angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-226">
+    <div ng-controller="Ctrl1">
+      Hello <input ng-model='name'> <hr/>
+      <span ng-bind="name"></span> <br/>
+      <span ng:bind="name"></span> <br/>
+      <span ng_bind="name"></span> <br/>
+      <span data-ng-bind="name"></span> <br/>
+      <span x-ng-bind="name"></span> <br/>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-225"></pre>
+<script type="text/ng-template" id="script.js-225">
+    angular.module('docsBindExample', [])
+      .controller('Ctrl1', function Ctrl1($scope) {
+        $scope.name = 'Max Karl Ernst Ludwig Planck (April 23, 1858 – October 4, 1947)';
+      });
+  </script>
+</div>
+<div class="tab-pane" title="ngScenario e2e test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-227"></pre>
+<script type="text/ng-template" id="scenario.js-227">
+    it('should show off bindings', function() {
+      expect(element('div[ng-controller="Ctrl1"] span[ng-bind]').text())
+        .toBe('Max Karl Ernst Ludwig Planck (April 23, 1858 – October 4, 1947)');
+    });
+  </script>
+</div>
+</div><h3 id="创建自定义&quot;指令&quot;_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="docsBindExample" ng-set-html="index.html-226" ng-eval-javascript="script.js-225"></div>
+<div class="alert alert-success">
+<strong>最佳实践:</strong> 建议使用破折号分隔符的方式(比如<code>ng-bind</code> for <code>ngBind</code>).
+如果你想支持HTML验证工具，你可以加前缀<code>data</code>.(比如把<code>ngBind</code>写成<code>data-ng-bind</code>).
+其它的形式虽然也是合法的，但都是因为历史遗留原因而支持的，我们建议不要那么用。
+</div>
+
+<p><code>$compile</code>(编译) 可以基于元素名字、属性、类名和注释来匹配指令的。Angular提供的所有指令都支持元素名、属性、类名和注释的形式。</p>
+<p>下面的例子给出了在模板里引用指令的各种方式：(在这个例子 里是<code>myDir</code> ):</p>
+<pre><code class="lang-html">&lt;my-dir&gt;&lt;/my-dir&gt;
+&lt;span my-dir=&quot;exp&quot;&gt;&lt;/span&gt;
+&lt;!-- directive: my-dir exp --&gt;
+&lt;span class=&quot;my-dir: exp;&quot;&gt;&lt;/span&gt;</code></pre>
+<div class="alert alert-success">
+<strong>最佳实践:</strong> 最好通过标签名和属性来使用指令而不要通过注释和类名。这样做可以更容易地看出一个元素是跟哪个指令匹配的。
+</div>
+
+<div class="alert alert-success">
+<strong>最佳实践:</strong> 通常注释式命名式指令使用在如下情景：某些指令需要跨越多个元素，但是受DOM API的限制，无法跨越多个元素(比如<code>&lt;table&gt;</code>元素)。
+AngularJS 1.2 引入了<a href="api/ng.directive:ngRepeat"><code><code>ng-repeat-start</code>和<code>ng-repeat-end</code></code></a>指令，作为更好的解决方案。
+建议开发者使用这种方式，而不要用“自定义注释”形式的指令。
+</div>
+
+
+
+<h4 id="创建自定义&quot;指令&quot;_demo_文本-和-属性-绑定">文本 和 属性 绑定</h4>
+<p>在编译的过程中<a href="api/ng.$compile"><code>编译器</code></a>会使用 <a href="api/ng.$interpolate"><code>$interpolate</code></a>服务去匹配文本和属性，以查看它是否含有内嵌的表达式。
+这些表达式会作为<a href="api/ng.$rootScope.Scope#methods_$watch"><code>监控</code></a>的值来注册，
+并作为<a href="api/ng.$rootScope.Scope#methods_$digest"><code>摘要</code></a>循环的一部分来进行实时更新。</p>
+<p>下面是展开(interpolation)绑定的一个例子</p>
+<pre><code class="lang-html">&lt;a ng-href=&quot;img/{{username}}.jpg&quot;&gt;Hello {{username}}!&lt;/a&gt;</code></pre>
+<h4 id="创建自定义&quot;指令&quot;_demo_-属性绑定"><code>ngAttr</code> 属性绑定</h4>
+<p>Web浏览器有时候对于属性的合法性检查简直是吹毛求疵。</p>
+<p>比如，考虑下面的模块：</p>
+<pre><code class="lang-html">&lt;svg&gt;
+  &lt;circle cx=&quot;{{cx}}&quot;&gt;&lt;/circle&gt;
+&lt;/svg&gt;</code></pre>
+<p>使用这样的写法时，我们会发现控制台中报错Error: Invalid value for attribute cx=&quot;{{cx}}&quot;.
+这是由于SVG DOM API的限制，你不能简单的写为cx=&quot;{{cx}}&quot;.</p>
+<p>使用ng-attr-cx 可以解决这个问题</p>
+<p>如果一个绑定的属性使用ngAttr前缀(或者ng-attr)进行声明, 那它在绑定的时候就会被应用到相应的未前缀化的属性上，
+这种方式允许你绑定到需要马上被浏览器处理的属性上面(比如SVG元素的circle[cx]属性)。</p>
+<p>所以，我们可以这样写来修复这个问题:</p>
+<pre><code class="lang-html">&lt;svg&gt;
+  &lt;circle ng-attr-cx=&quot;{{cx}}&quot;&gt;&lt;/circle&gt;
+&lt;/svg&gt;</code></pre>
+<h3 id="创建自定义&quot;指令&quot;_创建指令">创建指令</h3>
+<p>首先先谈一下注册指令API的API。</p>
+<p>和控制器一样，指令也是注册在模块上的。
+要注册一个指令，你可以用 <code>module.directive</code> API。
+<code>module.directive</code> 接受规范化<a href="guide/directive#creating-custom-directives_matching-directives">normalized</a>
+的指令名字和<strong>工厂方法</strong>。此工厂方法应该返回一个带有不同选项的对象来告诉
+编译器<code>$compile</code>此指令被匹配上该做些什么。</p>
+<p>工厂函数仅在 <a href="api/ng.$compile"><code>编译器</code></a> 第一次匹配到指令的时候调用一次.
+你可以在这里进行初始化的工作。
+该函数使用<a href="api/AUTO.$injector#methods_invoke"><code>$injector.invoke</code></a>调用，所以它可以像控制器一样进行依赖注入。</p>
+<div class="alert alert-success">
+<strong>最佳实践:</strong> 尽量返回一个对象，而不要只返回一个函数。
+</div>
+
+
+<p>接下来，我们先会讲解一些常见的例子，然后再深入讲解不同的选项项的原理和编译过程。</p>
+<div class="alert alert-success">
+<strong>最佳实践:</strong> 为了防止与未来的标准冲突，最好是前缀化你自己的指令名字。
+比如你创建一个指令<code>&lt;carousel&gt;</code> ，如果HTML7也引入相同的元素它可能会产生冲突。
+推荐使用两三个单词的前缀(比如btfCarousel)，同样，不能使用ng或者其他可能与angular未来版本起冲突的前缀。
+</div>
+
+<p>下面的例子我们将会使用作为 <code>my</code> 前缀 （例如，<code>myCustomer</code>）</p>
+<h4 id="创建自定义&quot;指令&quot;_创建指令_模板扩展指令">模板扩展指令</h4>
+<p>当你有大量代表客户信息的模板。这个模板在你的代码中重复了很多次，当你改变一个地方的时候，
+你不得不在其他地方同时改动，这时候，你就要使用指令来简化你的模板。</p>
+<p>我们来创建一个指令，简单的使用静态模板来替换它的内容。</p>
+<h3 id="创建自定义&quot;指令&quot;_source">Source</h3>
+<div source-edit="docsSimpleDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-229" source-edit-css="" source-edit-js="script.js-228" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-229" ng-html-wrap="docsSimpleDirective angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-229">
+    <div ng-controller="Ctrl">
+      <div my-customer></div>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-228"></pre>
+<script type="text/ng-template" id="script.js-228">
+    angular.module('docsSimpleDirective', [])
+      .controller('Ctrl', function($scope) {
+        $scope.customer = {
+          name: 'Naomi',
+          address: '1600 Amphitheatre'
+        };
+      })
+      .directive('myCustomer', function() {
+        return {
+          template: '姓名: {{customer.name}} 地址: {{customer.address}}'
+        };
+      });
+  </script>
+</div>
+</div><h3 id="创建自定义&quot;指令&quot;_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="docsSimpleDirective" ng-set-html="index.html-229" ng-eval-javascript="script.js-228"></div>
+<p>注意我们在这里做了一些绑定，<code>$compile</code> 编译完链接之后，它将会匹配子元素的指令，这意味着你可以组合一些指令。
+接下来我们看看下面的<a href="guide/directive#creating-custom-directives_demo_creating-directives-that-communicate">例子</a>是怎样做的</p>
+<p>这个例子中，我们直接在<code>template</code>选项项里写上模板，但是随着模板大小的增加，这样做非常不优雅。</p>
+<div class="alert alert-success">
+<strong>最佳实践:</strong> 除非你的模板非常小，否则最好分割成单独的hmtl文件，然后使用<code>templateUrl</code>选项来加载。
+</div>
+
+<p>如果你熟悉<code>ngInclude</code>，那么会发现<code>templateUrl</code>的作用与之类似，下面是用<code>templateUrl</code>选项的同一个例子：</p>
+<h3 id="创建自定义&quot;指令&quot;_source">Source</h3>
+<div source-edit="docsTemplateUrlDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-231 my-customer.html" source-edit-css="" source-edit-js="script.js-230" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-231" ng-html-wrap="docsTemplateUrlDirective angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-231">
+    <div ng-controller="Ctrl">
+      <div my-customer></div>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="my-customer.html">
+<pre class="prettyprint linenums" ng-set-text="my-customer.html"></pre>
+<script type="text/ng-template" id="my-customer.html">
+    Name: {{customer.name}} Address: {{customer.address}}
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-230"></pre>
+<script type="text/ng-template" id="script.js-230">
+    angular.module('docsTemplateUrlDirective', [])
+      .controller('Ctrl', function($scope) {
+        $scope.customer = {
+          name: 'Naomi',
+          address: '1600 Amphitheatre'
+        };
+      })
+      .directive('myCustomer', function() {
+        return {
+          templateUrl: 'my-customer.html'
+        };
+      });
+  </script>
+</div>
+</div><h3 id="创建自定义&quot;指令&quot;_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="docsTemplateUrlDirective" ng-set-html="index.html-231" ng-eval-javascript="script.js-230"></div>
+<p>非常好，但是如果我们想让我们的指令匹配标签名呢？ 如果我们只是简单的把元素放在hmtl上面，会发现没有效果。</p>
+<div class="alert alert-waring">
+<strong>注意:</strong> 创建指令的时候，默认仅使用属性的方式。为了创建一个能由元素名字触发的指令，你需要用到<code>restrict</code>选项。
+</div>
+
+<p>选项<code>restrict</code>可以设置成以下方式：</p>
+<ul>
+<li><code>&#39;A&#39;</code> - 仅匹配属性名</li>
+<li><code>&#39;E&#39;</code> - 仅匹配元素名</li>
+<li><code>&#39;AE&#39;</code> - 既匹配属性名又匹配元素名</li>
+</ul>
+<p>下面把例子的restrict选项选项成<code>restrict: &#39;E&#39;</code>。</p>
+<h3 id="创建自定义&quot;指令&quot;_source">Source</h3>
+<div source-edit="docsRestrictDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-233 my-customer.html" source-edit-css="" source-edit-js="script.js-232" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-233" ng-html-wrap="docsRestrictDirective angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-233">
+    <div ng-controller="Ctrl">
+      <my-customer></my-customer>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="my-customer.html">
+<pre class="prettyprint linenums" ng-set-text="my-customer.html"></pre>
+<script type="text/ng-template" id="my-customer.html">
+    Name: {{customer.name}} Address: {{customer.address}}
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-232"></pre>
+<script type="text/ng-template" id="script.js-232">
+    angular.module('docsRestrictDirective', [])
+      .controller('Ctrl', function($scope) {
+        $scope.customer = {
+          name: 'Naomi',
+          address: '1600 Amphitheatre'
+        };
+      })
+      .directive('myCustomer', function() {
+        return {
+          restrict: 'E',
+          templateUrl: 'my-customer.html'
+        };
+      });
+  </script>
+</div>
+</div><h3 id="创建自定义&quot;指令&quot;_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="docsRestrictDirective" ng-set-html="index.html-233" ng-eval-javascript="script.js-232"></div>
+<p>restrict属性的详情参阅 <a href="api/ng.$compile#description_comprehensive-directive-api_directive-definition-object"><code><code>restrict</code></code></a>。
+关于指令定义的API文档请参阅 <a href="api/ng.$compile#description_comprehensive-directive-api_directive-definition-object"><code>API docs</code></a>.</p>
+<div class="alert alert-info">
+<strong>什么情况下该用元素名，什么情况下该用属性名？</strong>
+
+当创建一个含有自己模板的组件的时候，建议使用元素名，常见情况是，当你想为你的模板创建一个DSL（特定领域语言）的时候。如果仅仅想为已有的元素添加功能，建议使用属性名.
+</div>
+
+<p>使用元素名做为myCustomer指令是非常正确的决定，因为你不是用一些&#39;customer&#39;行为来装饰这个元素，而是定义一个具有自定义行为的元素作为customer组件</p>
+<h4 id="创建自定义&quot;指令&quot;_demo_给指令一个独立作用域">给指令一个独立作用域(isolate scope)</h4>
+<p>上面我们的<code>myCustomer</code>指令已经非常好了，但是它有个致命的缺陷，我们在给定的作用域内仅能使用一次。</p>
+<p>它现在的实现是，我们每次重用该指令的时候都要为它新创一个控制器.</p>
+<h3 id="创建自定义&quot;指令&quot;_source">Source</h3>
+<div source-edit="docsScopeProblemExample" source-edit-deps="angular.js script.js" source-edit-html="index.html-235 my-customer.html" source-edit-css="" source-edit-js="script.js-234" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-235" ng-html-wrap="docsScopeProblemExample angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-235">
+    <div ng-controller="NaomiCtrl">
+      <my-customer></my-customer>
+    </div>
+    <hr>
+    <div ng-controller="IgorCtrl">
+      <my-customer></my-customer>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="my-customer.html">
+<pre class="prettyprint linenums" ng-set-text="my-customer.html"></pre>
+<script type="text/ng-template" id="my-customer.html">
+    Name: {{customer.name}} Address: {{customer.address}}
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-234"></pre>
+<script type="text/ng-template" id="script.js-234">
+    angular.module('docsScopeProblemExample', [])
+      .controller('NaomiCtrl', function($scope) {
+        $scope.customer = {
+          name: 'Naomi',
+          address: '1600 Amphitheatre'
+        };
+      })
+      .controller('IgorCtrl', function($scope) {
+        $scope.customer = {
+          name: 'Igor',
+          address: '123 Somewhere'
+        };
+      })
+      .directive('myCustomer', function() {
+        return {
+          restrict: 'E',
+          templateUrl: 'my-customer.html'
+        };
+      });
+  </script>
+</div>
+</div><h3 id="创建自定义&quot;指令&quot;_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="docsScopeProblemExample" ng-set-html="index.html-235" ng-eval-javascript="script.js-234"></div>
+<p>这显然不是一个好的解决方案。</p>
+<p>我们想要做的是能够把指令的作用域与外部的作用域隔离开来，然后映射外部的作用域到指令内部的作用域。
+可以通过创建<strong>独立作用域(isolate scope)</strong>来达到这个目的。我们可以使用指令的<code>scope</code>来选项它:</p>
+<h3 id="创建自定义&quot;指令&quot;_source">Source</h3>
+<div source-edit="docsIsolateScopeDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-237 my-customer-iso.html" source-edit-css="" source-edit-js="script.js-236" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-237" ng-html-wrap="docsIsolateScopeDirective angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-237">
+    <div ng-controller="Ctrl">
+      <my-customer info="naomi"></my-customer>
+      <hr>
+      <my-customer info="igor"></my-customer>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="my-customer-iso.html">
+<pre class="prettyprint linenums" ng-set-text="my-customer-iso.html"></pre>
+<script type="text/ng-template" id="my-customer-iso.html">
+    Name: {{customerInfo.name}} Address: {{customerInfo.address}}
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-236"></pre>
+<script type="text/ng-template" id="script.js-236">
+    angular.module('docsIsolateScopeDirective', [])
+      .controller('Ctrl', function($scope) {
+        $scope.naomi = { name: 'Naomi', address: '1600 Amphitheatre' };
+        $scope.igor = { name: 'Igor', address: '123 Somewhere' };
+      })
+      .directive('myCustomer', function() {
+        return {
+          restrict: 'E',
+          scope: {
+            customerInfo: '=info'
+          },
+          templateUrl: 'my-customer-iso.html'
+        };
+      });
+  </script>
+</div>
+</div><h3 id="创建自定义&quot;指令&quot;_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="docsIsolateScopeDirective" ng-set-html="index.html-237" ng-eval-javascript="script.js-236"></div>
+<p>首先看<code>index.html</code>,第一个<code>&lt;my-customer&gt;</code> 标签绑定了<code>naomi</code>(在控制的作用域[controller&#39;s scope]上暴露出来的)值到属性<code>info</code>上,
+第二个是绑定<code>igor</code>到 <code>info</code>.</p>
+<p>现在看看scope是如何选项的:</p>
+<pre><code class="lang-javascript">//...
+scope: {
+  customerInfo: &#39;=info&#39;
+},
+//...</code></pre>
+<p><strong>作用域选项</strong> 是一组为每个独立作用域绑定的属性组合.在此例子中它只有一个属性：</p>
+<ul>
+<li>它的名字(<code>customerInfo</code>) 对应于指令里的<strong>独立作用域</strong>的<code>customerInfo</code>属性.</li>
+<li>它的值 (<code>=info</code>) 告诉<code>$compile</code> 这是绑定了所在元素的 <code>info</code> 属性。</li>
+</ul>
+<div class="alert alert-warning">
+<strong>注意:</strong> 指令作用域选项中的&#39;=attr&#39;属性名是被规范化过后的名字.
+比如要绑定<code>&lt;div bind-to-this=&quot;thing&quot;&gt;</code>,你就要使用&#39;=bindToThis&#39;的绑定。
+</div>
+
+<p>如果属性名和你想要绑定的值的名字一样，你可以使用这样的快捷语法:</p>
+<pre><code class="lang-javascript">...
+scope: {
+  // 等价于&#39;=customer&#39;
+  customer: &#39;=&#39;
+},
+...</code></pre>
+<p>使用独立作用域(isolate scope)还有另外一个用处，那就是可以绑定不同的数据到指令内部的作用域。</p>
+<p>在我们的例子中，我们可以添加另外一个属性vojta到我们的作用域，然后在我们的指令模板中访问它。</p>
+<h3 id="创建自定义&quot;指令&quot;_source">Source</h3>
+<div source-edit="docsIsolationExample" source-edit-deps="angular.js script.js" source-edit-html="index.html-239 my-customer-plus-vojta.html" source-edit-css="" source-edit-js="script.js-238" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-239" ng-html-wrap="docsIsolationExample angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-239">
+    <div ng-controller="Ctrl">
+      <my-customer info="naomi"></my-customer>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="my-customer-plus-vojta.html">
+<pre class="prettyprint linenums" ng-set-text="my-customer-plus-vojta.html"></pre>
+<script type="text/ng-template" id="my-customer-plus-vojta.html">
+    Name: {{customerInfo.name}} Address: {{customerInfo.address}}
+    <hr>
+    Name: {{vojta.name}} Address: {{vojta.address}}
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-238"></pre>
+<script type="text/ng-template" id="script.js-238">
+    angular.module('docsIsolationExample', [])
+      .controller('Ctrl', function($scope) {
+        $scope.naomi = { name: 'Naomi', address: '1600 Amphitheatre' };
+
+        $scope.vojta = { name: 'Vojta', address: '3456 Somewhere Else' };
+      })
+      .directive('myCustomer', function() {
+        return {
+          restrict: 'E',
+          scope: {
+            customerInfo: '=info'
+          },
+          templateUrl: 'my-customer-plus-vojta.html'
+        };
+      });
+  </script>
+</div>
+</div><h3 id="创建自定义&quot;指令&quot;_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="docsIsolationExample" ng-set-html="index.html-239" ng-eval-javascript="script.js-238"></div>
+<p>注意，<code>{{vojta.name}}</code>和<code>{{vojta.address}}</code> 都是空的，意味着他们是undefined,
+虽然我们在控制器中定义了<code>vojta</code> ，但是在指令内部访问不到</p>
+<p>就像它的名字暗示的一样， 指令的<strong>独立作用域</strong> 隔离了除你添加到<code>scope: {}</code>
+对象中的数据模型之外的一切东西。这对于你要建立一个可复用的组件来说是非常有用的，
+因为它可以阻止除你传入的数据模型之外的一切东西改变你内部数据模型的状态。</p>
+<div class="alert alert-warning">
+<strong>注意:</strong>普通的作用域都使用原型方式继承自父作用域。但是独立作用域没有这样的继承关系。
+</div>
+
+<div class="alert alert-success">
+<strong>最佳实践:</strong>如果要使你的组件在应用范围内可重用，那么使用<code>scope</code>选项去创建一个独立作用域
+</div>
+
+
+<h4 id="创建自定义&quot;指令&quot;_demo_创建一个操作dom的指令">创建一个操作DOM的指令</h4>
+<p>在这个例子中，我们会创建一个显示当前时间的指令，每秒一次更新DOM以正确的显示当前的时间。</p>
+<p>指令修改DOM通常是在<code>link</code>选项中，<code>link</code>选项接受一个带有如下签名的函数<code>function link(scope,element,attrs) {...}</code>
+其中：
+<em> <code>scope</code> 是一个Angular的scope对象.
+</em> <code>element</code> 指令匹配的jqLite封装的元素(angular内部实现的类jquery的库)
+* <code>attrs</code> 是一个带有规范化后属性名字和相应值的对象.</p>
+<p>在我们的<code>link</code> 函数中，我们每秒更新一次显示时间，当用户改变绑定的时间格式字符串的时候也会更新。
+当指令被删除的时候，我们也要移除定时器，以避免引入内存泄露。</p>
+<h3 id="创建自定义&quot;指令&quot;_source">Source</h3>
+<div source-edit="docsTimeDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-241" source-edit-css="" source-edit-js="script.js-240" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-241" ng-html-wrap="docsTimeDirective angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-241">
+    <div ng-controller="Ctrl2">
+      Date format: <input ng-model="format"> <hr/>
+      Current time is: <span my-current-time="format"></span>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-240"></pre>
+<script type="text/ng-template" id="script.js-240">
+    angular.module('docsTimeDirective', [])
+      .controller('Ctrl2', function($scope) {
+        $scope.format = 'M/d/yy h:mm:ss a';
+      })
+      .directive('myCurrentTime', function($timeout, dateFilter) {
+
+        function link(scope, element, attrs) {
+          var format,
+              timeoId;
+
+          function updateTime() {
+            element.text(dateFilter(new Date(), format));
+          }
+
+          scope.$watch(attrs.myCurrentTime, function(value) {
+            format = value;
+            updateTime();
+          });
+
+          function scheduleUpdate() {
+            // save the timeoutId for canceling
+            timeoutId = $timeout(function() {
+              updateTime(); // update DOM
+              scheduleUpdate(); // schedule the next update
+            }, 1000);
+          }
+
+          element.on('$destroy', function() {
+            $timeout.cancel(timeoutId);
+          });
+
+          // start the UI update process.
+          scheduleUpdate();
+        }
+
+        return {
+          link: link
+        };
+      });
+  </script>
+</div>
+</div><h3 id="创建自定义&quot;指令&quot;_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="docsTimeDirective" ng-set-html="index.html-241" ng-eval-javascript="script.js-240"></div>
+<p>这里有很多东西值得注意：
+像<code>module.controller</code>函数中一样, <code>module.directive</code>函数的参数也是通过依赖注入获得的，
+因此，我们可以在<code>link</code>函数内部使用<code>$timeout</code> 和<code>dateFilter</code> 服务。</p>
+<p>我们注册了一个事件<code>element.on(&#39;$destroy&#39;, ...)</code>, 是什么触发了这个事件呢？</p>
+<p>AngularJS会触发一些特定的事件，当一个被angular编译过的DOM元素被移除的时候，
+它会触发一个<code>$destroy</code> 事件，同样的，当一个angular作用域被移除的时候，
+它会向下广播<code>$destroy</code> 事件到所有下级作用域。</p>
+<p>通过监听事件，你可以移除可能引起内存泄露的事件监听器，
+注册在元素和作用域上的监听器在它们被移除的时候，会自动会清理掉，
+但是假如注册一个事件在服务或者没有被删除的DOM节点上，你就必须手工清理，否则会有内存泄露的风险。</p>
+<div class="alert alert-success">
+<strong>最佳实践:</strong> 指令应该自己管理自身分配的内存。当指令被移除时，
+你可以使用<code>element.on(&#39;$destroy&#39;, ...)</code> 或 <code>scope.$on(&#39;$destroy&#39;, ...)</code>来执行一个清理的工作。
+</div>
+
+
+<h4 id="创建自定义&quot;指令&quot;_demo_创建包含其他元素的指令">创建包含其他元素的指令</h4>
+<p>我们现在已经实现了使用独立作用域传递数据模型到指令里面。
+但是有时候我们需要能够传进去整个模板而不是字符串或者对象。
+让我们通过创建&#39;dialog box&#39;组件来演示它。这个&#39;dialog box&#39;组件应该能够包裹任意内容。</p>
+<p>要想实现这个，我们需要使用<code>transclude</code>选项。</p>
+<h3 id="创建自定义&quot;指令&quot;_source">Source</h3>
+<div source-edit="docsTransclusionDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-243 my-dialog.html" source-edit-css="" source-edit-js="script.js-242" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-243" ng-html-wrap="docsTransclusionDirective angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-243">
+    <div ng-controller="Ctrl">
+      <my-dialog>Check out the contents, {{name}}!</my-dialog>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="my-dialog.html">
+<pre class="prettyprint linenums" ng-set-text="my-dialog.html"></pre>
+<script type="text/ng-template" id="my-dialog.html">
+    <div class="alert" ng-transclude>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-242"></pre>
+<script type="text/ng-template" id="script.js-242">
+    angular.module('docsTransclusionDirective', [])
+      .controller('Ctrl', function($scope) {
+        $scope.name = 'Tobias';
+      })
+      .directive('myDialog', function() {
+        return {
+          restrict: 'E',
+          transclude: true,
+          templateUrl: 'my-dialog.html'
+        };
+      });
+  </script>
+</div>
+</div><h3 id="创建自定义&quot;指令&quot;_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="docsTransclusionDirective" ng-set-html="index.html-243" ng-eval-javascript="script.js-242"></div>
+<p>这个<code>transclude</code>选项用来干嘛呢？<code>transclude</code>使带有这个选项的指令，所包裹的内容能够访问指令<strong>外部</strong>的作用域。</p>
+<p>为了说明这个,请看下面的例子。注意，我们在<code>script.js</code>增加了一个<code>link</code> 函数，
+在这个link函数内部我们重定义了name属性的值为Jeff，那么现在这个<code>{{name}}</code>会被解析成哪个值呢？</p>
+<h3 id="创建自定义&quot;指令&quot;_source">Source</h3>
+<div source-edit="docsTransclusionExample" source-edit-deps="angular.js script.js" source-edit-html="index.html-245 my-dialog.html" source-edit-css="" source-edit-js="script.js-244" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-245" ng-html-wrap="docsTransclusionExample angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-245">
+    <div ng-controller="Ctrl">
+      <my-dialog>Check out the contents, {{name}}!</my-dialog>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="my-dialog.html">
+<pre class="prettyprint linenums" ng-set-text="my-dialog.html"></pre>
+<script type="text/ng-template" id="my-dialog.html">
+    <div class="alert" ng-transclude>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-244"></pre>
+<script type="text/ng-template" id="script.js-244">
+    angular.module('docsTransclusionExample', [])
+      .controller('Ctrl', function($scope) {
+        $scope.name = 'Tobias';
+      })
+      .directive('myDialog', function() {
+        return {
+          restrict: 'E',
+          transclude: true,
+          scope: {},
+          templateUrl: 'my-dialog.html',
+          link: function (scope, element) {
+            scope.name = 'Jeff';
+          }
+        };
+      });
+  </script>
+</div>
+</div><h3 id="创建自定义&quot;指令&quot;_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="docsTransclusionExample" ng-set-html="index.html-245" ng-eval-javascript="script.js-244"></div>
+<p>一般，我们会认为<code>{{name}}</code>会被解析为<code>Jeff</code>，然而这里，我们看到这个例子中的<code>{{name}}</code> 还是被解析成了<code>Tobias</code>.</p>
+<p><code>transclude</code> 选项改变了指令相互嵌套的方式，他使指令的<strong>内容</strong>拥有任何指令外部的作用域，
+而不是内部的作用域。为了实现这一点，它给了指令内容访问外部作用域的机会。</p>
+<p>需要注意的是，如果指令不创建自己的scope(就是说scope:false，或省略)，然后在在link函数里执行
+<code>scope.name = &#39;Jeff&#39;;</code> 很明显外部的<code>scope</code>scope会受影响，因为指令是继续了外部的<code>scope</code> ,在输出上会看出 <code>Jeff</code></p>
+<p>这样的行为对于包含内容的指令是非常有意义的。因为如果不这样的话，
+你就必须分别传入每个你需要使用的数据模型。如果你需要传入每个要使用的数据模型，
+那么你就无法做到适应各种不同内容的情况,对吧？</p>
+<div class="alert alert-success">
+<strong>最佳实践:</strong> 仅当你要创建一个包裹任意内容的指令的时候使用<code>transclude: true</code>。
+</div>
+
+<p>接下来我们增加一个按钮到&#39;dialog box&#39;组件里面，允许用户使用指令绑定自己定义的行为。</p>
+<h3 id="创建自定义&quot;指令&quot;_source">Source</h3>
+<div source-edit="docsIsoFnBindExample" source-edit-deps="angular.js script.js" source-edit-html="index.html-247 my-dialog-close.html" source-edit-css="" source-edit-js="script.js-246" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-247" ng-html-wrap="docsIsoFnBindExample angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-247">
+    <div ng-controller="Ctrl">
+      <my-dialog ng-hide="dialogIsHidden" on-close="hideDialog()">
+        Check out the contents, {{name}}!
+      </my-dialog>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="my-dialog-close.html">
+<pre class="prettyprint linenums" ng-set-text="my-dialog-close.html"></pre>
+<script type="text/ng-template" id="my-dialog-close.html">
+    <div class="alert">
+      <a href class="close" ng-click="close()">&times;</a>
+      <div ng-transclude></div>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-246"></pre>
+<script type="text/ng-template" id="script.js-246">
+    angular.module('docsIsoFnBindExample', [])
+      .controller('Ctrl', function($scope, $timeout) {
+        $scope.name = 'Tobias';
+        $scope.hideDialog = function () {
+          $scope.dialogIsHidden = true;
+          $timeout(function () {
+            $scope.dialogIsHidden = false;
+          }, 2000);
+        };
+      })
+      .directive('myDialog', function() {
+        return {
+          restrict: 'E',
+          transclude: true,
+          scope: {
+            'close': '&onClose'
+          },
+          templateUrl: 'my-dialog-close.html'
+        };
+      });
+  </script>
+</div>
+</div><h3 id="创建自定义&quot;指令&quot;_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="docsIsoFnBindExample" ng-set-html="index.html-247" ng-eval-javascript="script.js-246"></div>
+<p>我们想要通过在指令的作用域上调用我们传进去的函数，但是这个函数本该运行在定义时候的上下文。</p>
+<p>先前我们看到如何在<code>scope</code>选项中使用<code>=prop</code> ，但是在上文的例子中，
+我们使用了<code>&amp;prop</code> ，<code>&amp;</code> 绑定了一个函数到独立作用域，
+允许独立作用域调用它，同时保留了原来函数的作用域(这里的作用域都是指$scope)。
+所以当一个用户点击<code>x</code>时候，就会运行<code>Ctrl</code>控制器的<code>close</code>函数。</p>
+<div class="alert alert-success">
+<strong>最佳实践:</strong>  当你的指令想要开放一个API去绑定特定的行为，在<code>scope</code>选项中使用<code>&amp;prop</code>。
+</div>
+
+
+<h4 id="创建自定义&quot;指令&quot;_demo_创建一个带事件监听器的指令">创建一个带事件监听器的指令</h4>
+<p>先前，我们使用<code>link</code>函数创建一个操作DOM元素的指令，基于上面的例子，我们创建一个监听元素的事件，以作出相应操作的指令。</p>
+<p>比如说，假如我们想要创建一个让用户可拖曳的元素，该怎么做呢？</p>
+<h3 id="创建自定义&quot;指令&quot;_source">Source</h3>
+<div source-edit="dragModule" source-edit-deps="angular.js script.js" source-edit-html="index.html-249" source-edit-css="" source-edit-js="script.js-248" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-249" ng-html-wrap="dragModule angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-249">
+    <span my-draggable>Drag ME</span>
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-248"></pre>
+<script type="text/ng-template" id="script.js-248">
+    angular.module('dragModule', []).
+      directive('myDraggable', function($document) {
+        return function(scope, element, attr) {
+          var startX = 0, startY = 0, x = 0, y = 0;
+
+          element.css({
+           position: 'relative',
+           border: '1px solid red',
+           backgroundColor: 'lightgrey',
+           cursor: 'pointer'
+          });
+
+          element.on('mousedown', function(event) {
+            // 组织所选对象的默认拖曳操作
+            event.preventDefault();
+            startX = event.pageX - x;
+            startY = event.pageY - y;
+            $document.on('mousemove', mousemove);
+            $document.on('mouseup', mouseup);
+          });
+
+          function mousemove(event) {
+            y = event.pageY - startY;
+            x = event.pageX - startX;
+            element.css({
+              top: y + 'px',
+              left:  x + 'px'
+            });
+          }
+
+          function mouseup() {
+            $document.unbind('mousemove', mousemove);
+            $document.unbind('mouseup', mouseup);
+          }
+        }
+      });
+  </script>
+</div>
+</div><h3 id="创建自定义&quot;指令&quot;_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="dragModule" ng-set-html="index.html-249" ng-eval-javascript="script.js-248"></div>
+<h4 id="创建自定义&quot;指令&quot;_demo_创建相互通信的指令">创建相互通信的指令</h4>
+<p>你可以通过在模板中使用指令来把任意指令组合起来。有时候，你可能想要一个由一组指令组合组成的组件。</p>
+<p>假设你想要一个带有tab的容器，容器的内容对应于当前激活的tab。</p>
+<h3 id="创建自定义&quot;指令&quot;_source">Source</h3>
+<div source-edit="docsTabsExample" source-edit-deps="angular.js script.js" source-edit-html="index.html-251 my-tabs.html my-pane.html" source-edit-css="" source-edit-js="script.js-250" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-251" ng-html-wrap="docsTabsExample angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-251">
+    <my-tabs>
+      <my-pane title="Hello">
+        <h5 id="创建自定义&quot;指令&quot;_source_hello">Hello</h5>
+        <p>Lorem ipsum dolor sit amet</p>
+      </my-pane>
+      <my-pane title="World">
+        <h5 id="创建自定义&quot;指令&quot;_source_world">World</h5>
+        <em>Mauris elementum elementum enim at suscipit.</em>
+        <p><a href ng-click="i = i + 1">counter: {{i || 0}}</a></p>
+      </my-pane>
+    </my-tabs>
+  </script>
+</div>
+<div class="tab-pane" title="my-tabs.html">
+<pre class="prettyprint linenums" ng-set-text="my-tabs.html"></pre>
+<script type="text/ng-template" id="my-tabs.html">
+    <div class="tabbable">
+      <ul class="nav nav-tabs">
+        <li ng-repeat="pane in panes" ng-class="{active:pane.selected}">
+          <a href="" ng-click="select(pane)">{{pane.title}}</a>
+        </li>
+      </ul>
+      <div class="tab-content" ng-transclude></div>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="my-pane.html">
+<pre class="prettyprint linenums" ng-set-text="my-pane.html"></pre>
+<script type="text/ng-template" id="my-pane.html">
+    <div class="tab-pane" ng-show="selected" ng-transclude>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-250"></pre>
+<script type="text/ng-template" id="script.js-250">
+    angular.module('docsTabsExample', [])
+      .directive('myTabs', function() {
+        return {
+          restrict: 'E',
+          transclude: true,
+          scope: {},
+          controller: function($scope) {
+            var panes = $scope.panes = [];
+
+            $scope.select = function(pane) {
+              angular.forEach(panes, function(pane) {
+                pane.selected = false;
+              });
+              pane.selected = true;
+            };
+
+            this.addPane = function(pane) {
+              if (panes.length == 0) {
+                $scope.select(pane);
+              }
+              panes.push(pane);
+            };
+          },
+          templateUrl: 'my-tabs.html'
+        };
+      })
+      .directive('myPane', function() {
+        return {
+          require: '^myTabs',
+          restrict: 'E',
+          transclude: true,
+          scope: {
+            title: '@'
+          },
+          link: function(scope, element, attrs, tabsCtrl) {
+            tabsCtrl.addPane(scope);
+          },
+          templateUrl: 'my-pane.html'
+        };
+      });
+  </script>
+</div>
+</div><h3 id="创建自定义&quot;指令&quot;_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="docsTabsExample" ng-set-html="index.html-251" ng-eval-javascript="script.js-250"></div>
+<p><code>myPane</code>指令有一个<code>require</code>的选项，其值为:<code>^myTabs</code>.，当指令使用这个选项，<code>$compile</code>服务会查找一个名叫myTabs的控制器，如果没有找到，就会抛出一个错误。
+<code>^</code>前缀意味着指令将会在它的父元素上面搜索控制器(如果没有<code>^</code>前缀，指令默认只在所属元素上搜索指定的控制器)。</p>
+<p>这里<code>myTabs</code>的控制器是来自何处呢？简单的通过controller选项就可以为指令定义一个控制器,
+比如上面例子中<code>myTabs</code> 就使用了这个选项。如<code>ngController</code>一样, 此选项把这个控制器绑定到了指令的模板上。</p>
+<p>回顾<code>myPane</code>的定义，你会注意到link函数的最后一个参数: <code>tabsCtrl</code>，
+当一个指令需要(require)一个控制器时，它会接收该指令的控制器实例作为<code>link</code>函数的第四个参数，
+通过它，<code>myPane</code>就可以调用<code>myTabs</code>的<code>addPane</code>函数了。</p>
+<p>聪明的读者可能想知道<code>link</code> 和 <code>controller</code>之间的区别，
+最基本的区别就是 <code>控制器</code>可以导出一个API，
+而子指令的<code>link</code>函数可以通过<code>require</code>来与这个API交互。</p>
+<div class="alert alert-success">
+<strong>最佳实践:</strong> 当你想暴露一个API给其它的指令调用那就用<code>controller</code>,否则用<code>link</code>。
+</div>
+
+<h4 id="创建自定义&quot;指令&quot;_demo_总结">总结</h4>
+<p>至此我们已经看到了指令的主要使用案例。每一个都可以作为你创建自己指令的很好的起点。</p>
+<p>如果你想更深入的了解编译的处理过程，可以查看<a href="guide/compiler">HTML编译器</a>。</p>
+<p><a href="api/ng.$compile"><code><code>$compile</code> API</code></a> 页面有directive每个选项项的具体解释，可参阅。</p>
+</div></div>

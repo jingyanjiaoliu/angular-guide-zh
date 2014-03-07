@@ -1,0 +1,57 @@
+<a href='http://github.com/angular/angular.js/edit/master/src/ngCookies/cookies.js' class='improve-docs'><i class="icon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href='http://github.com/angular/angular.js/tree/master/src/ngCookies/cookies.js#L21' class='view-source pull-right'>
+  <i class="icon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header">
+  <h1 class="api-profile-header-heading">$cookies</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  
+
+    <li>
+      - service in module <a href="api/ngCookies">ngCookies</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description">
+  <p>Provides read/write access to browser&#39;s cookies.</p>
+<p>Only a simple Object is exposed and by adding or removing properties to/from
+this object, new cookies are created/deleted at the end of current $eval.</p>
+<p>Requires the <a href="api/ngCookies"><code>ngCookies</code></a> module to be installed.</p>
+
+</div>
+
+
+
+
+<div>
+  
+
+    
+
+  
+
+  
+  
+  
+
+
+
+  
+  <h2 id="example">Example</h2><div class="runnable-example" id="example-example63" outputFolder="examples/example-example63">
+  <div class="runnable-example-file" name="index.html" language="html" type="html">
+<pre><code class="lang-html">  &lt;script&gt;&#10;    function ExampleController($cookies) {&#10;      // Retrieving a cookie&#10;      var favoriteCookie = $cookies.myFavorite;&#10;      // Setting a cookie&#10;      $cookies.myFavorite = &#39;oatmeal&#39;;&#10;    }&#10;  &lt;/script&gt;</code></pre>
+  </div>
+<iframe class="runnable-example-frame" src="examples/example-example63/index.html" name="example-example63"></iframe>
+</div>
+</div>
+
+

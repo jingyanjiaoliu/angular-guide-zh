@@ -1,0 +1,36 @@
+<a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/dev_guide.services.understanding_services.ngdoc" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="-angular--page"><p>翻译者:<a href="https://github.com/lightma">@lightma</a></p>
+<h3 id="什么是服务？">什么是服务？</h3>
+<p>服务是单例对象或者函数，用来实现web应用里常见的特定任务。
+Angular有很多内置的服务，比如<a href="http://docs.angularjs.org/api/ng.$http">$http service服务</a>，它提供了对浏览器<code>XMLHttpRequest</code>对象的访问，用以实现向服务器发出请求。
+就像其他Angular核心的变量和标识符一样，内置的服务名都以<code>$</code>开头(比如上面提到的<code>$http</code>)。当然，你也能创建自定义的服务。</p>
+<h3 id="使用服务">使用服务</h3>
+<p>为了使用某个服务，你需要指定其他组件(例如控制器，其他服务，过滤器或指令)依赖于该服务，剩下的就交给Angular的依赖注入子系统吧。Angular依赖注入子系统负责服务实例化、依赖解析并按声明向组件提供所依赖对象。</p>
+<p>Angular的依赖注入使用<a href="http://misko.hevery.com/2009/02/19/constructor-injection-vs-setter-injection/">&quot;构造函数注入&quot;</a>，在这种注入方式中，依赖是被当作参数传入组件的工厂方法或构造函数里。由于JavaScript是一种动态类型语言，Angular的依赖注入子系统就不能使用静态类型来指定依赖的服务。因此一个组件必须使用<a href="guide/di">依赖注入注解</a>方法中的一种来声明它的依赖。</p>
+<p>例如，提供<code>$inject</code>属性：</p>
+<pre><code>     var MyController = function($location) { ... };
+    MyController.$inject = [&#39;$location&#39;];
+    myModule.controller(&#39;MyController&#39;, MyController);</code></pre>
+<p>或者提供&quot;内联&quot;注入注解：</p>
+<pre><code>    var myService = function($http) { ... };
+    myModule.factory(&#39;myService&#39;, [&#39;$http&#39;, myService]);</code></pre>
+<h3 id="定义服务">定义服务</h3>
+<p>应用开发者可通过在Angular的模块中注册服务的名字和<strong>服务工厂方法</strong>来自由的定义服务。</p>
+<p><strong>服务工厂方法</strong>的目的就是生成单实例对象或者函数，这些单实例对象或者函数对于应用的其他部分来说就代表着该服务。当任何组件声明将该服务作为依赖时，这个对象或者函数就会被注入到该组件中(包括控制器、其他服务、过滤器或指令)。</p>
+<p>Angular工厂方法是延迟执行的，也就是说，仅当需要满足依赖声明时才会被执行，并且只会被执行一次。依赖于该服务的所有对象都共享<strong>服务工厂方法</strong>生成的单实例对象的引用。</p>
+<h3 id="相关主题">相关主题</h3>
+<ul>
+<li><a href="guide/di">关于Angular的依赖注入</a></li>
+<li><a href="guide/dev_guide.services.creating_services">创建服务</a></li>
+<li><a href="guide/dev_guide.services.managing_dependencies">管理服务依赖</a></li>
+<li><a href="guide/dev_guide.services.testing_services">测试Angular服务</a></li>
+</ul>
+<h3 id="相关api">相关API</h3>
+<ul>
+<li><a href="api/ng">Angular服务API</a></li>
+<li><a href="api/angular.injector"><code>注入器API</code></a></li>
+</ul>
+</div></div>

@@ -1,0 +1,151 @@
+<a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/index.ngdoc" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="developer-guide-page"><h2 id="关于angular-guide翻译的说明">关于Angular Guide翻译的说明</h2>
+<p>一次偶然的机会，我们在Angular.js中文社区群里相遇，更是一次巧妙的交谈，大家对于Angular官方的Guide最新版本没有中文版本表示无助，
+所以，本着为社区做贡献的心态，我们临时组织了一个Angular 开发指南翻译团队。</p>
+<p>我们是一群技术的热爱者，更是一群Angular的使用者，但是我们的翻译不代表官方，如有任何问题随时联系我们。</p>
+<p>目前参加翻译工作的人员有9位，分别是：</p>
+<p>ckken，grahamle，NigelYao，asnowwolf，lightma，joeylin，FrankyYang，lrrluo， why520crazy，破狼</p>
+<p>负责审核的成员目前有：二当家</p>
+<h2 id="angularjs-文档指南">AngularJS 文档指南</h2>
+<p>你需要知道AngularJS</p>
+<ul>
+<li><a href="guide/introduction">什么是AngularJS?</a></li>
+<li><a href="guide/concepts">概述</a></li>
+</ul>
+<h3 id="angularjs-文档指南_教程">教程</h3>
+<ul>
+<li><a href="tutorial/index">AngularJS官方教程</a></li>
+<li><a href="http://www.sitepoint.com/10-reasons-use-angularjs/">选择Angular的十个理由</a></li>
+<li><a href="https://www.youtube.com/watch?v=HCR7i5F5L8c">AngularJS的设计原则(视频)</a></li>
+<li><a href="http://www.youtube.com/watch?v=i9MHigUZKEM">60分钟入门教程(视频)</a></li>
+<li><a href="http://stackoverflow.com/questions/14994391/how-do-i-think-in-angularjs-if-i-have-a-jquery-background">jQuery程序员学习Angular必读</a></li>
+</ul>
+<h3 id="angularjs-文档指南_核心概念">核心概念</h3>
+<h4 id="angularjs-文档指南_核心概念_模板">模板</h4>
+<p>在Angular应用中，你把通过数据填充页面模板的工作从后端移到了前端，这导致动态更新的页面有了更好的代码结构。下面是你将用到的一些核心概念。</p>
+<ul>
+<li><a href="guide/databinding">数据绑定(Data Binding)</a></li>
+<li><a href="guide/expression">表达式(Expression)</a></li>
+<li><a href="guide/directive">指令(Directive)</a></li>
+<li><a href="api/ngRoute.$route">视图(View)和路由(Route) (参见范例)</a></li>
+<li><a href="guide/filter">过滤器(Filter)</a></li>
+<li><a href="guide/forms">表单(Form)</a> 和 <a href="http://mrbool.com/the-concepts-of-angularjs-forms/29117">AngularJS的表单概念</a></li>
+</ul>
+<h4 id="angularjs-文档指南_核心概念_程序结构">程序结构</h4>
+<ul>
+<li><strong>博客：</strong><a href="http://kirkbushell.me/when-to-use-directives-controllers-or-services-in-angular/">什么时候使用指令(Directive)、控制器(Controller)或服务(Service)</a></li>
+<li><strong>程序装载：</strong> <a href="guide/di">依赖注入(DI, Dependency injection)</a></li>
+<li><strong>把数据模型(Model)导出给视图(View)：</strong> <a href="guide/scope">作用域(Scope)</a></li>
+<li><strong>和服务器通讯：</strong> <a href="api/ng.$http"><code>$http</code></a>, <a href="api/ngResource.$resource">$resource</a></li>
+</ul>
+<h4 id="angularjs-文档指南_核心概念_其他-angularjs-功能">其他 AngularJS 功能</h4>
+<ul>
+<li><strong>动画：</strong> <a href="guide/animations">核心概念</a>, <a href="api/ngAnimate">ngAnimate API</a>, 以及 <a href="http://www.yearofmoo.com/2013/08/remastered-animation-in-angularjs-1-2.html">AngularJS 1.2中的动画</a></li>
+<li><strong>安全：</strong> <a href="api/ng.$sce"><code>受限场景转义(SCE)</code></a>, <a href="api/ng.directive:ngCsp"><code>内容安全策略(CSP)</code></a>, <a href="api/ngSanitize.$sanitize">$sanitize</a>, <a href="https://www.youtube.com/watch?v=18ifoT-Id54">视频</a></li>
+<li><strong>国际化(i18n)和本地化(l10n)：</strong> <a href="guide/i18n">Angular的国际化(i18n)和本地化(l10n)指南</a>, <a href="api/ng.filter:date"><code>日期过滤器</code></a>, <a href="api/ng.filter:currency"><code>货币过滤器</code></a>, <a href="http://www.novanet.no/blog/hallstein-brotan/dates/2013/10/creating-multilingual-support-using-angularjs/">创建多语种支持</a></li>
+<li><strong>移动开发：</strong> <a href="api/ngTouch">触控(Touch)事件</a></li>
+</ul>
+<h4 id="angularjs-文档指南_核心概念_测试">测试</h4>
+<ul>
+<li><strong>单元测试：</strong> <a href="http://www.youtube.com/watch?v=YG5DEzaQBIc">使用Karma（视频）</a>, <a href="guide/dev_guide.unit-testing">单元测试</a>, <a href="guide/dev_guide.services.testing_services">测试服务</a>, <a href="http://blog.jetbrains.com/webstorm/2013/10/running-javascript-tests-with-karma-in-webstorm-7/">在WebStorm中使用Karma</a></li>
+<li><strong>场景测试：</strong> <a href="https://github.com/angular/protractor">Protractor</a></li>
+</ul>
+<h3 id="angularjs-文档指南_具体的主题">具体的主题</h3>
+<ul>
+<li><strong>登录：</strong><a href="https://developers.google.com/+/photohunt/python">Google范例</a>, <a href="http://blog.brunoscopelliti.com/facebook-authentication-in-your-angularjs-web-app">Facebook范例</a>, <a href="http://blog.brunoscopelliti.com/deal-with-users-authentication-in-an-angularjs-web-app">认证策略</a>, <a href="http://frederiknakstad.com/authentication-in-single-page-applications-with-angular-js/">unix风格的认证</a></li>
+<li><strong>移动开发：</strong> <a href="http://www.ng-newsletter.com/posts/angular-on-mobile.html">Angular移动开发指南</a>, <a href="http://devgirl.org/2013/06/10/quick-start-guide-phonegap-and-angularjs/">PhoneGap</a></li>
+<li><strong>其他语言：</strong> <a href="http://www.coffeescriptlove.com/2013/08/angularjs-and-coffeescript-tutorials.html">CoffeeScript</a>, <a href="https://github.com/angular/angular.dart.tutorial/wiki">Dart</a></li>
+<li><strong>实时应用：</strong><a href="http://www.creativebloq.com/javascript/angularjs-collaboration-board-socketio-2132885">Socket.io</a>, <a href="https://github.com/jeffbcross/omnibinder">OmniBinder</a></li>
+<li><strong>可视化：</strong> <a href="http://gaslight.co/blog/angular-backed-svgs">SVG</a>, <a href="http://www.ng-newsletter.com/posts/d3-on-angular.html">D3.js</a></li>
+</ul>
+<h3 id="angularjs-文档指南_工具">工具</h3>
+<ul>
+<li><strong>调试：</strong> <a href="https://chrome.google.com/webstore/detail/angularjs-batarang/ighdmehidhipcmcojjgiloacoafjmpfk?hl=en">Batarang</a></li>
+<li><strong>测试：</strong> <a href="http://karma-runner.github.io">Karma</a>, <a href="https://github.com/angular/protractor">Protractor</a></li>
+<li><strong>编辑器：</strong> <a href="http://plugins.jetbrains.com/plugin/6971">Webstorm</a> (以及 <a href="http://www.youtube.com/watch?v=LJOyrSh1kDU">视频</a>), <a href="https://github.com/angular-ui/AngularJS-sublime-package">Sublime Text</a>, <a href="http://madskristensen.net/post/angularjs-intellisense-in-visual-studio-2012">Visual Studio</a></li>
+<li><strong>工作流：</strong> <a href="https://github.com/yeoman/generator-angular">Yeoman.io</a> 以及 <a href="http://www.sitepoint.com/kickstart-your-angularjs-development-with-yeoman-grunt-and-bower/">Angular Yeoman 指南</a></li>
+</ul>
+<h3 id="angularjs-文档指南_补充-类库">补充 类库</h3>
+<p>这里是部分在Angular方面提供了明确支持和文档的外部库的简短清单。你可以到<a href="http://ngmodules.org/">ngmodules.org</a>上找到已知Angular外部库的完整列表。</p>
+<ul>
+<li><strong>国际化(i18n)：</strong> <a href="http://pascalprecht.github.io/angular-translate/">angular-translate</a>, <a href="http://angular-gettext.rocketeer.be/">angular-gettext</a></li>
+<li><strong>RESTful服务：</strong> <a href="https://github.com/mgonto/restangular">Restangular</a></li>
+<li><strong>SQL和NoSQL后端：</strong> <a href="http://www.breezejs.com/">BreezeJS</a>, <a href="http://angularfire.com/">AngularFire</a></li>
+<li><strong>UI部件：</strong><a href="http://kendo-labs.github.io/angular-kendo/#/">KendoUI</a>, <a href="http://angular-ui.github.io/bootstrap/">UI Bootstrap</a>, <a href="http://wijmo.com/tag/angularjs-2/">Wijmo</a></li>
+</ul>
+<h3 id="angularjs-文档指南_部署">部署</h3>
+<h4 id="angularjs-文档指南_部署_概括">概括</h4>
+<ul>
+<li><strong>Javascript最小化：</strong><a href="http://thegreenpizza.github.io/2013/05/25/building-minification-safe-angular.js-applications/">背景</a>, <a href="http://www.thinkster.io/pick/XlWneEZCqY/angularjs-ngmin">ngmin自动处理工具</a></li>
+<li><strong>跟踪：</strong> <a href="http://ngmodules.org/modules/angularytics">分析(Google Analytics)</a>, <a href="http://www.bennadel.com/blog/2542-Logging-Client-Side-Errors-With-AngularJS-And-Stacktrace-js.htm">记录前端错误</a></li>
+<li><strong>SEO:</strong> <a href="http://www.yearofmoo.com/2012/11/angularjs-and-seo.html">手动</a>, <a href="http://prerender.io/">prerender.io</a>, <a href="http://www.brombone.com/">Brombone</a>, <a href="http://getseojs.com/">SEO.js</a>, <a href="http://www.seo4ajax.com/">SEO4Ajax</a></li>
+</ul>
+<p>关于prerender的中文资料，详见<a href="http://greengerong.github.io/blog/2013/12/08/prerender-seo-for-single-page-application/">破狼的博客</a></p>
+<h4 id="angularjs-文档指南_部署_服务-指定">服务-指定</h4>
+<ul>
+<li><strong>Django：</strong> <a href="http://blog.mourafiq.com/post/55034504632/end-to-end-web-app-with-django-rest-framework">入门</a>, <a href="http://django-angular.readthedocs.org/en/latest/integration.html">集成AngularJS与Django</a></li>
+<li><strong>FireBase：</strong> <a href="http://angularfire.com/">AngularFire</a>, <a href="http://www.youtube.com/watch?v=C7ZI7z7qnHU">使用AngularJS和FireBase开发实时应用 (视频)</a></li>
+<li><strong>Google云平台：</strong><a href="https://cloud.google.com/resources/articles/angularjs-cloud-endpoints-recipe-for-building-modern-web-applications">使用Cloud Endpoints</a>, <a href="https://github.com/GoogleCloudPlatform/appengine-angular-gotodos">使用Go</a></li>
+<li><strong>Hood.ie:</strong> <a href="http://www.roberthorvick.com/2013/06/30/todomvc-angularjs-hood-ie-60-minutes-to-awesome/">Angular 60分钟强力秀</a></li>
+<li><strong>MEAN开发栈：</strong><a href="http://blog.mongodb.org/post/49262866911/the-mean-stack-mongodb-expressjs-angularjs-and">博客</a>, <a href="http://thecodebarbarian.wordpress.com/2013/07/22/introduction-to-the-mean-stack-part-one-setting-up-your-tools/">起步</a>, <a href="https://developers.google.com/live/shows/913996610">Google GDL视频</a> </li>
+<li><strong>Rails：</strong><a href="http://coderberry.me/blog/2013/04/22/angularjs-on-rails-4-part-1/">入门</a>, <a href="https://shellycloud.com/blog/2013/10/how-to-integrate-angularjs-with-rails-4">集成AngularJS与Rails4</a>, <a href="https://github.com/hiravgandhi/angularjs-rails">angularjs-rails</a></li>
+<li><strong>PHP：</strong><a href="http://blog.brunoscopelliti.com/building-a-restful-web-service-with-angularjs-and-php-more-power-with-resource">构建RESTful的Web服务</a>, <a href="http://www.youtube.com/watch?v=hqAyiqUs93c">Laravel 4 端到端(视频)</a></li>
+</ul>
+<h3 id="angularjs-文档指南_学习资源">学习资源</h3>
+<h4 id="angularjs-文档指南_学习资源_书籍">书籍</h4>
+<ul>
+<li><a href="http://www.amazon.com/AngularJS-Brad-Green/dp/1449344852">AngularJS</a> 作者：Brad Green 和 Shyam Seshadri</li>
+<li><a href="http://www.amazon.com/Mastering-Web-Application-Development-AngularJS/dp/1782161821">Mastering Web App Development</a> 作者：Pawel Kozlowski 和 Pete Bacon Darwin</li>
+<li><a href="http://www.amazon.com/AngularJS-Directives-Alex-Vanston/dp/1783280336">AngularJS Directives（AngularJS指令详解）</a> 作者：Alex Vanston</li>
+<li><a href="http://www.amazon.co.uk/Recipes-Angular-js-Frederik-Dietz-ebook/dp/B00DK95V48">Recipes With AngularJS（AngularJS秘诀）</a> 作者：Frederik Dietz</li>
+<li><a href="http://www.amazon.com/Developing-AngularJS-Edge-Christopher-Hiller-ebook/dp/B00CJLFF8K">Developing an AngularJS Edge</a> 作者：Christopher Hiller</li>
+<li><a href="http://ng-book.com/">ng-book: The Complete Book on AngularJS（AngularJS大全）</a> 作者：Ari Lerner</li>
+</ul>
+<h4 id="angularjs-文档指南_学习资源_视频">视频:</h4>
+<ul>
+<li><a href="http://egghead.io/">egghead.io</a></li>
+<li><a href="http://youtube.com/angularjs">Youtube上的Angular专题</a></li>
+</ul>
+<h4 id="angularjs-文档指南_学习资源_课程">课程</h4>
+<ul>
+<li><strong>免费在线教程：</strong>
+<a href="http://thinkster.io">thinkster.io</a>,
+<a href="http://www.codecademy.com/courses/javascript-advanced-en-2hJ3J/0/1">CodeAcademy</a></li>
+<li><strong>收费在线教程：</strong>
+<a href="http://www.pluralsight.com/training/Courses/Find?highlight=true&amp;searchTerm=angularjs">Pluralsite (3门课)</a>,
+<a href="https://tutsplus.com/course/easier-js-apps-with-angular/">Tuts+</a>,
+<a href="http://www.lynda.com/AngularJS-tutorials/Up-Running-AngularJS/133318-2.html">lynda.com</a></li>
+<li><strong>收费现场培训：</strong>
+<a href="http://angularbootcamp.com/">angularbootcamp.com</a></li>
+</ul>
+<h3 id="angularjs-文档指南_帮助">帮助</h3>
+<p>如果你有个问题想得到帮助，最好在<a href="http://plnkr.co/">Plunker</a>, <a href="http://jsfiddle.net/">JSFiddle</a>, 或者类似的站点创建一个示例，并提交给下面的网站：</p>
+<ul>
+<li><a href="http://stackoverflow.com/search?q=angularjs">Stackoverflow.com</a></li>
+<li><a href="https://groups.google.com/forum/#!forum/angular">AngularJS邮件列表</a></li>
+<li><a href="http://webchat.freenode.net/?channels=angularjs&amp;uio=d4">AngularJS IRC频道</a></li>
+</ul>
+<h3 id="angularjs-文档指南_社交渠道">社交渠道</h3>
+<ul>
+<li><strong>日常更新：</strong> <a href="https://plus.google.com/u/0/+AngularJS">Google+</a> 或 <a href="https://twitter.com/angularjs">Twitter</a></li>
+<li><strong>每周新闻：</strong> <a href="http://www.ng-newsletter.com/">ng-newsletter</a></li>
+<li><strong>Meetups: </strong><a href="http://www.meetup.com/find/?keywords=angularJS&amp;radius=Infinity&amp;userFreeform=San+Francisco%2C+CA&amp;mcId=z94108&amp;mcName=San+Francisco%2C+CA&amp;sort=member_count&amp;eventFilter=mysugg">meetup.com</a></li>
+<li><strong>官方新闻与发布：</strong><a href="http://blog.angularjs.org/">AngularJS Blog</a></li>
+</ul>
+<h3 id="angularjs-文档指南_贡献给-angularjs">贡献给 AngularJS</h3>
+<p>虽然我们有好多核心成员都在Google工作，但Angular是一个凝聚了100位贡献者的开源项目，如果你已经准备好成为其中的一员，请阅读<a href="misc/contribute">AngularJS贡献指南</a></p>
+<h3 id="angularjs-文档指南_中文资源">中文资源</h3>
+<p><a href="https://github.com/jingyanjiaoliu/angular-guide-zh">本Angular业余翻译组的“家”，欢迎加盟</a></p>
+<p><a href="http://angular.duapp.com/guide">Angular中文文档的预览站（包括非正式发布的部分）</a></p>
+<p><a href="http://angularjs.cn">angularjs中文社区</a> 技术资料、中文文档，这个网站本身也是用angular + nodejs开发的</p>
+<p><a href="http://greengerong.github.io">破狼Blog</a> <a href="http://www.cnblogs.com/whitewolf/">破狼cnBlog</a>  一位angular爱好者的博客</p>
+<p><a href="https://github.com/jmcunningham/AngularJS-Learning">github AngularJS-Learning</a> 包含AngularJS很多资料的github库</p>
+<p>QQ交流群1 278252889(满)</p>
+<p>QQ交流群2 305739270</p>
+<h3 id="angularjs-文档指南_最后一点">最后一点</h3>
+<p>没有找到你想要的？访问<a href="https://github.com/jmcunningham/AngularJS-Learning">AngularJS-Learning</a>可以找到更多的视频、教程、博客的列表。</p>
+<p>如果你认为某些优秀的AngularJS资源应该放在本页面，请在<a href="https://plus.google.com/u/0/+AngularJS">Google+</a>或<a href="https://twitter.com/angularjs">Twitter</a>告诉我们。</p>
+</div></div>

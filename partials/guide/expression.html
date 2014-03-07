@@ -1,0 +1,144 @@
+<a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/expression.ngdoc" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="--page ---expressions--page"><p>翻译者:<a href="https://github.com/NigelYao">@NigelYao</a></p>
+<p>&quot;表达式&quot;是一种类似JavaScript的代码片段，通常在视图中以&#39;{{ expression }}&#39;的形式使用。表达式由<a href="api/ng.$parse"><code>$parse</code></a>服务解析，而解析之后经常会使用<a href="guide/filter">过滤器</a>来格式化成一种更加用户友好的形式。</p>
+<p>例如，下面这些都是Angular中合法的表达式：</p>
+<ul>
+<li><code>1+2</code></li>
+<li><code>user.name</code></li>
+</ul>
+<h3 id="angular表达式与js表达式">Angular表达式与JS表达式</h3>
+<p>可能会有人认为Angular视图表达式就是JavaScript表达式，但这不完全正确，因为Angular并没有使用JavaScript中的&#39;eval()&#39;来解析表达式。你可以认为Angular表达式与JavaScript表达式有如下的区别：</p>
+<ul>
+<li><p><strong>属性解析：</strong> 所有的属性的解析都是相对于作用域(scope)的，而不像JavaScript中的表达式解析那样是相对于全局&#39;window&#39;对象的。</p>
+</li>
+<li><p><strong>容错性：</strong> 表达式的解析对&#39;undefined&#39;和&#39;null&#39;具有容错性，这不像在JavaScript中，试图解析未定义的属性时会抛出<code>ReferenceError</code>或<code>TypeError</code>错误.</p>
+</li>
+<li><p><strong>禁止控制流语句：</strong> 表达式中不允许包括下列语句：条件判断(if)，循环(for/while)，抛出异常(throw)。</p>
+</li>
+</ul>
+<p>另一方面，如果你想执行特定的JavaScript代码，你应该在一个控制器里导出一个方法，然后在模板中调用这个方法。如果你想在JavaScript中解析一个Angular表达式，使用<a href="api/ng.$rootScope.Scope#methods_$eval"><code><code>$eval()</code></code></a>方法。</p>
+<h3 id="例子">例子</h3>
+<h3 id="source">Source</h3>
+<div source-edit="" source-edit-deps="angular.js" source-edit-html="index.html-252" source-edit-css="" source-edit-js="" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-253" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-252" ng-html-wrap=" angular.js"></pre>
+<script type="text/ng-template" id="index.html-252">
+ 1+2={{1+2}}
+</script>
+</div>
+<div class="tab-pane" title="ngScenario e2e test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-253"></pre>
+<script type="text/ng-template" id="scenario.js-253">
+ it('should calculate expression in binding', function() {
+   expect(binding('1+2')).toEqual('3');
+ });
+</script>
+</div>
+</div><h3 id="demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-252" ng-eval-javascript=""></div>
+<p>你可以在此处试一试解析其他的表达式：</p>
+<h3 id="source">Source</h3>
+<div source-edit="" source-edit-deps="angular.js script.js" source-edit-html="index.html-255" source-edit-css="" source-edit-js="script.js-254" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-256" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-255" ng-html-wrap=" angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-255">
+ 
+ <div ng-controller="Cntl2" class="expressions">
+   Expression:
+   <input type='text' ng-model="expr" size="80"/>
+   <button ng-click="addExp(expr)">Evaluate</button>
+   <ul>
+    <li ng-repeat="expr in exprs track by $index">
+      [ <a href="" ng-click="removeExp($index)">X</a> ]
+      <tt>{{expr}}</tt> => <span ng-bind="$parent.$eval(expr)"></span>
+     </li>
+   </ul>
+ </div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-254"></pre>
+<script type="text/ng-template" id="script.js-254">
+   function Cntl2($scope) {
+     var exprs = $scope.exprs = [];
+     $scope.expr = '3*10|currency';
+     $scope.addExp = function(expr) {
+        exprs.push(expr);
+     };
+
+     $scope.removeExp = function(index) {
+       exprs.splice(index, 1);
+     };
+   }
+ </script>
+</div>
+<div class="tab-pane" title="ngScenario e2e test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-256"></pre>
+<script type="text/ng-template" id="scenario.js-256">
+ it('should allow user expression testing', function() {
+    element('.expressions :button').click();
+    var li = using('.expressions ul').repeater('li');
+    expect(li.count()).toBe(1);
+    expect(li.row(0)).toEqual(["3*10|currency", "$30.00"]);
+ });
+</script>
+</div>
+</div><h3 id="demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-255" ng-eval-javascript="script.js-254"></div>
+<h2 id="属性解析">属性解析</h2>
+<p>属性解析发生在scope上。不像在JavaScript中，将默认的属性解析放在全局的window对象中，Angular表达式必须使用<a href="api/ng.$window"><code><code>$window</code></code></a>来指向全局的&#39;window&#39;对象。例如，如果你想调用在&#39;window&#39;上定义的&#39;alert()&#39;方法，在表达式中，你必须使用&#39;$window.alert()&#39;。作者故意这样设定，就是为了防止对全局状态非正常的访问（一些奇怪bug的常见来源）。</p>
+<h3 id="属性解析_source">Source</h3>
+<div source-edit="" source-edit-deps="angular.js script.js" source-edit-html="index.html-258" source-edit-css="" source-edit-js="script.js-257" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-259" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-258" ng-html-wrap=" angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-258">
+ 
+ <div class="example2" ng-controller="Cntl1">
+   Name: <input ng-model="name" type="text"/>
+   <button ng-click="greet()">Greet</button>
+ </div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-257"></pre>
+<script type="text/ng-template" id="script.js-257">
+   function Cntl1($window, $scope){
+     $scope.name = 'World';
+
+     $scope.greet = function() {
+       ($window.mockWindow || $window).alert('Hello ' + $scope.name);
+     }
+   }
+ </script>
+</div>
+<div class="tab-pane" title="ngScenario e2e test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-259"></pre>
+<script type="text/ng-template" id="scenario.js-259">
+ it('should calculate expression in binding', function() {
+   var alertText;
+   this.addFutureAction('set mock', function($window, $document, done) {
+     $window.mockWindow = {
+       alert: function(text){ alertText = text; }
+     };
+     done();
+   });
+   element(':button:contains(Greet)').click();
+   expect(this.addFuture('alert text', function(done) {
+     done(null, alertText);
+   })).toBe('Hello World');
+ });
+</script>
+</div>
+</div><h3 id="属性解析_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-258" ng-eval-javascript="script.js-257"></div>
+<h3 id="属性解析_容错性">容错性</h3>
+<p>表达式的解析对undefined和null具有容错性。在JavaScript中，解析&#39;a,b,c&#39;时，如果&#39;a&#39;不是一个对象会抛出异常。在一些语言中这可能会有用，但表达式的解析在Angular中主要用在数据绑定上，我们会像下面这样使用表达式：</p>
+<pre><code>    {{a.b.c}}</code></pre>
+<p>此时如果&#39;a&#39;是未定义的（也许我们正等着服务器响应数据，在不久的将来其会被定义），解析抛出异常将不再合理。如果表达式不具有容错性的话，我们的代码会变的繁杂且影响阅读，例如：<code>{{((a||{}).b||{}).c}}</code>。</p>
+<p>类似的，在undefined和null的对象上调用方法&#39;a.b.c()&#39;时会返回undefined。</p>
+<h3 id="属性解析_禁止控制流语句">禁止控制流语句</h3>
+<p>在表达式中禁止写控制流语句。这背后的原因在于，Angular设计哲学的核心认为，应用逻辑应该在控制器中，而不是在视图中控制。如果你需要条件表达式，循环或者抛出异常出现在你的视图表达式中，请将其委托到JavaScript方法中执行。</p>
+</div></div>

@@ -1,0 +1,340 @@
+<a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/forms.ngdoc" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="-forms--page"><p>翻译者:<a href="https://github.com/NigelYao">@NigelYao</a></p>
+<p>控件 (<code>input</code>, <code>select</code>, <code>textarea</code>) 是用户输入数据的一种方式。一个表单就是多个控件的集合，用来组织相关的控件。</p>
+<p>表单和控件提供验证服务，在用户输入信息有误的时候进行提示。
+这提升了用户体验，因为我们在第一时间告知用户什么地方出错了、如何修正错误。
+记住，尽管客户端（浏览器）验证在用户体验方面起了重要作用，但是，它很容易被绕过，因此是不能信任的。
+为了应用的安全，服务端的验证仍然是必须的。</p>
+<h2 id="简单的表单">简单的表单</h2>
+<p>理解双向绑定的关键指令是<a href="api/ng.directive:ngModel"><code>ngModel</code></a>.
+指令<code>ngModel</code>通过保持数据与视图的同步，和视图与数据的同步实现了双向绑定。
+额外的，它提供了<a href="api/ng.directive:ngModel.NgModelController"><code>API</code></a>来让其他指令扩展其行为。</p>
+<h3 id="简单的表单_source">Source</h3>
+<div source-edit="" source-edit-deps="angular.js script.js" source-edit-html="index.html-265" source-edit-css="" source-edit-js="script.js-264" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-265" ng-html-wrap=" angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-265">
+<div ng-controller="Controller">
+  <form novalidate class="simple-form">
+    Name: <input type="text" ng-model="user.name" /><br />
+    E-mail: <input type="email" ng-model="user.email" /><br />
+    Gender: <input type="radio" ng-model="user.gender" value="male" />male
+    <input type="radio" ng-model="user.gender" value="female" />female<br />
+    <button ng-click="reset()">RESET</button>
+    <button ng-click="update(user)">SAVE</button>
+  </form>
+  <pre>form = {{user | json}}</pre>
+  <pre>master = {{master | json}}</pre>
+</div>
+
+
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-264"></pre>
+<script type="text/ng-template" id="script.js-264">
+  function Controller($scope) {
+    $scope.master = {};
+
+    $scope.update = function(user) {
+      $scope.master = angular.copy(user);
+    };
+
+    $scope.reset = function() {
+      $scope.user = angular.copy($scope.master);
+    };
+
+    $scope.reset();
+  }
+  </script>
+</div>
+</div><h3 id="简单的表单_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-265" ng-eval-javascript="script.js-264"></div>
+<p>其中 <code>novalidate</code> 是用来禁用浏览器中自带的验证功能。</p>
+<h2 id="使用-css-类">使用 CSS 类</h2>
+<p>为了允许对表单和控件自定义样式， <code>ngModel</code> 增加了如下的CSS类：
+- <code>ng-valid</code>
+- <code>ng-invalid</code>
+- <code>ng-pristine</code>
+- <code>ng-dirty</code></p>
+<p>接下来的例子使用了CSS来展示每一个表单控件是否有效。
+在例子中，<code>user.name</code> 和 <code>user.email</code> 两者都是必须的，但是仅仅只在它们成为脏数据(dirty)时才会显示红色背景。
+这保证了用户在没有与控件进行交互，而恰好控件当前的状态不符合验证条件的时候，出现不恰当的错误提示。</p>
+<h3 id="使用-css-类_source">Source</h3>
+<div source-edit="" source-edit-deps="angular.js script.js" source-edit-html="index.html-267" source-edit-css="" source-edit-js="script.js-266" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-267" ng-html-wrap=" angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-267">
+<div ng-controller="Controller">
+  <form novalidate class="css-form">
+    Name:
+      <input type="text" ng-model="user.name" required /><br />
+    E-mail: <input type="email" ng-model="user.email" required /><br />
+    Gender: <input type="radio" ng-model="user.gender" value="male" />male
+    <input type="radio" ng-model="user.gender" value="female" />female<br />
+    <button ng-click="reset()">RESET</button>
+    <button ng-click="update(user)">SAVE</button>
+  </form>
+</div>
+
+<style type="text/css">
+  .css-form input.ng-invalid.ng-dirty {
+    background-color: #FA787E;
+  }
+
+  .css-form input.ng-valid.ng-dirty {
+    background-color: #78FA89;
+  }
+</style>
+
+
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-266"></pre>
+<script type="text/ng-template" id="script.js-266">
+  function Controller($scope) {
+    $scope.master = {};
+
+    $scope.update = function(user) {
+      $scope.master = angular.copy(user);
+    };
+
+    $scope.reset = function() {
+      $scope.user = angular.copy($scope.master);
+    };
+
+    $scope.reset();
+  }
+  </script>
+</div>
+</div><h3 id="使用-css-类_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-267" ng-eval-javascript="script.js-266"></div>
+<h2 id="与表单绑定和控制状态">与表单绑定和控制状态</h2>
+<p>一个表单是一个 <a href="api/ng.directive:form.FormController"><code>FormController</code></a> 实例。
+这个表单实例可以通过 &#39;name&#39; 属性装载到scope中去。</p>
+<p>类似的，一个拥有 <a href="api/ng.directive:ngModel"><code>api/ng.directive:ngModel</code></a> 指令的输入控件，包含一个<a href="api/ng.directive:ngModel.NgModelController"><code>NgModelController</code></a>实例。
+这样一个控件的实例可以使用 &#39;name&#39; 属性装载到表单实例中去，作为表单实例的一个字段。name属性指定了其在表单实例中的字段名。</p>
+<p>这意味着，视图中使用基本的数据绑定形式可以访问到表单和控件中的内部状态。</p>
+<p>这让我们可以为上面的例子扩展以下功能：</p>
+<ul>
+<li>RESET按钮 只在表单有改变的时候才可用</li>
+<li>SAVE按钮 只在表单有改变且数据有效的时候才可用</li>
+<li>为 <code>user.email</code> 和 <code>user.agree</code> 自定义错误提示信息</li>
+</ul>
+<h3 id="与表单绑定和控制状态_source">Source</h3>
+<div source-edit="" source-edit-deps="angular.js script.js" source-edit-html="index.html-269" source-edit-css="" source-edit-js="script.js-268" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-269" ng-html-wrap=" angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-269">
+<div ng-controller="Controller">
+  <form name="form" class="css-form" novalidate>
+    Name:
+      <input type="text" ng-model="user.name" name="uName" required /><br />
+    E-mail:
+      <input type="email" ng-model="user.email" name="uEmail" required/><br />
+    <div ng-show="form.uEmail.$dirty && form.uEmail.$invalid">Invalid:
+      <span ng-show="form.uEmail.$error.required">Tell us your email.</span>
+      <span ng-show="form.uEmail.$error.email">This is not a valid email.</span>
+    </div>
+
+    Gender: <input type="radio" ng-model="user.gender" value="male" />male
+    <input type="radio" ng-model="user.gender" value="female" />female<br />
+
+    <input type="checkbox" ng-model="user.agree" name="userAgree" required />
+    I agree: <input ng-show="user.agree" type="text" ng-model="user.agreeSign"
+              required /><br />
+    <div ng-show="!user.agree || !user.agreeSign">Please agree and sign.</div>
+
+    <button ng-click="reset()" ng-disabled="isUnchanged(user)">RESET</button>
+    <button ng-click="update(user)"
+            ng-disabled="form.$invalid || isUnchanged(user)">SAVE</button>
+  </form>
+</div>
+
+
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-268"></pre>
+<script type="text/ng-template" id="script.js-268">
+  function Controller($scope) {
+    $scope.master = {};
+
+    $scope.update = function(user) {
+      $scope.master = angular.copy(user);
+    };
+
+    $scope.reset = function() {
+      $scope.user = angular.copy($scope.master);
+    };
+
+    $scope.isUnchanged = function(user) {
+      return angular.equals(user, $scope.master);
+    };
+
+    $scope.reset();
+  }
+</script>
+</div>
+</div><h3 id="与表单绑定和控制状态_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-269" ng-eval-javascript="script.js-268"></div>
+<h2 id="自定义验证">自定义验证</h2>
+<p>Angular提供了一些常用的html5输入控件的验证实现：(<a href="api/ng.directive:input.text"><code>text</code></a>, <a href="api/ng.directive:input.number"><code>number</code></a>, <a href="api/ng.directive:input.url"><code>url</code></a>, <a href="api/ng.directive:input.email"><code>email</code></a>, <a href="api/ng.directive:input.radio"><code>radio</code></a>, <a href="api/ng.directive:input.checkbox"><code>checkbox</code></a>), 以及一些用于验证的指令 (<code>required</code>, <code>pattern</code>, <code>minlength</code>, <code>maxlength</code>, <code>min</code>, <code>max</code>).</p>
+<p>定义你自己的验证器可以首先定义一个指令，这个指令要为 &#39;ngModel&#39; <a href="api/ng.directive:ngModel.NgModelController"><code>controller</code></a>. 添加自定义验证方法。
+我们通过指定一个依赖来获得对这个控制器的引用，从下面的例子中可以看出。</p>
+<p>我们的验证在两个地方触发：</p>
+<ul>
+<li><p><strong>数据到视图的更新</strong> -
+任何时候，受约束的模型改变时，所有在<a href="api/ng.directive:ngModel.NgModelController#properties_$formatters"><code>NgModelController#$formatters</code></a>数组中的方法会被管式调用（一个接一个的调用方法），这样一来，所有的方法都有机会对值来进行格式化并改变表单和控件的有效性状态，通过<a href="api/ng.directive:ngModel.NgModelController#methods_$setvalidity"><code>NgModelController#$setValidity</code></a>来实现。</p>
+</li>
+<li><p><strong>视图到数据的更新</strong> -
+相似的，当用户与一个控件交互时，调用<a href="api/ng.directive:ngModel.NgModelController#methods_$setviewvalue"><code>NgModelController#$setViewValue</code></a>.
+这又反过来管式调用了所有在<a href="api/ng.directive:ngModel.NgModelController#properties_$parsers"><code>NgModelController#$parsers</code></a>数组中的方法，这样一来，所有的方法都有机会对值来进行转换并改变表单和控件的有效性状态，通过<a href="api/ng.directive:ngModel.NgModelController#methods_$setvalidity"><code>NgModelController#$setValidity</code></a>来实现。</p>
+</li>
+</ul>
+<p>下面的示例中我们创建了两个指令。</p>
+<ul>
+<li>第一个指令是 &#39;integer&#39; 整形数字，它验证了输入是否是一个合法的整形数字。
+例如，&#39;1.23&#39;是一个非法值，因为它包含小数部分。
+记住我们并没有对数组进行压栈操作，而是插入数组的开头。
+这是因为我们希望指令能成为第一个解析和处理被控制的值，而不希望在我们执行验证前，值已经在其他环节被转换成了数字。</li>
+<li>第二个指令时 &#39;smart-float&#39; 智能浮点数。
+它能解析 &#39;1.2&#39; 和 &#39;1,2&#39; 并将其转换成合法的浮点数 &#39;1.2&#39;.
+记住我们此时不能在HTML5的浏览器中使用 &#39;number&#39; 类型，因为在这种情况下，浏览器不会允许用户输入像 &#39;1,2&#39; 这种被认为是不合法的数字。</li>
+</ul>
+<h3 id="自定义验证_source">Source</h3>
+<div source-edit="form-example1" source-edit-deps="angular.js script.js" source-edit-html="index.html-271" source-edit-css="" source-edit-js="script.js-270" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-271" ng-html-wrap="form-example1 angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-271">
+<div ng-controller="Controller">
+  <form name="form" class="css-form" novalidate>
+    <div>
+      Size (integer 0 - 10):
+      <input type="number" ng-model="size" name="size"
+             min="0" max="10" integer />{{size}}<br />
+      <span ng-show="form.size.$error.integer">This is not valid integer!</span>
+      <span ng-show="form.size.$error.min || form.size.$error.max">
+        The value must be in range 0 to 10!</span>
+    </div>
+
+    <div>
+      Length (float):
+      <input type="text" ng-model="length" name="length" smart-float />
+      {{length}}<br />
+      <span ng-show="form.length.$error.float">
+        This is not a valid float number!</span>
+    </div>
+  </form>
+</div>
+
+
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-270"></pre>
+<script type="text/ng-template" id="script.js-270">
+  var app = angular.module('form-example1', []);
+
+  var INTEGER_REGEXP = /^\-?\d+$/;
+  app.directive('integer', function() {
+    return {
+      require: 'ngModel',
+      link: function(scope, elm, attrs, ctrl) {
+        ctrl.$parsers.unshift(function(viewValue) {
+          if (INTEGER_REGEXP.test(viewValue)) {
+            // 验证通过
+            ctrl.$setValidity('integer', true);
+            return viewValue;
+          } else {
+            // 验证不通过 返回 undefined (不会有模型更新)
+            ctrl.$setValidity('integer', false);
+            return undefined;
+          }
+        });
+      }
+    };
+  });
+
+  var FLOAT_REGEXP = /^\-?\d+((\.|\,)\d+)?$/;
+  app.directive('smartFloat', function() {
+    return {
+      require: 'ngModel',
+      link: function(scope, elm, attrs, ctrl) {
+        ctrl.$parsers.unshift(function(viewValue) {
+          if (FLOAT_REGEXP.test(viewValue)) {
+            ctrl.$setValidity('float', true);
+            return parseFloat(viewValue.replace(',', '.'));
+          } else {
+            ctrl.$setValidity('float', false);
+            return undefined;
+          }
+        });
+      }
+    };
+  });
+</script>
+</div>
+</div><h3 id="自定义验证_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="form-example1" ng-set-html="index.html-271" ng-eval-javascript="script.js-270"></div>
+<h2 id="实现自定义form控件">实现自定义form控件(使用 &#39;ngModel&#39;)</h2>
+<p>Angular实现了所有基本的HTML表单控件((<a href="api/ng.directive:input"><code>input</code></a>, <a href="api/ng.directive:select"><code>select</code></a>, <a href="api/ng.directive:textarea"><code>textarea</code></a>),在绝大多数情况下能够很高效。
+然而，如果你需要更多的灵活性，你可以使用指令来实现你的自定义表单控件。</p>
+<p>为了能让自定义控件能够与&#39;ngModel&#39;正常工作，达到双向绑定的效果，它需要：</p>
+<ul>
+<li>实现 &#39;$render&#39; 方法，它是负责在数据传递给方法<a href="api/ng.directive:ngModel.NgModelController#properties_$formatters"><code>NgModelController#$formatters</code></a>执行之后渲染数据。</li>
+<li>调用 &#39;$setViewValue&#39; 方法，在任何用户与控件交互后，模型需要更新的时候。这通常在一个DOM事件监听器里完成。</li>
+</ul>
+<p>查看 <a href="guide/directive">$compileProvider.directive</a> 获得更多的信息。</p>
+<p>接下来的例子展示了如何为一个可编辑元素添加双向绑定。</p>
+<h3 id="实现自定义form控件_source">Source</h3>
+<div source-edit="form-example2" source-edit-deps="angular.js script.js" source-edit-html="index.html-273" source-edit-css="" source-edit-js="script.js-272" source-edit-json="" source-edit-unit="" source-edit-scenario="" source-edit-protractor=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-273" ng-html-wrap="form-example2 angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-273">
+
+
+<div contentEditable="true" ng-model="content" title="Click to edit">Some</div>
+<pre>model = {{content}}</pre>
+
+<style type="text/css">
+  div[contentEditable] {
+    cursor: pointer;
+    background-color: #D0D0D0;
+  }
+</style>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-272"></pre>
+<script type="text/ng-template" id="script.js-272">
+  angular.module('form-example2', []).directive('contenteditable', function() {
+    return {
+      require: 'ngModel',
+      link: function(scope, elm, attrs, ctrl) {
+        // 视图 -> 模型
+        elm.on('blur', function() {
+          scope.$apply(function() {
+            ctrl.$setViewValue(elm.html());
+          });
+        });
+
+        // 模型 -> 视图
+        ctrl.$render = function() {
+          elm.html(ctrl.$viewValue);
+        };
+
+        // 从DOM中初始化数据
+        ctrl.$setViewValue(elm.html());
+      }
+    };
+  });
+</script>
+</div>
+</div><h3 id="实现自定义form控件_demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="form-example2" ng-set-html="index.html-273" ng-eval-javascript="script.js-272"></div>
+</div></div>
