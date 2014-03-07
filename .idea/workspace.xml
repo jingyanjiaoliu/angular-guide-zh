@@ -22,7 +22,7 @@
     <ignored path="angular_docs/build/docs/img/" />
     <ignored path="angular_docs/build/docs/css/" />
     <ignored path="angular_docs/" />
-    <file path="/Dummy.txt" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394186709410" ignored="false" />
+    <file path="/Dummy.txt" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394186785715" ignored="false" />
     <file path="/01-Controller(控制器).md" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386671212764" ignored="false" />
     <file path="/README.md" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1389671481637" ignored="false" />
     <file path="/03-Templates(模板).md" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386821386676" ignored="false" />
@@ -247,7 +247,7 @@
       <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="37" selection-start="1506" selection-end="1506" vertical-scroll-proportion="0.10669975">
+            <state line="224" column="42" selection-start="11509" selection-end="11509" vertical-scroll-proportion="0.29280397">
               <folding />
             </state>
           </provider>
@@ -609,7 +609,11 @@
       <created>1394186710574</created>
       <updated>1394186710574</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="change docs">
+      <created>1394186786648</created>
+      <updated>1394186786648</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -744,7 +748,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="37" selection-start="1506" selection-end="1506" vertical-scroll-proportion="0.10669975">
+        <state line="224" column="42" selection-start="11509" selection-end="11509" vertical-scroll-proportion="0.29280397">
           <folding />
         </state>
       </provider>
