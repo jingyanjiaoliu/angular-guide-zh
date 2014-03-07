@@ -25,31 +25,32 @@
 
       addTag('base', {href: baseUrl});
 
+      var front = "";
 
-      addTag('link', {rel: 'stylesheet', href: '../components/bootstrap-3.1.1/dist/css/bootstrap.min.css', type: 'text/css'});
-      addTag('link', {rel: 'stylesheet', href: '../components/open-sans-fontface-1.0.4/open-sans.css', type: 'text/css'});
-      addTag('link', {rel: 'stylesheet', href: '../css/prettify-theme.css', type: 'text/css'});
-      addTag('link', {rel: 'stylesheet', href: '../css/docs.css', type: 'text/css'});
-      addTag('link', {rel: 'stylesheet', href: '../css/animations.css', type: 'text/css'});
+      addTag('link', {rel: 'stylesheet', href: front + 'components/bootstrap-3.1.1/dist/css/bootstrap.min.css', type: 'text/css'});
+      addTag('link', {rel: 'stylesheet', href: front + 'components/open-sans-fontface-1.0.4/open-sans.css', type: 'text/css'});
+      addTag('link', {rel: 'stylesheet', href: front + 'css/prettify-theme.css', type: 'text/css'});
+      addTag('link', {rel: 'stylesheet', href: front + 'css/docs.css', type: 'text/css'});
+      addTag('link', {rel: 'stylesheet', href: front + 'css/animations.css', type: 'text/css'});
       
 
-      addTag('script', {src: '../js/angular.min.js' }, sync);
-      addTag('script', {src: '../js/angular-resource.min.js' }, sync);
-      addTag('script', {src: '../js/angular-route.min.js' }, sync);
-      addTag('script', {src: '../js/angular-cookies.min.js' }, sync);
-      addTag('script', {src: '../js/angular-sanitize.min.js' }, sync);
-      addTag('script', {src: '../js/angular-touch.min.js' }, sync);
-      addTag('script', {src: '../js/angular-animate.min.js' }, sync);
-      addTag('script', {src: '../components/marked-0.3.1/lib/marked.js' }, sync);
-      addTag('script', {src: '../js/angular-bootstrap/bootstrap.js' }, sync);
-      addTag('script', {src: '../js/angular-bootstrap/bootstrap-prettify.js' }, sync);
-      addTag('script', {src: '../js/angular-bootstrap/dropdown-toggle.js' }, sync);
-      addTag('script', {src: '../components/lunr.js-0.4.2/lunr.min.js' }, sync);
-      addTag('script', {src: '../components/google-code-prettify-1.0.1/src/prettify.js' }, sync);
-      addTag('script', {src: '../components/google-code-prettify-1.0.1/src/lang-css.js' }, sync);
-      addTag('script', {src: '../js/versions-data.js' }, sync);
-      addTag('script', {src: '../js/pages-data.js' }, sync);
-      addTag('script', {src: '../js/docs.js' }, sync);
+      addTag('script', {src: front + 'js/angular.min.js' }, sync);
+      addTag('script', {src: front + 'js/angular-resource.min.js' }, sync);
+      addTag('script', {src: front + 'js/angular-route.min.js' }, sync);
+      addTag('script', {src: front + 'js/angular-cookies.min.js' }, sync);
+      addTag('script', {src: front + 'js/angular-sanitize.min.js' }, sync);
+      addTag('script', {src: front + 'js/angular-touch.min.js' }, sync);
+      addTag('script', {src: front + 'js/angular-animate.min.js' }, sync);
+      addTag('script', {src: front + 'components/marked-0.3.1/lib/marked.js' }, sync);
+      addTag('script', {src: front + 'js/angular-bootstrap/bootstrap.js' }, sync);
+      addTag('script', {src: front + 'js/angular-bootstrap/bootstrap-prettify.js' }, sync);
+      addTag('script', {src: front + 'js/angular-bootstrap/dropdown-toggle.js' }, sync);
+      addTag('script', {src: front + 'components/lunr.js-0.4.2/lunr.min.js' }, sync);
+      addTag('script', {src: front + 'components/google-code-prettify-1.0.1/src/prettify.js' }, sync);
+      addTag('script', {src: front + 'components/google-code-prettify-1.0.1/src/lang-css.js' }, sync);
+      addTag('script', {src: front + 'js/versions-data.js' }, sync);
+      addTag('script', {src: front + 'js/pages-data.js' }, sync);
+      addTag('script', {src: front + 'js/docs.js' }, sync);
       
 
       function addTag(name, attributes, sync) {

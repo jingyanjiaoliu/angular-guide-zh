@@ -22,7 +22,7 @@
     <ignored path="angular_docs/build/docs/img/" />
     <ignored path="angular_docs/build/docs/css/" />
     <ignored path="angular_docs/" />
-    <file path="/Dummy.txt" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394185805674" ignored="false" />
+    <file path="/Dummy.txt" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394185959493" ignored="false" />
     <file path="/01-Controller(控制器).md" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386671212764" ignored="false" />
     <file path="/README.md" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1389671481637" ignored="false" />
     <file path="/03-Templates(模板).md" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386821386676" ignored="false" />
@@ -35,7 +35,7 @@
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/css/base.css" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1389146401399" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/data/chatgroup.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387021435392" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/project/task/pop_task_menu.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386839054214" ignored="false" />
-    <file path="/index.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386999091753" ignored="false" />
+    <file path="/index.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394186594584" ignored="false" />
     <file path="/server.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386838563792" ignored="false" />
     <file path="/layout.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387373049484" ignored="false" />
     <file path="$PROJECT_DIR$/../angular.js/docs/content/guide/filter.ngdoc" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386820012153" ignored="false" />
@@ -247,7 +247,7 @@
       <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="51" column="33" selection-start="3248" selection-end="3248" vertical-scroll-proportion="0.8883375">
+            <state line="27" column="19" selection-start="1488" selection-end="1488" vertical-scroll-proportion="0.10669975">
               <folding />
             </state>
           </provider>
@@ -347,23 +347,23 @@
   </component>
   <component name="PropertiesComponent">
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="105" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="107" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="70" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="71" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="105" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="70" />
     <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="preferences.sourceCode" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../angular-guide-zh-web" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="110" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="905" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="905" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="110" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="107" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="73" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="559" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="559" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="73" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="71" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
@@ -402,6 +402,13 @@
       <method />
     </configuration>
     <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="$PROJECT_DIR$">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" />
+        <option name="fileUrl" />
+      </JSDebuggerConfigurationSettings>
       <method />
     </configuration>
     <configuration default="false" name="server.js" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="/usr/local/bin/node" path-to-js-file="web_deploy/server.js" working-dir="$PROJECT_DIR$">
@@ -594,7 +601,11 @@
       <created>1394185810567</created>
       <updated>1394185810567</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="change docs">
+      <created>1394185960718</created>
+      <updated>1394185960718</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -729,7 +740,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="33" selection-start="3248" selection-end="3248" vertical-scroll-proportion="0.8883375">
+        <state line="27" column="19" selection-start="1488" selection-end="1488" vertical-scroll-proportion="0.10669975">
           <folding />
         </state>
       </provider>
