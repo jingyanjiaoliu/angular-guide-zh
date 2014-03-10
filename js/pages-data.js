@@ -1,5 +1,5 @@
 // Meta data used by the AngularJS docs app
-var front = "angular-guide-zh/";
+var front = "/angular-guide-zh/";
 var guideNavGroups = [
     {
         "name": "Developer Guide",
