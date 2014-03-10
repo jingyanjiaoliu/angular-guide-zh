@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11ba0f92-e1c1-4580-a45b-504bc37113d2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/pages-data.js" afterPath="$PROJECT_DIR$/js/pages-data.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="angular-guide-zh.iws" />
@@ -22,22 +22,22 @@
     <ignored path="angular_docs/build/docs/img/" />
     <ignored path="angular_docs/build/docs/css/" />
     <ignored path="angular_docs/" />
-    <file path="/Dummy.txt" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394186896575" ignored="false" />
+    <file path="/Dummy.txt" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394418616817" ignored="false" />
     <file path="/01-Controller(控制器).md" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386671212764" ignored="false" />
     <file path="/README.md" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1389671481637" ignored="false" />
     <file path="/03-Templates(模板).md" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386821386676" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/controller/project_member.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394180515291" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/controller/project_member.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
     <file path="/project_member.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387025163756" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/project/prj_sidebar_panel.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387024991880" ignored="false" />
     <file path="/prj_sidebar_panel.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387016198811" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/css/less/prjs_sidebar.less" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387006792500" ignored="false" />
     <file path="/prjs_sidebar.less" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386736853152" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/css/base.css" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1389146401399" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/css/base.css" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394263579188" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/data/chatgroup.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387021435392" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/project/task/pop_task_menu.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386839054214" ignored="false" />
     <file path="/index.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394186594584" ignored="false" />
     <file path="/server.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386838563792" ignored="false" />
-    <file path="/layout.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387373049484" ignored="false" />
+    <file path="/layout.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394264226482" ignored="false" />
     <file path="$PROJECT_DIR$/../angular.js/docs/content/guide/filter.ngdoc" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386820012153" ignored="false" />
     <file path="$PROJECT_DIR$/../angular.js/docs/content/guide/dev_guide.services.understanding_services.ngdoc" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386820028692" ignored="false" />
     <file path="$PROJECT_DIR$/../angular.js/docs/content/guide/templates.ngdoc" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386821973260" ignored="false" />
@@ -50,19 +50,19 @@
     <file path="$PROJECT_DIR$/../angular-guide-zh-web/docs/docs-data.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386995515427" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/controller/page.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386997235747" ignored="false" />
     <file path="/page.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386996350759" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/app.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394182888637" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/app.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394264437863" ignored="false" />
     <file path="$PROJECT_DIR$/../angular-guide-zh-web/docs/partials/guide/index.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387013945427" ignored="false" />
-    <file path="/a.dummy" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1388838770326" ignored="false" />
+    <file path="/a.dummy" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394263658949" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/team/pop_member_menu.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387006364340" ignored="false" />
     <file path="/pop_member_menu.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387006364340" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/css/less/prjs_sidebar.css" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387006934169" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/controller/project.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394180515291" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/controller/project.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/app_outer.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387009496508" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/core/config.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1389701941681" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/project/post/project_posts.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387028532927" ignored="false" />
-    <file path="/project_posts.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387024775533" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/directive/directive.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394184202952" ignored="false" />
-    <file path="/directive.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394183911996" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/core/config.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394254341790" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/project/post/project_posts.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394254383075" ignored="false" />
+    <file path="/project_posts.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394249341611" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/directive/directive.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394261474571" ignored="false" />
+    <file path="/directive.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394261342699" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/controller/post.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387024524527" ignored="false" />
     <file path="/post.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387024522857" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/directive/uploadfile.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387014483461" ignored="false" />
@@ -70,7 +70,7 @@
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/filter/filter.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1388734500042" ignored="false" />
     <file path="/filter.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387015882344" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/project/file/project_files.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387019337464" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/controller/header.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387033031445" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/controller/header.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394261372683" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/model/chatgroup.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387021435392" ignored="false" />
     <file path="/chatgroup.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387020562620" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/bus.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387871932748" ignored="false" />
@@ -81,7 +81,7 @@
     <file path="/entity.less" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387459314937" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/controller/entity_file.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387028833722" ignored="false" />
     <file path="/entity_file.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387028220623" ignored="false" />
-    <file path="/app.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394182439891" ignored="false" />
+    <file path="/app.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394264380766" ignored="false" />
     <file path="$PROJECT_DIR$/../angular-guide-zh-web/docs/partials/guide/dev_guide.templates.css-styling.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387101857391" ignored="false" />
     <file path="$PROJECT_DIR$/../angular-guide-zh-web/docs/partials/guide/migration.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387101857391" ignored="false" />
     <file path="$PROJECT_DIR$/../angular-guide-zh-web/docs/partials/guide/dev_guide.services.injecting_controllers.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387101857391" ignored="false" />
@@ -112,7 +112,7 @@
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/kzi.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1389701941681" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/constant.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387620172151" ignored="false" />
     <file path="/constant.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387620169807" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/view/layout.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394180515291" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/view/layout.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394264260922" ignored="false" />
     <file path="/event.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387598577401" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/entity/event.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387619281244" ignored="false" />
     <file path="/entity_event.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387976154249" ignored="false" />
@@ -143,11 +143,11 @@
     <file path="/project_events.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387630340478" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/route.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1389682873887" ignored="false" />
     <file path="/route.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1389686791861" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/header/header_menu.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387859784459" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/header/header_menu.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394261372683" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/controller/dashboard_inbox.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387860045886" ignored="false" />
     <file path="/dashboard_inbox.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387859940037" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/dashboard/calendar.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387953851384" ignored="false" />
-    <file path="/calendar.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387951483107" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/dashboard/calendar.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="/calendar.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394249941783" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/directive/event.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387874439812" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/data/task.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1387942617168" ignored="false" />
     <file path="/task.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1388804888058" ignored="false" />
@@ -190,7 +190,7 @@
     <file path="$PROJECT_DIR$/../angular-guide-zh-web/docs/partials/guide/animations.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1388925394906" ignored="false" />
     <file path="$PROJECT_DIR$/../angular-guide-zh-web/docs/partials/guide/providers.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1388925482632" ignored="false" />
     <file path="$PROJECT_DIR$/../angular-guide-zh-web/docs/partials/guide/ie.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1388970089799" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/css/base.less" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394181362661" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/css/base.less" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394255406883" ignored="false" />
     <file path="/task.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1389152800526" ignored="false" />
     <file path="$PROJECT_DIR$/../angular.js/docs/src/writer.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1389235097582" ignored="false" />
     <file path="$PROJECT_DIR$/../angular.js/docs/src/gen-docs.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1389235097582" ignored="false" />
@@ -216,15 +216,90 @@
     <file path="$PROJECT_DIR$/../angular.js!!!/docs/content/guide/i18n.ngdoc" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1390222890893" ignored="false" />
     <file path="$PROJECT_DIR$/../angular.js!!!/docs/content/guide/providers.ngdoc" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1390222890893" ignored="false" />
     <file path="$PROJECT_DIR$/../angular.js!!!/docs/content/guide/forms.ngdoc" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1390222890893" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/controller/dashboard.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394180515291" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/account/account_teams.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394180428607" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/project/task/project_tasks.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394180515291" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/project/prj_title_panel.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394180515291" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/controller/dashboard.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394262042638" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/account/account_teams.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394263554048" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/project/task/project_tasks.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/project/prj_title_panel.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/project/project_add.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394180515291" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/account/account_settings.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394180515291" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/core/jisu_push.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394180641119" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/project/setting/project_setting.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394181742704" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/account/account_settings.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394263549911" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/core/jisu_push.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/project/setting/project_setting.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
     <file path="/project_setting.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394181742704" ignored="false" />
+    <file path="/pages-data.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394418565000" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/dashboard/inbox.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394261876489" ignored="false" />
+    <file path="/inbox.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394256222996" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/css/less/mod/header.less" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394261372683" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/lib/wt-ui/popbox.less" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394246577686" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/header/header.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="/header.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394246824797" ignored="false" />
+    <file path="/account_apps.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394263497472" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/account/account_apps.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394263499089" ignored="false" />
+    <file path="/account_message.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394263527081" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/account/account_message.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394263527081" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/account/account_projects.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394263533083" ignored="false" />
+    <file path="/account_projects.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394247219044" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/account/account_security.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394263546025" ignored="false" />
+    <file path="/account_security.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394262739653" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/team/team_admin_basic.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394263853257" ignored="false" />
+    <file path="/team_admin_basic.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394247642683" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/team/team_admin_billing.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="/team_admin_billing.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394247971496" ignored="false" />
+    <file path="/team_admin_members.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394263995252" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/team/team_admin_members.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394263994512" ignored="false" />
+    <file path="/team_admin_projects.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394248070909" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/team/team_admin_projects.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="/team_admin_security.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394248111032" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/team/team_admin_security.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/team/team_admin_upgrade.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="/team_admin_upgrade.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394248251687" ignored="false" />
+    <file path="/team_admin_change_quota.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394248440184" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/team/team_admin_change_quota.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="/team_admin_degrade.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394248511809" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/team/team_admin_degrade.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="/team_admin_consultant.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394248547045" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/team/team_admin_consultant.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="/team_admin_export.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394248586717" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/team/team_admin_export.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="/team_admin_pay_coupon.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394248622167" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/team/team_admin_pay_coupon.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/team/team_admin_pay_online.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="/team_admin_pay_online.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394248659598" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/team/team_admin_payment.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="/team_admin_payment.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394248691199" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/project/page/project_pages.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="/project_pages.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394249443343" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/project/graph/project_graphs.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="/project_graphs.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394249516335" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/css/less/mod/left_menu.less" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394255060162" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/css/less/mod/header.css" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394250327156" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/css/less/mod/left_menu.css" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394250327156" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/project/trash/project_trash.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="/project_trash.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394253443764" ignored="false" />
+    <file path="/projects_archive.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394253533658" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/dashboard/projects_archive.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/css/less/page/dashboard.css" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394253682830" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/directive/layout_module.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394253966325" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/directive/layout_content_sidebar.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394254213784" ignored="false" />
+    <file path="/project_tasks.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394254162073" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/common/left_menu.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394260617959" ignored="false" />
+    <file path="/left_menu.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394260518834" ignored="false" />
+    <file path="/left_menu.less" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394255060162" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/css/less/notice.less" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="/prj_title_panel.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394256854647" ignored="false" />
+    <file path="/header_menu.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394257781062" ignored="false" />
+    <file path="/header.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394257470623" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/header/pop_new_menu.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394257688619" ignored="false" />
+    <file path="/pop_new_menu.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394257668948" ignored="false" />
+    <file path="/account_settings.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394262528537" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/controller/team.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/lib/angular/1.2.13/angular.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394261371721" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/css/less/layout/layout_col2.less" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394261644793" ignored="false" />
+    <file path="/layout_col2.less" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394261641128" ignored="false" />
+    <file path="/dashboard.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394262042022" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/account/account_level.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394262967037" ignored="false" />
+    <file path="/account_level.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394262591169" ignored="false" />
+    <file path="/account_teams.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394263012862" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/css/less/mod/team_admin.less" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394263510888" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,11 +319,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="108" column="57" selection-start="5387" selection-end="5387" vertical-scroll-proportion="0.3300248">
+            <state line="108" column="57" selection-start="5387" selection-end="5387" vertical-scroll-proportion="0.0">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="docs.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/docs.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding>
+                <marker date="1394174627000" expanded="false" signature="8945:8959" placeholder="..." />
+                <marker date="1394174627000" expanded="true" signature="13757:13762" placeholder="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pages-data.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/js/pages-data.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="157" column="37" selection-start="4837" selection-end="4837" vertical-scroll-proportion="0.15970962">
+              <folding>
+                <element signature="e#104#4795#0" expanded="false" />
+                <element signature="e#4981#487382#0" expanded="false" />
+                <element signature="e#487508#531136#0" expanded="false" />
+                <element signature="e#531165#547784#0" expanded="false" />
+                <element signature="e#531258#547774#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -271,7 +373,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/web_deploy/docs/index.html" />
         <option value="$PROJECT_DIR$/web_deploy/docs/docs-data.js" />
         <option value="$PROJECT_DIR$/guide/databinding.ngdoc" />
         <option value="$PROJECT_DIR$/guide/filter.ngdoc" />
@@ -287,6 +388,7 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/guide/introduction.ngdoc" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/js/pages-data.js" />
       </list>
     </option>
   </component>
@@ -322,6 +424,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -342,34 +445,33 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="70" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="71" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="104" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="106" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="70" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="104" />
     <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="preferences.sourceCode" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../angular-guide-zh-web" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="73" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="559" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="559" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="73" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="71" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="109" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="895" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="895" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="109" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="106" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -406,7 +508,7 @@
     </configuration>
     <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
       <JSDebuggerConfigurationSettings>
-        <option name="engineId" />
+        <option name="engineId" value="embedded" />
         <option name="fileUrl" />
       </JSDebuggerConfigurationSettings>
       <method />
@@ -617,7 +719,15 @@
       <created>1394186897687</created>
       <updated>1394186897687</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="change docs">
+      <created>1394186943350</created>
+      <updated>1394186943350</updated>
+    </task>
+    <task id="LOCAL-00048" summary="change docs">
+      <created>1394418613648</created>
+      <updated>1394418613648</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -645,15 +755,15 @@
     <editor active="true" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24006116" sideWeight="0.49960223" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1146789" sideWeight="0.49960223" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3292683" sideWeight="0.49960223" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28719172" sideWeight="0.7155963" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28719172" sideWeight="0.8853211" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28440368" sideWeight="0.35003978" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28440368" sideWeight="0.35003978" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277439" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28440368" sideWeight="0.6499602" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28440368" sideWeight="0.6499602" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -752,8 +862,61 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="57" selection-start="5387" selection-end="5387" vertical-scroll-proportion="0.3300248">
+        <state line="108" column="57" selection-start="5387" selection-end="5387" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/docs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1394174627000" expanded="false" signature="8945:8959" placeholder="..." />
+            <marker date="1394174627000" expanded="true" signature="13757:13762" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/pages-data.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8610" column="30" selection-start="472326" selection-end="472326" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#104#4795#0" expanded="false" />
+            <element signature="e#4981#487382#0" expanded="false" />
+            <element signature="e#487508#531136#0" expanded="false" />
+            <element signature="e#531165#547784#0" expanded="false" />
+            <element signature="e#531258#547774#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="108" column="57" selection-start="5387" selection-end="5387" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/docs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1394174627000" expanded="false" signature="8945:8959" placeholder="..." />
+            <marker date="1394174627000" expanded="true" signature="13757:13762" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/pages-data.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="157" column="37" selection-start="4837" selection-end="4837" vertical-scroll-proportion="0.15970962">
+          <folding>
+            <element signature="e#104#4795#0" expanded="false" />
+            <element signature="e#4981#487382#0" expanded="false" />
+            <element signature="e#487508#531136#0" expanded="false" />
+            <element signature="e#531165#547784#0" expanded="false" />
+            <element signature="e#531258#547774#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

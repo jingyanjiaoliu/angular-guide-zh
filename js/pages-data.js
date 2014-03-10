@@ -155,7 +155,7 @@ var guideNavGroups = [
     }
 ];
 
-for (var i = 0; i < guideNavGroups.navItems.length; i++) {
+for (var i = 0; i < guideNavGroups[0].navItems.length; i++) {
     guideNavGroups[i].href = front + guideNavGroups[i].href;
 }
 
