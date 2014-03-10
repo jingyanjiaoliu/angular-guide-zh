@@ -156,7 +156,7 @@ var guideNavGroups = [
 ];
 
 for (var i = 0; i < guideNavGroups[0].navItems.length; i++) {
-    guideNavGroups[i].href = front + guideNavGroups[i].href;
+    guideNavGroups[0].navItems[i].href = front + guideNavGroups[i].href;
 }
 
 angular.module('pagesData', [])

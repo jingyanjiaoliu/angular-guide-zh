@@ -22,7 +22,7 @@
     <ignored path="angular_docs/build/docs/img/" />
     <ignored path="angular_docs/build/docs/css/" />
     <ignored path="angular_docs/" />
-    <file path="/Dummy.txt" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394418616817" ignored="false" />
+    <file path="/Dummy.txt" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394419121293" ignored="false" />
     <file path="/01-Controller(控制器).md" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386671212764" ignored="false" />
     <file path="/README.md" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1389671481637" ignored="false" />
     <file path="/03-Templates(模板).md" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386821386676" ignored="false" />
@@ -225,7 +225,7 @@
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/core/jisu_push.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/project/setting/project_setting.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394259351925" ignored="false" />
     <file path="/project_setting.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394181742704" ignored="false" />
-    <file path="/pages-data.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394418565000" ignored="false" />
+    <file path="/pages-data.js" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394419320313" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/ycjs/tpl/dashboard/inbox.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394261876489" ignored="false" />
     <file path="/inbox.html" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394256222996" ignored="false" />
     <file path="$PROJECT_DIR$/../../../10_YC/Worktile/wtweb/res/css/less/mod/header.less" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394261372683" ignored="false" />
@@ -322,7 +322,7 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="108" column="57" selection-start="5387" selection-end="5387" vertical-scroll-proportion="0.0">
+            <state line="108" column="57" selection-start="5387" selection-end="5387" vertical-scroll-proportion="-18.75">
               <folding />
             </state>
           </provider>
@@ -343,13 +343,12 @@
       <file leaf-file-name="pages-data.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/pages-data.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="157" column="37" selection-start="4837" selection-end="4837" vertical-scroll-proportion="0.15970962">
+            <state line="158" column="33" selection-start="4895" selection-end="4895" vertical-scroll-proportion="0.24590164">
               <folding>
                 <element signature="e#104#4795#0" expanded="false" />
-                <element signature="e#4981#487382#0" expanded="false" />
-                <element signature="e#487508#531136#0" expanded="false" />
-                <element signature="e#531165#547784#0" expanded="false" />
-                <element signature="e#531258#547774#0" expanded="false" />
+                <element signature="e#487424#553010#0" expanded="false" />
+                <element signature="e#531177#547796#0" expanded="false" />
+                <element signature="e#531270#547786#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -727,7 +726,11 @@
       <created>1394418613648</created>
       <updated>1394418613648</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="change docs">
+      <created>1394419122434</created>
+      <updated>1394419122434</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -755,15 +758,15 @@
     <editor active="true" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1146789" sideWeight="0.49960223" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1146789" sideWeight="0.49960223" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3292683" sideWeight="0.49960223" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28719172" sideWeight="0.8853211" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28719172" sideWeight="0.7155963" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28440368" sideWeight="0.35003978" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277439" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28440368" sideWeight="0.6499602" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28440368" sideWeight="0.6499602" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -882,18 +885,10 @@
         <state line="8610" column="30" selection-start="472326" selection-end="472326" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#104#4795#0" expanded="false" />
-            <element signature="e#4981#487382#0" expanded="false" />
-            <element signature="e#487508#531136#0" expanded="false" />
-            <element signature="e#531165#547784#0" expanded="false" />
-            <element signature="e#531258#547774#0" expanded="false" />
+            <element signature="e#487424#553010#0" expanded="false" />
+            <element signature="e#531177#547796#0" expanded="false" />
+            <element signature="e#531270#547786#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="57" selection-start="5387" selection-end="5387" vertical-scroll-proportion="0.0">
-          <folding />
         </state>
       </provider>
     </entry>
@@ -907,15 +902,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="108" column="57" selection-start="5387" selection-end="5387" vertical-scroll-proportion="-18.75">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/pages-data.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="157" column="37" selection-start="4837" selection-end="4837" vertical-scroll-proportion="0.15970962">
+        <state line="158" column="33" selection-start="4895" selection-end="4895" vertical-scroll-proportion="0.24590164">
           <folding>
             <element signature="e#104#4795#0" expanded="false" />
-            <element signature="e#4981#487382#0" expanded="false" />
-            <element signature="e#487508#531136#0" expanded="false" />
-            <element signature="e#531165#547784#0" expanded="false" />
-            <element signature="e#531258#547774#0" expanded="false" />
+            <element signature="e#487424#553010#0" expanded="false" />
+            <element signature="e#531177#547796#0" expanded="false" />
+            <element signature="e#531270#547786#0" expanded="false" />
           </folding>
         </state>
       </provider>
