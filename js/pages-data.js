@@ -155,9 +155,9 @@ var guideNavGroups = [
     }
 ];
 
-for (var i = 0; i < guideNavGroups[0].navItems.length; i++) {
-    guideNavGroups[0].navItems[i].href = front + guideNavGroups[0].navItems[i].href;
-}
+//for (var i = 0; i < guideNavGroups[0].navItems.length; i++) {
+//    guideNavGroups[0].navItems[i].href = front + guideNavGroups[0].navItems[i].href;
+//}
 
 angular.module('pagesData', [])
     .value('NG_PAGES', {

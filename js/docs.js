@@ -134,7 +134,7 @@ angular.module('DocsController', [])
     }
 
     currentPage = $scope.currentPage = NG_PAGES[path];
-
+    currentPage.outputPath = "/angular-guide-zh/" + currentPage.outputPath;
     if ( currentPage ) {
       $scope.currentArea = currentPage && NG_NAVIGATION[currentPage.area];
       var pathParts = currentPage.path.split('/');
