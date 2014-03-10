@@ -22,7 +22,7 @@
     <ignored path="angular_docs/build/docs/img/" />
     <ignored path="angular_docs/build/docs/css/" />
     <ignored path="angular_docs/" />
-    <file path="/Dummy.txt" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394419121293" ignored="false" />
+    <file path="/Dummy.txt" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1394419323565" ignored="false" />
     <file path="/01-Controller(控制器).md" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386671212764" ignored="false" />
     <file path="/README.md" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1389671481637" ignored="false" />
     <file path="/03-Templates(模板).md" changelist="11ba0f92-e1c1-4580-a45b-504bc37113d2" time="1386821386676" ignored="false" />
@@ -343,12 +343,12 @@
       <file leaf-file-name="pages-data.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/pages-data.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="158" column="33" selection-start="4895" selection-end="4895" vertical-scroll-proportion="0.24590164">
+            <state line="158" column="83" selection-start="4945" selection-end="4945" vertical-scroll-proportion="0.24590164">
               <folding>
                 <element signature="e#104#4795#0" expanded="false" />
-                <element signature="e#487424#553010#0" expanded="false" />
-                <element signature="e#531177#547796#0" expanded="false" />
-                <element signature="e#531270#547786#0" expanded="false" />
+                <element signature="e#487436#553022#0" expanded="false" />
+                <element signature="e#531189#547808#0" expanded="false" />
+                <element signature="e#531282#547798#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -730,7 +730,11 @@
       <created>1394419122434</created>
       <updated>1394419122434</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="change docs">
+      <created>1394419324793</created>
+      <updated>1394419324793</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -885,9 +889,9 @@
         <state line="8610" column="30" selection-start="472326" selection-end="472326" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#104#4795#0" expanded="false" />
-            <element signature="e#487424#553010#0" expanded="false" />
-            <element signature="e#531177#547796#0" expanded="false" />
-            <element signature="e#531270#547786#0" expanded="false" />
+            <element signature="e#487436#553022#0" expanded="false" />
+            <element signature="e#531189#547808#0" expanded="false" />
+            <element signature="e#531282#547798#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -911,12 +915,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/pages-data.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="158" column="33" selection-start="4895" selection-end="4895" vertical-scroll-proportion="0.24590164">
+        <state line="158" column="83" selection-start="4945" selection-end="4945" vertical-scroll-proportion="0.24590164">
           <folding>
             <element signature="e#104#4795#0" expanded="false" />
-            <element signature="e#487424#553010#0" expanded="false" />
-            <element signature="e#531177#547796#0" expanded="false" />
-            <element signature="e#531270#547786#0" expanded="false" />
+            <element signature="e#487436#553022#0" expanded="false" />
+            <element signature="e#531189#547808#0" expanded="false" />
+            <element signature="e#531282#547798#0" expanded="false" />
           </folding>
         </state>
       </provider>
