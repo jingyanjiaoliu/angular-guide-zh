@@ -9,7 +9,7 @@ Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
 1. http://docs.angularjs.org/guide
 1. https://github.com/angular/angular.js/tree/master/docs/content/guide
 
-翻译后的文档地址：http://angular.duapp.com/
+翻译后的文档地址：http://ngnice.com/docs/guide
 
 * [01-Controllers（控制器）](http://angular.duapp.com/guide/controller)翻译者:@GrahamLe 已完成翻译初稿
 * [02-Filters（过滤器）](http://angular.duapp.com/guide/filter) 翻译者:@NigelYao  已完成
