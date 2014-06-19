@@ -98,7 +98,7 @@
 </script>
 
 <div ng-controller="Ctrl">
-  <input ng-model="greeting" type="greeting"><br>
+  <input ng-model="greeting" type="text"><br>
   未添加过滤器: {{greeting}}<br>
   逆置: {{greeting|reverse}}<br>
   逆置 + 大写: {{greeting|reverse:true}}<br>
