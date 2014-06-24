@@ -125,7 +125,7 @@ $location.path('/newValue')
   // 你也可以像这样把它们串起来：$location.path('/someNewPath').replace();
 </pre>
 
-注意，setter方法不会立刻更新`window.location`。反之，`$location`服务是挂在与{@link api/ng.$rootScope.Scope 作用域(scope)}的生命周期中的，它会在作用域的`$digest`阶段把多个`$location`调用合并到一起，然后“提交”到`window.location对象中。由于对$location的状态的多次修改会被合并成一次修改通知浏览器，在一个生命周期内你只要调用了一次`replace`操作就可以“提交”一个replace操作(“替换”而不是“追加”历史记录)。浏览器地址一旦被更新，$location服务器就会重置`replace()`方法设置的标识，将来的修改将会追加新的历史记录，除非再次调用`replace()`。
+注意，setter方法不会立刻更新`window.location`。反之，`$location`服务是挂在与{@link api/ng.$rootScope.Scope 作用域(scope)}的生命周期中的，它会在作用域的`$digest`阶段把多个`$location`调用合并到一起，然后“提交”到`window.location`对象中。由于对$location的状态的多次修改会被合并成一次修改通知浏览器，在一个生命周期内你只要调用了一次`replace`操作就可以“提交”一个replace操作(“替换”而不是“追加”历史记录)。浏览器地址一旦被更新，$location服务器就会重置`replace()`方法设置的标识，将来的修改将会追加新的历史记录，除非再次调用`replace()`。
 
 ### setter和字符编码
 
