@@ -127,7 +127,7 @@
 
 <example module="formExample">
   <file name="index.html">
-    <div ng-controller="Controller">
+    <div ng-controller="ExampleController">
       <form name="form" class="css-form" novalidate>
         姓名:
           <input type="text" ng-model="user.name" name="uName" required /><br />
