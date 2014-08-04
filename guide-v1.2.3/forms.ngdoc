@@ -16,38 +16,39 @@
 指令`ngModel`通过维护“数据到视图”的同步以及“视图到数据”的同步实现了双向绑定。
 另外，它还提供了{@link api/ng.directive:ngModel.NgModelController API}来让其他指令扩展其行为。
 
-<doc:example>
-<doc:source>
-<div ng-controller="Controller">
-  <form novalidate class="simple-form">
-    Name: <input type="text" ng-model="user.name" /><br />
-    E-mail: <input type="email" ng-model="user.email" /><br />
-    Gender: <input type="radio" ng-model="user.gender" value="male" />male
-    <input type="radio" ng-model="user.gender" value="female" />female<br />
-    <button ng-click="reset()">RESET</button>
-    <button ng-click="update(user)">SAVE</button>
-  </form>
-  <pre>form = {{user | json}}</pre>
-  <pre>master = {{master | json}}</pre>
-</div>
+<example module="formExample">
+  <file name="index.html">
+    <div ng-controller="ExampleController">
+      <form novalidate class="simple-form">
+        姓名: <input type="text" ng-model="user.name" /><br />
+        E-mail: <input type="email" ng-model="user.email" /><br />
+        性别: <input type="radio" ng-model="user.gender" value="male" />男
+        <input type="radio" ng-model="user.gender" value="female" />女<br />
+        <button ng-click="reset()">重置</button>
+        <button ng-click="update(user)">保存</button>
+      </form>
+      <pre>form = {{user | json}}</pre>
+      <pre>master = {{master | json}}</pre>
+    </div>
 
-<script>
-  function Controller($scope) {
-    $scope.master = {};
+    <script>
+      angular.module('formExample', [])
+        .controller('ExampleController', ['$scope', function($scope) {
+          $scope.master = {};
 
-    $scope.update = function(user) {
-      $scope.master = angular.copy(user);
-    };
+          $scope.update = function(user) {
+            $scope.master = angular.copy(user);
+          };
 
-    $scope.reset = function() {
-      $scope.user = angular.copy($scope.master);
-    };
+          $scope.reset = function() {
+            $scope.user = angular.copy($scope.master);
+          };
 
-    $scope.reset();
-  }
-  </script>
-</doc:source>
-</doc:example>
+          $scope.reset();
+        }]);
+    </script>
+  </file>
+</example>
 
 其中 `novalidate` 属性用于禁用浏览器自带的表单验证功能。
 
@@ -64,47 +65,48 @@
 在例子中，`user.name` 和 `user.email` 都是必需的（required），它们仅在成为脏数据(dirty)时才会显示红色背景，但不会在初始状态下（也为空）显示。
 这样就防止了用户在尚未与该控件进行交互，而该控件的当前状态恰好不符合验证条件的时候，出现不恰当的错误提示。
 
-<doc:example>
-<doc:source>
-<div ng-controller="Controller">
-  <form novalidate class="css-form">
-    Name:
-      <input type="text" ng-model="user.name" required /><br />
-    邮箱: <input type="email" ng-model="user.email" required /><br />
-    性别: <label><input type="radio" ng-model="user.gender" value="male" />男</label>
-    <label><input type="radio" ng-model="user.gender" value="female" />女</label><br />
-    <button ng-click="reset()">重置</button>
-    <button ng-click="update(user)">保存</button>
-  </form>
-</div>
+<example module="formExample">
+  <file name="index.html">
+    <div ng-controller="ExampleController">
+      <form novalidate class="css-form">
+        姓名:
+          <input type="text" ng-model="user.name" required /><br />
+        E-mail: <input type="email" ng-model="user.email" required /><br />
+        性别: <input type="radio" ng-model="user.gender" value="male" />男
+        <input type="radio" ng-model="user.gender" value="female" />女<br />
+        <button ng-click="reset()">重置</button>
+        <button ng-click="update(user)">保存</button>
+      </form>
+    </div>
 
-<style type="text/css">
-  .css-form input.ng-invalid.ng-dirty {
-    background-color: #FA787E;
-  }
+    <style type="text/css">
+      .css-form input.ng-invalid.ng-dirty {
+        background-color: #FA787E;
+      }
 
-  .css-form input.ng-valid.ng-dirty {
-    background-color: #78FA89;
-  }
-</style>
+      .css-form input.ng-valid.ng-dirty {
+        background-color: #78FA89;
+      }
+    </style>
 
-<script>
-  function Controller($scope) {
-    $scope.master = {};
+    <script>
+      angular.module('formExample', [])
+        .controller('ExampleController', ['$scope', function($scope) {
+          $scope.master = {};
 
-    $scope.update = function(user) {
-      $scope.master = angular.copy(user);
-    };
+          $scope.update = function(user) {
+            $scope.master = angular.copy(user);
+          };
 
-    $scope.reset = function() {
-      $scope.user = angular.copy($scope.master);
-    };
+          $scope.reset = function() {
+            $scope.user = angular.copy($scope.master);
+          };
 
-    $scope.reset();
-  }
-  </script>
-</doc:source>
-</doc:example>
+          $scope.reset();
+        }]);
+    </script>
+  </file>
+</example>
 
 
 # 与表单绑定和控制状态
@@ -123,54 +125,132 @@
 - 保存按钮 只在表单有改变且数据有效的时候才可用
 - 为 `user.email` 和 `user.agree` 自定义错误提示信息
 
-<doc:example>
-<doc:source>
-<div ng-controller="Controller">
-  <form name="form" class="css-form" novalidate>
-    Name:
-      <input type="text" ng-model="user.name" name="uName" required /><br />
-    E-mail:
-      <input type="email" ng-model="user.email" name="uEmail" required/><br />
-    <div ng-show="form.uEmail.$dirty && form.uEmail.$invalid">Invalid:
-      <span ng-show="form.uEmail.$error.required">Tell us your email.</span>
-      <span ng-show="form.uEmail.$error.email">This is not a valid email.</span>
+<example module="formExample">
+  <file name="index.html">
+    <div ng-controller="Controller">
+      <form name="form" class="css-form" novalidate>
+        姓名:
+          <input type="text" ng-model="user.name" name="uName" required /><br />
+        E-mail:
+          <input type="email" ng-model="user.email" name="uEmail" required/><br />
+        <div ng-show="form.uEmail.$dirty && form.uEmail.$invalid">Invalid:
+          <span ng-show="form.uEmail.$error.required">Tell us your email.</span>
+          <span ng-show="form.uEmail.$error.email">This is not a valid email.</span>
+        </div>
+
+        性别: <input type="radio" ng-model="user.gender" value="male" />男
+        <input type="radio" ng-model="user.gender" value="female" />女<br />
+
+        <input type="checkbox" ng-model="user.agree" name="userAgree" required />
+        我统一: <input ng-show="user.agree" type="text" ng-model="user.agreeSign"
+                  required /><br />
+        <div ng-show="!user.agree || !user.agreeSign">Please agree and sign.</div>
+
+        <button ng-click="reset()" ng-disabled="isUnchanged(user)">重置</button>
+        <button ng-click="update(user)"
+                ng-disabled="form.$invalid || isUnchanged(user)">保存</button>
+      </form>
     </div>
+  </file>
 
-    Gender: <input type="radio" ng-model="user.gender" value="male" />male
-    <input type="radio" ng-model="user.gender" value="female" />female<br />
+  <file name="script.js">
+    angular.module('formExample', [])
+      .controller('ExampleController', ['$scope', function($scope) {
+        $scope.master = {};
 
-    <input type="checkbox" ng-model="user.agree" name="userAgree" required />
-    I agree: <input ng-show="user.agree" type="text" ng-model="user.agreeSign"
-              required /><br />
-    <div ng-show="!user.agree || !user.agreeSign">Please agree and sign.</div>
+        $scope.update = function(user) {
+          $scope.master = angular.copy(user);
+        };
 
-    <button ng-click="reset()" ng-disabled="isUnchanged(user)">RESET</button>
-    <button ng-click="update(user)"
-            ng-disabled="form.$invalid || isUnchanged(user)">SAVE</button>
-  </form>
-</div>
+        $scope.reset = function() {
+          $scope.user = angular.copy($scope.master);
+        };
 
-<script>
-  function Controller($scope) {
-    $scope.master = {};
+        $scope.isUnchanged = function(user) {
+          return angular.equals(user, $scope.master);
+        };
 
-    $scope.update = function(user) {
-      $scope.master = angular.copy(user);
-    };
+        $scope.reset();
+      }]);
+  </file>
+</example>
 
-    $scope.reset = function() {
-      $scope.user = angular.copy($scope.master);
-    };
 
-    $scope.isUnchanged = function(user) {
-      return angular.equals(user, $scope.master);
-    };
+# Custom triggers
 
-    $scope.reset();
-  }
-</script>
-</doc:source>
-</doc:example>
+By default, any change to the content will trigger a model update and form validation. You can
+override this behavior using the {@link ng.directive:ngModelOptions ngModelOptions} directive to
+bind only to specified list of events. I.e. `ng-model-options="{ updateOn: 'blur' }"` will update
+and validate only after the control loses focus. You can set several events using a space delimited
+list. I.e. `ng-model-options="{ updateOn: 'mousedown blur' }"`
+
+If you want to keep the default behavior and just add new events that may trigger the model update
+and validation, add "default" as one of the specified events.
+
+I.e. `ng-model-options="{ updateOn: 'default blur' }"`
+
+The following example shows how to override immediate updates. Changes on the inputs within the form will update the model
+only when the control loses focus (blur event).
+
+<example module="customTriggerExample">
+  <file name="index.html">
+    <div ng-controller="ExampleController">
+      <form>
+        Name:
+        <input type="text" ng-model="user.name" ng-model-options="{ updateOn: 'blur' }" /><br />
+        Other data:
+        <input type="text" ng-model="user.data" /><br />
+      </form>
+      <pre>username = "{{user.name}}"</pre>
+    </div>
+  </file>
+  <file name="script.js">
+     angular.module('customTriggerExample', [])
+      .controller('ExampleController', ['$scope', function($scope) {
+        $scope.user = {};
+      }]);
+  </file>
+</example>
+
+
+
+# Non-immediate (debounced) model updates
+
+You can delay the model update/validation by using the `debounce` key with the
+{@link ng.directive:ngModelOptions ngModelOptions} directive. This delay will also apply to
+parsers, validators and model flags like `$dirty` or `$pristine`.
+
+I.e. `ng-model-options="{ debounce: 500 }"` will wait for half a second since
+the last content change before triggering the model update and form validation.
+
+If custom triggers are used, custom debouncing timeouts can be set for each event using an object
+in `debounce`. This can be useful to force immediate updates on some specific circumstances
+(like blur events).
+
+I.e. `ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"`
+
+If those attributes are added to an element, they will be applied to all the child elements and controls that inherit from it unless they are
+overridden.
+
+This example shows how to debounce model changes. Model will be updated only 250 milliseconds after last change.
+
+<example module="debounceExample">
+  <file name="index.html">
+    <div ng-controller="ExampleController">
+      <form>
+        Name:
+        <input type="text" ng-model="user.name" ng-model-options="{ debounce: 250 }" /><br />
+      </form>
+      <pre>username = "{{user.name}}"</pre>
+    </div>
+  </file>
+  <file name="script.js">
+    angular.module('debounceExample', [])
+      .controller('ExampleController', ['$scope', function($scope) {
+        $scope.user = {};
+      }]);
+  </file>
+</example>
 
 
 # 自定义验证
