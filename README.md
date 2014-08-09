@@ -4,7 +4,7 @@
 
 最新的开发指南文档已经移动到guide文件夹中，如果更新翻译的同学直接在guide文件夹中翻译
 
-
+-----
 
 
 Angular.js的[官方Guide文档](http://docs.angularjs.org/guide) 共29个章节
