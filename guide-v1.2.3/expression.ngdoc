@@ -138,9 +138,6 @@
 
 ## `$event`
 
-Directives like {@link ng.directive:ngClick `ngClick`} and {@link ng.directive:ngFocus `ngFocus`}
-expose a `$event` object within the scope of that expression.
-
 指令 {@link ng.directive:ngClick `ngClick`} and {@link ng.directive:ngFocus `ngFocus`}向当前表达式的作用域提供了一个 `$event` 的对象。
 
 <example module="eventExampleApp">
@@ -177,18 +174,9 @@ expose a `$event` object within the scope of that expression.
   </file>
 </example>
 
-Note in the example above how we can pass in `$event` to `clickMe`, but how it does not show up
-in `{{$event}}`. This is because `$event` is outside the scope of that binding.
-
-请注意，在上面的示例中，我们是传递`$event` 的参数给`clickMe`，而不是通过 `{{$event}}`这种绑定的方式来传递参数的。这是因为，在数据绑定的时候，`$event` 在该次绑定的作用域之外。
-
-## One-time binding
+请注意，在上面的示例中，我们是传递`$event` 的参数给`clickMe`，而不是通过 `{{$event}}`这种绑定的方式来传递参数的。这是因为，在数据绑定的时候，`$event` 不在该次绑定的作用域。
 
 ## 单次绑定
-
-An expression that starts with `::` is considered a one-time expression. One-time expressions
-will stop recalculating once they are stable, which happens after the first digest if the expression
-result is a non-undefined value (see value stabilization algorithm below).
 
 一个以`::`开头的表达式会被当作单次绑定来处理。单次绑定会在数据趋于稳定之后停止对其解析计算，如果表达式的结果不是未定义(non-undefined)的话，这个过程发生在首次digest(具体请查看下面的数据稳定算法)。
 
@@ -240,66 +228,32 @@ result is a non-undefined value (see value stabilization algorithm below).
 </example>
 
 
-### Why this feature
-
-### 为什么增加这个特性
-
-The main purpose of one-time binding expression is to provide a way to create a binding
-that gets deregistered and frees up resources once the binding is stabilized.
-Reducing the number of expressions being watched makes the digest loop faster and allows more
-information to be displayed at the same time.
+### 为什么使用这个特性
 
 单次绑定的主要意图是提供一种在数据绑定稳定之后，注销绑定并且释放资源。
 减少表达式被监察的次数，加快digest循环，允许同时显示更多的数据信息。
 
-### Value stabilization algorithm
-
 ### 数据稳定算法
-
-One-time binding expressions will retain the value of the expression at the end of the
-digest cycle as long as that value is not undefined. If the value of the expression is set
-within the digest loop and later, within the same digest loop, it is set to undefined,
-then the expression is not fulfilled and will remain watched.
 
 单次绑定表达式在值未定义的情况下，于digest循环结束的时候获得表达式的值。如果表达式的值在digest循环执行过程中就被赋值了，在同一个digest循环中会再次将其设置为为未定义的。此时表达式未被填充，在digest循环结束之前仍将会被监察。
 
-  1. Given an expression that starts with `::` when a digest loop is entered and expression
-     is dirty-checked store the value as V
+  1、若指定的表达式是以`::`开头，在进入digest循环的时候，对表达式进行脏数据检验，并将值存为V
 
-1、若指定的表达式是以`::`开头，在进入digest循环的时候，对表达式进行脏数据检验，并将值存为V
-
-  2. If V is not undefined mark the result of the expression as stable and schedule a task
-     to deregister the watch for this expression when we exit the digest loop
-
-2、如果V的值是未定义的，将这个表达式的值标记为稳定的并执行一个任务调度，在退出digest循环的时候，注销对此表达式的监察。
-
-  3. Process the digest loop as normal
-
-3、按正常的方式执行digest
-
-  4. When digest loop is done and all the values have settled process the queue of watch
-     deregistration tasks. For each watch to be deregistered check if it still evaluates
-     to value that is not `undefined`. If that's the case, deregister the watch. Otherwise
-     keep dirty-checking the watch in the future digest loops by following the same
-     algorithm starting from step 1
-
-4、当digest循环完成后，所有已经被赋值的表达式会注销监察任务。对其中每一个在注销时会检查值是否已经定义并有值。如果是，那么注销监察。否则会在以后的digest循环中，从算法的第一步开始，对被监察的表达式进行脏数据检查。
+  2、如果V的值是未定义的，将这个表达式的值标记为稳定的并执行一个任务调度，在退出digest循环的时候，注销对此表达式的监察。
 
 
-### How to benefit from one-time binding
+  3、按正常的方式执行digest
+
+  4、当digest循环完成后，所有已经被赋值的表达式会注销监察任务。对其中每一个在注销时会检查值是否已经定义并有值。如果是，那么注销监察。否则会在以后的digest循环中，从算法的第一步开始，对被监察的表达式进行脏数据检查。
+
 
 ## 何时更好的利用单次绑定
-
-When interpolating text or attributes. If the expression, once set, will not change
-then it is a candidate for one-time expression.
 
 在插入绑定文字和属性的时候。如果表达式在赋值后不会修改，那么是适合使用单次绑定的。
 
 ```html
   <div name="attr: {{::color}}">text: {{::name}}</div>
 ```
-
-When using a directive with bidirectional binding and the parameters will not change
 
 当使用双向绑定指令，参数不需要改变的情况下。
 
@@ -319,8 +273,6 @@ someModule.directive('someDirective', function() {
   <div some-directive name=“::myName” color=“My color is {{::myColor}}”></div>
 ```
 
-
-When using a directive that takes an expression
 
 在使用的指令以表达式为参数的情况下。
 
