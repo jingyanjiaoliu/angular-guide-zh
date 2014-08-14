@@ -176,30 +176,15 @@
 </example>
 
 
-# Custom triggers
 # 自定义触发器
 
-By default, any change to the content will trigger a model update and form validation. You can
-override this behavior using the {@link ng.directive:ngModelOptions ngModelOptions} directive to
-bind only to specified list of events. I.e. `ng-model-options="{ updateOn: 'blur' }"` will update
-and validate only after the control loses focus. You can set several events using a space delimited
-list. I.e. `ng-model-options="{ updateOn: 'mousedown blur' }"`
-
-默认的情况下，对表单所做的任何改变会触发model的更新和表单的验证。你可以通过 {@link ng.directive:ngModelOptions ngModelOptions}指令来覆写此行为，使其只和特定的事件绑定。例如，`ng-model-options="{ updateOn: 'blur' }"`，只会在控件失去焦点的时候才会更新model和验证表单。你可以使用空格来分隔多个事件，组成一个事件列表，如：`ng-model-options="{ updateOn: 'mousedown blur' }"`
-
-If you want to keep the default behavior and just add new events that may trigger the model update
-and validation, add "default" as one of the specified events.
+默认的情况下，对表单所做的任何改变会触发model的更新和表单的验证。你可以通过 {@link ng.directive:ngModelOptions ngModelOptions}指令来覆写此行为，使其只和特定的事件绑定。例如，`ng-model-options="{ updateOn: 'blur' }"`，控件只会在失去焦点的时候才会更新model和验证表单。你可以使用空格来分隔多个事件，组成一个事件列表，如：`ng-model-options="{ updateOn: 'mousedown blur' }"`
 
 如果你希望保留默认的行为，只是想添加新的事件去触发更新和验证，将“default”加入到事件列表中。
 
-I.e. `ng-model-options="{ updateOn: 'default blur' }"`
-
 例如 `ng-model-options="{ updateOn: 'default blur' }"`
 
-The following example shows how to override immediate updates. Changes on the inputs within the form will update the model
-only when the control loses focus (blur event).
-
-接下来的示例展示了如何覆写即时更新动作。表单中的控件，只会在控件失去焦点的时候才会去更新model（blur事件）。
+接下来的示例展示了如何覆写即时更新动作。表单中的控件，只会在失去焦点的时候才会去更新model（blur事件）。
 
 <example module="customTriggerExample">
   <file name="index.html">
@@ -223,35 +208,17 @@ only when the control loses focus (blur event).
 
 
 
-# Non-immediate (debounced) model updates
-
 # 非即时的（快速响应）数据模型更新
-
-You can delay the model update/validation by using the `debounce` key with the
-{@link ng.directive:ngModelOptions ngModelOptions} directive. This delay will also apply to
-parsers, validators and model flags like `$dirty` or `$pristine`.
 
 要延迟更新或验证model数据模型，可以在{@link ng.directive:ngModelOptions ngModelOptions}指令中使用'debounced'关键字。延迟同样会应用到解析器、验证器和数据模型标识中，如`$dirty` 和 `$pristine`。
 
-I.e. `ng-model-options="{ debounce: 500 }"` will wait for half a second since
-the last content change before triggering the model update and form validation.
-
 例如，`ng-model-options="{ debounce: 500 }"` 会在数据更新后等待半秒钟，再触发模型更新和表单验证。
-
-If custom triggers are used, custom debouncing timeouts can be set for each event using an object
-in `debounce`. This can be useful to force immediate updates on some specific circumstances
-(like blur events).
 
 如果使用了自定义触发器，可以在 `debounce`中的对象为为每一个事件设置自定义延迟时间。这在某些需要强制立即更新数据模型的情形下会很有用（如blur事件）。
 
 例如 `ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"`
 
-If those attributes are added to an element, they will be applied to all the child elements and controls that inherit from it unless they are
-overridden.
-
 如果这些属性被添加到一个元素中去了，那就会被应用到它所有的子元素和所有继承自它的元素上，除非它们被覆写。
-
-This example shows how to debounce model changes. Model will be updated only 250 milliseconds after last change.
 
 下面的例子展示了如何快速响应数据模型变化。模型在改动后的250毫秒之后就会被更新。
 
