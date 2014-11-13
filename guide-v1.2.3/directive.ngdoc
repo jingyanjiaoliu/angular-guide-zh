@@ -52,7 +52,7 @@ Angular内置了一整套指令，如`ngBind`, `ngModel`, 和`ngView`。
 
 Angular把一个元素的标签和属性名字进行**规范化**，来决定哪个元素匹配哪个指令。
 我们通常用区分大小写的**规范化**命名方式(比如`ngModel`)来识别指令。
-然而，HTML是区分大小的，所以我们在DOM中使用的指令只能用小写的方式命名，
+然而，HTML是大小写不敏感的，所以我们在DOM中使用的指令只能用小写的方式命名，
 通常使用{@link http://en.wikipedia.org/wiki/Letter_case#Computers 破折号间隔}的形式(比如：`ng-model`).
 
 **规范化**的过程如下所示：
