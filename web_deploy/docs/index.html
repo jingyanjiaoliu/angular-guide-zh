@@ -65,7 +65,9 @@
       function path(name) {
         if (production) {
           if (name.match(/^angular(-\w+)?\.js/) && !name.match(/bootstrap/)) {
-            name =  '//ajax.googleapis.com/ajax/libs/angularjs/' +
+            // google的CDN访问不了，换一个CDN
+            //name =  '//ajax.googleapis.com/ajax/libs/angularjs/' +
+            name = '//cdn.bootcss.com/angular.js/' +
                 angularVersion.cdn +
                 '/' +
                 name.replace(/\.js$/, '.min.js');
